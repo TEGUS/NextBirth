@@ -1,0 +1,49 @@
+show-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  cursor: pointer;
+  width: 70%;
+
+  .libelle {
+    width: 80%;
+  }
+  .show {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    width: 100%;
+    .day {
+      padding: 5px;
+      background-color: color($colors, primary);
+      border: 1px solid color($colors, primary);
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      width: 35%;
+    }
+    .month {
+      padding: 5px;
+      background-color: color($colors, primary);
+      border: 1px solid color($colors, primary);
+      width: 30%;
+      margin-right: 2px;
+      margin-left: 2px;
+    }
+    .year {
+      padding: 5px;
+      background-color: color($colors, primary);
+      border: 1px solid color($colors, primary);
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      width: 35%;
+    }
+  }
+}

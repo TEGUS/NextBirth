@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>neXtBirth</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="content">
+    <show-date [libelle]="'Veuillez entrer la date de vos dernières règles'"></show-date>
+    <show-date [libelle]="'Ou votre date d accouchement'"></show-date>
+    <input-element [libelle]="'Email'" [type]="'email'"></input-element>
+    <input-element [libelle]="'Mot de passe'" [type]="'password'"></input-element>
+    <div class="create-account">
+      <div class="libelle">Pour profiter d'une prise en charge complète, veuillez</div>
+      <input type="button" value="CREER UN COMPTE" (click)="signUp()">
+    </div>
+  </div>
+</ion-content>
