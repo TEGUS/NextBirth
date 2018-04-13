@@ -15,6 +15,7 @@
 // automatically applied to the <body> element in the app.
 
 ion-content {
+  color: white;
   background-image: url('/assets/imgs/background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
@@ -22,4 +23,25 @@ ion-content {
 
 ion-navbar {
   border-bottom: 3px solid darkred;
+}
+
+// Customize ScrollBar
+::-webkit-scrollbar {
+  width: 14px; /* for vertical scrollbars */
+  height: 14px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: darkred;
+  background-image: -webkit-linear-gradient(90deg,
+    transparent,
+    rgba(0, 0, 0, 0.1) 100%,
+    transparent,
+    transparent)
 }

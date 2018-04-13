@@ -1,4 +1,5 @@
 input-element {
+  color: white;
 
   @mixin comp($direction, $content) {
     display: flex;

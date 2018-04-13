@@ -9,6 +9,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {SignUpModule} from '../pages/sign-up/sign-up.module';
 import {SignUpPage} from "../pages/sign-up/sign-up";
+import {ChooseModePageModule} from "../pages/choose-mode/choose-mode.module";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {SignUpPage} from "../pages/sign-up/sign-up";
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    SignUpModule
+    SignUpModule,
+    ChooseModePageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
