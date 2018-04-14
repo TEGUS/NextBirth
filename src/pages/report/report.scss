@@ -1,0 +1,116 @@
+page-report {
+  @mixin comp($direction, $content) {
+    display: flex;
+    flex-direction: $direction;
+    align-items: center;
+    justify-content: $content;
+  }
+
+  ion-content {
+    background: #e4e4e4;
+    background-color: #e4e4e4;
+  }
+
+  .part-1 {
+    padding: 5px;
+    .params {
+      @include comp(row, space-between);
+      font-weight: 600;
+      .param {
+        @include comp(row, space-between);
+        .libelle-param {
+          padding: 5px;
+        }
+        .value-param {
+          color: color($colors, primary);
+          padding: 5px;
+          background-color: white;
+        }
+      }
+    }
+    .report-profile {
+      margin-top: 10%;
+
+      img {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        left: 20px;
+        top: 2px;
+      }
+
+      .profile {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background-color: #bababa;
+        padding: 2px;
+        margin-left: 15%;
+
+        position: relative;
+        left: 20px;
+        top: -60px;
+
+        .rep-prof-libelle {
+          @include comp(column, flex-start);
+          align-items: baseline;
+          margin-left: 20%;
+          label {
+            font-weight: 700;
+          }
+        }
+        .options {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          ion-icon {
+            font-size: 29px;
+          }
+          .option {
+            @include comp(row, space-between);
+            padding: 5px;
+            div {
+              font-weight: 600;
+              padding-left: 7px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .transition {
+    margin: 0;
+    width: 100%;
+    height: 50px;
+    background-color: color($colors, primary);
+    color: white;
+    @include comp(row, space-between);
+    label {
+      width: inherit;
+      text-align: center;
+    }
+  }
+
+  ion-grid {
+    padding: 10px;
+    ion-row {
+      border-bottom: 1px solid #bdbdbd;
+      padding: 10px;
+      ion-col {
+        height: 100px;
+      }
+      .item-list {
+        font-weight: 600;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        label {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}

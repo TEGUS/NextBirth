@@ -7,6 +7,7 @@ import {HomePage} from '../pages/home/home';
 import {ListPage} from '../pages/list/list';
 import {SignUpPage} from '../pages/sign-up/sign-up';
 import {ChooseModePage} from "../pages/choose-mode/choose-mode";
+import {ReportPage} from "../pages/report/report";
 
 @Component({
   templateUrl: 'app.html'
@@ -14,7 +15,7 @@ import {ChooseModePage} from "../pages/choose-mode/choose-mode";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ChooseModePage;
+  rootPage: any = ReportPage;
 
   pages: Array<{ title: string, component: any }>;
 

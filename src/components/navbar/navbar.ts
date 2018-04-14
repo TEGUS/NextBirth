@@ -1,22 +1,16 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
-/**
- * Generated class for the NavbarComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
+
 @Component({
   selector: 'navbar',
   templateUrl: 'navbar.html'
 })
 export class NavbarComponent {
-
-  text: string;
+  @Input() title = 'neXtBirth'
+  @Input() showMenuToggle = true;
 
   constructor() {
-    console.log('Hello NavbarComponent Component');
-    this.text = 'Hello World';
   }
+
 
 }
