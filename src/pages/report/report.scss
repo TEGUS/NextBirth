@@ -6,9 +6,8 @@ page-report {
     justify-content: $content;
   }
 
-  ion-content {
+  .content-md {
     background: #e4e4e4;
-    background-color: #e4e4e4;
   }
 
   .part-1 {
@@ -37,6 +36,7 @@ page-report {
         height: 100px;
         left: 20px;
         top: 2px;
+        z-index: 3;
       }
 
       .profile {
