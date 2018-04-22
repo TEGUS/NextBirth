@@ -1,0 +1,37 @@
+page-img5 {
+
+  ion-row {
+    background-color: #e4e4e4;
+    border-bottom: 1px solid #bdbdbd;
+    padding: 10px;
+    margin-top: 10px;
+    ion-col {
+      height: 100px;
+    }
+    .item-list {
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+
+      label {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .button-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
+
+  #triangle {
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-left: 20px solid color($colors, primary);
+    cursor: pointer;
+  }
+}

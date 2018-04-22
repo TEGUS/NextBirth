@@ -3,11 +3,12 @@ import {Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
-import {HomePage} from '../pages/home/home';
-import {ListPage} from '../pages/list/list';
-import {SignUpPage} from '../pages/sign-up/sign-up';
+import {SignUpPage} from "../pages/sign-up/sign-up";
 import {ChooseModePage} from "../pages/choose-mode/choose-mode";
 import {ReportPage} from "../pages/report/report";
+import {Img5Page} from "../pages/img5/img5";
+import {Img6Page} from "../pages/img6/img6";
+import {Img7Page} from "../pages/img7/img7";
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +16,7 @@ import {ReportPage} from "../pages/report/report";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ReportPage;
+  rootPage: any = Img7Page;
 
   pages: Array<{ title: string, component: any }>;
 
@@ -24,8 +25,12 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      {title: 'Home', component: HomePage},
-      {title: 'List', component: ListPage}
+      {title: 'ReportPage', component: ReportPage},
+      {title: 'ChooseMode', component: ChooseModePage},
+      {title: 'SignUp', component: SignUpPage},
+      {title: 'Img5', component: Img5Page},
+      {title: 'Img6', component: Img6Page},
+      {title: 'Img7', component: Img7Page}
     ];
 
   }

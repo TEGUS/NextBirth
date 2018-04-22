@@ -1,5 +1,17 @@
 
-<div class="column-direction">
+<div class="column-direction" *ngIf="direction == 'column'">
   <div class="libelle">{{libelle}}</div>
-  <input [type]="type" [style.width]="widthComponentInput">
+
+  <ion-input *ngIf="type != 'checkbox'" [type]="type" [style.width]="widthComponentInput"></ion-input>
+
+  <ion-checkbox color="dark" *ngIf="type == 'checkbox'"></ion-checkbox>
+</div>
+
+<div class="row-direction" *ngIf="direction == 'row'">
+  <ion-col col-6 class="libelle">{{libelle}}</ion-col>
+
+  <ion-col col-6>
+    <ion-input *ngIf="type != 'checkbox'" [type]="type" [style.width]="widthComponentInput"></ion-input>
+    <ion-checkbox color="dark" *ngIf="type == 'checkbox'"></ion-checkbox>
+  </ion-col>
 </div>

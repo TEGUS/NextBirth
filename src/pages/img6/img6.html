@@ -1,0 +1,66 @@
+<ion-header>
+  <navbar></navbar>
+</ion-header>
+
+<ion-content padding>
+  <div style="padding-left: 50px; padding-right: 50px;">
+    <input-element [libelle]="'Pseudonyme'" [type]="'text'"></input-element>
+    <input-element [libelle]="'Numéro de téléphone'" [type]="'text'"></input-element>
+    <ion-row>
+      <ion-col>
+        <input-element [libelle]="'Age'" [type]="'text'"></input-element>
+      </ion-col>
+      <ion-col>
+        <input-element [libelle]="'Poids'" [type]="'text'"></input-element>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-col-1">
+        <ion-label>Diabète</ion-label>
+        <ion-checkbox color="dark"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-col-1">
+        <ion-label>HTA</ion-label>
+        <ion-checkbox color="dark"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-col-1">
+        <ion-label>Drépano</ion-label>
+        <ion-checkbox color="dark"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <ion-row>
+    <ion-col col-12>
+      <input-element [libelle]="'Age des premières règles'" [type]="'text'" [direction]="'row'"></input-element>
+    </ion-col>
+    <ion-col col-12>
+      <input-element [libelle]="'Durée des seignements'" [type]="'text'" [direction]="'row'"></input-element>
+    </ion-col>
+    <ion-col col-12>
+      <input-element [libelle]="'Durée du cycle régulier'" [type]="'text'" [direction]="'row'"></input-element>
+    </ion-col>
+    <ion-col col-12>
+      <input-element [libelle]="'Douleur pendant les règles'" [type]="'checkbox'" [direction]="'row'"></input-element>
+    </ion-col>
+    <ion-col col-12>
+      <input-element [libelle]="'Nombre de grossesse'" [type]="'text'" [direction]="'row'"></input-element>
+    </ion-col>
+    <ion-col col-12>
+      <input-element [libelle]="'Nombre de prématurés'" [type]="'text'" [direction]="'row'"></input-element>
+    </ion-col>
+    <ion-col col-12>
+      <input-element [libelle]="'Nombre de fausses couches ou avortement'" [type]="'text'" [direction]="'row'"></input-element>
+    </ion-col>
+    <ion-col col-12>
+      <input-element [libelle]="'Nombre denfant vivant'" [type]="'text'" [direction]="'row'"></input-element>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+<ion-footer>
+  <button ion-button color="primary" clear icon-right>
+    <h5>Suivant <ion-icon name="arrow-forward"></ion-icon></h5>
+  </button>
+</ion-footer>

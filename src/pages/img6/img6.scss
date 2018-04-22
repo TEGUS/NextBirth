@@ -1,0 +1,25 @@
+page-img6 {
+  ion-label {
+    text-align: center;
+  }
+
+  .ion-col-1 {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ion-footer {
+    background-color: #fcf366;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    h5 {
+      font-weight: 900;
+    }
+  }
+}
