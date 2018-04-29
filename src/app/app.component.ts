@@ -25,12 +25,24 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      {title: 'ReportPage', component: ReportPage, icon: 'calendar'},
-      {title: 'ChooseMode', component: ChooseModePage, icon: 'calendar'},
-      {title: 'SignUp', component: SignUpPage, icon: 'calendar'},
-      {title: 'Img5', component: Img5Page, icon: 'calendar'},
-      {title: 'Img6', component: Img6Page, icon: 'calendar'},
-      {title: 'Img7', component: Img7Page, icon: 'calendar'}
+      // {title: 'ReportPage', component: ReportPage, icon: 'calendar'},
+      // {title: 'ChooseMode', component: ChooseModePage, icon: 'calendar'},
+      // {title: 'SignUp', component: SignUpPage, icon: 'calendar'},
+      // {title: 'Img5', component: Img5Page, icon: 'calendar'},
+      // {title: 'Img6', component: Img6Page, icon: 'calendar'},
+      // {title: 'Img7', component: Img7Page, icon: 'calendar'},
+
+      {title: 'Calendrier', component: null, icon: 'icon1'},
+      {title: 'Mes situations à risque', component: null, icon: 'icon2'},
+      {title: 'Mon médecin', component: null, icon: 'icon3'},
+      {title: 'Mes mises à jour', component: null, icon: 'icon4'},
+      {title: 'Gynéco à proximité', component: null, icon: 'icon5'},
+      {title: 'Outils surveillance', component: null, icon: 'icon6'},
+      {title: 'FAQ', component: null, icon: 'icon7'},
+      {title: 'Paramètres', component: null, icon: 'icon8'},
+      {title: 'Pilulier', component: null, icon: 'icon9'},
+      {title: 'Mise en garde', component: null, icon: 'icon10'},
+      {title: 'Humeur et état d\'esprit', component: null, icon: 'icon11'},
     ];
 
   }
@@ -47,6 +59,7 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    if (page.component != null)
+      this.nav.setRoot(page.component);
   }
 }
