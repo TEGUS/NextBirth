@@ -21,17 +21,5 @@ page-img5 {
     }
   }
 
-  .button-submit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-  }
-
-  #triangle {
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
-    border-left: 20px solid color($colors, primary);
-    cursor: pointer;
-  }
+  
 }

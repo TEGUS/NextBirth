@@ -21,6 +21,20 @@ ion-content {
   background-size: cover;
 }
 
+ .button-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
+
+  #triangle {
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-left: 20px solid color($colors, primary);
+    cursor: pointer;
+  }
+
 img.img-menu {
   height: 30px;
   border: 0;

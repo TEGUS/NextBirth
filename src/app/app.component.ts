@@ -16,7 +16,7 @@ import {Img7Page} from "../pages/img7/img7";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Img7Page;
+  rootPage: any = ReportPage;
 
   pages: Array<any>;
 
