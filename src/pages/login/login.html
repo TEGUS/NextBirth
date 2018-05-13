@@ -1,0 +1,30 @@
+
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class="content">
+    <input-element
+      [libelle]="'Email'"
+      [type]="'email'"
+      (outputValue)="getEmail($event)">
+    </input-element>
+
+    <input-element
+      [libelle]="'Mot de passe'"
+      [type]="'password'"
+      (outputValue)="getPassword($event)">
+    </input-element>
+
+    <p class="error" *ngIf="error != null"> {{error.message}} </p>
+
+    <div class="create-account">
+      <input id="login" type="button" value="SE CONNECTER" (click)="login()">
+      <input id="signup" type="button" value="SE CREER UN COMPTE" (click)="signup()">
+    </div>
+  </div>
+</ion-content>

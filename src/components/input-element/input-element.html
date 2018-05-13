@@ -2,16 +2,18 @@
 <div class="column-direction" *ngIf="direction == 'column'">
   <div class="libelle">{{libelle}}</div>
 
-  <ion-input *ngIf="type != 'checkbox'" [type]="type" [style.width]="widthComponentInput"></ion-input>
+  <ion-input *ngIf="type != 'checkbox'" [type]="type" [style.width]="widthComponentInput" (ionChange)="inputChange($event)"></ion-input>
 
-  <ion-checkbox color="dark" *ngIf="type == 'checkbox'"></ion-checkbox>
+  <ion-checkbox color="dark" *ngIf="type == 'checkbox'" (ionChange)="inputChange($event)"></ion-checkbox>
 </div>
 
 <div class="row-direction" *ngIf="direction == 'row'">
-  <ion-col col-6 class="libelle">{{libelle}}</ion-col>
+  <ion-col col-6 class="libelle" *ngIf="textPosition == 'left'">{{libelle}}</ion-col>
 
   <ion-col col-6>
-    <ion-input *ngIf="type != 'checkbox'" [type]="type" [style.width]="widthComponentInput"></ion-input>
-    <ion-checkbox color="dark" *ngIf="type == 'checkbox'"></ion-checkbox>
+    <ion-input *ngIf="type != 'checkbox'" [type]="type" [style.width]="widthComponentInput" (ionChange)="inputChange($event)"></ion-input>
+    <ion-checkbox color="dark" *ngIf="type == 'checkbox'" (ionChange)="inputChange($event)"></ion-checkbox>
   </ion-col>
+
+  <ion-col col-6 class="libelle" *ngIf="textPosition == 'right'">{{libelle}}</ion-col>
 </div>

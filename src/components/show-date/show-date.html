@@ -1,9 +1,14 @@
-
-
 <div class="libelle">{{libelle}}</div>
 
-<div class="show">
-  <div class="day">DD</div>
-  <div class="month">MM</div>
-  <div class="year">YYYY</div>
+<div class="show" (click)="datePicker.open()">
+  <div class="day">{{dateToShow.day}}</div>
+  <div class="month">{{dateToShow.month}}</div>
+  <div class="year">{{dateToShow.year}}</div>
 </div>
+
+<ion-datetime #datePicker
+              text-center
+              (ionChange)="dateChanged($event)"
+              displayFormat="DD MMM, YYYY"
+              [(ngModel)]="date" hidden="true">
+</ion-datetime>

@@ -1,0 +1,27 @@
+<ion-header>
+  <navbar></navbar>
+</ion-header>
+
+<ion-content padding-left padding-right padding-bottom>
+  <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; color: white;">
+    <input-element [libelle]="'Ovulation dans'" [type]="'number'"></input-element>
+    <input-element [libelle]="'Règles dans'" [type]="'number'"></input-element>
+  </div>
+
+  <hr>
+
+  <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    <button ion-button color="primary" style="color: white; text-transform: capitalize;">Signaler un soucis</button>
+    <button ion-button color="primary" style="color: white; text-transform: capitalize;">Signaler un soucis</button>
+  </div>
+
+  <ion-row *ngFor="let item of items">
+    <ion-col col-3>
+      <img [src]="item.img" alt="" width="80" height="80">
+    </ion-col>
+    <ion-col class="item-list">
+      <label>{{item.label}}</label>
+      <p>{{item.description}}</p>
+    </ion-col>
+  </ion-row>
+</ion-content>

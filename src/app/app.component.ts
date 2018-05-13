@@ -9,6 +9,10 @@ import {ReportPage} from "../pages/report/report";
 import {Img5Page} from "../pages/img5/img5";
 import {Img6Page} from "../pages/img6/img6";
 import {Img7Page} from "../pages/img7/img7";
+import {Img8Page} from "../pages/img8/img8";
+import {Img9Page} from "../pages/img9/img9";
+import {Img10Page} from "../pages/img10/img10";
+import {LoginPage} from "../pages/login/login";
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +20,7 @@ import {Img7Page} from "../pages/img7/img7";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ReportPage;
+  rootPage: any = LoginPage;
 
   pages: Array<any>;
 
@@ -25,12 +29,15 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      // {title: 'ReportPage', component: ReportPage, icon: 'calendar'},
-      // {title: 'ChooseMode', component: ChooseModePage, icon: 'calendar'},
-      // {title: 'SignUp', component: SignUpPage, icon: 'calendar'},
-      // {title: 'Img5', component: Img5Page, icon: 'calendar'},
-      // {title: 'Img6', component: Img6Page, icon: 'calendar'},
-      // {title: 'Img7', component: Img7Page, icon: 'calendar'},
+      {title: 'ReportPage', component: ReportPage, icon: 'calendar'},
+      {title: 'ChooseMode', component: ChooseModePage, icon: 'calendar'},
+      {title: 'SignUp', component: SignUpPage, icon: 'calendar'},
+      {title: 'Img5', component: Img5Page, icon: 'calendar'},
+      {title: 'Img6', component: Img6Page, icon: 'calendar'},
+      {title: 'Img7', component: Img7Page, icon: 'calendar'},
+      {title: 'Img8', component: Img8Page, icon: 'calendar'},
+      {title: 'Img9', component: Img9Page, icon: 'calendar'},
+      {title: 'Img10', component: Img10Page, icon: 'calendar'},
 
       {title: 'Calendrier', component: null, icon: 'icon1'},
       {title: 'Mes situations à risque', component: null, icon: 'icon2'},

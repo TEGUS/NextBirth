@@ -1,16 +1,18 @@
 import {NgModule} from '@angular/core';
 import {IonicPageModule} from 'ionic-angular';
-import {ReportPage} from './report';
+import {Img8Page} from './img8';
 import {NavbarModule} from "../../components/navbar/navbar.module";
+import {InputElementModule} from "../../components/input-element/input-element.component";
 
 @NgModule({
   declarations: [
-    ReportPage,
+    Img8Page,
   ],
   imports: [
     NavbarModule,
-    IonicPageModule.forChild(ReportPage),
+    InputElementModule,
+    IonicPageModule.forChild(Img8Page),
   ],
 })
-export class ReportPageModule {
+export class Img8PageModule {
 }

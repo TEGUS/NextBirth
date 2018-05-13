@@ -11,9 +11,10 @@ input-element {
     ion-input {
       margin-top: 10px;
       background-color: color($colors, primary);
-      font-size: 15px;
+      font-size: 16px;
       border-radius: 20px;
       padding: 0;
+      text-align: center;
     }
   }
 

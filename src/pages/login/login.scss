@@ -1,4 +1,4 @@
-page-sign-up {
+page-login {
   .content {
     display: flex;
     flex-direction: column;
@@ -9,16 +9,17 @@ page-sign-up {
     width: 100%;
 
     input-element {
-      width: 70%;
+      width: inherit;
     }
 
     .error {
-      width: 70%;
+      width: inherit;
       color: red;
       font-weight: 700;
       margin: 0;
       padding: 0;
       background-color: white;
+      margin-top: 22px;
     }
 
     .create-account {
@@ -27,7 +28,7 @@ page-sign-up {
       align-items: center;
       justify-content: center;
       margin-top: 15px;
-      width: 70%;
+      width: inherit;
 
       .libelle {
         width: 90%;
@@ -35,12 +36,20 @@ page-sign-up {
 
       input {
         margin-top: 10px;
-        background-color: color($colors, secondary);
-        border: 1px solid color($colors, secondary);
         width: 100%;
         font-size: 15px;
         border-radius: 20px;
         padding: 8px;
+
+        &#login {
+          background-color: color($colors, secondary);
+          border: 1px solid color($colors, secondary);
+        }
+
+        &#signup {
+          background-color: color($colors, dark);
+          border: 1px solid color($colors, dark);
+        }
       }
     }
   }
