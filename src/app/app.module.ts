@@ -1,12 +1,12 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {ErrorHandler, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
-import { LocalNotifications } from '@ionic-native/local-notifications';
+import {LocalNotifications} from '@ionic-native/local-notifications';
 import {MyApp} from './app.component';
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-import { IonicStorageModule } from '@ionic/storage';
+import {IonicStorageModule} from '@ionic/storage';
 import {SignUpModule} from '../pages/sign-up/sign-up.module';
 import {ChooseModePageModule} from "../pages/choose-mode/choose-mode.module";
 import {ReportPageModule} from "../pages/report/report.module";
@@ -22,8 +22,8 @@ import {Img13PageModule} from "../pages/img13/img13.module";
 import {AuthenticationProvider} from '../providers/authentication';
 import {HttpClientModule} from "@angular/common/http";
 import {LoginPageModule} from "../pages/login/login.module";
-import { ServiceProvider } from '../providers/service';
-import { LocalstorageProvider } from '../providers/localstorage';
+import {ServiceProvider} from '../providers/service';
+import {LocalstorageProvider} from '../providers/localstorage';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,6 @@ import { LocalstorageProvider } from '../providers/localstorage';
   ],
   imports: [
     BrowserModule,
-    
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     HttpClientModule,
@@ -62,7 +61,7 @@ import { LocalstorageProvider } from '../providers/localstorage';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthenticationProvider,
     ServiceProvider,
-    LocalNotifications 
+    LocalNotifications
   ]
 })
 export class AppModule {

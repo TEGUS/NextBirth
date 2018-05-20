@@ -11,8 +11,6 @@ export class ReportPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private localNotifications: LocalNotifications) {
     // Schedule delayed notification
-    
-    
   }
 
   ionViewDidLoad() {
