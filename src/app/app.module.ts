@@ -62,7 +62,7 @@ import { LocalstorageProvider } from '../providers/localstorage';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthenticationProvider,
     ServiceProvider,
-    LocalNotifications
+    LocalNotifications 
   ]
 })
 export class AppModule {

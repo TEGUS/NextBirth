@@ -15,8 +15,6 @@ export class ServiceProvider {
   token: any;
   headers: any;
 
-
-
   constructor(public http: HttpClient) {
     this.headers = {
       headers: new HttpHeaders({
@@ -42,5 +40,4 @@ export class ServiceProvider {
     );
   }
 
- 
 }

@@ -23,6 +23,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public mylocalstorage: LocalstorageProvider) {
+
   }
 
   ionViewDidLoad() {
@@ -54,9 +55,6 @@ export class LoginPage {
             this.mylocalstorage.storeSession(next).then(()=>{
                       
             });
-
-   
-
             this.navCtrl.setRoot('ChooseModePage',{
           
         });
