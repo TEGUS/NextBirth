@@ -54,7 +54,7 @@ export class LocalstorageProvider {
 
   //delete key
   removeKey(key) {
-    this.storage.remove(key);
+    return this.storage.remove(key);
   }
 
   //clear the whole local storage

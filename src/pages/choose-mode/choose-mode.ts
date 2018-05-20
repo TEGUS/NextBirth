@@ -12,10 +12,6 @@ export class ChooseModePage {
   modes = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public services: ServiceProvider,) {
-
-    console.log("=========================================");
-    console.log(Session.user);
-    console.log("=========================================");
   }
 
   ionViewWillLoad() {
