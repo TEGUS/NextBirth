@@ -1,0 +1,56 @@
+page-login {
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    text-align: center;
+    width: 100%;
+
+    input-element {
+      width: inherit;
+    }
+
+    .error {
+      width: inherit;
+      color: red;
+      font-weight: 700;
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      margin-top: 22px;
+    }
+
+    .create-account {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 15px;
+      width: inherit;
+
+      .libelle {
+        width: 90%;
+      }
+
+      input {
+        margin-top: 10px;
+        width: 100%;
+        font-size: 15px;
+        border-radius: 20px;
+        padding: 8px;
+
+        &#login {
+          background-color: color($colors, secondary);
+          border: 1px solid color($colors, secondary);
+        }
+
+        &#signup {
+          background-color: color($colors, dark);
+          border: 1px solid color($colors, dark);
+        }
+      }
+    }
+  }
+}

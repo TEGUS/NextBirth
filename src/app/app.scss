@@ -45,22 +45,26 @@ ion-navbar {
 }
 
 // Customize ScrollBar
-::-webkit-scrollbar {
-  width: 14px; /* for vertical scrollbars */
-  height: 14px; /* for horizontal scrollbars */
-}
+//::-webkit-scrollbar {
+//  width: 14px; /* for vertical scrollbars */
+//  height: 14px; /* for horizontal scrollbars */
+//}
+//
+//::-webkit-scrollbar-track {
+//  border-radius: 10px;
+//  background-color: transparent;
+//}
+//
+//::-webkit-scrollbar-thumb {
+//  border-radius: 10px;
+//  background-color: darkred;
+//  background-image: -webkit-linear-gradient(90deg,
+//    transparent,
+//    rgba(0, 0, 0, 0.1) 100%,
+//    transparent,
+//    transparent)
+//}
 
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: darkred;
-  background-image: -webkit-linear-gradient(90deg,
-    transparent,
-    rgba(0, 0, 0, 0.1) 100%,
-    transparent,
-    transparent)
+hr {
+  border-top: 1px solid white;
 }

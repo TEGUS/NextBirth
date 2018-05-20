@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+
 
 /**
  * Generated class for the ShowDateComponent component.
@@ -11,9 +12,18 @@ import {Component, Input} from '@angular/core';
   templateUrl: 'show-date.html'
 })
 export class ShowDateComponent {
-
+  @ViewChild('datePicker') datePicker;
   @Input() libelle = '';
+  @Output() outputDate: EventEmitter<any> = new EventEmitter();
+  dateToShow = null;
+  date = null;
 
   constructor() {
+    this.dateToShow = {day: 'DD', month: 'MM', year: 'YYYY'}
+  }
+
+  dateChanged(event) {
+    this.dateToShow = event;
+    this.outputDate.emit(this.dateToShow);
   }
 }

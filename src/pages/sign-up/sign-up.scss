@@ -12,6 +12,15 @@ page-sign-up {
       width: 70%;
     }
 
+    .error {
+      width: 70%;
+      color: red;
+      font-weight: 700;
+      margin: 0;
+      padding: 0;
+      background-color: white;
+    }
+
     .create-account {
       display: flex;
       flex-direction: column;
