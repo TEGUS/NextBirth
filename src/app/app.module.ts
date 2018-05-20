@@ -22,7 +22,9 @@ import {Img13PageModule} from "../pages/img13/img13.module";
 import {AuthenticationProvider} from '../providers/authentication';
 import {HttpClientModule} from "@angular/common/http";
 import {LoginPageModule} from "../pages/login/login.module";
-import { ServiceProvider } from '../providers/service';
+import {ServiceProvider} from '../providers/service';
+import {LocalstorageProvider} from '../providers/localstorage';
+import {IonicStorageModule, Storage} from "@ionic/storage";
 
 @NgModule({
   declarations: [
@@ -30,9 +32,13 @@ import { ServiceProvider } from '../providers/service';
   ],
   imports: [
     BrowserModule,
+    IonicStorageModule.forRoot({
+      name: '__nextbirth_db',
+      driverOrder: ['indexeddb', 'sqlite', 'websql']
+    }),
     IonicModule.forRoot(MyApp),
-    HttpClientModule,
 
+    HttpClientModule,
     SignUpModule,
     LoginPageModule,
     ChooseModePageModule,
@@ -55,8 +61,10 @@ import { ServiceProvider } from '../providers/service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    // Storage,
     AuthenticationProvider,
-    ServiceProvider
+    ServiceProvider,
+    // LocalstorageProvider
   ]
 })
 export class AppModule {
