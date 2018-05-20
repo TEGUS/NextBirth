@@ -12,15 +12,40 @@ import { Session} from './../configs/configs';
 export class LocalstorageProvider {
 
   private key = 'session';
+  private keymode = 'mode';
   
 
   constructor(public storage: Storage){
       
   }
 
+  storeModeInSession(mode){
+     Session.mode = mode;
+     return new Promise((resolve)=>{
+      this.storage.set(this.keymode, mode).then((val) => {
+        resolve();
+      }, error=>{
+          resolve();
+      });
+  });
+  }
+
+  getModeInSession(){
+    return new Promise((resolve,  failed)=>{
+        this.storage.get(this.keymode).then((data) => {
+            if(data == null){
+                failed();
+            }else{
+                Session.mode = data;
+            }
+        }).catch((error)=>{
+            failed();
+        });
+    });
+}
 
   storeSession(data){
-      console.log(data);
+     
       Session.user = data;
       Session.token = data.token;
       return new Promise((resolve)=>{
@@ -48,5 +73,7 @@ export class LocalstorageProvider {
           });
       });
   }
+
+
 
 }

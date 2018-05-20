@@ -1,12 +1,12 @@
 input-element {
   color: white;
-
   @mixin comp($direction, $content) {
     display: flex;
     flex-direction: $direction;
     align-items: center;
     justify-content: $content;
     margin-top: 15px;
+
 
     ion-input {
       margin-top: 10px;
@@ -15,6 +15,7 @@ input-element {
       border-radius: 20px;
       padding: 0;
       text-align: center;
+      padding-left: 15px;
     }
   }
 
