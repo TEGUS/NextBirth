@@ -48,7 +48,6 @@ export class LoginPage {
 
   login() {
     if (checkField(this.object.email) && checkField(this.object.plainPassword)) {
-      console.log(this.object);
       let loading = this.loadingCtrl.create();
       loading.present();
       this.authProvider.logIn(this.object).subscribe(next => {

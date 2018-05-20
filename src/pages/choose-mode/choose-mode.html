@@ -18,9 +18,9 @@
   <h6 style="color: white">Adopter nos conseils en choisissant un des modes suivants:</h6>
   <ion-grid *ngFor="let m of modes">
     <mode
-      [image]="m.image"
-      [libelle]="m.libelle"
-      [description]="m.description">
+      [image]="m._embedded.image._embedded.url_photo"
+      [libelle]="m.code"
+      [description]="m.description" (click)="selectmode(m.id)">
     </mode>
   </ion-grid>
 </ion-content>

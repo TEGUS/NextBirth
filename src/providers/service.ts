@@ -2,6 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {currentHost} from "../host/host";
 import {Observable} from "rxjs/Observable";
+import { Session } from '../configs/configs';
 
 /*
   Generated class for the ServiceProvider provider.
@@ -20,7 +21,7 @@ export class ServiceProvider {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ' + this.token
+        'Authorization': 'Bearer ' + Session.token
       })
     };
     this.host = currentHost;
@@ -33,11 +34,23 @@ export class ServiceProvider {
     );
   }
 
+
+
   getCategories(): Observable<any> {
     return this.http.get(
       this.host + 'categories',
       this.headers
     );
+  }
+
+  selectonemode(id): Observable<any>{
+     
+    return this.http.post(
+      this.host + 'choice-modes',
+      {categorie:id},
+      this.headers
+    );
+
   }
 
 }

@@ -13,10 +13,37 @@ import {HttpClient} from "@angular/common/http";
 export class LocalstorageProvider {
 
   private key = 'session';
+  private keymode = 'mode';
+  
 
   constructor(public http: HttpClient, public storage: Storage) {
     console.log('Hello LocalstorageProvider Provider');
   }
+
+  storeModeInSession(mode){
+    Session.mode = mode;
+    return new Promise((resolve)=>{
+     this.storage.set(this.keymode, mode).then((val) => {
+       resolve();
+     }, error=>{
+         resolve();
+     });
+ });
+ }
+ getModeInSession(){
+  return new Promise((resolve,  failed)=>{
+      this.storage.get(this.keymode).then((data) => {
+          if(data == null){
+              failed();
+          }else{
+              Session.mode = data;
+          }
+      }).catch((error)=>{
+          failed();
+      });
+  });
+}
+
 
   storeSession(data) {
     console.log(data);
@@ -63,5 +90,7 @@ export class LocalstorageProvider {
       console.log('all keys are cleared');
     });
   }
+
+
 
 }
