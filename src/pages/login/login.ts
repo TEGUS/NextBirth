@@ -3,7 +3,8 @@ import {IonicPage, LoadingController, NavController, NavParams, ToastController}
 import {AuthenticationProvider} from "../../providers/authentication";
 import {SignUpPage} from "../sign-up/sign-up";
 import {checkField} from "../../variables/functions";
-import {LocalstorageProvider} from "../../providers/localstorage";
+import {LocalstorageProvider} from '../../providers/localstorage';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -22,9 +23,8 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
-              public toastCtrl: ToastController,
-              public localStorage: LocalstorageProvider
-  ) {
+              public toastCtrl: ToastController, public mylocalstorage: LocalstorageProvider) {
+
   }
 
   ionViewDidLoad() {
@@ -52,8 +52,8 @@ export class LoginPage {
       let loading = this.loadingCtrl.create();
       loading.present();
       this.authProvider.logIn(this.object).subscribe(next => {
-        console.log(next);
-        // this.localStorage.setKey('login', JSON.stringify(next));
+        this.mylocalstorage.storeSession(next).then(() => {});
+        this.navCtrl.setRoot('ChooseModePage', {});
       }, error => {
         loading.dismiss();
         console.log(error);

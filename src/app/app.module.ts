@@ -1,12 +1,12 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {ErrorHandler, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
-
+import {LocalNotifications} from '@ionic-native/local-notifications';
 import {MyApp} from './app.component';
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-
+import {IonicStorageModule} from '@ionic/storage';
 import {SignUpModule} from '../pages/sign-up/sign-up.module';
 import {ChooseModePageModule} from "../pages/choose-mode/choose-mode.module";
 import {ReportPageModule} from "../pages/report/report.module";
@@ -24,7 +24,6 @@ import {HttpClientModule} from "@angular/common/http";
 import {LoginPageModule} from "../pages/login/login.module";
 import {ServiceProvider} from '../providers/service';
 import {LocalstorageProvider} from '../providers/localstorage';
-import {IonicStorageModule, Storage} from "@ionic/storage";
 
 @NgModule({
   declarations: [
@@ -32,13 +31,10 @@ import {IonicStorageModule, Storage} from "@ionic/storage";
   ],
   imports: [
     BrowserModule,
-    IonicStorageModule.forRoot({
-      name: '__nextbirth_db',
-      driverOrder: ['indexeddb', 'sqlite', 'websql']
-    }),
     IonicModule.forRoot(MyApp),
-
+    IonicStorageModule.forRoot(),
     HttpClientModule,
+
     SignUpModule,
     LoginPageModule,
     ChooseModePageModule,
@@ -59,12 +55,13 @@ import {IonicStorageModule, Storage} from "@ionic/storage";
   ],
   providers: [
     StatusBar,
+    Storage,
+    LocalstorageProvider,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    // Storage,
     AuthenticationProvider,
     ServiceProvider,
-    // LocalstorageProvider
+    LocalNotifications
   ]
 })
 export class AppModule {

@@ -16,22 +16,22 @@ export class Img5Page {
   ionViewWillLoad() {
     this.items = [
       {
-        img: '/assets/imgs/background.jpg',
+        img: 'assets/imgs/background.jpg',
         label: 'Les 20 bases d\'une conception',
         description: 'Texte'
       },
       {
-        img: '/assets/imgs/background.jpg',
+        img: 'assets/imgs/background.jpg',
         label: 'Les 20 bases d\'une conception',
         description: 'Texte'
       },
       {
-        img: '/assets/imgs/background.jpg',
+        img: 'assets/imgs/background.jpg',
         label: 'Les 20 bases d\'une conception',
         description: 'Texte'
       },
       {
-        img: '/assets/imgs/background.jpg',
+        img: 'assets/imgs/background.jpg',
         label: 'Les 20 bases d\'une conception',
         description: 'Texte'
       },

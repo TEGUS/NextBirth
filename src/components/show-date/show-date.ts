@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import * as moment from 'moment';
+
 
 /**
  * Generated class for the ShowDateComponent component.

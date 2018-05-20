@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import {ServiceProvider} from "../../providers/service";
+import { Session } from '../../configs/configs';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class ChooseModePage {
   modes = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public services: ServiceProvider,) {
+
+    console.log("=========================================");
+    console.log(Session.user);
+    console.log("=========================================");
   }
 
   ionViewWillLoad() {
