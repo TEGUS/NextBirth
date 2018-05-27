@@ -32,7 +32,7 @@ export class ChooseModePage {
   selectmode(onemodeid){
       let loading = this.loadingCtrl.create();
       loading.present();
-      this.services.selectonemode(onemodeid).subscribe(resp => {
+      this.services.selectMode(onemodeid).subscribe(resp => {
 
           this.mylocalstorage.storeModeInSession(resp._embedded.categorie).then(()=>{
 

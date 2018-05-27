@@ -27,7 +27,7 @@ export class ServiceProvider {
     this.host = currentHost;
   }
 
-  getChoiceModes(): Observable<any> {
+  getModes(): Observable<any> {
     return this.http.get(
       this.host + 'choice-modes',
       this.headers
@@ -41,7 +41,7 @@ export class ServiceProvider {
     );
   }
 
-  selectonemode(id): Observable<any>{
+  selectMode(id): Observable<any>{
     return this.http.post(
       this.host + 'choice-modes',
       {categorie:id},
