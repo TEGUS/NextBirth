@@ -44,13 +44,11 @@ export class ServiceProvider {
   }
 
   selectonemode(id): Observable<any>{
-     
     return this.http.post(
       this.host + 'choice-modes',
       {categorie:id},
       this.headers
     );
-
   }
 
 }
