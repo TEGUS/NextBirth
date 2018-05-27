@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController,AlertController, NavParams,  LoadingController, ToastController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, AlertController, NavParams, LoadingController, ToastController} from 'ionic-angular';
 import {LocalStorageProvider} from '../../providers/localstorage';
 import {ServiceProvider} from "../../providers/service";
+import {ModeContraceptionPage} from "../mode-contraception/mode-contraception";
+import {QuestionContraceptionPage} from "../question-contraception/question-contraception";
 
 /**
  * Generated class for the ProfilsPage page.
@@ -16,15 +18,15 @@ import {ServiceProvider} from "../../providers/service";
   templateUrl: 'profil.html',
 })
 export class ProfilPage {
-  
+
   public object = null;
   public error = null;
   public ladate = null;
   public username = null;
   public phone = null;
 
-  constructor(public navCtrl: NavController, public services: ServiceProvider , public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController, public navParams: NavParams, public mylocalstorage: LocalStorageProvider, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public services: ServiceProvider, public loadingCtrl: LoadingController,
+              public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider, public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -33,20 +35,19 @@ export class ProfilPage {
 
   ionViewWillLoad() {
     this.object = {
-      
-      poids:null,
-      diabete:null,
-      hta:null,
-      drepano:null,
-      agePremiereRegle:null,
-      dureeSaignement:null,
-      dureeCycle:null,
-      cycleRegulier:null,
-      douleurRegle:null,
-      nombreGrossesse:null,
-      nombrePremature:null,
-      nombreFosseCouche:null,
-      nombreEnfantVivant:null
+      poids: null,
+      diabete: null,
+      hta: null,
+      drepano: null,
+      agePremiereRegle: null,
+      dureeSaignement: null,
+      dureeCycle: null,
+      cycleRegulier: null,
+      douleurRegle: null,
+      nombreGrossesse: null,
+      nombrePremature: null,
+      nombreFosseCouche: null,
+      nombreEnfantVivant: null
     }
   }
 
@@ -54,126 +55,91 @@ export class ProfilPage {
     this.ladate = date;
   }
 
-  getDureeSaignement(dureeSaignement){
+  getDureeSaignement(dureeSaignement) {
     this.object.dureeSaignement = dureeSaignement;
-  } 
+  }
 
-  getDureeCycle(dureeCycle){
+  getDureeCycle(dureeCycle) {
     this.object.dureeCycle = dureeCycle;
-  } 
+  }
 
-  getCycleRegulier(cycleRegulier){
+  getCycleRegulier(cycleRegulier) {
     this.object.cycleRegulier = cycleRegulier;
   }
 
-  getAgePremiereRegle(agePremiereRegle){
+  getAgePremiereRegle(agePremiereRegle) {
     this.object.agePremiereRegle = agePremiereRegle;
   }
-  getDouleur(douleurRegle){
+
+  getDouleur(douleurRegle) {
     this.object.douleurRegle = douleurRegle;
   }
+
   getUsername(username) {
     this.username = username;
   }
-  getPhone(phone){
+
+  getPhone(phone) {
     this.phone = phone;
   }
-  getAge(age){
-    
+
+  getAge(age) {
+
   }
 
-  getPoids(poids){
+  getPoids(poids) {
     this.object.poids = poids;
   }
 
-  getNombreGrossesse(nombreGrossesse){
+  getNombreGrossesse(nombreGrossesse) {
     this.object.nombreGrossesse = nombreGrossesse;
   }
 
-  getNombrePremature(nombrePremature){
+  getNombrePremature(nombrePremature) {
     this.object.nombrePremature = nombrePremature;
   }
-  
-  getNombreFosseCouche(nombreFosseCouche){
+
+  getNombreFosseCouche(nombreFosseCouche) {
     this.object.nombreFosseCouche = nombreFosseCouche;
   }
 
-  getNombreEnfantVivant(nombreEnfantVivant){
+  getNombreEnfantVivant(nombreEnfantVivant) {
     this.object.nombreEnfantVivant = nombreEnfantVivant;
   }
 
 
-  updateprofiles() {
+  updateProfile() {
+    this.object.diabete = this.object.diabete ? 1 : 0;
+    this.object.hta = this.object.hta ? 1 : 0;
+    this.object.drepano = this.object.drepano ? 1 : 0;
+    this.object.douleurRegle = this.object.douleurRegle ? 1 : 0;
+    this.object.douleurRegle = this.object.douleurRegle ? 1 : 0;
+    this.object.cycleRegulier = this.object.cycleRegulier ? 1 : 0;
     
-    if(this.object.diabete){
-      this.object.diabete = 1;
-    }else{
-      this.object.diabete = 0;
-    }
-    if(this.object.hta){
-      this.object.hta = 1;
-    }else{
-      this.object.hta = 0;
-    }
-    if(this.object.drepano){
-      this.object.drepano = 1;
-    }else{
-      this.object.drepano = 0;
-    }
-    if(this.object.douleurRegle){
-      this.object.douleurRegle = 1;
-    }else{
-      this.object.douleurRegle = 0;
+    this.object.account = this.object.account = {
+      "username": this.username,
+      "phone": this.phone,
+      "dateNaissance": this.ladate
     }
 
-    if(this.object.douleurRegle){
-      this.object.douleurRegle = 1;
-    }else{
-      this.object.douleurRegle = 0;
-    }
-
-    if(this.object.cycleRegulier){
-      this.object.cycleRegulier = 1;
-    }else{
-      this.object.cycleRegulier = 0;
-    }
-  
-
-    this.object.account =  this.object.account = {
-          "username":this.username,
-          "phone":this.phone,
-          "dateNaissance":this.ladate
-    }
-
-
-    /*this.mylocalstorage.getSession().then(result => {
+    console.log(this.object)
+    let loading = this.loadingCtrl.create();
+    loading.present();
+    this.services.updateprofile(this.object).subscribe(next => {
+      console.log(next)
+    }, error => {
+      loading.dismiss();
+      console.log(error);
     }, () => {
-      
-    });    */
-
-
-      let loading = this.loadingCtrl.create();
-      loading.present();
-
-      this.services.updateprofile(this.object).subscribe(next => {
-        var id_mode = 1;
-        this.selectMode(id_mode);
-
-      }, error => {
-        loading.dismiss();
-        console.log(error);
-      }, () => {
-
-        loading.dismiss();
-        loading.onDidDismiss(() => {
-          //this.presentToast('Finish Login!');
-          
-        });
-
-      });
-
-    console.log(this.object);
- 
+      loading.dismiss();
+      this.localStorage.getKey('modeSelected').then(mode => {
+        if (mode !== null) {
+          this.selectMode(mode)
+        } else {
+          this.navCtrl.pop();
+        }
+      })
+    });
   }
 
   presentToast(message: any) {
@@ -184,25 +150,35 @@ export class ProfilPage {
     toast.present();
   }
 
-  selectMode(id_mode) {
+  selectMode(mode) {
     let loading = this.loadingCtrl.create();
     loading.present();
-    this.services.selectMode(id_mode).subscribe(resp => {
-      
-        console.log("=======================================");
-        console.log(resp);
-        console.log("=======================================");
-
-
+    this.services.selectMode(mode.id).subscribe(resp => {
+      console.log("=======================================");
+      console.log(resp);
+      console.log("=======================================");
     }, error => {
       loading.dismiss();
     }, () => {
       loading.dismiss();
       loading.onDidDismiss(() => {
+        this.localStorage.removeKey('modeSelected');
         console.log('Succes du stochage du mode!');
+
+        switch (mode.code) {
+          case 'CONTPL':
+            this.navCtrl.push(ModeContraceptionPage);
+            break;
+          case 'CONTPR':
+            break;
+          case 'GRS':
+            this.navCtrl.push(QuestionContraceptionPage)
+            break;
+          case 'GEST':
+            break;
+        }
       });
     });
-
   }
 
 }

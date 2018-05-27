@@ -91,7 +91,7 @@ export class ServiceProvider {
    */
   checkProfile(): Observable<any> {
     return this.http.get(
-      this.host + 'patient/profil/check',
+      this.host + 'patient/profile/check',
       this.headers
     );
   }
