@@ -13,7 +13,7 @@ export class ChooseModePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public services: ServiceProvider,
               public loadingCtrl: LoadingController,
-              public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider) {
+              public toastCtrl: ToastController, public localStorage: LocalStorageProvider) {
   }
 
   ionViewWillLoad() {}
@@ -23,33 +23,57 @@ export class ChooseModePage {
     this.getAllcategories();
   }
 
-  selectMode(id_mode) {
-    let loading = this.loadingCtrl.create();
-    loading.present();
-    this.services.selectMode(id_mode).subscribe(resp => {
-      this.mylocalstorage.storeModeInSession(resp._embedded.categorie).then(next => {
-        console.log(next);
-      });
-    }, error => {
-      loading.dismiss();
-    }, () => {
-      loading.dismiss();
-      loading.onDidDismiss(() => {
-        console.log('Succes du stochage du mode!');
-      });
+  checkProfile() {
+    return new Promise((resolve, reject) => {
+      this.services.checkProfile().subscribe(next => {
+        resolve(next.status);
+      }, error => {
+        reject(error);
+      })
     });
-
   }
 
+  selectMode(mode) {
+    let loading = this.loadingCtrl.create();
+    loading.present();
+    this.checkProfile().then(next => {
+      console.log(next);
+      if (next) {
+        this.services.selectMode(mode.id).subscribe(resp => {
+          console.log(resp);
+          this.localStorage.storeModeInSession(resp._embedded.categorie);
+        }, error => {
+          loading.dismiss();
+          console.log(error);
+        }, () => {
+          loading.dismiss();
+          loading.onDidDismiss(() => {
+            console.log('Succes du stochage du mode!');
+            //Redirection vers la page du Mode
+          });
+        });
+      } else {
+        loading.dismiss();
+        loading.onDidDismiss(() => {
+          this.localStorage.setKey("modeSelected", mode);
+          //Redirection vers Update Profile
+        });
+      }
+    }, error => {
+      loading.dismiss();
+      console.error(error);
+    });
+  }
 
   getAllcategories() {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getCategories().subscribe(next => {
+      console.log(next);
       this.modes = next;
     }, error => {
       loading.dismiss();
-
+      console.log(error);
     }, () => {
       loading.dismiss();
       loading.onDidDismiss(() => {
