@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
+import {IonicPage, LoadingController, MenuController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {AuthenticationProvider} from "../../providers/authentication";
 import {checkField} from "../../variables/functions";
+import {LocalStorageProvider} from "../../providers/localstorage";
 
 
 @IonicPage()
@@ -16,7 +17,8 @@ export class SignUpPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
-              public toastCtrl: ToastController) {
+              public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider,
+              public menuCtrl: MenuController) {
   }
 
   ionViewWillLoad() {
@@ -74,6 +76,7 @@ export class SignUpPage {
         loading.present();
         this.authProvider.signUp(this.object).subscribe(next => {
           console.log(next);
+          this.mylocalstorage.storeSession(next).then(() => {});
         }, error => {
           loading.dismiss();
           console.log(error);
@@ -83,7 +86,8 @@ export class SignUpPage {
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.presentToast('Finish SignUp!');
-            this.navCtrl.pop();
+            this.navCtrl.setRoot('ChooseModePage', {});
+            this.menuCtrl.enable(true, 'sideMenu');
           });
         });
       } else {

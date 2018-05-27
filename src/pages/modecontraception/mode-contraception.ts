@@ -3,10 +3,10 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-img5',
-  templateUrl: 'img5.html',
+  selector: 'page-mode-contraception',
+  templateUrl: 'mode-contraception.html',
 })
-export class Img5Page {
+export class ModeContraceptionPage {
 
   items = [];
 

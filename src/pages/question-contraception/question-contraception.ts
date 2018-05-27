@@ -4,10 +4,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-img7',
-  templateUrl: 'img7.html',
+  selector: 'page-question-contraception',
+  templateUrl: 'question-contraception.html',
 })
-export class Img7Page {
+export class QuestionContraceptionPage {
 
   questions = [];
 
@@ -24,7 +24,7 @@ export class Img7Page {
       { libelle : 'Avez-vous été diagnostiqué ?' }
     ]
 
-    console.log('ionViewDidLoad Img7Page');
+    console.log('ionViewDidLoad QuestionContraceptionPage');
   }
 
 }

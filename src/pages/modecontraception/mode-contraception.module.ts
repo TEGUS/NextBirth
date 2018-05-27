@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { Img7Page } from './img7';
+import { ModeContraceptionPage } from './mode-contraception';
 import {NavbarModule} from "../../components/navbar/navbar.module";
 
 @NgModule({
   declarations: [
-    Img7Page,
+    ModeContraceptionPage,
   ],
   imports: [
     NavbarModule,
-    IonicPageModule.forChild(Img7Page),
+    IonicPageModule.forChild(ModeContraceptionPage),
   ],
 })
-export class Img7PageModule {}
+export class ModeContraceptionPageModule {}

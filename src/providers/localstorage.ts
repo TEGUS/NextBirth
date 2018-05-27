@@ -4,45 +4,46 @@ import {Session} from './../configs/configs';
 import {HttpClient} from "@angular/common/http";
 
 /*
-  Generated class for the LocalstorageProvider provider.
+  Generated class for the LocalStorageProvider provider.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
 @Injectable()
-export class LocalstorageProvider {
+export class LocalStorageProvider {
 
   private key = 'session';
   private keymode = 'mode';
-  
+
 
   constructor(public http: HttpClient, public storage: Storage) {
-    console.log('Hello LocalstorageProvider Provider');
+    console.log('Hello LocalStorageProvider Provider');
   }
 
-  storeModeInSession(mode){
+  storeModeInSession(mode) {
     Session.mode = mode;
-    return new Promise((resolve)=>{
-     this.storage.set(this.keymode, mode).then((val) => {
-       resolve();
-     }, error=>{
-         resolve();
-     });
- });
- }
- getModeInSession(){
-  return new Promise((resolve,  failed)=>{
-      this.storage.get(this.keymode).then((data) => {
-          if(data == null){
-              failed();
-          }else{
-              Session.mode = data;
-          }
-      }).catch((error)=>{
-          failed();
+    return new Promise((resolve) => {
+      this.storage.set(this.keymode, mode).then((val) => {
+        resolve();
+      }, error => {
+        resolve();
       });
-  });
-}
+    });
+  }
+
+  getModeInSession() {
+    return new Promise((resolve, failed) => {
+      this.storage.get(this.keymode).then((data) => {
+        if (data == null) {
+          failed();
+        } else {
+          Session.mode = data;
+        }
+      }).catch((error) => {
+        failed();
+      });
+    });
+  }
 
 
   storeSession(data) {
@@ -81,7 +82,7 @@ export class LocalstorageProvider {
 
   //delete key
   removeKey(key) {
-    this.storage.remove(key);
+    return this.storage.remove(key);
   }
 
   //clear the whole local storage
@@ -90,7 +91,6 @@ export class LocalstorageProvider {
       console.log('all keys are cleared');
     });
   }
-
 
 
 }

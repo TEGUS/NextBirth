@@ -1,4 +1,5 @@
-<ion-menu [content]="content">
+
+<ion-menu [content]="content" id="sideMenu">
   <ion-header>
     <ion-toolbar color="primary">
       <ion-title>Menu</ion-title>
@@ -6,13 +7,6 @@
   </ion-header>
 
   <ion-content style="background-color: #e4e4e4; background-image: none;">
-    <!--<ion-list no-lines no-border no-padding>-->
-      <!--<button menuClose ion-item icon-start *ngFor="let p of pages" (click)="openPage(p)">-->
-        <!--<ion-icon color="primary"><img [src]="'./assets/icon/' + p.icon + '.png'" alt="" width="16" height="16"></ion-icon>-->
-        <!--{{p.title}}-->
-      <!--</button>-->
-    <!--</ion-list>-->
-
     <ion-grid>
       <ion-row menuClose *ngFor="let p of pages" (click)="openPage(p)" style="display: table; padding: 10px; cursor: pointer;">
         <ion-col col-2>
@@ -23,9 +17,17 @@
           {{p.title}}
         </ion-col>
       </ion-row>
+      <ion-row menuClose (click)="signOut()">
+        <ion-col col-2>
+          <img [src]="'./assets/icon/signout.png'" alt=""
+               style="max-width: 100px;" class="img-menu">
+        </ion-col>
+        <ion-col style="display: table-cell; vertical-align: middle; padding-left: 15px; font-weight: 600;">
+          Deconnexion
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </ion-content>
-
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
