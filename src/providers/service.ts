@@ -1,5 +1,5 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {currentHost} from "../host/host";
 import {Observable} from "rxjs/Observable";
 import {LocalStorageProvider} from "./localstorage";
@@ -52,10 +52,10 @@ export class ServiceProvider {
     );
   }
 
-  selectMode(id): Observable<any>{
+  selectMode(id): Observable<any> {
     return this.http.post(
       this.host + 'choice-modes',
-      {categorie:id},
+      {categorie: id},
       this.headers
     );
   }

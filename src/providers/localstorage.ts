@@ -20,29 +20,30 @@ export class LocalStorageProvider {
     console.log('Hello LocalStorageProvider Provider');
   }
 
-  storeModeInSession(mode){
+  storeModeInSession(mode) {
     Session.mode = mode;
-    return new Promise((resolve)=>{
-     this.storage.set(this.keymode, mode).then((val) => {
-       resolve();
-     }, error=>{
-         resolve();
-     });
- });
- }
- getModeInSession(){
-  return new Promise((resolve,  failed)=>{
-      this.storage.get(this.keymode).then((data) => {
-          if(data == null){
-              failed();
-          }else{
-              Session.mode = data;
-          }
-      }).catch((error)=>{
-          failed();
+    return new Promise((resolve) => {
+      this.storage.set(this.keymode, mode).then((val) => {
+        resolve();
+      }, error => {
+        resolve();
       });
-  });
-}
+    });
+  }
+
+  getModeInSession() {
+    return new Promise((resolve, failed) => {
+      this.storage.get(this.keymode).then((data) => {
+        if (data == null) {
+          failed();
+        } else {
+          Session.mode = data;
+        }
+      }).catch((error) => {
+        failed();
+      });
+    });
+  }
 
 
   storeSession(data) {
@@ -90,7 +91,6 @@ export class LocalStorageProvider {
       console.log('all keys are cleared');
     });
   }
-
 
 
 }
