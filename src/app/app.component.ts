@@ -6,12 +6,13 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {SignUpPage} from "../pages/sign-up/sign-up";
 import {ChooseModePage} from "../pages/choose-mode/choose-mode";
 import {ReportPage} from "../pages/report/report";
-import {Img5Page} from "../pages/img5/img5";
-import {Img6Page} from "../pages/img6/img6";
-import {Img7Page} from "../pages/img7/img7";
+import {ModeContraceptionPage} from "../pages/modecontraception/mode-contraception";
+import {ProfilsPage} from "../pages/profils/profils";
+import {QuestionContraceptionPage} from "../pages/question-contraception/question-contraception";
 import {Img8Page} from "../pages/img8/img8";
 import {Img9Page} from "../pages/img9/img9";
 import {Img10Page} from "../pages/img10/img10";
+import {Img11Page} from "../pages/img11/img11";
 import {LoginPage} from "../pages/login/login";
 import {LocalStorageProvider} from "../providers/localstorage";
 
@@ -31,27 +32,27 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      // {title: 'ReportPage', component: ReportPage, icon: 'calendar'},
-      // {title: 'ChooseMode', component: ChooseModePage, icon: 'calendar'},
-      // {title: 'SignUp', component: SignUpPage, icon: 'calendar'},
-      // {title: 'Img5', component: Img5Page, icon: 'calendar'},
-      // {title: 'Img6', component: Img6Page, icon: 'calendar'},
-      // {title: 'Img7', component: Img7Page, icon: 'calendar'},
-      // {title: 'Img8', component: Img8Page, icon: 'calendar'},
-      // {title: 'Img9', component: Img9Page, icon: 'calendar'},
-      // {title: 'Img10', component: Img10Page, icon: 'calendar'},
+       {title: 'ReportPage', component: ReportPage, icon: 'calendar'},
+       {title: 'ChooseMode', component: ChooseModePage, icon: 'calendar'},
+       {title: 'SignUp', component: SignUpPage, icon: 'calendar'},
+       {title: 'Mode Contraception', component: ModeContraceptionPage, icon: 'calendar'},
+       {title: 'Profils', component: ProfilsPage, icon: 'calendar'},
+       {title: 'Question_contraception', component: QuestionContraceptionPage, icon: 'calendar'},
+       {title: 'Img8', component: Img8Page, icon: 'calendar'},
+       {title: 'Img9', component: Img9Page, icon: 'calendar'},
+       {title: 'Img10', component: Img10Page, icon: 'calendar'},
 
-      {title: 'Calendrier', component: null, icon: 'icon1'},
-      {title: 'Mes situations à risque', component: null, icon: 'icon2'},
-      {title: 'Mon médecin', component: null, icon: 'icon3'},
-      {title: 'Mes mises à jour', component: null, icon: 'icon4'},
-      {title: 'Gynéco à proximité', component: null, icon: 'icon5'},
-      {title: 'Outils surveillance', component: null, icon: 'icon6'},
-      {title: 'FAQ', component: null, icon: 'icon7'},
-      {title: 'Paramètres', component: null, icon: 'icon8'},
-      {title: 'Pilulier', component: null, icon: 'icon9'},
-      {title: 'Mise en garde', component: null, icon: 'icon10'},
-      {title: 'Humeur et état d\'esprit', component: null, icon: 'icon11'},
+      //{title: 'Calendrier', component: null, icon: 'icon1'},
+      //{title: 'Mes situations à risque', component: null, icon: 'icon2'},
+      //{title: 'Mon médecin', component: null, icon: 'icon3'},
+      //{title: 'Mes mises à jour', component: null, icon: 'icon4'},
+      //{title: 'Gynéco à proximité', component: null, icon: 'icon5'},
+      //{title: 'Outils surveillance', component: null, icon: 'icon6'},
+      //{title: 'FAQ', component: null, icon: 'icon7'},
+      //{title: 'Paramètres', component: null, icon: 'icon8'},
+      //{title: 'Pilulier', component: null, icon: 'icon9'},
+      //{title: 'Mise en garde', component: null, icon: 'icon10'},
+      //{title: 'Humeur et état d\'esprit', component: null, icon: 'icon11'},
     ];
   }
 
