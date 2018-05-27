@@ -10,9 +10,9 @@ import {IonicStorageModule} from '@ionic/storage';
 import {SignUpModule} from '../pages/sign-up/sign-up.module';
 import {ChooseModePageModule} from "../pages/choose-mode/choose-mode.module";
 import {ReportPageModule} from "../pages/report/report.module";
-import {ModeContraceptionPageModule} from "../pages/modecontraception/mode-contraception.module";
+import {ModeContraceptionPageModule} from "../pages/mode-contraception/mode-contraception.module";
 import {QuestionContraceptionPageModule} from "../pages/question-contraception/question-contraception.module";
-import {ProfilsPageModule} from "../pages/profils/profils.module";
+import {ProfilPageModule} from "../pages/profil/profil.module";
 import {Img8PageModule} from "../pages/img8/img8.module";
 import {Img9PageModule} from "../pages/img9/img9.module";
 import {Img10PageModule} from "../pages/img10/img10.module";
@@ -40,7 +40,7 @@ import {LocalStorageProvider} from '../providers/localstorage';
     ChooseModePageModule,
     ReportPageModule,
     ModeContraceptionPageModule,
-    ProfilsPageModule,
+    ProfilPageModule,
     QuestionContraceptionPageModule,
     Img8PageModule,
     Img9PageModule,

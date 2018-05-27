@@ -38,6 +38,7 @@ export class ServiceProvider {
     });
   }
 
+  ///// ** Modes
   getModes(): Observable<any> {
     return this.http.get(
       this.host + 'choice-modes',
@@ -68,4 +69,11 @@ export class ServiceProvider {
     );
   }
 
+  ///// ** Profile
+  checkProfile(): Observable<any> {
+    return this.http.get(
+      this.host + 'patient/profil/check',
+      this.headers
+    );
+  }
 }

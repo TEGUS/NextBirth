@@ -12,10 +12,10 @@ import {ServiceProvider} from "../../providers/service";
 
 @IonicPage()
 @Component({
-  selector: 'page-profils',
-  templateUrl: 'profils.html',
+  selector: 'page-profil',
+  templateUrl: 'profil.html',
 })
-export class ProfilsPage {
+export class ProfilPage {
   
   public object = null;
   public error = null;

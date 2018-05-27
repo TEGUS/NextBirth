@@ -11,10 +11,8 @@ import {HttpClient} from "@angular/common/http";
 */
 @Injectable()
 export class LocalStorageProvider {
-
   private key = 'session';
   private keymode = 'mode';
-
 
   constructor(public http: HttpClient, public storage: Storage) {
     console.log('Hello LocalStorageProvider Provider');
@@ -45,7 +43,6 @@ export class LocalStorageProvider {
     });
   }
 
-
   storeSession(data) {
     console.log(data);
     Session.user = data;
@@ -69,7 +66,6 @@ export class LocalStorageProvider {
     });
   }
 
-
   //store key
   setKey(key, value) {
     return this.storage.set(key, value);
@@ -91,6 +87,4 @@ export class LocalStorageProvider {
       console.log('all keys are cleared');
     });
   }
-
-
 }
