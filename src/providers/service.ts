@@ -60,4 +60,12 @@ export class ServiceProvider {
     );
   }
 
+  updateprofile(utilisateurs: any): Observable<any> {
+    return this.http.put(
+      this.host + 'patient/profile/complete',
+      utilisateurs,
+      this.headers
+    );
+  }
+
 }

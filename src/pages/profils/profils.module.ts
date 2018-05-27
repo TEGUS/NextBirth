@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { ProfilsPage } from './profils';
 import {NavbarModule} from "../../components/navbar/navbar.module";
 import {InputElementModule} from "../../components/input-element/input-element.component";
+import {ShowDateModule} from "../../components/show-date/show-date.module";
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import {InputElementModule} from "../../components/input-element/input-element.c
   imports: [
     InputElementModule,
     NavbarModule,
+    ShowDateModule,
     IonicPageModule.forChild(ProfilsPage),
   ],
 })

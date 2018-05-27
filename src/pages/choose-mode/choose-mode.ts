@@ -27,9 +27,9 @@ export class ChooseModePage {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.selectMode(id_mode).subscribe(resp => {
-      this.mylocalstorage.storeModeInSession(resp._embedded.categorie).then(next => {
-        console.log(next);
-      });
+      
+        console.log(resp);
+     
     }, error => {
       loading.dismiss();
     }, () => {

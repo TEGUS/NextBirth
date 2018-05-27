@@ -1,7 +1,7 @@
 
 <div class="column-direction" *ngIf="direction == 'column'">
   <div class="libelle">{{libelle}}</div>
-
+  
   <ion-input *ngIf="type != 'checkbox'" [type]="type" [style.width]="widthComponentInput" (ionChange)="inputChange($event)"></ion-input>
 
   <ion-checkbox color="dark" *ngIf="type == 'checkbox'" (ionChange)="inputChange($event)"></ion-checkbox>
