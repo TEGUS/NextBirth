@@ -23,7 +23,7 @@ import {AuthenticationProvider} from '../providers/authentication';
 import {HttpClientModule} from "@angular/common/http";
 import {LoginPageModule} from "../pages/login/login.module";
 import {ServiceProvider} from '../providers/service';
-import {LocalstorageProvider} from '../providers/localstorage';
+import {LocalStorageProvider} from '../providers/localstorage';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,7 @@ import {LocalstorageProvider} from '../providers/localstorage';
   providers: [
     StatusBar,
     Storage,
-    LocalstorageProvider,
+    LocalStorageProvider,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthenticationProvider,

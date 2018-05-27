@@ -13,7 +13,7 @@ import {Img8Page} from "../pages/img8/img8";
 import {Img9Page} from "../pages/img9/img9";
 import {Img10Page} from "../pages/img10/img10";
 import {LoginPage} from "../pages/login/login";
-import {LocalstorageProvider} from "../providers/localstorage";
+import {LocalStorageProvider} from "../providers/localstorage";
 
 @Component({
   templateUrl: 'app.html'
@@ -26,20 +26,20 @@ export class MyApp {
   pages: Array<any>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-              public localStorage: LocalstorageProvider, public menuCtrl: MenuController) {
+              public localStorage: LocalStorageProvider, public menuCtrl: MenuController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      {title: 'ReportPage', component: ReportPage, icon: 'calendar'},
-      {title: 'ChooseMode', component: ChooseModePage, icon: 'calendar'},
-      {title: 'SignUp', component: SignUpPage, icon: 'calendar'},
-      {title: 'Img5', component: Img5Page, icon: 'calendar'},
-      {title: 'Img6', component: Img6Page, icon: 'calendar'},
-      {title: 'Img7', component: Img7Page, icon: 'calendar'},
-      {title: 'Img8', component: Img8Page, icon: 'calendar'},
-      {title: 'Img9', component: Img9Page, icon: 'calendar'},
-      {title: 'Img10', component: Img10Page, icon: 'calendar'},
+      // {title: 'ReportPage', component: ReportPage, icon: 'calendar'},
+      // {title: 'ChooseMode', component: ChooseModePage, icon: 'calendar'},
+      // {title: 'SignUp', component: SignUpPage, icon: 'calendar'},
+      // {title: 'Img5', component: Img5Page, icon: 'calendar'},
+      // {title: 'Img6', component: Img6Page, icon: 'calendar'},
+      // {title: 'Img7', component: Img7Page, icon: 'calendar'},
+      // {title: 'Img8', component: Img8Page, icon: 'calendar'},
+      // {title: 'Img9', component: Img9Page, icon: 'calendar'},
+      // {title: 'Img10', component: Img10Page, icon: 'calendar'},
 
       {title: 'Calendrier', component: null, icon: 'icon1'},
       {title: 'Mes situations à risque', component: null, icon: 'icon2'},

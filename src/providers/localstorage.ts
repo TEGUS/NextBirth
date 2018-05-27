@@ -4,20 +4,20 @@ import {Session} from './../configs/configs';
 import {HttpClient} from "@angular/common/http";
 
 /*
-  Generated class for the LocalstorageProvider provider.
+  Generated class for the LocalStorageProvider provider.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
 @Injectable()
-export class LocalstorageProvider {
+export class LocalStorageProvider {
 
   private key = 'session';
   private keymode = 'mode';
-  
+
 
   constructor(public http: HttpClient, public storage: Storage) {
-    console.log('Hello LocalstorageProvider Provider');
+    console.log('Hello LocalStorageProvider Provider');
   }
 
   storeModeInSession(mode){

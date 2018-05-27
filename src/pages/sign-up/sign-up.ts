@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, LoadingController, MenuController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {AuthenticationProvider} from "../../providers/authentication";
 import {checkField} from "../../variables/functions";
-import {LocalstorageProvider} from "../../providers/localstorage";
+import {LocalStorageProvider} from "../../providers/localstorage";
 
 
 @IonicPage()
@@ -17,7 +17,7 @@ export class SignUpPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
-              public toastCtrl: ToastController, public mylocalstorage: LocalstorageProvider,
+              public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider,
               public menuCtrl: MenuController) {
   }
 

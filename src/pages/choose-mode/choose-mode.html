@@ -4,7 +4,7 @@
 
 
 <ion-content padding>
- 
+
   <input-element [libelle]="'Prévision des règles'" [type]="'text'"></input-element>
   <ion-row>
     <ion-col>
@@ -20,7 +20,7 @@
     <mode
       [image]="m._embedded.image._embedded.url_photo"
       [libelle]="m.code"
-      [description]="m.description" (click)="selectmode(m.id)">
+      [description]="m.description" (click)="selectMode(m.id)">
     </mode>
   </ion-grid>
 </ion-content>

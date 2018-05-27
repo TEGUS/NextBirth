@@ -1,9 +1,12 @@
 import {Component} from '@angular/core';
-import {IonicPage, LoadingController, MenuController, NavController, NavParams, ToastController} from 'ionic-angular';
+import {
+  AlertController, IonicPage, LoadingController, MenuController, NavController, NavParams,
+  ToastController
+} from 'ionic-angular';
 import {AuthenticationProvider} from "../../providers/authentication";
 import {SignUpPage} from "../sign-up/sign-up";
 import {checkField} from "../../variables/functions";
-import {LocalstorageProvider} from '../../providers/localstorage';
+import {LocalStorageProvider} from '../../providers/localstorage';
 
 /**
  * Generated class for the LoginPage page.
@@ -23,8 +26,8 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
-              public toastCtrl: ToastController, public mylocalstorage: LocalstorageProvider,
-              public menuCtrl: MenuController) {
+              public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider,
+              public menuCtrl: MenuController, public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -57,6 +60,16 @@ export class LoginPage {
         console.log(error);
         this.error = error.error;
         console.log(this.error);
+
+        if (this.error.error != undefined && this.error.error.code === 500) {
+          let alert = this.alertCtrl.create({
+            title: 'Internal Server error',
+            subTitle: '500',
+            message: 'Internal Server error',
+            buttons: ['Okay']
+          });
+          alert.present();
+        }
       }, () => {
         loading.dismiss();
         loading.onDidDismiss(() => {
