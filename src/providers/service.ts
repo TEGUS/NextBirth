@@ -34,8 +34,6 @@ export class ServiceProvider {
     );
   }
 
-
-
   getCategories(): Observable<any> {
     return this.http.get(
       this.host + 'categories',
