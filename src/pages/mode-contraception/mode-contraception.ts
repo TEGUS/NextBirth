@@ -49,7 +49,7 @@ export class ModeContraceptionPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Img5Page');
+    console.log('ionViewDidLoad ModeContraceptionPage');
   }
 
 }
