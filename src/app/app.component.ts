@@ -87,7 +87,7 @@ export class MyApp {
   }
 
   signOut() {
-    this.localStorage.removeKey('session').then(next => {
+    this.localStorage.clearStorage().then(next => {
       this.menuCtrl.enable(false);
       this.nav.setRoot(LoginPage);
     }, error => {

@@ -32,7 +32,9 @@ import {LocalStorageProvider} from '../providers/localstorage';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot({
+      name: '_NextBirth_DB'
+    }),
     HttpClientModule,
 
     SignUpModule,

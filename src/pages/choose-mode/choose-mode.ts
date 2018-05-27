@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController, LoadingController} from 'ionic-angular';
 import {ServiceProvider} from "../../providers/service";
 import {LocalStorageProvider} from '../../providers/localstorage';
+import {ProfilPage} from "../profil/profil";
+import {QuestionContraceptionPage} from "../question-contraception/question-contraception";
 
 @IonicPage()
 @Component({
@@ -16,7 +18,8 @@ export class ChooseModePage {
               public toastCtrl: ToastController, public localStorage: LocalStorageProvider) {
   }
 
-  ionViewWillLoad() {}
+  ionViewWillLoad() {
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChooseModePage');
@@ -50,6 +53,17 @@ export class ChooseModePage {
           loading.onDidDismiss(() => {
             console.log('Succes du stochage du mode!');
             //Redirection vers la page du Mode
+            switch (mode.code) {
+              case 'CONTPL':
+                break;
+              case 'CONTPR':
+                break;
+              case 'GRS':
+                this.navCtrl.push(QuestionContraceptionPage)
+                break;
+              case 'GEST':
+                break;
+            }
           });
         });
       } else {
@@ -57,6 +71,7 @@ export class ChooseModePage {
         loading.onDidDismiss(() => {
           this.localStorage.setKey("modeSelected", mode);
           //Redirection vers Update Profile
+          this.navCtrl.push(ProfilPage)
         });
       }
     }, error => {

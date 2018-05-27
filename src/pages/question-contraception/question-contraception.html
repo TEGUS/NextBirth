@@ -13,7 +13,12 @@
         <ion-grid>
           <ion-row *ngFor="let q of questions">
             <ion-col col-1><div class="triangle"></div></ion-col>
-            <ion-col>{{q.libelle}}</ion-col>
+            <ion-col col-7>{{q.libelle}}</ion-col>
+            <ion-col col-4>
+              <ion-select [(ngModel)]="q.choice" style="max-width: none;" (ionChange)="listenChange($event, q)">
+                <ion-option [value]="r.key" *ngFor="let r of q.reponses">{{r.value}}</ion-option>
+              </ion-select>
+            </ion-col>
           </ion-row>
         </ion-grid>
 
@@ -26,7 +31,7 @@
 </ion-content>
 
 <ion-footer>
-  <button ion-button color="primary" clear icon-right>
+  <button ion-button color="primary" clear icon-right (click)="submit()">
     <h5>Suivant
       <ion-icon name="arrow-forward"></ion-icon>
     </h5>

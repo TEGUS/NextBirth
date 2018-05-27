@@ -83,8 +83,6 @@ export class LocalStorageProvider {
 
   //clear the whole local storage
   clearStorage() {
-    this.storage.clear().then(() => {
-      console.log('all keys are cleared');
-    });
+    return this.storage.clear();
   }
 }

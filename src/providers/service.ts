@@ -39,13 +39,22 @@ export class ServiceProvider {
   }
 
   ///// ** Modes
-  getModes(): Observable<any> {
+
+  /**
+   * Le mode courant
+   * @returns {Observable<any>}
+   */
+  getMode(): Observable<any> {
     return this.http.get(
       this.host + 'choice-modes',
       this.headers
     );
   }
 
+  /**
+   * Toutes les catégories
+   * @returns {Observable<any>}
+   */
   getCategories(): Observable<any> {
     return this.http.get(
       this.host + 'categories',
@@ -53,6 +62,11 @@ export class ServiceProvider {
     );
   }
 
+  /**
+   * Selection d'un mode
+   * @param id
+   * @returns {Observable<any>}
+   */
   selectMode(id): Observable<any> {
     return this.http.post(
       this.host + 'choice-modes',
@@ -61,11 +75,39 @@ export class ServiceProvider {
     );
   }
 
-
   ///// ** Profile
+
+  /**
+   * Check Profile
+   * @returns {Observable<any>}
+   */
   checkProfile(): Observable<any> {
     return this.http.get(
       this.host + 'patient/profil/check',
+      this.headers
+    );
+  }
+
+  /**
+   * Get Configs Désir de grossesse
+   * @returns {Observable<any>}
+   */
+  getConfigDesirGrossesse(): Observable<any> {
+    return this.http.get(
+      this.host + 'patient/desir-grossesse/complete/config',
+      this.headers
+    );
+  }
+
+  /**
+   * Complete Desir Grossesse
+   * @param object
+   * @returns {Observable<any>}
+   */
+  completeDesirGrossesse(object): Observable<any> {
+    return this.http.put(
+      this.host + 'patient/desir-grossesse/complete',
+      object,
       this.headers
     );
   }

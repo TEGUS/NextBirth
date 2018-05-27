@@ -4,7 +4,6 @@
 
 
 <ion-content padding>
-
   <input-element [libelle]="'Prévision des règles'" [type]="'text'"></input-element>
   <ion-row>
     <ion-col>
@@ -19,7 +18,7 @@
   <ion-grid *ngFor="let m of modes">
     <mode
       [image]="m._embedded.image._embedded.url_photo"
-      [libelle]="m.code"
+      [libelle]="m.intitule"
       [description]="m.description" (click)="selectMode(m)">
     </mode>
   </ion-grid>
