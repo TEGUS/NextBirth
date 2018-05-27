@@ -6,8 +6,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {SignUpPage} from "../pages/sign-up/sign-up";
 import {ChooseModePage} from "../pages/choose-mode/choose-mode";
 import {ReportPage} from "../pages/report/report";
-import {ModeContraceptionPage} from "../pages/modecontraception/mode-contraception";
-import {ProfilsPage} from "../pages/profils/profils";
+import {ModeContraceptionPage} from "../pages/mode-contraception/mode-contraception";
+import {ProfilPage} from "../pages/profil/profil";
 import {QuestionContraceptionPage} from "../pages/question-contraception/question-contraception";
 import {Img8Page} from "../pages/img8/img8";
 import {Img9Page} from "../pages/img9/img9";
@@ -36,7 +36,7 @@ export class MyApp {
        {title: 'ChooseMode', component: ChooseModePage, icon: 'calendar'},
        {title: 'SignUp', component: SignUpPage, icon: 'calendar'},
        {title: 'Mode Contraception', component: ModeContraceptionPage, icon: 'calendar'},
-       {title: 'Profils', component: ProfilsPage, icon: 'calendar'},
+       {title: 'Profils', component: ProfilPage, icon: 'calendar'},
        {title: 'Question_contraception', component: QuestionContraceptionPage, icon: 'calendar'},
        {title: 'Img8', component: Img8Page, icon: 'calendar'},
        {title: 'Img9', component: Img9Page, icon: 'calendar'},
