@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {LocalStorageProvider} from "../../providers/localstorage";
 import {ServiceProvider} from "../../providers/service";
+import {ReportPage} from "../report/report";
 
 
 @IonicPage()
@@ -12,6 +13,7 @@ import {ServiceProvider} from "../../providers/service";
 export class QuestionContraceptionPage {
   questions = [];
   object = null;
+  infos_desir_grossesse = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public loadingCtrl: LoadingController, public localStorage: LocalStorageProvider, public services: ServiceProvider,
@@ -19,6 +21,8 @@ export class QuestionContraceptionPage {
   }
 
   ionViewDidLoad() {
+    this.infos_desir_grossesse = this.navParams.get('infos_desir_grossesse');
+
     this.object = {
       maritalStatus: null,
       frequenceSaignement: null,
@@ -28,41 +32,72 @@ export class QuestionContraceptionPage {
       diagnostique: null
     }
 
+    if (this.infos_desir_grossesse !== null) {
+      this.object = {
+        maritalStatus: this.infos_desir_grossesse.marital_status,
+        frequenceSaignement: this.infos_desir_grossesse.frequence_saignement,
+        etatEsprit: this.infos_desir_grossesse.etat_esprit,
+        profession: this.infos_desir_grossesse.profession,
+        dureeDesirGrossesse: this.infos_desir_grossesse.duree_desir_grossesse,
+        diagnostique: this.infos_desir_grossesse.diagnostique
+      }
+
+      console.log(this.object)
+    }
+
+    this.getConfigDesirGrossesse()
+    console.log('ionViewDidLoad QuestionContraceptionPage')
+  }
+
+  getConfigDesirGrossesse() {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getConfigDesirGrossesse().subscribe(next => {
       console.log(next);
       this.questions = [
-        {code: 'maritalStatus', libelle: 'Quelle est votre situation ?', reponses: next.marital_status, choice: ''},
+        {
+          code: 'maritalStatus',
+          libelle: 'Quelle est votre situation ?',
+          reponses: next.marital_status,
+          choice: this.infos_desir_grossesse !== null ? this.infos_desir_grossesse.marital_status : ''
+        },
         {
           code: 'frequenceSaignement',
           libelle: 'Quelle est la fréquence de saignement ?',
           reponses: next.frequence_saignement,
-          choice: ''
+          choice: this.infos_desir_grossesse !== null ? this.infos_desir_grossesse.frequence_saignement : ''
         },
-        {code: 'etatEsprit', libelle: 'Quelle est votre état d\'exprit ?', reponses: next.etat_esprit, choice: ''},
-        {code: 'profession', libelle: 'Quelle est votre profession ?', reponses: next.profession, choice: ''},
+        {
+          code: 'etatEsprit',
+          libelle: 'Quelle est votre état d\'exprit ?',
+          reponses: next.etat_esprit,
+          choice: this.infos_desir_grossesse !== null ? this.infos_desir_grossesse.etat_esprit : ''
+        },
+        {
+          code: 'profession',
+          libelle: 'Quelle est votre profession ?',
+          reponses: next.profession,
+          choice: this.infos_desir_grossesse !== null ? this.infos_desir_grossesse.profession : ''
+        },
         {
           code: 'dureeDesirGrossesse',
           libelle: 'Depuis combien de temps cherchez vous à concevoir ?',
           reponses: [{key: '1', value: '1'}, {key: '2', value: '2s'}],
-          choice: ''
+          choice: this.infos_desir_grossesse !== null ? this.infos_desir_grossesse.duree_desir_grossesse : ''
         },
         {
           code: 'diagnostique',
           libelle: 'Avez-vous été diagnostiqué ?',
           reponses: [{key: false, value: 'Non'}, {key: true, value: 'Oui'}],
-          choice: ''
+          choice: this.infos_desir_grossesse !== null ? this.infos_desir_grossesse.diagnostique : ''
         }
       ]
     }, error => {
-      loading.dismiss();
+      loading.dismiss()
       console.error(error);
     }, () => {
-      loading.dismiss();
+      loading.dismiss()
     });
-
-    console.log('ionViewDidLoad QuestionContraceptionPage');
   }
 
   listenChange(event, question) {
@@ -116,6 +151,9 @@ export class QuestionContraceptionPage {
         loading.dismiss();
       }, () => {
         loading.dismiss();
+        loading.onDidDismiss(() => {
+          this.navCtrl.setRoot(ReportPage)
+        })
       });
     }, error => {
       let alert = this.alertCtrl.create({

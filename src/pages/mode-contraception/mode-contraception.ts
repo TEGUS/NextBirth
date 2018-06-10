@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {ServiceProvider} from "../../providers/service";
+import {ArticleDetailPage} from "../article-detail/article-detail";
 
 @IonicPage()
 @Component({
@@ -9,47 +11,33 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 export class ModeContraceptionPage {
 
   items = [];
+  title = '';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-
-  ionViewWillLoad() {
-    this.items = [
-      {
-        img: 'assets/imgs/background.jpg',
-        label: 'Les 20 bases d\'une conception',
-        description: 'Texte'
-      },
-      {
-        img: 'assets/imgs/background.jpg',
-        label: 'Les 20 bases d\'une conception',
-        description: 'Texte'
-      },
-      {
-        img: 'assets/imgs/background.jpg',
-        label: 'Les 20 bases d\'une conception',
-        description: 'Texte'
-      },
-      {
-        img: 'assets/imgs/background.jpg',
-        label: 'Les 20 bases d\'une conception',
-        description: 'Texte'
-      },
-      {
-        img: '/assets/imgs/background.jpg',
-        label: 'Les 20 bases d\'une conception',
-        description: 'Texte'
-      },
-      {
-        img: '/assets/imgs/background.jpg',
-        label: 'Les 20 bases d\'une conception',
-        description: 'Texte'
-      },
-    ]
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public loadingCtrl: LoadingController, public services: ServiceProvider) {
+    this.title = this.navParams.get('title') == null ? 'Mode de Contraception' : this.navParams.get('title');
   }
 
   ionViewDidLoad() {
+    let loading = this.loadingCtrl.create();
+    loading.present();
+    this.services.getArticles().subscribe(next => {
+      console.log(next);
+      this.items = next
+    }, error => {
+      loading.dismiss();
+      console.error(error);
+    }, () => {
+      loading.dismiss();
+    });
+
     console.log('ionViewDidLoad ModeContraceptionPage');
   }
 
+  selectArticle(id) {
+    console.log(id);
+    this.navCtrl.push(ArticleDetailPage, {
+      id: id
+    })
+  }
 }

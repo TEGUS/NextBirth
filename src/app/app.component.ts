@@ -58,16 +58,39 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.menuCtrl.enable(false);
+      this.menuCtrl.enable(false)
 
       this.localStorage.getKey('session').then(next => {
-        console.log(next);
+        console.log(next)
+
         if (next !== null) {
-          this.rootPage = ChooseModePage;
           this.menuCtrl.enable(true, 'sideMenu');
+
+          this.localStorage.getKey('mode').then(mode => {
+            console.log(mode)
+            this.rootPage = ChooseModePage
+            // if (mode !== null) {
+            //   switch (mode.code) {
+            //     case 'CONTPL':
+            //       this.rootPage = ModeContraceptionPage
+            //       break;
+            //     case 'CONTPR':
+            //       this.rootPage = ModeContraceptionPage
+            //       break;
+            //     case 'GRS':
+            //       this.rootPage = QuestionContraceptionPage
+            //       break;
+            //     case 'GEST':
+            //       break;
+            //   }
+            // } else {
+            //   this.rootPage = ChooseModePage
+            // }
+          });
         } else {
           this.rootPage = LoginPage;
         }
+
       }, error => {
         console.log(error);
       });

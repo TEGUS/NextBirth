@@ -1,0 +1,14 @@
+<ion-header>
+  <navbar [title]="title"></navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="article != null">
+    <img
+      [src]="article._embedded.miniature != null ? article._embedded.miniature._embedded.url_photo : '/assets/imgs/background.jpg'"
+      alt="" width="180" height="180">
+    <br>
+    {{article.title}} <br><br>
+    <div [innerHtml]="article.content"></div> <br>
+  </div>
+</ion-content>

@@ -24,6 +24,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {LoginPageModule} from "../pages/login/login.module";
 import {ServiceProvider} from '../providers/service';
 import {LocalStorageProvider} from '../providers/localstorage';
+import {ArticleDetailPageModule} from "../pages/article-detail/article-detail.module";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import {LocalStorageProvider} from '../providers/localstorage';
     ModeContraceptionPageModule,
     ProfilPageModule,
     QuestionContraceptionPageModule,
+    ArticleDetailPageModule,
     Img8PageModule,
     Img9PageModule,
     Img10PageModule,
@@ -57,7 +59,7 @@ import {LocalStorageProvider} from '../providers/localstorage';
   ],
   providers: [
     StatusBar,
-    Storage,
+    // Storage,
     LocalStorageProvider,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

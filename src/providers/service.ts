@@ -119,4 +119,37 @@ export class ServiceProvider {
       this.headers
     );
   }
+
+  /**
+   * Vérification des informations nécessaires pour la mode désir de grossesse
+   * @returns {Observable<any>}
+   */
+  checkProfileDesirGrossesse(): Observable<any> {
+    return this.http.get(
+      this.host + 'patient/profile/desir-grossesse/check',
+      this.headers
+    );
+  }
+
+  /**
+   * Retourne les articles portant sur le mode choisi
+   * @returns {Observable<any>}
+   */
+  getArticles(): Observable<any> {
+    return this.http.get(
+      this.host + 'articles',
+      this.headers
+    );
+  }
+
+  /**
+   * Retourne les détails sur un article
+   * @returns {Observable<any>}
+   */
+  getArticle(id): Observable<any> {
+    return this.http.get(
+      this.host + 'article/' + id,
+      this.headers
+    );
+  }
 }

@@ -4,6 +4,7 @@ import {LocalStorageProvider} from '../../providers/localstorage';
 import {ServiceProvider} from "../../providers/service";
 import {ModeContraceptionPage} from "../mode-contraception/mode-contraception";
 import {QuestionContraceptionPage} from "../question-contraception/question-contraception";
+import {Img8Page} from "../img8/img8";
 
 /**
  * Generated class for the ProfilsPage page.
@@ -168,14 +169,20 @@ export class ProfilPage {
 
         switch (mode.code) {
           case 'CONTPL':
-            this.navCtrl.push(ModeContraceptionPage);
+            this.navCtrl.setRoot(ModeContraceptionPage, {
+              title: mode.intitule
+            })
             break;
           case 'CONTPR':
+            this.navCtrl.setRoot(ModeContraceptionPage, {
+              title: mode.intitule
+            })
             break;
           case 'GRS':
-            this.navCtrl.push(QuestionContraceptionPage)
+            this.navCtrl.setRoot(QuestionContraceptionPage)
             break;
           case 'GEST':
+            this.navCtrl.setRoot(Img8Page)
             break;
         }
       });

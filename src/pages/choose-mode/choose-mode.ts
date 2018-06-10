@@ -1,10 +1,12 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController, LoadingController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController, LoadingController, AlertController} from 'ionic-angular';
 import {ServiceProvider} from "../../providers/service";
 import {LocalStorageProvider} from '../../providers/localstorage';
 import {ProfilPage} from "../profil/profil";
 import {QuestionContraceptionPage} from "../question-contraception/question-contraception";
 import {ModeContraceptionPage} from "../mode-contraception/mode-contraception";
+import {Img8Page} from "../img8/img8";
+import {ReportPage} from "../report/report";
 
 @IonicPage()
 @Component({
@@ -15,7 +17,7 @@ export class ChooseModePage {
   modes = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public services: ServiceProvider,
-              public loadingCtrl: LoadingController,
+              public loadingCtrl: LoadingController, public alertCtrl: AlertController,
               public toastCtrl: ToastController, public localStorage: LocalStorageProvider) {
   }
 
@@ -30,7 +32,19 @@ export class ChooseModePage {
   checkProfile() {
     return new Promise((resolve, reject) => {
       this.services.checkProfile().subscribe(next => {
+        console.log(next)
         resolve(next.status);
+      }, error => {
+        reject(error);
+      })
+    });
+  }
+
+  checkProfileDesirGrossesse() {
+    return new Promise((resolve, reject) => {
+      this.services.checkProfileDesirGrossesse().subscribe(next => {
+        console.log(next)
+        resolve(next);
       }, error => {
         reject(error);
       })
@@ -48,7 +62,7 @@ export class ChooseModePage {
           this.localStorage.storeModeInSession(mode);
         }, error => {
           loading.dismiss();
-          console.log(error);
+          console.error(error);
         }, () => {
           loading.dismiss();
           loading.onDidDismiss(() => {
@@ -56,14 +70,51 @@ export class ChooseModePage {
             //Redirection vers la page du Mode
             switch (mode.code) {
               case 'CONTPL':
-                this.navCtrl.push(ModeContraceptionPage);
+                this.navCtrl.push(ModeContraceptionPage, {
+                  title: mode.intitule
+                })
                 break;
               case 'CONTPR':
+                this.navCtrl.push(ModeContraceptionPage, {
+                  title: mode.intitule
+                })
                 break;
               case 'GRS':
-                this.navCtrl.push(QuestionContraceptionPage)
+                let loading = this.loadingCtrl.create();
+                loading.present();
+                this.checkProfileDesirGrossesse().then((next: any) => {
+                  loading.dismiss()
+                  if (next.status) {
+                    let alert = this.alertCtrl.create({
+                      message: 'Voulez vous mettre à jour vos infos ?',
+                      buttons: [
+                        {
+                          text: 'Non',
+                          handler: () => {
+                            this.navCtrl.push(ReportPage)
+                          }
+                        },
+                        {
+                          text: 'Oui',
+                          handler: () => {
+                            this.navCtrl.push(QuestionContraceptionPage, {
+                              infos_desir_grossesse: next.infos_desir_grossesse
+                            })
+                          }
+                        }
+                      ]
+                    });
+                    alert.present();
+                  } else {
+                    this.navCtrl.push(QuestionContraceptionPage)
+                  }
+                }, error => {
+                  console.error(error)
+                  loading.dismiss();
+                })
                 break;
               case 'GEST':
+                this.navCtrl.push(Img8Page)
                 break;
             }
           });
