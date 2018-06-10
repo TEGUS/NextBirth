@@ -59,7 +59,7 @@ import {ArticleDetailPageModule} from "../pages/article-detail/article-detail.mo
   ],
   providers: [
     StatusBar,
-    // Storage,
+    Storage,
     LocalStorageProvider,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

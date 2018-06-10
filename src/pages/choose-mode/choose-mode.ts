@@ -59,28 +59,15 @@ export class ChooseModePage {
       console.log(next);
       if (next) {
         this.services.selectMode(mode.id).subscribe(alerts => {
-         
           alerts.forEach(element => {
-            /*console.log("=======================================");
-            console.log(new Date().getTime());
-            console.log(new Date(element.date_alert).getTime());
-            console.log(element.date_alert);
-            console.log(element._embedded.conseil.description);
-            console.log("=======================================");*/
             this.localNotifications.schedule({
               text: element._embedded.conseil.description,
               trigger: {at: new Date(new Date(element.date_alert).getTime())},
               led: 'FF0000',
               sound: 'file://assets/imgs/notification.mp3'
             });
-            
           });
-
-          
-          
           this.localStorage.storeModeInSession(mode);
-        
-        
         }, error => {
           loading.dismiss();
           console.error(error);
