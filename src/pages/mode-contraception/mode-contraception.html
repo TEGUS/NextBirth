@@ -1,5 +1,5 @@
 <ion-header>
-  <navbar></navbar>
+  <navbar [title]="title"></navbar>
 </ion-header>
 
 
@@ -17,16 +17,16 @@
     </div>
   </div>
 
-  <ion-row *ngFor="let item of items">
+  <ion-row *ngFor="let item of items" (click)="selectArticle(item.id)">
     <ion-col col-3>
-      <img [src]="item.img" alt="" width="80" height="80">
+      <img [src]="item._embedded.miniature != null ? item._embedded.miniature._embedded.url_photo : '/assets/imgs/background.jpg'" alt="" width="80" height="80">
     </ion-col>
     <ion-col class="item-list">
-      <label>{{item.label}}</label>
-      <p>{{item.description}}</p>
+      <label>{{item.title}}</label>
+      <p>{{item.content | slice:0:47}}...</p>
     </ion-col>
     <ion-col col-2 class="button-submit">
-      <div id="triangle"></div>
+      <img src="assets/imgs/maflecherouge.png" alt="" width="15" height="30">
     </ion-col>
   </ion-row>
 </ion-content>

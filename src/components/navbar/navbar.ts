@@ -6,7 +6,7 @@ import {Component, Input} from '@angular/core';
   templateUrl: 'navbar.html'
 })
 export class NavbarComponent {
-  @Input() title = 'neXtBirth'
+  @Input() title = 'NextBirth'
   @Input() showMenuToggle = true;
 
   constructor() {

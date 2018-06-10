@@ -3,19 +3,22 @@
 </ion-header>
 
 
-<ion-content padding>
-  <input-element [libelle]="'Prévision des règles'" [type]="'text'"></input-element>
-  <ion-row>
-    <ion-col>
-      <input-element [libelle]="'Ovulation de'" [type]="'text'"></input-element>
-    </ion-col>
-    <ion-col>
-      <input-element [libelle]="'Aménorée de'" [type]="'text'"></input-element>
-    </ion-col>
-  </ion-row>
-  <hr>
-  <h6 style="color: white">Adopter nos conseils en choisissant un des modes suivants:</h6>
-  <ion-grid *ngFor="let m of modes">
+<ion-content>
+  <div padding>
+    <input-element [libelle]="'Prévision des règles'" [type]="'text'"></input-element>
+    <ion-row>
+      <ion-col>
+        <input-element [libelle]="'Ovulation de'" [type]="'text'"></input-element>
+      </ion-col>
+      <ion-col>
+        <input-element [libelle]="'Aménorée de'" [type]="'text'"></input-element>
+      </ion-col>
+    </ion-row>
+    <hr>
+    <h6 style="color: white">Adopter nos conseils en choisissant un des modes suivants:</h6>
+
+  </div>
+  <ion-grid *ngFor="let m of modes" class="modes">
     <mode
       [image]="m._embedded.image._embedded.url_photo"
       [libelle]="m.intitule"

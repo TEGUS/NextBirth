@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {ServiceProvider} from "../../providers/service";
+import {ArticleDetailPage} from "../article-detail/article-detail";
 
 @IonicPage()
 @Component({
@@ -10,8 +12,8 @@ export class Img8Page {
   items = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public alertCtrl: AlertController) {
-    this.presentAlert();
+              public alertCtrl: AlertController, public loadingCtrl: LoadingController, public services: ServiceProvider) {
+
   }
 
   presentAlert() {
@@ -25,39 +27,24 @@ export class Img8Page {
   }
 
   ionViewDidLoad() {
-    this.items = [
-      {
-        img: '/assets/imgs/background.jpg',
-        label: 'Title',
-        description: 'Description'
-      },
-      {
-        img: '/assets/imgs/background.jpg',
-        label: 'Title',
-        description: 'Description'
-      },
-      {
-        img: '/assets/imgs/background.jpg',
-        label: 'Title',
-        description: 'Description'
-      },
-      {
-        img: '/assets/imgs/background.jpg',
-        label: 'Title',
-        description: 'Description'
-      },
-      {
-        img: '/assets/imgs/background.jpg',
-        label: 'Title',
-        description: 'Description'
-      },
-      {
-        img: '/assets/imgs/background.jpg',
-        label: 'Title',
-        description: 'Description'
-      },
-    ]
+    let loading = this.loadingCtrl.create();
+    loading.present();
+    this.services.getArticles().subscribe(next => {
+      console.log(next);
+      this.items = next
+    }, error => {
+      loading.dismiss();
+      console.error(error);
+    }, () => {
+      loading.dismiss();
+    });
     console.log('ionViewDidLoad Img8Page');
   }
 
+  selectArticle(id) {
+    console.log(id);
+    this.navCtrl.push(ArticleDetailPage, {
+      id: id
+    })
+  }
 }

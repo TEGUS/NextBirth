@@ -1,27 +1,36 @@
 <ion-header>
-  <navbar></navbar>
+  <navbar title="Gestante"></navbar>
 </ion-header>
 
-<ion-content padding-left padding-right padding-bottom>
-  <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; color: white;">
-    <input-element [libelle]="'Ovulation dans'" [type]="'number'"></input-element>
-    <input-element [libelle]="'Règles dans'" [type]="'number'"></input-element>
+<ion-content>
+  <div padding-left padding-right padding-bottom>
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; color: white;">
+      <input-element [libelle]="'Ovulation dans'" [type]="'number'"></input-element>
+      <input-element [libelle]="'Règles dans'" [type]="'number'"></input-element>
+    </div>
+
+    <hr>
+
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+      <button ion-button color="primary" style="color: white; text-transform: capitalize;">Signaler un soucis</button>
+      <button ion-button color="primary" style="color: white; text-transform: capitalize;">Signaler un soucis</button>
+    </div>
   </div>
 
-  <hr>
-
-  <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
-    <button ion-button color="primary" style="color: white; text-transform: capitalize;">Signaler un soucis</button>
-    <button ion-button color="primary" style="color: white; text-transform: capitalize;">Signaler un soucis</button>
-  </div>
-
-  <ion-row *ngFor="let item of items">
-    <ion-col col-3>
-      <img [src]="item.img" alt="" width="80" height="80">
-    </ion-col>
-    <ion-col class="item-list">
-      <label>{{item.label}}</label>
-      <p>{{item.description}}</p>
-    </ion-col>
-  </ion-row>
+  <ion-grid>
+    <ion-row style="height: 105px;" *ngFor="let item of items" (click)="selectArticle(item.id)">
+      <ion-col col-4>
+        <img
+          [src]="item._embedded.miniature != null ? item._embedded.miniature._embedded.url_photo : '/assets/imgs/background.jpg'"
+          alt="" width="100" height="70">
+      </ion-col>
+      <ion-col class="item-list">
+        <label>{{item.title}}</label>
+        <p>{{item.content | slice:0:30}}...</p>
+      </ion-col>
+      <ion-col col-2 class="button-submit">
+        <img src="assets/imgs/maflecherouge.png" alt="" width="15" height="30">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
