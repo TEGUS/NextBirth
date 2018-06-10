@@ -1,0 +1,48 @@
+
+gestion de mode contraception avec pelule
+
+gestion de mode contraception avec preservatif
+
+gestion de mode desir de grocesse 
+
+gestion du mode gestante
+
+
+liste les articles pour chaque mode
+
+detail sur un articles
+
+une fois le mode choisi a la prochaine connexion on se positionne a la page pricipale du mode choisis
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
