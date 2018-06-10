@@ -4,6 +4,7 @@ import {ServiceProvider} from "../../providers/service";
 import {LocalStorageProvider} from '../../providers/localstorage';
 import {ProfilPage} from "../profil/profil";
 import {QuestionContraceptionPage} from "../question-contraception/question-contraception";
+import {ModeContraceptionPage} from "../mode-contraception/mode-contraception";
 
 @IonicPage()
 @Component({
@@ -42,9 +43,9 @@ export class ChooseModePage {
     this.checkProfile().then(next => {
       console.log(next);
       if (next) {
-        this.services.selectMode(mode.id).subscribe(resp => {
-          console.log(resp);
-          this.localStorage.storeModeInSession(resp._embedded.categorie);
+        this.services.selectMode(mode.id).subscribe(alerts => {
+          console.log(alerts);
+          this.localStorage.storeModeInSession(mode);
         }, error => {
           loading.dismiss();
           console.log(error);
@@ -55,6 +56,7 @@ export class ChooseModePage {
             //Redirection vers la page du Mode
             switch (mode.code) {
               case 'CONTPL':
+                this.navCtrl.push(ModeContraceptionPage);
                 break;
               case 'CONTPR':
                 break;

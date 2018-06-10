@@ -25,6 +25,8 @@ export class ProfilPage {
   public username = null;
   public phone = null;
 
+  modeSelectedExist = false;
+
   constructor(public navCtrl: NavController, public services: ServiceProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider, public alertCtrl: AlertController) {
   }
@@ -34,6 +36,11 @@ export class ProfilPage {
   }
 
   ionViewWillLoad() {
+    this.localStorage.getKey('modeSelected').then(mode => {
+      console.log(mode);
+      this.modeSelectedExist = mode !== null ? true : false;
+    });
+
     this.object = {
       poids: null,
       diabete: null,
@@ -115,7 +122,7 @@ export class ProfilPage {
     this.object.douleurRegle = this.object.douleurRegle ? 1 : 0;
     this.object.douleurRegle = this.object.douleurRegle ? 1 : 0;
     this.object.cycleRegulier = this.object.cycleRegulier ? 1 : 0;
-    
+
     this.object.account = this.object.account = {
       "username": this.username,
       "phone": this.phone,
@@ -133,11 +140,7 @@ export class ProfilPage {
     }, () => {
       loading.dismiss();
       this.localStorage.getKey('modeSelected').then(mode => {
-        if (mode !== null) {
-          this.selectMode(mode)
-        } else {
-          this.navCtrl.pop();
-        }
+        (mode !== null) ? this.selectMode(mode) : this.navCtrl.pop();
       })
     });
   }
@@ -154,9 +157,7 @@ export class ProfilPage {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.selectMode(mode.id).subscribe(resp => {
-      console.log("=======================================");
       console.log(resp);
-      console.log("=======================================");
     }, error => {
       loading.dismiss();
     }, () => {
@@ -180,5 +181,4 @@ export class ProfilPage {
       });
     });
   }
-
 }
