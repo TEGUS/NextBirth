@@ -136,6 +136,7 @@
 
 <ion-footer>
   <button ion-button color="primary" (click)="updateProfile()" clear icon-right>
-    <h5>Suivant <ion-icon name="arrow-forward"></ion-icon></h5>
+    <h5 *ngIf="modeSelectedExist">Suivant <ion-icon name="arrow-forward"></ion-icon></h5>
+    <h5 *ngIf="!modeSelectedExist">Mettre à jour</h5>
   </button>
 </ion-footer>
