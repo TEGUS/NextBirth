@@ -131,8 +131,8 @@ export class Img9Page {
       this.localStorage.getKey('session').then(session => {
         let events = []
         let patient = session.user._embedded.patient
-        patient.duree_cycle = 28
-        patient.duree_saignement = 4
+        // patient.duree_cycle = 28
+        // patient.duree_saignement = 4
 
         //DateDebutDernierRegle
         let dateDebutDernierRegle = new Date(patient._embedded.infoEvolution.debut_dernieres_menstrues)
