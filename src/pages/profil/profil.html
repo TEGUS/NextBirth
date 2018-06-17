@@ -3,46 +3,39 @@
 </ion-header>
 
 <ion-content padding>
-
   <div class="content">
-        <show-date
-              [libelle]="'Date de naissance'"
-              (outputDate)="dateDeNaissance($event)">
-        </show-date>
-  </div>
-  <div style="padding-left: 50px; padding-right: 50px;">
+    <show-date
+      [libelle]="'Date de naissance'"
+      (outputDate)="dateDeNaissance($event)">
+    </show-date>
     <input-element
-    [libelle]="'Pseudonyme'"
-    [type]="'text'"
-    (outputValue)="getUsername($event)"
-    >
-
+      [libelle]="'Pseudonyme'"
+      [type]="'text'"
+      (outputValue)="getUsername($event)">
     </input-element>
     <input-element
-    [libelle]="'Numéro de téléphone'"
-    [type]="'text'"
-    (outputValue)="getPhone($event)"
-    ></input-element>
+      [libelle]="'Numéro de téléphone'"
+      [type]="'text'"
+      (outputValue)="getPhone($event)">
+    </input-element>
     <ion-row>
       <ion-col>
         <input-element
-        [libelle]="'Age'"
-        [type]="'text'"
-        (outputValue)="getAge($event)"
+          [libelle]="'Age'"
+          [type]="'text'"
+          (outputValue)="getAge($event)"
         ></input-element>
       </ion-col>
       <ion-col>
         <input-element
-        [libelle]="'Poids'"
-        [type]="'text'"
-        (outputValue)="getPoids($event)"
+          [libelle]="'Poids'"
+          [type]="'text'"
+          (outputValue)="getPoids($event)"
         ></input-element>
       </ion-col>
     </ion-row>
-
-
-
-
+  </div>
+  <div style="padding-left: 50px; padding-right: 50px;">
     <ion-row>
       <ion-col class="ion-col-1">
         <ion-label>Diabète</ion-label>
@@ -62,73 +55,73 @@
   <ion-row>
     <ion-col col-12>
       <input-element
-      [libelle]="'Age des premières règles'"
-      [type]="'text'"
-      [direction]="'row'"
-      (outputValue)="getAgePremiereRegle($event)"
+        [libelle]="'Age des premières règles'"
+        [type]="'text'"
+        [direction]="'row'"
+        (outputValue)="getAgePremiereRegle($event)"
       ></input-element>
     </ion-col>
     <ion-col col-12>
       <input-element
-      [libelle]="'Durée des seignements'"
-      [type]="'text'"
-      [direction]="'row'"
-      (outputValue)="getDureeSaignement($event)"
+        [libelle]="'Durée des seignements'"
+        [type]="'text'"
+        [direction]="'row'"
+        (outputValue)="getDureeSaignement($event)"
       ></input-element>
     </ion-col>
 
     <ion-col col-12>
       <input-element
-      [libelle]="'Durée du cycle régulier'"
-      [type]="'text'"
-      [direction]="'row'"
-      (outputValue)="getDureeCycle($event)"
+        [libelle]="'Durée du cycle régulier'"
+        [type]="'text'"
+        [direction]="'row'"
+        (outputValue)="getDureeCycle($event)"
       ></input-element>
     </ion-col>
     <ion-col col-12>
       <input-element
-      [libelle]="'Cycle Regulier'"
-      [type]="'checkbox'"
-      [direction]="'row'"
-      (outputValue)="getCycleRegulier($event)" ></input-element>
+        [libelle]="'Cycle Regulier'"
+        [type]="'checkbox'"
+        [direction]="'row'"
+        (outputValue)="getCycleRegulier($event)"></input-element>
     </ion-col>
     <ion-col col-12>
       <input-element
-      [libelle]="'Douleur pendant les règles'"
-      [type]="'checkbox'"
-      [direction]="'row'"
-      (outputValue)="getDouleur($event)" ></input-element>
+        [libelle]="'Douleur pendant les règles'"
+        [type]="'checkbox'"
+        [direction]="'row'"
+        (outputValue)="getDouleur($event)"></input-element>
     </ion-col>
     <ion-col col-12>
       <input-element
-      [libelle]="'Nombre de grossesse'"
-      [type]="'number'"
-      [direction]="'row'"
-      (outputValue)="getNombreGrossesse($event)"
+        [libelle]="'Nombre de grossesse'"
+        [type]="'number'"
+        [direction]="'row'"
+        (outputValue)="getNombreGrossesse($event)"
 
       ></input-element>
     </ion-col>
     <ion-col col-12>
       <input-element
-      [libelle]="'Nombre de prématurés'"
-      [type]="'text'"
-      [direction]="'row'"
-      (outputValue)="getNombrePremature($event)"
+        [libelle]="'Nombre de prématurés'"
+        [type]="'text'"
+        [direction]="'row'"
+        (outputValue)="getNombrePremature($event)"
       ></input-element>
     </ion-col>
     <ion-col col-12>
       <input-element
-      [libelle]="'Nombre de fausses couches ou avortement'"
-      [type]="'text'"
-      [direction]="'row'"
-      (outputValue)="getNombreFosseCouche($event)"
+        [libelle]="'Nombre de fausses couches ou avortement'"
+        [type]="'text'"
+        [direction]="'row'"
+        (outputValue)="getNombreFosseCouche($event)"
       ></input-element>
     </ion-col>
     <ion-col col-12>
       <input-element
-      [libelle]="'Nombre denfant vivant'"
-      [type]="'text'" [direction]="'row'"
-      (outputValue)="getNombreEnfantVivant($event)"
+        [libelle]="'Nombre denfant vivant'"
+        [type]="'text'" [direction]="'row'"
+        (outputValue)="getNombreEnfantVivant($event)"
       ></input-element>
     </ion-col>
   </ion-row>
@@ -136,7 +129,9 @@
 
 <ion-footer>
   <button ion-button color="primary" (click)="updateProfile()" clear icon-right>
-    <h5 *ngIf="modeSelectedExist">Suivant <ion-icon name="arrow-forward"></ion-icon></h5>
+    <h5 *ngIf="modeSelectedExist">Suivant
+      <ion-icon name="arrow-forward"></ion-icon>
+    </h5>
     <h5 *ngIf="!modeSelectedExist">Mettre à jour</h5>
   </button>
 </ion-footer>

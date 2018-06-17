@@ -12,3 +12,8 @@ export class ModeComponent {
   constructor() {
   }
 }
+
+export const GEST = 'MO1';
+export const CONTPR = 'MO2';
+export const CONTPL = 'MO3';
+export const GRS = 'MO4';

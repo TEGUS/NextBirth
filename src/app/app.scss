@@ -15,10 +15,14 @@
 // automatically applied to the <body> element in the app.
 
 ion-content {
-  color: white;
-  background: url('/assets/imgs/background.jpg') no-repeat;
-  background-size: cover;
+  //color: white;
+  //background: url('/assets/imgs/background.jpg') no-repeat;
+  //background-size: cover;
 }
+
+//.content-md {
+//  background-color: #e4e4e4;
+//}
 
 .button-submit {
   display: flex;

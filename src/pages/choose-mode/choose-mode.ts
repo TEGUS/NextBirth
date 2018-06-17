@@ -7,7 +7,8 @@ import {QuestionContraceptionPage} from "../question-contraception/question-cont
 import {ModeContraceptionPage} from "../mode-contraception/mode-contraception";
 import {Img8Page} from "../img8/img8";
 import {ReportPage} from "../report/report";
-import { LocalNotifications } from '@ionic-native/local-notifications';
+import {LocalNotifications} from '@ionic-native/local-notifications';
+import * as codesMode from "../../components/mode/mode";
 
 @IonicPage()
 @Component({
@@ -19,7 +20,7 @@ export class ChooseModePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public services: ServiceProvider,
               public loadingCtrl: LoadingController, public alertCtrl: AlertController,
-              public toastCtrl: ToastController, public localStorage: LocalStorageProvider,private localNotifications: LocalNotifications) {
+              public toastCtrl: ToastController, public localStorage: LocalStorageProvider, private localNotifications: LocalNotifications) {
   }
 
   ionViewWillLoad() {
@@ -72,60 +73,58 @@ export class ChooseModePage {
           loading.dismiss();
           console.error(error);
         }, () => {
-          loading.dismiss();
-          loading.onDidDismiss(() => {
-            console.log('Succes du stochage du mode!');
-            //Redirection vers la page du Mode
-            switch (mode.code) {
-              case 'CONTPL':
-                this.navCtrl.push(ModeContraceptionPage, {
-                  title: mode.intitule
-                })
-                break;
-              case 'CONTPR':
-                this.navCtrl.push(ModeContraceptionPage, {
-                  title: mode.intitule
-                })
-                break;
-              case 'GRS':
-                let loading = this.loadingCtrl.create();
-                loading.present();
-                this.checkProfileDesirGrossesse().then((next: any) => {
-                  loading.dismiss()
-                  if (next.status) {
-                    let alert = this.alertCtrl.create({
-                      message: 'Voulez vous mettre à jour vos infos ?',
-                      buttons: [
-                        {
-                          text: 'Non',
-                          handler: () => {
-                            this.navCtrl.push(ReportPage)
-                          }
-                        },
-                        {
-                          text: 'Oui',
-                          handler: () => {
-                            this.navCtrl.push(QuestionContraceptionPage, {
-                              infos_desir_grossesse: next.infos_desir_grossesse
-                            })
-                          }
+          console.log('Succes du stochage du mode!');
+          //Redirection vers la page du Mode
+          switch (mode.code) {
+            case codesMode.CONTPL:
+              loading.dismiss();
+              this.navCtrl.push(ModeContraceptionPage, {
+                title: mode.intitule
+              })
+              break;
+            case codesMode.CONTPR:
+              loading.dismiss();
+              this.navCtrl.push(ModeContraceptionPage, {
+                title: mode.intitule
+              })
+              break;
+            case codesMode.GRS:
+              this.checkProfileDesirGrossesse().then((next: any) => {
+                loading.dismiss()
+                if (next.status) {
+                  let alert = this.alertCtrl.create({
+                    message: 'Voulez vous mettre à jour vos infos ?',
+                    buttons: [
+                      {
+                        text: 'Non',
+                        handler: () => {
+                          this.navCtrl.push(ReportPage)
                         }
-                      ]
-                    });
-                    alert.present();
-                  } else {
-                    this.navCtrl.push(QuestionContraceptionPage)
-                  }
-                }, error => {
-                  console.error(error)
-                  loading.dismiss();
-                })
-                break;
-              case 'GEST':
-                this.navCtrl.push(Img8Page)
-                break;
-            }
-          });
+                      },
+                      {
+                        text: 'Oui',
+                        handler: () => {
+                          this.navCtrl.push(QuestionContraceptionPage, {
+                            infos_desir_grossesse: next.infos_desir_grossesse
+                          })
+                        }
+                      }
+                    ]
+                  });
+                  alert.present();
+                } else {
+                  this.navCtrl.push(QuestionContraceptionPage)
+                }
+              }, error => {
+                console.error(error)
+                loading.dismiss();
+              })
+              break;
+            case codesMode.GEST:
+              loading.dismiss();
+              this.navCtrl.push(Img8Page)
+              break;
+          }
         });
       } else {
         loading.dismiss();

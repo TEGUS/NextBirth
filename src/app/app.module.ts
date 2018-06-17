@@ -25,6 +25,7 @@ import {LoginPageModule} from "../pages/login/login.module";
 import {ServiceProvider} from '../providers/service';
 import {LocalStorageProvider} from '../providers/localstorage';
 import {ArticleDetailPageModule} from "../pages/article-detail/article-detail.module";
+import {Calendar} from "@ionic-native/calendar";
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import {ArticleDetailPageModule} from "../pages/article-detail/article-detail.mo
   ],
   providers: [
     StatusBar,
+    Calendar,
     // Storage,
     LocalStorageProvider,
     SplashScreen,

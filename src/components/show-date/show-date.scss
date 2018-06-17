@@ -10,6 +10,7 @@ show-date {
   .libelle {
     width: 80%;
   }
+
   .show {
     display: flex;
     flex-direction: row;
@@ -21,6 +22,8 @@ show-date {
     font-size: 18px;
     font-weight: 600;
     width: 100%;
+    color: color($colors, input-text);
+
     .day {
       padding: 5px;
       background-color: color($colors, primary);
