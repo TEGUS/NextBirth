@@ -29,7 +29,7 @@ export class MyApp {
 
   pages: Array<any>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public network: Network,
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
               public localStorage: LocalStorageProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController) {
     this.initializeApp();
 
@@ -114,14 +114,6 @@ export class MyApp {
 
       }, error => {
         console.log(error);
-      });
-
-      this.network.onDisconnect().subscribe(() => {
-        console.log('network was disconnected :-(');
-      });
-
-      this.network.onConnect().subscribe(() => {
-        console.log('network connected!');
       });
     });
   }
