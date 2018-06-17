@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Network} from "@ionic-native/network";
 
 
 @Component({
@@ -7,10 +8,32 @@ import {Component, Input} from '@angular/core';
 })
 export class NavbarComponent {
   @Input() title = 'NextBirth'
-  @Input() showMenuToggle = true;
+  @Input() showMenuToggle = true
 
-  constructor() {
+  private msg_network = 'msg network'
+  private showNetworkStatus = false
+  private colorNetworkStatus = 'red'
+
+  constructor(public network: Network) {
+
+    console.log(this.network.type);
+    this.checkNetwork();
   }
 
+  checkNetwork() {
+    this.network.onDisconnect().subscribe(next => {
+      this.msg_network = 'Network was disconnected'
+      this.colorNetworkStatus = 'red'
+      this.showNetworkStatus = true
+    });
 
+    this.network.onConnect().subscribe(next => {
+      this.msg_network = 'Network connected'
+      this.colorNetworkStatus = 'green'
+      this.showNetworkStatus = true
+      setTimeout(() => {
+        this.showNetworkStatus = false
+      }, 2000)
+    });
+  }
 }

@@ -1,7 +1,12 @@
-
 <ion-navbar color="primary">
   <button ion-button menuToggle *ngIf="showMenuToggle">
     <ion-icon name="menu"></ion-icon>
   </button>
   <ion-title>{{title}}</ion-title>
 </ion-navbar>
+
+<div style="height: 13px; font-size: 11px; color: white; text-align: center;"
+     [style.background-color]="colorNetworkStatus"
+     *ngIf="showNetworkStatus">
+  {{msg_network}}
+</div>
