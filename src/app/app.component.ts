@@ -78,8 +78,8 @@ export class MyApp {
 
           this.localStorage.getKey('mode').then(mode => {
             console.log(mode)
-            this.rootPage = ChooseModePage
-            // this.rootPage = Img9Page
+            // this.rootPage = ChooseModePage
+            this.rootPage = Img9Page
             // if (mode !== null) {
             //   switch (mode.code) {
             //     case codesMode.CONTPL:
