@@ -17,6 +17,7 @@ import {LoginPage} from "../pages/login/login";
 import {LocalStorageProvider} from "../providers/localstorage";
 import * as codesMode from "../components/mode/mode";
 import {ServiceProvider} from "../providers/service";
+import {Network} from "@ionic-native/network";
 
 @Component({
   templateUrl: 'app.html'
@@ -28,7 +29,7 @@ export class MyApp {
 
   pages: Array<any>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public network: Network,
               public localStorage: LocalStorageProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController) {
     this.initializeApp();
 
@@ -113,6 +114,14 @@ export class MyApp {
 
       }, error => {
         console.log(error);
+      });
+
+      this.network.onDisconnect().subscribe(() => {
+        console.log('network was disconnected :-(');
+      });
+
+      this.network.onConnect().subscribe(() => {
+        console.log('network connected!');
       });
     });
   }
