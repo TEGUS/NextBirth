@@ -28,7 +28,7 @@ export class MyApp {
 
   pages: Array<any>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public services: ServiceProvider,
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
               public localStorage: LocalStorageProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController) {
     this.initializeApp();
 
@@ -117,16 +117,16 @@ export class MyApp {
     });
   }
 
-  checkProfileDesirGrossesse() {
-    return new Promise((resolve, reject) => {
-      this.services.checkProfileDesirGrossesse().subscribe(next => {
-        console.log(next)
-        resolve(next);
-      }, error => {
-        reject(error);
-      })
-    });
-  }
+  // checkProfileDesirGrossesse() {
+  //   return new Promise((resolve, reject) => {
+  //     this.services.checkProfileDesirGrossesse().subscribe(next => {
+  //       console.log(next)
+  //       resolve(next);
+  //     }, error => {
+  //       reject(error);
+  //     })
+  //   });
+  // }
 
   openPage(page) {
     // Reset the content nav to have just this page
