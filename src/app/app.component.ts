@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {MenuController, Nav, Platform} from 'ionic-angular';
+import {LoadingController, MenuController, Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
@@ -15,6 +15,8 @@ import {Img10Page} from "../pages/img10/img10";
 import {Img11Page} from "../pages/img11/img11";
 import {LoginPage} from "../pages/login/login";
 import {LocalStorageProvider} from "../providers/localstorage";
+import * as codesMode from "../components/mode/mode";
+import {ServiceProvider} from "../providers/service";
 
 @Component({
   templateUrl: 'app.html'
@@ -27,7 +29,7 @@ export class MyApp {
   pages: Array<any>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-              public localStorage: LocalStorageProvider, public menuCtrl: MenuController) {
+              public localStorage: LocalStorageProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -58,6 +60,13 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      // this.statusBar.styleDefault();
+      // this.splashScreen.hide();
+      this.statusBar.backgroundColorByHexString("#eb5350");
+      this.statusBar.styleLightContent();
+
       this.menuCtrl.enable(false)
 
       this.localStorage.getKey('session').then(next => {
@@ -69,18 +78,28 @@ export class MyApp {
           this.localStorage.getKey('mode').then(mode => {
             console.log(mode)
             this.rootPage = ChooseModePage
+            // this.rootPage = Img9Page
             // if (mode !== null) {
             //   switch (mode.code) {
-            //     case 'CONTPL':
+            //     case codesMode.CONTPL:
             //       this.rootPage = ModeContraceptionPage
             //       break;
-            //     case 'CONTPR':
+            //     case codesMode.CONTPR:
             //       this.rootPage = ModeContraceptionPage
             //       break;
-            //     case 'GRS':
-            //       this.rootPage = QuestionContraceptionPage
+            //     case codesMode.GRS:
+            //       let loading = this.loadingCtrl.create();
+            //       loading.present();
+            //       this.checkProfileDesirGrossesse().then((next: any) => {
+            //         loading.dismiss()
+            //         this.rootPage = next.status ? ReportPage : QuestionContraceptionPage;
+            //       }, error => {
+            //         console.error(error)
+            //         loading.dismiss();
+            //       })
             //       break;
-            //     case 'GEST':
+            //     case codesMode.GEST:
+            //       this.rootPage = Img8Page
             //       break;
             //   }
             // } else {
@@ -89,18 +108,25 @@ export class MyApp {
           });
         } else {
           this.rootPage = LoginPage;
+          // this.rootPage = Img9Page;
         }
 
       }, error => {
         console.log(error);
       });
-
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
     });
   }
+
+  // checkProfileDesirGrossesse() {
+  //   return new Promise((resolve, reject) => {
+  //     this.services.checkProfileDesirGrossesse().subscribe(next => {
+  //       console.log(next)
+  //       resolve(next);
+  //     }, error => {
+  //       reject(error);
+  //     })
+  //   });
+  // }
 
   openPage(page) {
     // Reset the content nav to have just this page

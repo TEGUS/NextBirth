@@ -14,7 +14,7 @@ export class LocalStorageProvider {
   private key = 'session';
   private keymode = 'mode';
 
-  constructor(public http: HttpClient, public storage: Storage) {
+  constructor(private http: HttpClient, private storage: Storage) {
     console.log('Hello LocalStorageProvider Provider');
   }
 

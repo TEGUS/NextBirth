@@ -4,7 +4,7 @@ page-profil {
   }
 
   .ion-col-1 {
-    color: white;
+    color: color($colors, libelle-text);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,12 +28,15 @@ page-profil {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    color: white;
     text-align: center;
     width: 100%;
 
     input-element {
-      width: 70%;
+      width: inherit;
+    }
+
+    show-date {
+      width: inherit;
     }
 
     .error {

@@ -15,25 +15,28 @@
 // automatically applied to the <body> element in the app.
 
 ion-content {
-  color: white;
-  background-image: url('/assets/imgs/background.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
+  //color: white;
+  //background: url('/assets/imgs/background.jpg') no-repeat;
+  //background-size: cover;
 }
 
- .button-submit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-  }
+//.content-md {
+//  background-color: #e4e4e4;
+//}
 
-  #triangle {
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
-    border-left: 20px solid color($colors, primary);
-    cursor: pointer;
-  }
+.button-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+#triangle {
+  border-top: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+  border-left: 20px solid color($colors, primary);
+  cursor: pointer;
+}
 
 img.img-menu {
   height: 30px;
