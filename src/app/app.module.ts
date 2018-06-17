@@ -34,7 +34,8 @@ import {ArticleDetailPageModule} from "../pages/article-detail/article-detail.mo
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({
-      name: '_NextBirth_DB'
+      name: '_NextBirth_DB',
+      driverOrder: ['localstorage', 'indexeddb', 'sqlite', 'websql']
     }),
     HttpClientModule,
 
@@ -59,7 +60,7 @@ import {ArticleDetailPageModule} from "../pages/article-detail/article-detail.mo
   ],
   providers: [
     StatusBar,
-    Storage,
+    // Storage,
     LocalStorageProvider,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

@@ -58,6 +58,13 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      // this.statusBar.styleDefault();
+      // this.splashScreen.hide();
+      this.statusBar.backgroundColorByHexString("#eb5350");
+      this.statusBar.styleLightContent();
+
       this.menuCtrl.enable(false)
 
       this.localStorage.getKey('session').then(next => {
@@ -94,11 +101,6 @@ export class MyApp {
       }, error => {
         console.log(error);
       });
-
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
     });
   }
 
