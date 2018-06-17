@@ -54,6 +54,7 @@ export class ChooseModePage {
   }
 
   selectMode(mode) {
+
     let loading = this.loadingCtrl.create();
     loading.present();
     this.checkProfile().then(next => {
