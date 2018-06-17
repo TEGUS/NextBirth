@@ -60,6 +60,8 @@ export class ChooseModePage {
       if (next) {
         this.services.selectMode(mode.id).subscribe(alerts => {
          
+          var listesNotification = [];
+          var i = 0;
           alerts.forEach(element => {
             /*console.log("=======================================");
             console.log(new Date().getTime());
@@ -67,15 +69,25 @@ export class ChooseModePage {
             console.log(element.date_alert);
             console.log(element._embedded.conseil.description);
             console.log("=======================================");*/
-            this.localNotifications.schedule({
+
+            var notification = {
+              id:i+1,
               text: element._embedded.conseil.description,
               trigger: {at: new Date(new Date(element.date_alert).getTime())},
               led: 'FF0000',
               sound: 'file://assets/imgs/notification.mp3'
-            });
+            }
+
+            listesNotification.push(notification);
+            i++;
             
           });
 
+          if(i == alert.length){
+            this.localNotifications.schedule(
+              listesNotification
+            );
+          }
           
           
           this.localStorage.storeModeInSession(mode);
