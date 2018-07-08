@@ -16,27 +16,31 @@ import {LocalStorageProvider} from "../../providers/localstorage";
   templateUrl: 'img9.html',
 })
 export class Img9Page {
-  date: any;
-  daysInThisMonth: any;
-  daysInLastMonth: any;
-  daysInNextMonth: any;
-  monthNames: string[];
-  currentMonth: any;
-  currentYear: any;
-  currentDate: any;
-  eventList: any;
-  selectedEvent: any;
-  isSelected: any;
+  private date: any;
+  private daysInThisMonth: any;
+  private daysInLastMonth: any;
+  private daysInNextMonth: any;
+  private monthNames: string[];
+  private currentMonth: any;
+  private currentYear: any;
+  private currentDate: any;
+  private eventList: any;
+  private selectedEvent: any;
+  private isSelected: any;
 
 
-  previousMonth: any = 'month';
-  nextMonth: any = 'month';
+  private previousMonth: any = 'month';
+  private nextMonth: any = 'month';
 
-  events = [];
+  private events = [];
+
+  private today: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private calendar: Calendar,
               public localStorage: LocalStorageProvider) {
     this.calculCycleMenstruel();
+
+    this.monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   }
 
   ionViewDidLoad() {
@@ -44,8 +48,8 @@ export class Img9Page {
   }
 
   ionViewWillEnter() {
+    this.today = new Date();
     this.date = new Date();
-    this.monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     this.getDaysOfMonth();
   }
 
@@ -68,9 +72,10 @@ export class Img9Page {
     var firstDayThisMonth = new Date(this.date.getFullYear(), this.date.getMonth(), 1).getDay();
     var prevNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth(), 0).getDate();
     for (var i = prevNumOfDays - (firstDayThisMonth - 1); i <= prevNumOfDays; i++) {
+      let event = this.events.find(e => e.date.getFullYear() === this.date.getFullYear() && e.date.getMonth() === this.date.getMonth() - 1 && e.date.getDate() === i)
       this.daysInLastMonth.push({
-        day: i,
-        color: null
+        day: this.formatDay(i),
+        color: event !== undefined ? event.color : 'white'
       });
     }
 
@@ -78,7 +83,7 @@ export class Img9Page {
     for (var i = 0; i < thisNumOfDays; i++) {
       let event = this.events.find(e => e.date.getFullYear() === this.date.getFullYear() && e.date.getMonth() === this.date.getMonth() && e.date.getDate() === i + 1)
       this.daysInThisMonth.push({
-        day: i + 1,
+        day: this.formatDay(i + 1),
         color: event !== undefined ? event.color : 'white'
       });
     }
@@ -86,17 +91,19 @@ export class Img9Page {
     var lastDayThisMonth = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDay();
     var nextNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth() + 2, 0).getDate();
     for (var i = 0; i < (6 - lastDayThisMonth); i++) {
+      let event = this.events.find(e => e.date.getFullYear() === this.date.getFullYear() && e.date.getMonth() === this.date.getMonth() + 1 && e.date.getDate() === i + 1)
       this.daysInNextMonth.push({
-        day: i + 1,
-        color: null
+        day: this.formatDay(i + 1),
+        color: event !== undefined ? event.color : 'white'
       });
     }
     var totalDays = this.daysInLastMonth.length + this.daysInThisMonth.length + this.daysInNextMonth.length;
     if (totalDays < 36) {
       for (var i = (7 - lastDayThisMonth); i < ((7 - lastDayThisMonth) + 7); i++) {
+        let event = this.events.find(e => e.date.getFullYear() === this.date.getFullYear() && e.date.getMonth() === this.date.getMonth() + 1 && e.date.getDate() === i)
         this.daysInNextMonth.push({
-          day: i,
-          color: null
+          day: this.formatDay(i),
+          color: event !== undefined ? event.color : 'white'
         });
       }
     }
@@ -110,6 +117,14 @@ export class Img9Page {
   goToNextMonth() {
     this.date = new Date(this.date.getFullYear(), this.date.getMonth() + 2, 0);
     this.getDaysOfMonth();
+  }
+
+  goToThisMonth() {
+    this.ionViewWillEnter();
+  }
+
+  formatDay(day) {
+    return (day < 10) ? '0' + day : day
   }
 
   selectDate(day) {
@@ -129,6 +144,8 @@ export class Img9Page {
   calculCycleMenstruel() {
     return new Promise((resolve) => {
       this.localStorage.getKey('session').then(session => {
+        console.log(session);
+
         let events = []
         let patient = session.user._embedded.patient
         // patient.duree_cycle = 28
@@ -144,7 +161,7 @@ export class Img9Page {
         for (let i = 1; i < 6; i++) {
           let nbJours = patient.duree_cycle * i
           newDateDebutDernierRegle.setDate(dateDebutDernierRegle.getDate() + nbJours)
-          this.initSaignementOvulation(newDateDebutDernierRegle ,patient)
+          this.initSaignementOvulation(newDateDebutDernierRegle, patient)
           newDateDebutDernierRegle = new Date(dateDebutDernierRegle)
         }
 

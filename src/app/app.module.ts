@@ -27,6 +27,7 @@ import {LocalStorageProvider} from '../providers/localstorage';
 import {ArticleDetailPageModule} from "../pages/article-detail/article-detail.module";
 import {Calendar} from "@ionic-native/calendar";
 import {Network} from "@ionic-native/network";
+// import {IonicSwipeAllModule} from "ionic-swipe-all";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {Network} from "@ionic-native/network";
       driverOrder: ['localstorage', 'indexeddb', 'sqlite', 'websql']
     }),
     HttpClientModule,
+    // IonicSwipeAllModule,
 
     SignUpModule,
     LoginPageModule,
