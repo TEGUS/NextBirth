@@ -19,10 +19,10 @@
 
   </div>
   <ion-grid *ngFor="let m of modes" class="modes">
-    <mode
-      [image]="m._embedded.image._embedded.url_photo"
-      [libelle]="m.intitule"
-      [description]="m.description" (click)="selectMode(m)">
-    </mode>
+      <mode
+        [image]="m._embedded.image._embedded.url_photo"
+        [libelle]="m.intitule"
+        [description]="m.description" (click)="selectMode(m)">
+      </mode>
   </ion-grid>
 </ion-content>

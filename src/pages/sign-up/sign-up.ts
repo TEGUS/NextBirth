@@ -11,9 +11,13 @@ import {LocalStorageProvider} from "../../providers/localstorage";
   templateUrl: 'sign-up.html',
 })
 export class SignUpPage {
+  
+  
   object = null;
   error = null;
   showError = null;
+
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
@@ -24,7 +28,7 @@ export class SignUpPage {
   ionViewWillLoad() {
     this.object = {
       infoEvolution: {
-        dateDernieresMenstrues: null,
+        debutDernieresMenstrues: null,
         dureeMenstrues: null
       },
       account: {
@@ -44,7 +48,7 @@ export class SignUpPage {
   }
 
   dateLastMentruation(date) {
-    this.object.infoEvolution.dateDernieresMenstrues = date;
+    this.object.infoEvolution.debutDernieresMenstrues = date;
   }
 
   getDurationMenstruation(duree) {
@@ -64,6 +68,8 @@ export class SignUpPage {
   }
 
   signUp() {
+
+
     if (checkField(this.object.account.email) &&
       checkField(this.object.account.plainPassword.first) &&
       checkField(this.object.account.plainPassword.second) &&
@@ -80,7 +86,7 @@ export class SignUpPage {
         }, error => {
           loading.dismiss();
           console.log(error);
-          this.error = error.error.errors.children.account.children;
+         // this.error = error.error.errors.children.account.children;
           console.log(this.error);
         }, () => {
           loading.dismiss();
@@ -96,6 +102,8 @@ export class SignUpPage {
     } else {
       this.setMessageError('Veuillez remplir touts les champs!')
     }
+
+
   }
 
   setMessageError(message) {
@@ -112,4 +120,9 @@ export class SignUpPage {
     });
     toast.present();
   }
+
+
+
+
+
 }
