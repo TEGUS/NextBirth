@@ -31,7 +31,7 @@ export class MyApp {
        {title: 'Mes situations à risque', component: "MessituationarisquePage", icon: 'icon2'},
        {title: 'Mes mises à jour', component: "MiseajourPage", icon: 'icon4'},
        {title: 'Outils surveillance', component: "SurveillancePage", icon: 'icon6'},
-       
+
        {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
        {title: 'Paramètres', component: null, icon: 'icon8'},
        {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
@@ -73,8 +73,8 @@ export class MyApp {
             console.log(mode)
              //this.rootPage = "ChooseModePage";
              //this.rootPage = "TimelinetestPage";
-            
-            
+
+
              if (mode !== null) {
               switch (mode.code) {
                 case codesMode.CONTPL:

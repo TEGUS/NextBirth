@@ -29,11 +29,19 @@
       </ion-col>
     </ion-row>
 
+    <!--<ion-grid swipeAll (swiperight)="goToLastMonth()" (swipeleft)="goToNextMonth()">-->
     <ion-grid>
       <ion-row class="calendar-date">
-        <ion-col col-1 *ngFor="let lastDay of daysInLastMonth" class="last-month" (click)="goToLastMonth()">
-          {{lastDay.day}}
+        <ion-col col-1 *ngFor="let lastDay of daysInLastMonth" (click)="goToLastMonth()">
+          <span class="last-month" *ngIf="lastDay.color == 'white'">
+            {{lastDay.day}}
+          </span>
+          <span class="event" [style.background-color]="lastDay.color"
+                *ngIf="lastDay.color != 'white'">
+            {{lastDay.day}}
+          </span>
         </ion-col>
+
         <ion-col col-1 *ngFor="let day of daysInThisMonth" (click)="selectDate(day)">
           <span class="event" [style.background-color]="day.color"
                 *ngIf="currentDate != day.day && day.color != 'white'">
@@ -44,14 +52,22 @@
             <ng-template #otherDate class="otherDate">{{day.day}}</ng-template>
           </div>
         </ion-col>
-        <ion-col col-1 *ngFor="let nextDay of daysInNextMonth" class="next-month" (click)="goToNextMonth()">
-          {{nextDay.day}}
+
+        <ion-col col-1 *ngFor="let nextDay of daysInNextMonth" (click)="goToNextMonth()">
+          <span class="next-month" *ngIf="nextDay.color == 'white'">
+            {{nextDay.day}}
+          </span>
+          <span class="event" [style.background-color]="nextDay.color"
+                *ngIf="nextDay.color != 'white'">
+            {{nextDay.day}}
+          </span>
         </ion-col>
       </ion-row>
     </ion-grid>
 
     <ion-grid class="showpreviousnext">
       <ion-row (click)="goToLastMonth()">{{previousMonth | slice:0:3}}.</ion-row>
+      <ion-row (click)="goToThisMonth()" *ngIf="today != undefined && date != undefined && today.getDate() != date.getDate()">Today.</ion-row>
       <ion-row (click)="goToNextMonth()">{{nextMonth | slice:0:3}}.</ion-row>
     </ion-grid>
   </div>
