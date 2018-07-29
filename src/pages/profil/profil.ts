@@ -40,9 +40,9 @@ export class ProfilPage {
       console.log(mode);
       this.modeSelectedExist = mode !== null ? true : false;
     });
+    
 
     this.object = {
-      poids: null,
       diabete: 0,
       hta: 0,
       drepano: 0,
@@ -95,7 +95,7 @@ export class ProfilPage {
   }
 
   getPoids(poids) {
-    this.object.poids = poids;
+    
   }
 
   getNombreGrossesse(nombreGrossesse) {
@@ -117,7 +117,7 @@ export class ProfilPage {
   checkValues() {
     return new Promise((resolve, reject) => {
       if (
-        this.object.poids === null || this.object.agePremiereRegle === null ||
+        this.object.agePremiereRegle === null ||
         this.object.dureeSaignement === null || this.object.dureeCycle === null ||
         this.object.nombreGressesse === null || this.object.nombrePremature === null ||
         this.object.nombreFosseCouche === null || this.object.nombreEnfantVivant === null
@@ -130,6 +130,7 @@ export class ProfilPage {
   }
 
   updateProfile() {
+
     this.checkValues().then(next => {
       this.object.diabete = this.object.diabete ? 1 : 0;
       this.object.hta = this.object.hta ? 1 : 0;
@@ -138,13 +139,13 @@ export class ProfilPage {
       this.object.douleurRegle = this.object.douleurRegle ? 1 : 0;
       this.object.cycleRegulier = this.object.cycleRegulier ? 1 : 0;
 
-      this.object.account = this.object.account = {
+      this.object.account = {
         "username": this.username,
         "phone": this.phone,
         "dateNaissance": this.ladate
       }
 
-      console.log(this.object)
+    
       let loading = this.loadingCtrl.create();
       loading.present();
       this.services.updateprofile(this.object).subscribe(next => {
@@ -186,8 +187,8 @@ export class ProfilPage {
       loading.dismiss();
       loading.onDidDismiss(() => {
         this.localStorage.removeKey('modeSelected');
-        console.log('Succes du stochage du mode!');
-
+        this.localStorage.setKey("mode", mode);
+        
         switch (mode.code) {
           case codesMode.CONTPL:
             this.navCtrl.setRoot("ModeContraceptionPage", {
@@ -203,9 +204,11 @@ export class ProfilPage {
             this.navCtrl.setRoot("QuestionContraceptionPage")
             break;
           case codesMode.GEST:
-            this.navCtrl.setRoot("Img8Page")
+            this.navCtrl.setRoot("ReportPage")
             break;
         }
+
+
       });
     });
   }

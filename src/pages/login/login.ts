@@ -54,7 +54,16 @@ export class LoginPage {
       let loading = this.loadingCtrl.create();
       loading.present();
       this.authProvider.logIn(this.object).subscribe(next => {
-        this.mylocalstorage.storeSession(next).then(() => {});
+        this.mylocalstorage.storeSession(next).then(() => {
+          
+          loading.dismiss();
+          loading.onDidDismiss(() => {
+            this.presentToast('Finish Login!');
+            this.navCtrl.setRoot('ChooseModePage', {});
+            this.menuCtrl.enable(true, 'sideMenu');
+          });
+
+        });
       }, error => {
         loading.dismiss();
         console.log(error);
@@ -71,12 +80,7 @@ export class LoginPage {
           alert.present();
         }
       }, () => {
-        loading.dismiss();
-        loading.onDidDismiss(() => {
-          this.presentToast('Finish Login!');
-          this.navCtrl.setRoot('ChooseModePage', {});
-          this.menuCtrl.enable(true, 'sideMenu');
-        });
+        
       });
     } else {
       this.error = {

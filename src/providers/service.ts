@@ -26,7 +26,7 @@ export class ServiceProvider {
     
     return new Promise((resolve, reject) => {
       this.localStorage.getKey('session').then(next => {
-           let o = {
+          let o = {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           };
@@ -51,6 +51,8 @@ export class ServiceProvider {
    * @returns {Observable<any>}
    */
   getMode(): Observable<any> {
+    
+
     return this.http.get(
       this.host + 'choice-modes',
       this.headers
@@ -62,6 +64,7 @@ export class ServiceProvider {
    * @returns {Observable<any>}
    */
   getCategories(): Observable<any> {
+   
     return this.http.get(
       this.host + 'categories',
       this.headers
@@ -74,6 +77,8 @@ export class ServiceProvider {
    * @returns {Observable<any>}
    */
   selectMode(id): Observable<any> {
+
+    
     return this.http.post(
       this.host + 'choice-modes',
       {categorie: id},

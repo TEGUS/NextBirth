@@ -64,18 +64,22 @@ export class MyApp {
       this.menuCtrl.enable(false);
 
       this.localStorage.getKey('session').then(next => {
-        console.log(next)
+       
 
         if (next !== null) {
           this.menuCtrl.enable(true, 'sideMenu');
 
           this.localStorage.getKey('mode').then(mode => {
-            console.log(mode)
+             console.log("===============================");
+             console.log(mode);
+             console.log("===============================");
+             
              //this.rootPage = "ChooseModePage";
              //this.rootPage = "TimelinetestPage";
 
 
              if (mode !== null) {
+              
               switch (mode.code) {
                 case codesMode.CONTPL:
                    this.rootPage = "ModeContraceptionPage"
@@ -95,7 +99,7 @@ export class MyApp {
                    })
                    break;
                   case codesMode.GEST:
-                   this.rootPage = "Img8Page"
+                   this.rootPage = "ReportPage"
                    break;
                }
               } else {

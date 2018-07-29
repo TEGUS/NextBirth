@@ -71,4 +71,22 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+
+
+  <ion-fab bottom right class="monsuperbutton">
+      <button ion-fab><ion-icon name="add"></ion-icon></button>
+      <!-- <ion-fab-list side="top">
+        <button ion-fab>Facebook</button>
+        <button ion-fab>Twitter</button>
+        <button ion-fab>Youtube</button>
+      </ion-fab-list>-->
+      <ion-fab-list side="left">
+         
+        <button (click)="takenote()"  ion-fab style="background-color:red"><ion-icon name="document"></ion-icon></button>
+        <button (click)="takephotos2()"   ion-fab style="background-color:red"><ion-icon name="camera"></ion-icon></button>
+      </ion-fab-list>
+  </ion-fab>
+
+
 </ion-content>

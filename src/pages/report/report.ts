@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams, AlertController} from 'ionic-angular';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import {ServiceProvider} from "../../providers/service";
+import {Camera, CameraOptions} from '@ionic-native/camera';
+import {Base64} from '@ionic-native/base64';
 
 @IonicPage()
 @Component({
@@ -11,8 +13,14 @@ import {ServiceProvider} from "../../providers/service";
 export class ReportPage {
   items = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private localNotifications: LocalNotifications,
-              public loadingCtrl: LoadingController, public services: ServiceProvider
+  public noteGrosesse= {
+      libele:"",
+      description:'0',
+      image:'0'
+  }
+
+  constructor(public navCtrl: NavController,private alertCtrl: AlertController, private base64: Base64, public navParams: NavParams, private localNotifications: LocalNotifications,
+              public loadingCtrl: LoadingController,private camera: Camera, public services: ServiceProvider
   ) {
     // Schedule delayed notification
   }
@@ -45,4 +53,74 @@ export class ReportPage {
       id: id
     })
   }
+
+
+  presentPrompt() {
+    let alert = this.alertCtrl.create({
+      title: 'Bien Voiloir saisir le bon moment',
+      inputs: [
+        {
+          name: 'libele',
+          placeholder: 'libele'
+        },
+        {
+          name: 'description',
+          placeholder: 'Description'
+          
+        }
+        
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            this.noteGrosesse.libele = data.libele;
+            this.noteGrosesse.description = data.description;
+            console.log("=============================");
+            console.log(data);
+            console.log(this.noteGrosesse);
+            console.log("=============================");
+           
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  takenote(){
+   this.presentPrompt()
+  }
+  takephotos(){
+
+    const options: CameraOptions = {
+      quality:100,
+      destinationType:1,
+      encodingType:this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((ImageData) => {
+          let base64Image = ImageData;
+              this.base64.encodeFile(base64Image).then((base64File: string)=>{
+                
+                this.noteGrosesse.image = base64File;
+          
+            }, (err) =>{  
+          })
+           
+            
+            
+    }, (err) =>{
+
+    })
+}
+
 }

@@ -82,19 +82,22 @@ export class SignUpPage {
         loading.present();
         this.authProvider.signUp(this.object).subscribe(next => {
           console.log(next);
-          this.mylocalstorage.storeSession(next).then(() => {});
+          this.mylocalstorage.storeSession(next).then(() => {
+            loading.dismiss();
+            loading.onDidDismiss(() => {
+              this.presentToast('Finish SignUp!');
+              this.navCtrl.setRoot('ChooseModePage', {});
+              this.menuCtrl.enable(true, 'sideMenu');
+            });
+          });
         }, error => {
           loading.dismiss();
           console.log(error);
          // this.error = error.error.errors.children.account.children;
           console.log(this.error);
         }, () => {
-          loading.dismiss();
-          loading.onDidDismiss(() => {
-            this.presentToast('Finish SignUp!');
-            this.navCtrl.setRoot('ChooseModePage', {});
-            this.menuCtrl.enable(true, 'sideMenu');
-          });
+          
+          
         });
       } else {
         this.setMessageError('Les mots de passe ne sont pas identiques!')
