@@ -36,6 +36,7 @@ export class ServiceProvider {
           resolve({
             headers: new HttpHeaders(o)
           });
+          
       }, error => {
         reject('No session on local storage!');
       })

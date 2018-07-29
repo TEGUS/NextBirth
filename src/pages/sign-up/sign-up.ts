@@ -27,10 +27,10 @@ export class SignUpPage {
 
   ionViewWillLoad() {
     this.object = {
-      infoEvolution: {
-        debutDernieresMenstrues: null,
-        dureeMenstrues: null
-      },
+     
+      debutDernieresMenstrues: null,
+      dureeMenstrues: null,
+ 
       account: {
         nom: null,
         prenom: null,
@@ -48,11 +48,11 @@ export class SignUpPage {
   }
 
   dateLastMentruation(date) {
-    this.object.infoEvolution.debutDernieresMenstrues = date;
+    this.object.debutDernieresMenstrues = date;
   }
 
   getDurationMenstruation(duree) {
-    this.object.infoEvolution.dureeMenstrues = parseInt(duree)
+    this.object.dureeMenstrues = parseInt(duree)
   }
 
   getEmail(email) {
@@ -73,8 +73,8 @@ export class SignUpPage {
     if (checkField(this.object.account.email) &&
       checkField(this.object.account.plainPassword.first) &&
       checkField(this.object.account.plainPassword.second) &&
-      checkField(this.object.infoEvolution.dateDernieresMenstrues) &&
-      checkField(this.object.infoEvolution.dureeMenstrues)
+      checkField(this.object.dateDernieresMenstrues) &&
+      checkField(this.object.dureeMenstrues)
     ) {
       if (this.object.account.plainPassword.first === this.object.account.plainPassword.second) {
         console.log(this.object);
