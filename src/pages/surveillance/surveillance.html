@@ -1,0 +1,113 @@
+<ion-header>
+  <navbar [title]="'Outil de surveillance'"></navbar>
+</ion-header>
+
+<ion-content class="monbody">
+  
+
+    <ion-card class="question">
+          <ion-row class="montext">
+              Tocomètre
+          </ion-row>   
+    </ion-card>
+    <div class="contenu">
+        <button class="buttondebut">Débuter</button>
+        <ion-row class="maligne">
+            <ion-col>
+              <p class="special">Fin des contractions</p> 
+              <ion-card class="moncard">
+                <p class="textbouton">00:00</p>  
+              </ion-card>
+            </ion-col>
+            <ion-col>
+              <p class="special2"> Début des contractions </p> 
+              <ion-card class="moncard2">
+                <p class="textbouton">00:00</p>  
+            </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row class="maligne">
+          <ion-col>
+            <p class="special">Durée moyenne des contractions yes yes</p> 
+            <ion-card class="moncard">
+              <p class="textbouton">00:00</p>  
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <p class="special2"> Fréquence des contractions </p> 
+            <ion-card class="moncard2">
+              <p class="textbouton">1/10 min</p>  
+          </ion-card>
+          </ion-col>
+        </ion-row>
+        <button class="buttondebut2">Rénitialiser</button>
+        <ion-row>
+          <ion-col>
+            <p>Intensité des contractions</p>
+          </ion-col>
+          <ion-col>
+            <button class="monbutonrond1"></button>
+            <button class="monbutonrond2"></button>
+            <button class="monbutonrond3"></button>
+            <button class="monbutonrond4"></button>
+            <button class="monbutonrond5"></button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="dernierrow">
+          <ion-col>
+            <p>Rupture des membranes</p>
+          </ion-col>
+          <ion-col>
+          <button class="boutonoui" (click)="actionSurOui()">Oui</button>
+          <button class="boutonon">Non</button>
+        </ion-col>
+      </ion-row>
+      
+      <ion-card class="recapitulatif" *ngIf="testeur == 0">
+        <ion-card-content>
+          <ion-row class="montext1">
+              Récapitulatif:
+          </ion-row> 
+          <ion-row class="montext2">
+            Durée moyenne des contractions
+          </ion-row>   
+          <ion-row class="montext2">
+            Durée moyenne des contractions
+          </ion-row> 
+          <ion-row class="montext2">
+            Durée moyenne des contractions
+          </ion-row> 
+        </ion-card-content>
+      </ion-card>
+      
+      <ion-card class="recapitulatif2" *ngIf="testeur == 1">
+           <p class="titlecard"> choisir la couleur </p>
+           <ion-row>
+               <ion-col >
+                  <button class="buttonclaire"> claire </button>
+               </ion-col>
+               <ion-col>
+                <button class="buttonpuru"> Purulente </button>
+               </ion-col>
+           </ion-row>
+           <ion-row>
+            <ion-col >
+               <button class="buttontroube"> Trouble </button>
+            </ion-col>
+            <ion-col>
+             <button class="buttonbrunatre"> brunâtre </button>
+            </ion-col>
+           </ion-row>
+           <ion-row>
+            <ion-col >
+               <button class="buttonverdatre"> Verdâtre </button>
+            </ion-col>
+           </ion-row>
+           
+      </ion-card>
+
+
+  </div>
+ 
+
+</ion-content>

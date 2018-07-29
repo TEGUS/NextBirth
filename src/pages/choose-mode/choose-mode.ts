@@ -27,7 +27,7 @@ export class ChooseModePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChooseModePage');
+   
     this.getAllcategories();
   }
 

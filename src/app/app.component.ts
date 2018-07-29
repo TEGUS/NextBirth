@@ -3,21 +3,13 @@ import {LoadingController, MenuController, Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
-import {SignUpPage} from "../pages/sign-up/sign-up";
-import {ChooseModePage} from "../pages/choose-mode/choose-mode";
-import {ReportPage} from "../pages/report/report";
-import {ModeContraceptionPage} from "../pages/mode-contraception/mode-contraception";
-import {ProfilPage} from "../pages/profil/profil";
-import {QuestionContraceptionPage} from "../pages/question-contraception/question-contraception";
-import {Img8Page} from "../pages/img8/img8";
-import {Img9Page} from "../pages/img9/img9";
-import {Img10Page} from "../pages/img10/img10";
-import {Img11Page} from "../pages/img11/img11";
-import {LoginPage} from "../pages/login/login";
+
 import {LocalStorageProvider} from "../providers/localstorage";
 import * as codesMode from "../components/mode/mode";
 import {ServiceProvider} from "../providers/service";
 import {Network} from "@ionic-native/network";
+import { FluxReglePage } from '../pages/flux-regle/flux-regle';
+import { SurveillancePage } from '../pages/surveillance/surveillance';
 
 @Component({
   templateUrl: 'app.html'
@@ -30,20 +22,21 @@ export class MyApp {
   pages: Array<any>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-              public localStorage: LocalStorageProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController) {
+              public localStorage: LocalStorageProvider, public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-       {title: 'ReportPage', component: ReportPage, icon: 'icon1'},
-       {title: 'ChooseMode', component: ChooseModePage, icon: 'icon2'},
-       {title: 'SignUp', component: SignUpPage,  icon: 'icon3'},
-       {title: 'Mode Contraception', component: ModeContraceptionPage, icon: 'icon4'},
-       {title: 'Profils', component: ProfilPage, icon: 'icon5'},
-       {title: 'Question_contraception', component: QuestionContraceptionPage, icon: 'icon6'},
-       {title: 'Pilulier', component: Img8Page, icon: 'icon7'},
-       {title: 'Mise en garde', component: Img9Page, icon: 'icon9'},
-       {title: 'Humeur et état d\'esprit', component: Img10Page, icon: 'icon11'},
+       {title: 'Calendrier', component: "Img9Page", icon: 'icon1'},
+       {title: 'Mes situations à risque', component: "MessituationarisquePage", icon: 'icon2'},
+       {title: 'Mes mises à jour', component: "MiseajourPage", icon: 'icon4'},
+       {title: 'Outils surveillance', component: "SurveillancePage", icon: 'icon6'},
+       
+       {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
+       {title: 'Paramètres', component: null, icon: 'icon8'},
+       {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
+       {title: 'Mise en garde', component: "Img8Page", icon: 'icon10'},
+       {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'},
 
      /* {title: 'Calendrier', component: null, icon: 'icon1'},
       {title: 'Mes situations à risque', component: null, icon: 'icon2'},
@@ -68,7 +61,7 @@ export class MyApp {
       this.statusBar.backgroundColorByHexString("#eb5350");
       this.statusBar.styleLightContent();
 
-      this.menuCtrl.enable(false)
+      this.menuCtrl.enable(false);
 
       this.localStorage.getKey('session').then(next => {
         console.log(next)
@@ -78,38 +71,43 @@ export class MyApp {
 
           this.localStorage.getKey('mode').then(mode => {
             console.log(mode)
-            // this.rootPage = ChooseModePage
-            this.rootPage = Img9Page
-            // if (mode !== null) {
-            //   switch (mode.code) {
-            //     case codesMode.CONTPL:
-            //       this.rootPage = ModeContraceptionPage
-            //       break;
-            //     case codesMode.CONTPR:
-            //       this.rootPage = ModeContraceptionPage
-            //       break;
-            //     case codesMode.GRS:
-            //       let loading = this.loadingCtrl.create();
-            //       loading.present();
-            //       this.checkProfileDesirGrossesse().then((next: any) => {
-            //         loading.dismiss()
-            //         this.rootPage = next.status ? ReportPage : QuestionContraceptionPage;
-            //       }, error => {
-            //         console.error(error)
-            //         loading.dismiss();
-            //       })
-            //       break;
-            //     case codesMode.GEST:
-            //       this.rootPage = Img8Page
-            //       break;
-            //   }
-            // } else {
-            //   this.rootPage = ChooseModePage
-            // }
+             //this.rootPage = "ChooseModePage";
+             //this.rootPage = "TimelinetestPage";
+            
+            
+             if (mode !== null) {
+              switch (mode.code) {
+                case codesMode.CONTPL:
+                   this.rootPage = "ModeContraceptionPage"
+                   break;
+                 case codesMode.CONTPR:
+                   this.rootPage = "ModeContraceptionPage"
+                   break;
+                 case codesMode.GRS:
+                  let loading = this.loadingCtrl.create();
+                   loading.present();
+                   this.checkProfileDesirGrossesse().then((next: any) => {
+                     loading.dismiss()
+                     this.rootPage = next.status ? "ReportPage" : "QuestionContraceptionPage";
+                   }, error => {
+                     console.error(error)
+                     loading.dismiss();
+                   })
+                   break;
+                  case codesMode.GEST:
+                   this.rootPage = "Img8Page"
+                   break;
+               }
+              } else {
+               this.rootPage = "ChooseModePage"
+              }
+
+
           });
         } else {
-          this.rootPage = LoginPage;
-          // this.rootPage = Img9Page;
+            this.rootPage = "LoginPage";
+           //this.rootPage = "TimelinetestPage";
+           //this.rootPage = 'FluxReglePage';
         }
 
       }, error => {
@@ -118,16 +116,16 @@ export class MyApp {
     });
   }
 
-  // checkProfileDesirGrossesse() {
-  //   return new Promise((resolve, reject) => {
-  //     this.services.checkProfileDesirGrossesse().subscribe(next => {
-  //       console.log(next)
-  //       resolve(next);
-  //     }, error => {
-  //       reject(error);
-  //     })
-  //   });
-  // }
+   checkProfileDesirGrossesse() {
+     return new Promise((resolve, reject) => {
+     this.services.checkProfileDesirGrossesse().subscribe(next => {
+       console.log(next)
+         resolve(next);
+       }, error => {
+         reject(error);
+       })
+     });
+  }
 
   openPage(page) {
     // Reset the content nav to have just this page
@@ -139,7 +137,7 @@ export class MyApp {
   signOut() {
     this.localStorage.clearStorage().then(next => {
       this.menuCtrl.enable(false);
-      this.nav.setRoot(LoginPage);
+      this.nav.setRoot("LoginPage");
     }, error => {
       console.log(error);
     })

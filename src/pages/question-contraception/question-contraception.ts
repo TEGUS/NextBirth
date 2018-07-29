@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {LocalStorageProvider} from "../../providers/localstorage";
 import {ServiceProvider} from "../../providers/service";
-import {ReportPage} from "../report/report";
 
 
 @IonicPage()
@@ -152,7 +151,7 @@ export class QuestionContraceptionPage {
       }, () => {
         loading.dismiss();
         loading.onDidDismiss(() => {
-          this.navCtrl.setRoot(ReportPage)
+          this.navCtrl.setRoot("ReportPage")
         })
       });
     }, error => {

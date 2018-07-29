@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import {IonicModule} from "ionic-angular";
+import { TimelineComponent } from './timeline/timeline';
 
 @NgModule({
-	declarations: [],
+	declarations: [TimelineComponent],
 	imports: [IonicModule],
-	exports: []
+	exports: [TimelineComponent]
 })
 export class ComponentsModule {}

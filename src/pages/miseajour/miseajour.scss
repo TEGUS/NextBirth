@@ -1,0 +1,47 @@
+page-miseajour {
+
+    .monbody{
+        background-color: #e3e3e3;
+    }
+    .text{
+        float: right;
+    }
+    .monimput{
+        background-color: #fff;
+        width: 100px;
+        height: 23px;
+        margin-top: 10px;
+     }
+     
+     .maligne{
+         margin-top: -18px;
+     }
+
+     .monselect{
+        margin-top: 10px;
+        height: 25px;
+        width: 160px;
+        background-color: #fff;
+        
+     }
+
+   
+
+    .monfooter{
+        background-color: #f5ff28;
+        height: 35px;
+    }
+    .buttonenregistrer{
+        float: right;
+        background-color: #f5ff28;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .buttonanuler{
+        background-color: #f5ff28;
+        color: red;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+}

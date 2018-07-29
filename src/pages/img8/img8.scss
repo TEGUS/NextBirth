@@ -24,4 +24,41 @@ page-img8 {
       }
     }
   }
+
+  .monimput{
+    width: 30px;
+    margin-top: 11px;
+    height: 20px;
+  }
+
+  .monbutton{
+    width: 100%;
+    height: 40px;
+    background-color: #fccf00;
+  }
+
+  .monalerte{
+    background-color: #ff0024;
+    width: 100%;
+    height: 90px;
+    margin-top: -4px;
+  }
+
+  .datealerte{
+    text-align: center;
+    color:white;
+    margin-left: 20px;
+    font-weight: bold;
+  }
+
+  .contenuealerte{
+    text-align: center;
+    color: white;
+    width: 100%;
+  }
+  .imagealert{
+    margin-top: 15px;
+    height: 40px;
+    width: 40px;
+  }
 }

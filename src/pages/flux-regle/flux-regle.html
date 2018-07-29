@@ -1,0 +1,64 @@
+<ion-header>
+  <navbar [title]="'Flux Des Règles'"></navbar>
+</ion-header>
+
+
+
+<ion-content padding class="lecorps">
+    
+  <ion-card class="question">
+      <ion-card-content>
+        <ion-row class="montext">
+            Avez-vous vu vos règles ce jour ?
+        </ion-row>   
+        <button class="monbuton"> oui</button>
+        <button class="monbuton">non</button>
+      </ion-card-content>
+   </ion-card>
+
+   <ion-card class="question2">
+      <ion-card-content>
+        <ion-row class="montext2">
+            Comment etais le flux ?
+        </ion-row>   
+        <select name="" id="" class="monselect">
+           <option value="habituel">habituel</option>
+           <option value="ihabituel">ihabituel</option>
+           <option value="tres abondant">annormal</option>
+        </select>
+      </ion-card-content>
+  </ion-card>
+
+  <ion-card class="question3">
+    <ion-card-content>
+      <ion-row class="montext3">
+          Veuillez décrire le flux habituel ?
+      </ion-row>   
+      <ion-row class="lignejour1">
+        jour1 : <img (click)="img1j1()" src="assets/imgs/jour1.png" class="b1imjour1"> <img src="assets/imgs/jour2.png" class="b1imjour1"> <img src="assets/imgs/jour2.png" class="b1imjour1">
+      </ion-row>
+
+      <ion-row class="lignejour2">
+        jour2 : <img (click)="img1j1()" src="assets/imgs/jour1.png" class="b1imjour1"> <img src="assets/imgs/jour2.png" class="b1imjour1"> <img src="assets/imgs/jour2.png" class="b1imjour1">
+      </ion-row>
+
+
+      <ion-row class="lignejour3">
+        jour3 : <img (click)="img1j1()" src="assets/imgs/jour1.png" class="b1imjour1"> <img src="assets/imgs/jour2.png" class="b1imjour1"> <img src="assets/imgs/jour2.png" class="b1imjour1">
+      </ion-row>
+
+      <ion-row class="moncheckbox">
+          <ion-checkbox class="selectioncheck" color="danger" checked="true"></ion-checkbox> 
+           <p class="moncheckboxtext">Ne plus me poser cette question </p>  
+      </ion-row>
+      
+    
+    </ion-card-content>
+</ion-card>
+</ion-content>
+
+<ion-footer class="monfooter">
+  <button ion-button  clear icon-right (click)="submit()">
+      <ion-icon class="monsuivant" name="arrow-forward"> SUIVANT</ion-icon>
+  </button>
+</ion-footer>

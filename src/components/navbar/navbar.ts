@@ -36,4 +36,6 @@ export class NavbarComponent {
       }, 2000)
     });
   }
+
+  
 }
