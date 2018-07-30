@@ -19,162 +19,98 @@
     </ion-col>
   </ion-row>
 
-  <br>
-  <br>
+  <br><br>
 
   <div *ngIf="testeur==0">
-    <ion-row>
-      <ion-col>
-        <p class="text">Non du produit</p>
-      </ion-col>
-      <ion-col>
-        <ion-input class="monimput" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
+    <form [formGroup]="form" (submit)="addTreatment()">
+      <ion-row>
+        <ion-col>
+          <p class="text">Non du produit</p>
+        </ion-col>
+        <ion-col>
+          <ion-input class="monimput" type="text" formControlName="name"></ion-input>
+        </ion-col>
+      </ion-row>
 
-    <ion-row class="maligne">
-      <ion-col>
-        <p class="text">Frequence de prise</p>
-      </ion-col>
-      <ion-col>
-        <select name="" id="" class="monselect">
-          <option value="habituel">Grossesse évolutive</option>
-          <option value="ihabituel">ihabituel</option>
-          <option value="tres abondant">annormal</option>
-        </select>
-      </ion-col>
-    </ion-row>
+      <ion-row class="maligne">
+        <ion-col>
+          <p class="text">Frequence de prise</p>
+        </ion-col>
+        <ion-col>
+          <select formControlName="frequencePrise" class="monselect">
+            <option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</option>
+          </select>
+        </ion-col>
+      </ion-row>
 
-    <ion-row class="maligne">
-      <ion-col>
-        <p class="text">Horaire de la 1ère prise</p>
-      </ion-col>
-      <ion-col>
-        <ion-input class="monimput" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
+      <ion-row class="maligne">
+        <ion-col>
+          <p class="text">Durée du traitement</p>
+        </ion-col>
+        <ion-col>
+          <ion-input class="monimput" type="number" formControlName="dureeTraitement"></ion-input>
+        </ion-col>
+      </ion-row>
 
-    <ion-row class="maligne">
-      <ion-col>
-        <p class="text">Durée du traitement</p>
-      </ion-col>
-      <ion-col>
-        <ion-input class="monimput" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
+      <ion-row class="maligne">
+        <ion-col col-6>
+          <p class="text">Date du début</p>
+        </ion-col>
+        <ion-col col-4>
+          <ion-input class="monimput2" disabled="true" type="text" formControlName="dateDebutTraitement"></ion-input>
+        </ion-col>
+        <ion-col col-2 (click)="datePicker.open()">
+          <ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>
+        </ion-col>
+      </ion-row>
 
-    <ion-row class="maligne">
-      <ion-col col-6>
-        <p class="text">Date du début</p>
-      </ion-col>
-      <ion-col col-4>
-        <ion-input class="monimput2" type="text"></ion-input>
-      </ion-col>
-      <ion-col col-2>
-        <ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>
-      </ion-col>
-    </ion-row>
+      <ion-datetime #datePicker text-center
+                    (ionChange)="dateDebutTraitementChanged($event)" hidden="true">
+      </ion-datetime>
 
-    <ion-row class="maligne">
-      <ion-col>
-        <p class="text">Jours du cycle</p>
-      </ion-col>
-      <ion-col>
-        <select name="" id="" class="monselect">
-          <option value="habituel">Grossesse évolutive</option>
-          <option value="ihabituel">ihabituel</option>
-          <option value="tres abondant">annormal</option>
-        </select>
-      </ion-col>
-    </ion-row>
+      <ion-row class="maligne">
+        <ion-col col-6>
+          <p class="text">Horaire de la 1ère prise</p>
+        </ion-col>
+        <ion-col col-4>
+          <ion-input class="monimput" disabled="true" type="text" formControlName="horaireFirstPrise"></ion-input>
+        </ion-col>
+        <ion-col col-2 (click)="timePicker.open()">
+          <ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>
+        </ion-col>
+      </ion-row>
 
-    <ion-row class="maligne">
-      <ion-col>
-        <p class="text">Evaluation de l'évolution</p>
-      </ion-col>
-      <ion-col>
-        <ion-input class="monimput" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
+      <ion-datetime #timePicker text-center  pickerFormat="HH mm"
+                    (ionChange)="heureDebutTraitementChanged($event)  " hidden="true">
+      </ion-datetime>
+
+      <ion-row class="maligne">
+        <ion-col>
+          <p class="text">Jour du cycle</p>
+        </ion-col>
+        <ion-col>
+          <ion-input class="monimput" type="number" formControlName="jourCycle"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="maligne">
+        <ion-col>
+          <p class="text">Evaluation de l'évolution</p>
+        </ion-col>
+        <ion-col>
+          <ion-input class="monimput" type="text" formControlName="evaluationEvolution"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <button ion-button type="submit" [disabled]="!form.valid">Add</button>
+    </form>
   </div>
 
   <div *ngIf="testeur==1">
-    <ion-row>
-      <ion-col>
-        <p class="text">Non du produit</p>
-      </ion-col>
-      <ion-col>
-        <ion-input class="monimput" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="maligne">
-      <ion-col>
-        <p class="text">Frequence de prise</p>
-      </ion-col>
-      <ion-col>
-        <select name="" id="" class="monselect">
-          <option value="habituel">Grossesse évolutive</option>
-          <option value="ihabituel">ihabituel</option>
-          <option value="tres abondant">annormal</option>
-        </select>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="maligne">
-      <ion-col>
-        <p class="text">Horaire de la 1ère prise</p>
-      </ion-col>
-      <ion-col>
-        <ion-input class="monimput" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="maligne">
-      <ion-col>
-        <p class="text">Durée du traitement</p>
-      </ion-col>
-      <ion-col>
-        <ion-input class="monimput" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="maligne">
-      <ion-col col-6>
-        <p class="text">Date du début</p>
-      </ion-col>
-      <ion-col col-4>
-        <ion-input class="monimput2" type="text"></ion-input>
-      </ion-col>
-      <ion-col col-2>
-        <ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="maligne">
-      <ion-col>
-        <p class="text">Jours du cycle</p>
-      </ion-col>
-      <ion-col>
-        <select name="" id="" class="monselect">
-          <option value="habituel">Grossesse évolutive</option>
-          <option value="ihabituel">ihabituel</option>
-          <option value="tres abondant">annormal</option>
-        </select>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="maligne">
-      <ion-col>
-        <p class="text">Evaluation de l'évolution</p>
-      </ion-col>
-      <ion-col>
-        <ion-input class="monimput" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
+    Traitements encours..
   </div>
 
-  <ion-fab bottom right class="monsuperbutton">
+  <ion-fab bottom right class="monsuperbutton" *ngIf="testeur==1">
     <button ion-fab>
       <ion-icon name="add"></ion-icon>
     </button>

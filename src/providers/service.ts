@@ -1,8 +1,8 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {currentHost} from "../host/host";
-import {LocalStorageProvider} from "./localstorage";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from "rxjs/Observable";
+import { currentHost } from "../host/host";
+import { LocalStorageProvider } from "./localstorage";
 
 /*
   Generated class for the ServiceProvider provider.
@@ -17,7 +17,7 @@ export class ServiceProvider {
 
   constructor(public http: HttpClient, public localStorage: LocalStorageProvider) {
     this.initHeaders().then(next => {
-      this.headers = next;
+       this.headers = next;
     });
     this.host = currentHost;
   }
@@ -147,7 +147,6 @@ export class ServiceProvider {
     );
   }
 
-
   /**
    * Retourne les détails sur un article
    * @returns {Observable<any>}
@@ -155,6 +154,33 @@ export class ServiceProvider {
   getArticle(id): Observable<any> {
     return this.http.get(
       this.host + 'article/' + id,
+      this.headers
+    );
+  }
+
+
+  ////--- PILULIER
+
+  /**
+   * Ajouter une traitement(produit) au Pilulier
+   * @param treatment
+   * @returns {Observable<any>}
+   */
+  addTreatment(treatment): Observable<any> {
+    return this.http.post(
+      this.host + 'medicaments',
+      treatment,
+      this.headers
+    );
+  }
+
+  /**
+   * Les différentes fréquences de prise de traitement
+   * @returns {Observable<any>}
+   */
+  getFrequencesPrise(): Observable<any> {
+    return this.http.get(
+      this.host + 'medicament/config',
       this.headers
     );
   }
