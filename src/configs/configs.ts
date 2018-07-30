@@ -1,7 +1,6 @@
-
-export var Session:any = {
-    user:null,
-    toke:null,
-    mode:null
+export var Session: any = {
+  user: null,
+  toke: null,
+  mode: null
 };
 

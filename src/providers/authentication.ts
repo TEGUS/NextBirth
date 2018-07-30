@@ -31,8 +31,6 @@ export class AuthenticationProvider {
       headers['Authorization'] = 'Basic ' + btoa(login + ':' + pwd);
     }
 
-    
-
     return {
       headers: new HttpHeaders(headers)
     };
