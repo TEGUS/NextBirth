@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from "rxjs/Observable";
-import { currentHost } from "../host/host";
-import { LocalStorageProvider } from "./localstorage";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from "rxjs/Observable";
+import {currentHost} from "../host/host";
+import {LocalStorageProvider} from "./localstorage";
 
 /*
   Generated class for the ServiceProvider provider.
@@ -17,25 +17,25 @@ export class ServiceProvider {
 
   constructor(public http: HttpClient, public localStorage: LocalStorageProvider) {
     this.initHeaders().then(next => {
-       this.headers = next;
+      this.headers = next;
     });
     this.host = currentHost;
   }
 
   initHeaders() {
-    
     return new Promise((resolve, reject) => {
       this.localStorage.getKey('session').then(next => {
-           let o = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          };
-          if (next !== null) {
-            o['Authorization']='Bearer ' + next.token;
-          }
-          resolve({
-            headers: new HttpHeaders(o)
-          });
+        let o = {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        };
+        if (next !== null) {
+          o['Authorization'] = 'Bearer ' + next.token;
+        }
+        console.log(o);
+        resolve({
+          headers: new HttpHeaders(o)
+        });
       }, error => {
         reject('No session on local storage!');
       })
@@ -146,7 +146,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
 
   /**
    * Retourne les détails sur un article
