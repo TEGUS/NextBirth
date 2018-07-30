@@ -6,14 +6,16 @@
 
 <ion-content padding>
   <div class="content">
+    
+    
     <show-date
       [libelle]="'Veuillez entrer la date de vos dernières règles'"
       (outputDate)="dateLastMentruation($event)">
     </show-date>
 
-    <show-date
+    <!--<show-date
       [libelle]="'Ou votre date d accouchement'">
-    </show-date>
+    </show-date>-->
 
     <input-element
       [libelle]="'Durée Menstrues'"
