@@ -86,7 +86,7 @@ export class LoginPage {
   }
 
   signup() {
-    this.navCtrl.push(SignUpPage);
+    this.navCtrl.push("SignUpPage");
   }
 
   presentToast(message: any) {

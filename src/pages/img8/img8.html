@@ -3,19 +3,50 @@
 </ion-header>
 
 <ion-content>
-  <div padding-left padding-right padding-bottom>
-    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; color: white;">
-      <input-element [libelle]="'Ovulation dans'" [type]="'number'"></input-element>
-      <input-element [libelle]="'Règles dans'" [type]="'number'"></input-element>
-    </div>
 
-    <hr>
+  <ion-row>
+     <ion-col col-4>
+        <p>Ovulation dans</p>
+     </ion-col>
+     <ion-col col-2>
+        <input class="monimput" type="text">
+    </ion-col>
+    <ion-col col-4>
+        <p>Règle dans</p>
+    </ion-col>
+    <ion-col col-2>
+        <input class="monimput" type="text">
+    </ion-col>
 
-    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
-      <button ion-button color="primary" style="color: white; text-transform: capitalize;">Signaler un soucis</button>
-      <button ion-button color="primary" style="color: white; text-transform: capitalize;">Signaler un soucis</button>
-    </div>
-  </div>
+  </ion-row>
+    
+  <ion-row>
+    <ion-col col-6>
+       <button class="monbutton">Signaler un câlin</button>
+    </ion-col>
+    <ion-col col-6>
+        <button class="monbutton">Signaler un souci</button>
+      </ion-col>
+  </ion-row>
+
+  
+
+    <p  class="monalerte">
+      <ion-row>
+          <ion-col col-2>
+            <img (click)="img1j1()"  src="assets/imgs/alert.png" class="imagealert">
+          </ion-col>
+          <ion-col col-10>
+               <p class="datealerte">Mardi 06 mars 2018 </p>
+               <p class="contenuealerte">Alerte rouge! Port risqué de conception en cette periode </p>
+          </ion-col>
+
+      </ion-row>
+       
+    </p>
+
+
+  
 
   <ion-grid>
     <ion-row style="height: 105px;" *ngFor="let item of items" (click)="selectArticle(item.id)">
@@ -29,7 +60,7 @@
         <p>{{item.content | slice:0:30}}...</p>
       </ion-col>
       <ion-col col-2 class="button-submit">
-        <img src="assets/imgs/maflecherouge.png" alt="" width="15" height="30">
+        <img src="assets/imgs/maflecherouge.png" alt="" width="20" height="40">
       </ion-col>
     </ion-row>
   </ion-grid>

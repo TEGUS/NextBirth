@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {ServiceProvider} from "../../providers/service";
-import {ArticleDetailPage} from "../article-detail/article-detail";
 
 @IonicPage()
 @Component({
@@ -43,8 +42,10 @@ export class Img8Page {
 
   selectArticle(id) {
     console.log(id);
-    this.navCtrl.push(ArticleDetailPage, {
+    this.navCtrl.push("ArticleDetailPage", {
       id: id
     })
   }
+
+  
 }

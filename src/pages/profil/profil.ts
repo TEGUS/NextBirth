@@ -2,9 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, AlertController, NavParams, LoadingController, ToastController} from 'ionic-angular';
 import {LocalStorageProvider} from '../../providers/localstorage';
 import {ServiceProvider} from "../../providers/service";
-import {ModeContraceptionPage} from "../mode-contraception/mode-contraception";
-import {QuestionContraceptionPage} from "../question-contraception/question-contraception";
-import {Img8Page} from "../img8/img8";
+
 import * as codesMode from "../../components/mode/mode";
 
 /**
@@ -192,20 +190,20 @@ export class ProfilPage {
 
         switch (mode.code) {
           case codesMode.CONTPL:
-            this.navCtrl.setRoot(ModeContraceptionPage, {
+            this.navCtrl.setRoot("ModeContraceptionPage", {
               title: mode.intitule
             })
             break;
           case codesMode.CONTPR:
-            this.navCtrl.setRoot(ModeContraceptionPage, {
+            this.navCtrl.setRoot("ModeContraceptionPage", {
               title: mode.intitule
             })
             break;
           case codesMode.GRS:
-            this.navCtrl.setRoot(QuestionContraceptionPage)
+            this.navCtrl.setRoot("QuestionContraceptionPage")
             break;
           case codesMode.GEST:
-            this.navCtrl.setRoot(Img8Page)
+            this.navCtrl.setRoot("Img8Page")
             break;
         }
       });

@@ -55,7 +55,7 @@ export class LocalStorageProvider {
       this.storage.get(this.key).then((data) => {
         if (data == null) {
           failed();
-        } else {
+        }else {
           Session.user = data;
           Session.token = data.token;
           resolve(data);
