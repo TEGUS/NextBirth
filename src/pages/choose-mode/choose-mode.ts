@@ -55,6 +55,7 @@ export class ChooseModePage {
 
   selectMode(mode) {
 
+ 
     let loading = this.loadingCtrl.create();
     loading.present();
     this.checkProfile().then(next => {
@@ -86,7 +87,7 @@ export class ChooseModePage {
                   sound: 'file://assets/imgs/notification.mp3'
                 }
 
-                listesNotification.push(manotification);
+                listesNotification.push("manotification");
                 i++;
             
             });
@@ -113,13 +114,13 @@ export class ChooseModePage {
           switch (mode.code) {
             case codesMode.CONTPL:
               loading.dismiss();
-              this.navCtrl.push(ModeContraceptionPage, {
+              this.navCtrl.push("ModeContraceptionPage", {
                 title: mode.intitule
               })
               break;
             case codesMode.CONTPR:
               loading.dismiss();
-              this.navCtrl.push(ModeContraceptionPage, {
+              this.navCtrl.push("ModeContraceptionPage", {
                 title: mode.intitule
               })
               break;
@@ -133,13 +134,13 @@ export class ChooseModePage {
                       {
                         text: 'Non',
                         handler: () => {
-                          this.navCtrl.push(ReportPage)
+                          this.navCtrl.push("ReportPage")
                         }
                       },
                       {
                         text: 'Oui',
                         handler: () => {
-                          this.navCtrl.push(QuestionContraceptionPage, {
+                          this.navCtrl.push("QuestionContraceptionPage", {
                             infos_desir_grossesse: next.infos_desir_grossesse
                           })
                         }
@@ -148,7 +149,7 @@ export class ChooseModePage {
                   });
                   alert.present();
                 } else {
-                  this.navCtrl.push(QuestionContraceptionPage)
+                  this.navCtrl.push("QuestionContraceptionPage")
                 }
               }, error => {
                 console.error(error)
@@ -157,7 +158,7 @@ export class ChooseModePage {
               break;
             case codesMode.GEST:
               loading.dismiss();
-              this.navCtrl.push(Img8Page)
+              this.navCtrl.push("ReportPage")
               break;
           }
         });

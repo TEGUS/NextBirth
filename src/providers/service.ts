@@ -147,6 +147,7 @@ export class ServiceProvider {
     );
   }
 
+
   /**
    * Retourne les détails sur un article
    * @returns {Observable<any>}
