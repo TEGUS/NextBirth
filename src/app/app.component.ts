@@ -70,9 +70,6 @@ export class MyApp {
           this.menuCtrl.enable(true, 'sideMenu');
 
           this.localStorage.getKey('mode').then(mode => {
-             console.log("===============================");
-             console.log(mode);
-             console.log("===============================");
              
              //this.rootPage = "ChooseModePage";
              //this.rootPage = "TimelinetestPage";
@@ -92,20 +89,21 @@ export class MyApp {
                    loading.present();
                    this.checkProfileDesirGrossesse().then((next: any) => {
                      loading.dismiss()
-                     this.rootPage = next.status ? "ReportPage" : "QuestionContraceptionPage";
+                     this.rootPage = next.status ? "PilulierPage" : "QuestionContraceptionPage";
                    }, error => {
                      console.error(error)
                      loading.dismiss();
                    })
                    break;
                   case codesMode.GEST:
-                   this.rootPage = "ReportPage"
+                   this.rootPage = "PilulierPage"
                    break;
                }
               } else {
                this.rootPage = "ChooseModePage"
               }
 
+              //ReportPage
 
           });
         } else {
