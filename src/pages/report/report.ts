@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams, AlertController} from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams, AlertController, ModalController, ModalOptions, Modal} from 'ionic-angular';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import {ServiceProvider} from "../../providers/service";
 import {Camera, CameraOptions} from '@ionic-native/camera';
@@ -19,7 +19,7 @@ export class ReportPage {
       image:'0'
   }
 
-  constructor(public navCtrl: NavController,private alertCtrl: AlertController, private base64: Base64, public navParams: NavParams, private localNotifications: LocalNotifications,
+  constructor(public navCtrl: NavController,private modal: ModalController,private alertCtrl: AlertController, private base64: Base64, public navParams: NavParams, private localNotifications: LocalNotifications,
               public loadingCtrl: LoadingController,private camera: Camera, public services: ServiceProvider
   ) {
     // Schedule delayed notification
@@ -120,9 +120,49 @@ export class ReportPage {
            
             
             
-    }, (err) =>{
+        }, (err) =>{
 
-    })
+        })
+    }
+
+
+    openModal(){
+
+        const myModalOptions: ModalOptions = {
+          enableBackdropDismiss: false
+        };
+    
+        const myModalData = {
+          name: 'Paul Halliday',
+          occupation: 'Developer'
+        };
+    
+        const myModal: Modal = this.modal.create('MonmodalPage', { data: myModalData }, myModalOptions);
+    
+        myModal.present();
+    
+        myModal.onDidDismiss((data) => {
+          console.log("I have dismissed.");
+          console.log(data);
+        });
+    
+        myModal.onWillDismiss((data) => {
+          console.log("I'm about to dismiss");
+          console.log(data);
+        });
+  
+    }
+
+    mesbonmoment(){
+
+      this.navCtrl.push("MesbonmomentPage", {
+      })
+    }
+
+    
+
+    
+
 }
 
-}
+

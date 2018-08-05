@@ -1,0 +1,54 @@
+<!--
+  Generated template for the MonmodalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header color="primary">
+
+  <button style="height: 50px;" (click)="closeModal()" ion-button full>Close</button>
+
+</ion-header>
+
+
+<ion-content padding>
+      
+
+  <div  class="mebouttons">
+    <button  style="background-color: #1b9eea" ion-button icon-start  (click)="takephotos()">
+      <ion-icon  name="camera"></ion-icon>
+    </button>
+    <button  style="background-color: #1b9eea" ion-button icon-start  (click)="takegalerie()">
+        <ion-icon  name="md-images"></ion-icon>
+      </button>
+    <button style="background-color: #cc0c0c"  ion-button icon-start  (click)="deleteall()">
+      <ion-icon  name="md-trash"></ion-icon>
+    </button>
+    <button style="background-color: #251f79" ion-button icon-start  (click)="annuler()">
+      <ion-icon name="md-refresh"></ion-icon>
+    </button>
+  </div>
+
+  <ion-card style="height: 37%; width: 95%;" *ngIf="testeur==1">
+    <img style="height: 100%; width: 100%;" src="{{noteGrosesse.image}}" alt="">
+  </ion-card>
+
+  <div class="blockbuttontext">
+      <input class="moninput" [(ngModel)]="noteGrosesse.libelle" type="text"   placeholder="Entrer le libele">
+  </div>
+
+  <div class="blockbuttontext">
+      <input class="moninput" [(ngModel)]="noteGrosesse.description" type="text"   placeholder="Entrer la description">
+  </div>
+
+
+
+
+  <div class="blockbutton">
+      <button  ion-button class="colors"  block (click)="save()">
+            ENREGISTRER
+          <ion-icon name="arrow-forward" float-right class="monicon"></ion-icon>
+      </button>
+  </div>
+
+</ion-content>

@@ -185,4 +185,37 @@ export class ServiceProvider {
       this.headers
     );
   }
+
+
+
+
+  //////////////////////////////
+
+
+   /**
+   * Ajouter une traitement(produit) au Pilulier
+   * @param treatment
+   * @returns {Observable<any>}
+   */
+  saveNote(note): Observable<any> {
+    return this.http.post(
+      this.host + 'grossesse/notes',
+      note,
+      this.headers
+    );
+  }
+
+  /**
+   * Les différentes fréquences de prise de traitement
+   * @returns {Observable<any>}
+   */
+  getAllNote(): Observable<any> {
+    return this.http.get(
+      this.host + 'grossesse/notes',
+      this.headers
+    );
+  }
+
+
+  
 }
