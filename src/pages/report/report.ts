@@ -98,6 +98,8 @@ export class ReportPage {
   takenote(){
    this.presentPrompt()
   }
+
+  
   takephotos(){
 
     const options: CameraOptions = {
