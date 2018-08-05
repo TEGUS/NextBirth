@@ -103,8 +103,17 @@
         </ion-col>
       </ion-row>
 
-      <button ion-button type="submit" [disabled]="!form.valid">{{currentTreatment == null ? 'Add' : 'Update'}}</button>
-      <button ion-button type="reset">Cancel</button>
+      <!--<button ion-button type="submit" [disabled]="!form.valid">{{currentTreatment == null ? 'Add' : 'Update'}}</button>-->
+      <!--<button ion-button type="reset">Cancel</button>-->
+
+      <ion-fab bottom right>
+        <button ion-fab mini type="reset">
+          <ion-icon name="close"></ion-icon>
+        </button>
+        <button ion-fab mini type="submit" [disabled]="!form.valid">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </button>
+      </ion-fab>
     </form>
   </div>
 
@@ -124,7 +133,7 @@
   </div>
 
   <ion-fab bottom right class="monsuperbutton" *ngIf="testeur==1">
-    <button ion-fab>
+    <button ion-fab (click)="changetesteur1()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

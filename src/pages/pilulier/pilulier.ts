@@ -174,6 +174,9 @@ export class PilulierPage {
   }
 
   gotoDelete(item) {
+    // const date = new Date("1970-01-01T10:48:00-05:00");
+    // console.log(date.getUTCHours())
+    // console.log(date.getMinutes())
     let alert = this.alertCtrl.create({
       title: 'Confirm purchase',
       message: 'Do you want to delete this treatement?',
