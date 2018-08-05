@@ -1,16 +1,16 @@
 import {NgModule} from '@angular/core';
 import {IonicPageModule} from 'ionic-angular';
-import {Img9Page} from './img9';
+import {CalendarPage} from './calendar';
 import {NavbarModule} from "../../components/navbar/navbar.module";
 
 @NgModule({
   declarations: [
-    Img9Page,
+    CalendarPage,
   ],
   imports: [
     NavbarModule,
-    IonicPageModule.forChild(Img9Page),
+    IonicPageModule.forChild(CalendarPage),
   ],
 })
-export class Img9PageModule {
+export class CalendarPageModule {
 }

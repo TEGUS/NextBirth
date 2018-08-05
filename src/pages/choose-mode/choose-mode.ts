@@ -27,7 +27,6 @@ export class ChooseModePage {
   }
 
   ionViewDidLoad() {
-   
     this.getAllcategories();
   }
 
@@ -54,57 +53,44 @@ export class ChooseModePage {
   }
 
   selectMode(mode) {
-
- 
     let loading = this.loadingCtrl.create();
     loading.present();
     this.checkProfile().then(next => {
       console.log(next);
       if (next) {
         this.services.selectMode(mode.id).subscribe(alerts => {
+          let listesNotification = [];
+          var i = 0;
+          alerts.forEach(element => {
+            /*console.log("==========================================");
+            console.log(new Date().getTime() + (60*1000)*(i+1))
+            console.log(new Date());
+            console.log(new Date(element.date_alert));
+            alert(new Date(element.date_alert));
+            console.log(new Date(element.date_alert).getTime());
+            console.log(element._embedded.conseil.description);
+            console.log("==========================================");
+            */
 
-            let listesNotification = [];
-            var i = 0;
-            
-            alerts.forEach(element => {
-                /*console.log("==========================================");
-                console.log(new Date().getTime() + (60*1000)*(i+1))
-                console.log(new Date());
-                console.log(new Date(element.date_alert));
-                alert(new Date(element.date_alert));
-                console.log(new Date(element.date_alert).getTime());
-                console.log(element._embedded.conseil.description);
-                console.log("==========================================");
-                */
-                
+            let manotification = {
+              id: i + 1,
+              text: element._embedded.conseil.description,
+              //trigger: {at: new Date(new Date().getTime() + (60*1000)*(i+1))},
+              trigger: {at: new Date((new Date(element.date_alert)).getTime())},
+              led: 'FF0000',
+              sound: 'file://assets/imgs/notification.mp3'
+            }
 
-                let manotification = {
-                  id:i+1,
-                  text: element._embedded.conseil.description,
-                  //trigger: {at: new Date(new Date().getTime() + (60*1000)*(i+1))},
-                  trigger: {at: new Date((new Date(element.date_alert)).getTime())},
-                  led: 'FF0000',
-                  sound: 'file://assets/imgs/notification.mp3'
-                }
+            listesNotification.push("manotification");
+            i++;
+          });
 
-                listesNotification.push("manotification");
-                i++;
-            
-            });
-
-         
-
-          if(i == alerts.length){
-            
+          if (i == alerts.length) {
             this.localNotifications.schedule(
               listesNotification
             );
           }
-          
-          
           this.localStorage.storeModeInSession(mode);
-
-
         }, error => {
           loading.dismiss();
           console.error(error);

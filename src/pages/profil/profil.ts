@@ -40,7 +40,7 @@ export class ProfilPage {
       console.log(mode);
       this.modeSelectedExist = mode !== null ? true : false;
     });
-    
+
 
     this.object = {
       diabete: 0,
@@ -95,7 +95,7 @@ export class ProfilPage {
   }
 
   getPoids(poids) {
-    
+
   }
 
   getNombreGrossesse(nombreGrossesse) {
@@ -130,7 +130,6 @@ export class ProfilPage {
   }
 
   updateProfile() {
-
     this.checkValues().then(next => {
       this.object.diabete = this.object.diabete ? 1 : 0;
       this.object.hta = this.object.hta ? 1 : 0;
@@ -145,11 +144,11 @@ export class ProfilPage {
         "dateNaissance": this.ladate
       }
 
-    
       let loading = this.loadingCtrl.create();
       loading.present();
       this.services.updateprofile(this.object).subscribe(next => {
         console.log(next)
+        this.localStorage.updatePatientStorage(next);
       }, error => {
         loading.dismiss();
         console.log(error);
@@ -188,7 +187,7 @@ export class ProfilPage {
       loading.onDidDismiss(() => {
         this.localStorage.removeKey('modeSelected');
         this.localStorage.setKey("mode", mode);
-        
+
         switch (mode.code) {
           case codesMode.CONTPL:
             this.navCtrl.setRoot("ModeContraceptionPage", {
@@ -207,8 +206,6 @@ export class ProfilPage {
             this.navCtrl.setRoot("ReportPage")
             break;
         }
-
-
       });
     });
   }
