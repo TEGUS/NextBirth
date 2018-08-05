@@ -176,9 +176,16 @@ export class CalendarPage {
 
         this.initSaignementOvulation(dateDebutDernierRegle, patient);
 
-        //Etablicement du cycle sur 6 mois
-        let newDateDebutDernierRegle = new Date(dateDebutDernierRegle)
-        for (let i = 1; i < 6; i++) {
+        //Etablicement du cycle sur 12 mois!
+        let newDateDebutDernierRegle = new Date(dateDebutDernierRegle);
+
+        // let nbYear = (new Date()).getFullYear() - newDateDebutDernierRegle.getFullYear();
+        // let nbMois = nbYear * 12;
+        // nbMois = (nbMois === 0) ? 6 : (nbMois + 6);
+        //
+        // console.log(nbMois);
+
+        for (let i = 1; i < 12; i++) {
           let nbJours = patient.duree_cycle * i
           newDateDebutDernierRegle.setDate(dateDebutDernierRegle.getDate() + nbJours)
           this.initSaignementOvulation(newDateDebutDernierRegle, patient)
