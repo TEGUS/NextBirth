@@ -36,6 +36,7 @@ export class LocalStorageProvider {
     });
   }
 
+  
   getModeInSession() {
     return new Promise((resolve, failed) => {
       this.storage.get(this.keymode).then((data) => {
