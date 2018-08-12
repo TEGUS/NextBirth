@@ -61,7 +61,7 @@ export class ChooseModePage {
         this.services.selectMode(mode.id).subscribe(alerts => {
           let listesNotification = [];
           var i = 0;
-          alerts.forEach(element => {
+          alerts.forEach((element) => {
             /*console.log("==========================================");
             console.log(new Date().getTime() + (60*1000)*(i+1))
             console.log(new Date());
@@ -81,7 +81,7 @@ export class ChooseModePage {
               sound: 'file://assets/imgs/notification.mp3'
             }
 
-            listesNotification.push("manotification");
+            listesNotification.push(manotification);
             i++;
           });
 
