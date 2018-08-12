@@ -27,7 +27,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-       {title: 'Calendrier', component: "Img9Page", icon: 'icon1'},
+       {title: 'Calendrier', component: "CalendarPage", icon: 'icon1'},
        {title: 'Mes situations à risque', component: "MessituationarisquePage", icon: 'icon2'},
        {title: 'Mes mises à jour', component: "MiseajourPage", icon: 'icon4'},
        {title: 'Outils surveillance', component: "SurveillancePage", icon: 'icon6'},
@@ -64,19 +64,19 @@ export class MyApp {
       this.menuCtrl.enable(false);
 
       this.localStorage.getKey('session').then(next => {
-       
+
 
         if (next !== null) {
           this.menuCtrl.enable(true, 'sideMenu');
 
           this.localStorage.getKey('mode').then(mode => {
-             
+
              //this.rootPage = "ChooseModePage";
              //this.rootPage = "TimelinetestPage";
 
 
              if (mode !== null) {
-              
+
               switch (mode.code) {
                 case codesMode.CONTPL:
                    this.rootPage = "ModeContraceptionPage"

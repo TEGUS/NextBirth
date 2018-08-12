@@ -22,7 +22,7 @@
   <br>
 
   <div *ngIf="testeur==0">
-    <form [formGroup]="form" (submit)="addTreatment()">
+    <form [formGroup]="form" (submit)="addTreatment()" (reset)="cancel()">
       <ion-row>
         <ion-col>
           <p class="text">Non du produit</p>
@@ -81,7 +81,8 @@
       </ion-row>
 
       <ion-datetime #timePicker text-center  pickerFormat="HH mm"
-                    (ionChange)="heureDebutTraitementChanged($event)  " hidden="true">
+                    (ionChange)="heureDebutTraitementChanged($event)"
+                    hidden="true">
       </ion-datetime>
 
       <ion-row class="maligne">
@@ -102,16 +103,37 @@
         </ion-col>
       </ion-row>
 
-      <button ion-button type="submit" [disabled]="!form.valid">Add</button>
+      <!--<button ion-button type="submit" [disabled]="!form.valid">{{currentTreatment == null ? 'Add' : 'Update'}}</button>-->
+      <!--<button ion-button type="reset">Cancel</button>-->
+
+      <ion-fab bottom right>
+        <button ion-fab mini type="reset">
+          <ion-icon name="close"></ion-icon>
+        </button>
+        <button ion-fab mini type="submit" [disabled]="!form.valid">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </button>
+      </ion-fab>
     </form>
   </div>
 
   <div *ngIf="testeur==1">
-    Traitements encours..
+    <div *ngFor="let item of treatments">
+      Nom: {{item.name}}<br>
+      Duree: {{item.duree_traitement}}<br>
+      Date Debut: {{item.date_debut_traitement}}<br>
+      Première prise: {{item.horaire_first_prise}}<br>
+      Fréquence de prise: {{item.frequence_prise}}<br>
+      Jour Cycle: {{item.jour_cycle}}<br>
+      Evaluation Evolution: {{item.evaluation_evolution}}<br>
+
+      <button ion-button (click)="gotoUpdate(item)">Update</button>
+      <button ion-button (click)="gotoDelete(item)">Delete</button>
+    </div>
   </div>
 
   <ion-fab bottom right class="monsuperbutton" *ngIf="testeur==1">
-    <button ion-fab>
+    <button ion-fab (click)="changetesteur1()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

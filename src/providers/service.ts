@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from "rxjs/Observable";
-import { currentHost } from "../host/host";
-import { LocalStorageProvider } from "./localstorage";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from "rxjs/Observable";
+import {currentHost} from "../host/host";
+import {LocalStorageProvider} from "./localstorage";
 
 /*
   Generated class for the ServiceProvider provider.
@@ -17,7 +17,7 @@ export class ServiceProvider {
 
   constructor(public http: HttpClient, public localStorage: LocalStorageProvider) {
     this.initHeaders().then(next => {
-       this.headers = next;
+      this.headers = next;
     });
     this.host = currentHost;
   }
@@ -176,6 +176,31 @@ export class ServiceProvider {
   }
 
   /**
+   * Mise à jour d'un traitement
+   * @param treatment
+   * @returns {Observable<any>}
+   */
+  updateTreatment(id, treatment): Observable<any> {
+    return this.http.put(
+      this.host + 'medicament/' + id,
+      treatment,
+      this.headers
+    );
+  }
+
+  /**
+   * Supprimer un traitement
+   * @param id
+   * @returns {Observable<any>}
+   */
+  deleteTreatment(id): Observable<any> {
+    return this.http.delete(
+      this.host + 'medicaments/' + id,
+      this.headers
+    );
+  }
+
+  /**
    * Les différentes fréquences de prise de traitement
    * @returns {Observable<any>}
    */
@@ -218,4 +243,14 @@ export class ServiceProvider {
 
 
   
+  /**
+   * Get all treatments
+   * @returns {Observable<any>}
+   */
+  allTreatments(): Observable<any> {
+    return this.http.get(
+      this.host + 'medicaments',
+      this.headers
+    );
+  }
 }

@@ -29,6 +29,13 @@ export class LocalStorageProvider {
     });
   }
 
+  updatePatientStorage(patient) {
+    this.getKey(this.key).then(session => {
+      session.patient = patient
+      this.setKey(this.key, session);
+    });
+  }
+
   getModeInSession() {
     return new Promise((resolve, failed) => {
       this.storage.get(this.keymode).then((data) => {

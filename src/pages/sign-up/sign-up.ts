@@ -11,8 +11,8 @@ import {LocalStorageProvider} from "../../providers/localstorage";
   templateUrl: 'sign-up.html',
 })
 export class SignUpPage {
-  
-  
+
+
   object = null;
   error = null;
   showError = null;
@@ -27,10 +27,10 @@ export class SignUpPage {
 
   ionViewWillLoad() {
     this.object = {
-     
+
       debutDernieresMenstrues: null,
       dureeMenstrues: null,
- 
+
       account: {
         nom: null,
         prenom: null,
@@ -48,6 +48,7 @@ export class SignUpPage {
   }
 
   dateLastMentruation(date) {
+    console.log(date);
     this.object.debutDernieresMenstrues = date;
   }
 
@@ -68,8 +69,6 @@ export class SignUpPage {
   }
 
   signUp() {
-
-
     if (checkField(this.object.account.email) &&
       checkField(this.object.account.plainPassword.first) &&
       checkField(this.object.account.plainPassword.second) &&
@@ -96,8 +95,8 @@ export class SignUpPage {
          // this.error = error.error.errors.children.account.children;
           console.log(this.error);
         }, () => {
-          
-          
+
+
         });
       } else {
         this.setMessageError('Les mots de passe ne sont pas identiques!')
@@ -105,8 +104,6 @@ export class SignUpPage {
     } else {
       this.setMessageError('Veuillez remplir touts les champs!')
     }
-
-
   }
 
   setMessageError(message) {
@@ -123,9 +120,4 @@ export class SignUpPage {
     });
     toast.present();
   }
-
-
-
-
-
 }

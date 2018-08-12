@@ -56,10 +56,10 @@ export class MonmodalPage {
     this.testeur = 1;
     const options: CameraOptions = {
       quality:100,
-      destinationType:0,
+      destinationType:1,
       encodingType:this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: 0
+      sourceType: 1
 
     }
 

@@ -7,7 +7,6 @@ import {MyApp} from './app.component';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {IonicStorageModule} from '@ionic/storage';
-import {SignUpModule} from '../pages/sign-up/sign-up.module';
 import {AuthenticationProvider} from '../providers/authentication';
 import {HttpClientModule} from "@angular/common/http";
 import {ServiceProvider} from '../providers/service';

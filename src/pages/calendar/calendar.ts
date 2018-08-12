@@ -2,9 +2,10 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Calendar} from "@ionic-native/calendar";
 import {LocalStorageProvider} from "../../providers/localstorage";
+import {ServiceProvider} from "../../providers/service";
 
 /**
- * Generated class for the Img9Page page.
+ * Generated class for the CalendarPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,10 +13,10 @@ import {LocalStorageProvider} from "../../providers/localstorage";
 
 @IonicPage()
 @Component({
-  selector: 'page-img9',
-  templateUrl: 'img9.html',
+  selector: 'page-calendar',
+  templateUrl: 'calendar.html',
 })
-export class Img9Page {
+export class CalendarPage {
   private date: any;
   private daysInThisMonth: any;
   private daysInLastMonth: any;
@@ -37,17 +38,25 @@ export class Img9Page {
   private today: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private calendar: Calendar,
-              public localStorage: LocalStorageProvider) {
-    this.calculCycleMenstruel();
-
+              public localStorage: LocalStorageProvider, public services: ServiceProvider) {
     this.monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Img9Page');
+    console.log('ionViewDidLoad CalendarPage');
   }
 
   ionViewWillEnter() {
+    this.checkProfile().then(next => {
+      console.log(next);
+      if (next) {
+        this.calculCycleMenstruel();
+      } else {
+        this.navCtrl.push("ProfilPage");
+      }
+    }, error => {
+      console.error(error);
+    });
     this.today = new Date();
     this.date = new Date();
     this.getDaysOfMonth();
@@ -141,6 +150,17 @@ export class Img9Page {
     // });
   }
 
+  checkProfile() {
+    return new Promise((resolve, reject) => {
+      this.services.checkProfile().subscribe(next => {
+        console.log(next)
+        resolve(next.status);
+      }, error => {
+        reject(error);
+      })
+    });
+  }
+
   calculCycleMenstruel() {
     return new Promise((resolve) => {
       this.localStorage.getKey('session').then(session => {
@@ -152,13 +172,20 @@ export class Img9Page {
         // patient.duree_saignement = 4
 
         //DateDebutDernierRegle
-        let dateDebutDernierRegle = new Date(patient._embedded.infoEvolution.debut_dernieres_menstrues)
+        let dateDebutDernierRegle = new Date(patient.debut_dernieres_menstrues)
 
         this.initSaignementOvulation(dateDebutDernierRegle, patient);
 
-        //Etablicement du cycle sur 6 mois
-        let newDateDebutDernierRegle = new Date(dateDebutDernierRegle)
-        for (let i = 1; i < 6; i++) {
+        //Etablicement du cycle sur 12 mois!
+        let newDateDebutDernierRegle = new Date(dateDebutDernierRegle);
+
+        // let nbYear = (new Date()).getFullYear() - newDateDebutDernierRegle.getFullYear();
+        // let nbMois = nbYear * 12;
+        // nbMois = (nbMois === 0) ? 6 : (nbMois + 6);
+        //
+        // console.log(nbMois);
+
+        for (let i = 1; i < 12; i++) {
           let nbJours = patient.duree_cycle * i
           newDateDebutDernierRegle.setDate(dateDebutDernierRegle.getDate() + nbJours)
           this.initSaignementOvulation(newDateDebutDernierRegle, patient)
