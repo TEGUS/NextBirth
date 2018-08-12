@@ -31,7 +31,7 @@ export class LocalStorageProvider {
 
   updatePatientStorage(patient) {
     this.getKey(this.key).then(session => {
-      session.patient = patient
+      session.user._embedded.patient = patient;
       this.setKey(this.key, session);
     });
   }

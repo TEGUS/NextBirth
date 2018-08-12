@@ -54,8 +54,8 @@ export class LoginPage {
       let loading = this.loadingCtrl.create();
       loading.present();
       this.authProvider.logIn(this.object).subscribe(next => {
+        console.log(next);
         this.mylocalstorage.storeSession(next).then(() => {
-          
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.presentToast('Finish Login!');
@@ -80,7 +80,7 @@ export class LoginPage {
           alert.present();
         }
       }, () => {
-        
+
       });
     } else {
       this.error = {
