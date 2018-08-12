@@ -37,9 +37,13 @@
           <p class="text">Frequence de prise</p>
         </ion-col>
         <ion-col>
-          <select formControlName="frequencePrise" class="monselect">
-            <option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</option>
-          </select>
+          <!--<select (click)="select.open()" formControlName="frequencePrise" class="monselect">-->
+            <!--<option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</option>-->
+          <!--</select>-->
+
+          <ion-select #select formControlName="frequencePrise">
+            <ion-option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</ion-option>
+          </ion-select>
         </ion-col>
       </ion-row>
 
@@ -80,7 +84,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-datetime #timePicker text-center  pickerFormat="HH mm"
+      <ion-datetime #timePicker text-center pickerFormat="HH mm"
                     (ionChange)="heureDebutTraitementChanged($event)"
                     hidden="true">
       </ion-datetime>
@@ -103,17 +107,25 @@
         </ion-col>
       </ion-row>
 
-      <!--<button ion-button type="submit" [disabled]="!form.valid">{{currentTreatment == null ? 'Add' : 'Update'}}</button>-->
-      <!--<button ion-button type="reset">Cancel</button>-->
+      <ion-row>
+        <ion-col>
+          <button ion-button type="submit" [disabled]="!form.valid">
+            {{currentTreatment == null ? 'Add' : 'Update'}}
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button type="reset">Cancel</button>
+        </ion-col>
+      </ion-row>
 
-      <ion-fab bottom right>
-        <button ion-fab mini type="reset">
-          <ion-icon name="close"></ion-icon>
-        </button>
-        <button ion-fab mini type="submit" [disabled]="!form.valid">
-          <ion-icon name="checkmark-circle"></ion-icon>
-        </button>
-      </ion-fab>
+      <!--<ion-fab bottom right>-->
+      <!--<button ion-fab mini type="reset">-->
+      <!--<ion-icon name="close"></ion-icon>-->
+      <!--</button>-->
+      <!--<button ion-fab mini type="submit" [disabled]="!form.valid">-->
+      <!--<ion-icon name="checkmark-circle"></ion-icon>-->
+      <!--</button>-->
+      <!--</ion-fab>-->
     </form>
   </div>
 
