@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ServiceProvider} from "../../providers/service";
+import {LocalNotifications} from "@ionic-native/local-notifications";
 
 /**
  * Generated class for the PilulierPage page.
@@ -29,7 +30,8 @@ export class PilulierPage {
   private timePickerModel = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
-              public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController) {
+              public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
+              private localNotifications: LocalNotifications) {
   }
 
   ionViewWillLoad() {
@@ -163,6 +165,7 @@ export class PilulierPage {
     }, () => {
       loading.dismiss();
       loading.onDidDismiss(() => {
+        this.initScheduleTreatement();
       })
     });
   }
@@ -209,5 +212,33 @@ export class PilulierPage {
       ]
     });
     alert.present();
+  }
+
+  initScheduleTreatement() {
+    if (this.treatments.length === 0)
+      return;
+
+    console.log(this.localNotifications.getAllScheduled());
+    console.log(this.localNotifications.getScheduledIds());
+
+    let notifications = []
+    this.treatments.forEach((item, i) => {
+      notifications.push({
+        id: 'treatment' + i + 1,
+        text: '',
+        trigger: {
+          at: new Date()
+        },
+        led: 'FF0000',
+        sound: 'file://assets/imgs/notification.mp3'
+      })
+    })
+
+    if (notifications.length == this.treatments.length) {
+      this.localNotifications.schedule(notifications);
+
+      console.log(this.localNotifications.getAllScheduled());
+      console.log(this.localNotifications.getScheduledIds());
+    }
   }
 }
