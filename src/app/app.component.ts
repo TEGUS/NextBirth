@@ -26,7 +26,8 @@ export class MyApp {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    this.pages = [
+    this.pages = [  
+       {title: 'Profil', component: "MyprofilsPage", icon: 'icon3'},
        {title: 'Calendrier', component: "CalendarPage", icon: 'icon1'},
        {title: 'Mes situations à risque', component: "MessituationarisquePage", icon: 'icon2'},
        {title: 'Mes mises à jour', component: "MiseajourPage", icon: 'icon4'},
@@ -89,14 +90,14 @@ export class MyApp {
                    loading.present();
                    this.checkProfileDesirGrossesse().then((next: any) => {
                      loading.dismiss()
-                     this.rootPage = next.status ? "PilulierPage" : "QuestionContraceptionPage";
+                     this.rootPage = next.status ? "ReportPage" : "QuestionContraceptionPage";
                    }, error => {
                      console.error(error)
                      loading.dismiss();
                    })
                    break;
                   case codesMode.GEST:
-                   this.rootPage = "PilulierPage"
+                   this.rootPage = "ReportPage"
                    break;
                }
               } else {

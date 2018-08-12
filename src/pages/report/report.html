@@ -24,8 +24,8 @@
       </div>
     </div>
 
-    <div class="report-profile">
-      <img class="profils" src="assets/imgs/user.jpg" alt="">
+    <div class="report-profile" >
+      <img (click)="mesbonmoment()" class="profils" src="assets/imgs/user.jpg" alt="">
       <div class="profile">
         <div class="rep-prof-libelle">
           <label>MA GROSSESSE</label>
@@ -64,7 +64,7 @@
       </ion-col>
       <ion-col class="item-list">
         <label>{{item.title}}</label>
-        <p>{{item.content | slice:0:30}}...</p>
+        <!--<p>{{item.content | slice:0:30}}...</p>-->
       </ion-col>
       <ion-col col-2 class="button-submit">
         <img src="assets/imgs/maflecherouge.png" alt="" width="15" height="30">
@@ -82,9 +82,9 @@
         <button ion-fab>Youtube</button>
       </ion-fab-list>-->
       <ion-fab-list side="left">
-         
-        <button (click)="takenote()"  ion-fab style="background-color:red"><ion-icon name="document"></ion-icon></button>
-        <button (click)="takephotos()"   ion-fab style="background-color:red"><ion-icon name="camera"></ion-icon></button>
+        
+        <button (click)="openModal()"  ion-fab style="background-color:#eb5350"><ion-icon name="document"></ion-icon></button>
+        <button (click)="openModal()"   ion-fab style="background-color:#eb5350"><ion-icon name="camera"></ion-icon></button>
       </ion-fab-list>
   </ion-fab>
 
