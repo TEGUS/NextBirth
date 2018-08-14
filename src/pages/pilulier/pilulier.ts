@@ -31,7 +31,7 @@ export class PilulierPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
-              private localNotifications: LocalNotifications) {
+              private localNotifications: LocalNotifications,) {
   }
 
   ionViewWillLoad() {
@@ -60,7 +60,8 @@ export class PilulierPage {
     })
 
     if (this.currentTreatment !== null) {
-      const date = new Date("2018-08-05T00:00:00+01:00");
+      console.log(this.currentTreatment);
+      let date: Date = new Date(this.currentTreatment.date_debut_traitement);
       this.datePickerModel = {
         year: date.getFullYear(),
         month: date.getMonth() + 1,
@@ -68,12 +69,34 @@ export class PilulierPage {
       }
       this.dateDebutTraitementChanged(this.datePickerModel)
 
-      const horaire = new Date("1970-01-01T12:13:00+01:00");
+      let horaire: Date = new Date(this.currentTreatment.horaire_first_prise);
       this.timePickerModel = {
         hour: horaire.getHours(),
         minute: horaire.getMinutes()
       }
       this.heureDebutTraitementChanged(this.timePickerModel)
+
+
+      // const item = this.currentTreatment;
+      // let initDate = new Date(item.date_debut_traitement)
+      // console.log(initDate);
+      //
+      // let initHoraire: Date = new Date(item.horaire_first_prise);
+      // initDate.setHours(initHoraire.getHours(), initHoraire.getMinutes())
+      // console.log(initDate);
+      //
+      // const dureeTreatment = item.duree_traitement * 24 // 1jr = 24h
+      // console.log(dureeTreatment);
+      // const frequencePrise = item.frequence_prise === 0 ? 6 : (item.frequence_prise === 1 ? 8 : 10)
+      // console.log(frequencePrise);
+      // let nombrePrise: number = (dureeTreatment / frequencePrise) - 1;
+      // console.log(nombrePrise);
+      //
+      // while(nombrePrise >= 1) {
+      //   initDate.setHours(initDate.getHours() + frequencePrise)
+      //   console.log(initDate);
+      //   nombrePrise--;
+      // }
     }
   }
 
@@ -135,6 +158,7 @@ export class PilulierPage {
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.cancel();
+            this.initScheduleTreatement();
           })
         });
       } else {
@@ -147,6 +171,7 @@ export class PilulierPage {
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.cancel();
+            this.initScheduleTreatement();
           })
         });
       }
@@ -154,20 +179,22 @@ export class PilulierPage {
   }
 
   getTreatments() {
-    let loading = this.loadingCtrl.create();
-    loading.present();
-    this.services.allTreatments().subscribe((next: any) => {
-      this.treatments = next;
-      console.log(next)
-    }, error => {
-      console.error(error)
-      loading.dismiss()
-    }, () => {
-      loading.dismiss();
-      loading.onDidDismiss(() => {
-        this.initScheduleTreatement();
-      })
-    });
+    return new Promise(resolve => {
+      let loading = this.loadingCtrl.create();
+      loading.present();
+      this.services.allTreatments().subscribe((next: any) => {
+        this.treatments = next;
+        console.log(next)
+      }, error => {
+        console.error(error)
+        loading.dismiss()
+      }, () => {
+        loading.dismiss();
+        loading.onDidDismiss(() => {
+          resolve(this.treatments);
+        })
+      });
+    })
   }
 
   gotoUpdate(item) {
@@ -215,30 +242,44 @@ export class PilulierPage {
   }
 
   initScheduleTreatement() {
-    if (this.treatments.length === 0)
-      return;
+    this.getTreatments().then(next => {
+      if (this.treatments.length === 0)
+        return;
 
-    console.log(this.localNotifications.getAllScheduled());
-    console.log(this.localNotifications.getScheduledIds());
+      let notifications = []
+      this.treatments.forEach((item: any) => {
+        let initDate = new Date(item.date_debut_traitement)
 
-    let notifications = []
-    this.treatments.forEach((item, i) => {
-      notifications.push({
-        id: 'treatment' + i + 1,
-        text: '',
-        trigger: {
-          at: new Date()
-        },
-        led: 'FF0000',
-        sound: 'file://assets/imgs/notification.mp3'
+        let initHoraire: Date = new Date(item.horaire_first_prise);
+        initDate.setHours(initHoraire.getHours(), initHoraire.getMinutes())
+
+        const dureeTreatment = item.duree_traitement * 24 // 1jr = 24h => duree_traitement * 24
+        const frequencePrise = item.frequence_prise === 0 ? 6 : (item.frequence_prise === 1 ? 8 : 10) //En Heure
+        let nombrePrise: number = (dureeTreatment / frequencePrise) - 1;
+
+        while(nombrePrise >= 1) {
+          initDate.setHours(initDate.getHours() + frequencePrise)
+          console.log(initDate);
+          notifications.push({
+            id: 'Treatement-' + initDate.getTime(),
+            text: 'Prise du médicament : ' + item.name,
+            trigger: {
+              at: new Date(new Date(initDate).getTime())
+            },
+            led: 'FF0000',
+            sound: 'file://assets/imgs/notification.mp3'
+          });
+          nombrePrise--;
+        }
       })
-    })
 
-    if (notifications.length == this.treatments.length) {
       this.localNotifications.schedule(notifications);
-
-      console.log(this.localNotifications.getAllScheduled());
-      console.log(this.localNotifications.getScheduledIds());
-    }
+    }, error => {
+      let alert = this.alertCtrl.create({
+        title: error,
+        buttons: ['Dismiss']
+      });
+      alert.present();
+    })
   }
 }
