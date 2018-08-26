@@ -1,16 +1,11 @@
 import {Component, ViewChild} from '@angular/core';
 import {AlertController, LoadingController, MenuController, Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
-
-
 import {LocalStorageProvider} from "../providers/localstorage";
 import * as codesMode from "../components/mode/mode";
-import {ServiceProvider} from "../providers/service";
-import {Network} from "@ionic-native/network";
 import {FluxReglePage} from '../pages/flux-regle/flux-regle';
 import {SurveillancePage} from '../pages/surveillance/surveillance';
-import {LocalNotifications} from "@ionic-native/local-notifications";
+import {ServiceProvider} from "../providers/service";
 
 @Component({
   templateUrl: 'app.html'
@@ -22,9 +17,10 @@ export class MyApp {
 
   pages: Array<any>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-              public localStorage: LocalStorageProvider, public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController,
-              private localNotifications: LocalNotifications, public alertCtrl: AlertController) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public localStorage: LocalStorageProvider,
+              public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController,
+              public alertCtrl: AlertController) {
+    this.services.initHeaders();
     this.initializeApp();
 
     // used for an example of ngFor and navigation
