@@ -117,6 +117,7 @@ export class MonmodalPage {
       name: 'John Doe',
       occupation: 'Milkman'
     };
+    
     this.view.dismiss(data);
   }
 
@@ -128,11 +129,14 @@ export class MonmodalPage {
     loading.present();
     this.services.saveNote(this.noteGrosesse).subscribe(next => {
       this.closeModal()
+      
     }, error => {
       loading.dismiss();
       console.error(error);
     }, () => {
       loading.dismiss();
+          /*this.navCtrl.push("MesbonmomentPage", {
+          })*/
     });
 
   }

@@ -28,6 +28,8 @@ export class PilulierPage {
   private currentTreatment = null;
   private datePickerModel = null;
   private timePickerModel = null;
+  private madate = null;
+  private monheure = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
@@ -69,6 +71,7 @@ export class PilulierPage {
         month: date.getMonth() + 1,
         day: date.getDate()
       }
+      
       this.dateDebutTraitementChanged(this.datePickerModel)
 
       let horaire: Date = new Date(this.currentTreatment.horaire_first_prise);
@@ -110,12 +113,19 @@ export class PilulierPage {
   dateDebutTraitementChanged(event) {
     console.log(event);
     this.dateDebutTraitement = event;
+    this.madate = event.year + '-' + event.month + '-' + event.day + 'T19:46:57.118Z';
     this.form.patchValue({dateDebutTraitement: event.day + '/' + event.month + '/' + event.year})
   }
 
   heureDebutTraitementChanged(event) {
     console.log(event);
     this.heureDebutTraitement = event;
+    if(event.minute>10){
+      this.monheure = event.hour + ':' + event.minute + ':00';
+    }else{
+      this.monheure = event.hour + ':0' + event.minute + ':00';
+    }
+    
     this.form.patchValue({horaireFirstPrise: event.hour + ':' + event.minute})
   }
 
@@ -140,8 +150,8 @@ export class PilulierPage {
         name: this.form.value.name,
         frequence_prise: Number(this.form.value.frequencePrise),
         duree_traitement: Number(this.form.value.dureeTraitement),
-        date_debut_traitement: this.dateDebutTraitement,
-        horaire_firstPrise: this.heureDebutTraitement,
+        date_debut_traitement: this.madate,
+        horaire_first_prise: this.monheure,
         jour_cycle: Number(this.form.value.jourCycle),
         evaluation_evolution: this.form.value.evaluationEvolution
       }
@@ -261,7 +271,6 @@ export class PilulierPage {
 
         while(nombrePrise >= 1) {
           initDate.setHours(initDate.getHours() + frequencePrise)
-          console.log(initDate);
           notifications.push({
             id: 'Treatement-' + initDate.getTime(),
             text: 'Prise du médicament : ' + item.name,
