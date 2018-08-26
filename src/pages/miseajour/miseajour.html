@@ -4,110 +4,116 @@
 
 
 <ion-content class="monbody">
-  <br>
-  <br>
-  <br>
-  <ion-row>
-    <ion-col col-6>
-      <p class="text">Date</p>
-    </ion-col>
-    <ion-col>
-      <ion-input class="monimput" type="text"></ion-input>
-    </ion-col>
-    <ion-col>
-      <p> kg </p>
-    </ion-col>
-  </ion-row>
-  <ion-row class="maligne">
-    <ion-col col-6>
-      <p class="text">Poids</p>
-    </ion-col>
-    <ion-col>
-      <ion-input class="monimput" type="text"></ion-input>
-    </ion-col>
-    <ion-col>
-      <p> kg </p>
-    </ion-col>
-  </ion-row>
-  <ion-row class="maligne">
-    <ion-col col-6>
-      <p class="text">Taille</p>
-    </ion-col>
-    <ion-col>
-      <ion-input class="monimput" type="text"></ion-input>
-    </ion-col>
-    <ion-col>
-      <p> m </p>
-    </ion-col>
-  </ion-row>
-  <ion-row class="maligne">
-    <ion-col col-6>
-      <p class="text">Taux d'hémoglobine</p>
-    </ion-col>
-    <ion-col>
-      <ion-input class="monimput" type="text"></ion-input>
-    </ion-col>
-    <ion-col>
-      <p> g/dl </p>
-    </ion-col>
-  </ion-row>
-  <ion-row class="maligne">
-    <ion-col col-6>
-      <p class="text">Tension artérielle</p>
-    </ion-col>
-    <ion-col>
-      <ion-input class="monimput" type="text"></ion-input>
-    </ion-col>
-    <ion-col>
-      <p> mmHg </p>
-    </ion-col>
-  </ion-row>
-  <ion-row class="maligne">
-    <ion-col col-6>
-      <p class="text">Glycémie à jeun</p>
-    </ion-col>
-    <ion-col>
-      <ion-input class="monimput" type="text"></ion-input>
-    </ion-col>
-    <ion-col>
-      <p> g/l </p>
-    </ion-col>
-  </ion-row>
-  <ion-row class="maligne">
-    <ion-col col-6>
-      <p class="text">Température vaginale</p>
-    </ion-col>
-    <ion-col>
-      <ion-input class="monimput" type="text"></ion-input>
-    </ion-col>
-    <ion-col>
-      <p> °C </p>
-    </ion-col>
-  </ion-row>
-  <ion-row class="maligne">
-    <ion-col col-6>
-      <p class="text"> Conclusion du dernier CPN </p>
-    </ion-col>
-    <ion-col>
-      <select name="" id="" class="monselect">
-        <option value="habituel">Grossesse évolutive</option>
-        <option value="ihabituel">ihabituel</option>
-        <option value="tres abondant">annormal</option>
-      </select>
-    </ion-col>
+  <br><br><br>
+  <div *ngIf="form != null">
+    <form [formGroup]="form">
+      <!--<ion-row class="maligne">-->
+        <!--<ion-col col-6>-->
+          <!--<p class="text">Date</p>-->
+        <!--</ion-col>-->
+        <!--<ion-col>-->
+          <!--<ion-input (click)="datePicker.open()" disabled="true" formControlName="updated_date" class="monimput" type="text"></ion-input>-->
+        <!--</ion-col>-->
+      <!--</ion-row>-->
+      <!--<ion-datetime #datePicker text-center-->
+                    <!--(ionChange)="dateDebutTraitementChanged($event)" hidden="true">-->
+      <!--</ion-datetime>-->
 
-  </ion-row>
+      <ion-row class="maligne">
+        <ion-col col-6>
+          <p class="text">Poids</p>
+        </ion-col>
+        <ion-col>
+          <ion-input formControlName="poids" class="monimput" type="number"></ion-input>
+        </ion-col>
+        <ion-col>
+          <p> kg </p>
+        </ion-col>
+      </ion-row>
 
+      <ion-row class="maligne">
+        <ion-col col-6>
+          <p class="text">Taille</p>
+        </ion-col>
+        <ion-col>
+          <ion-input formControlName="taille" class="monimput" type="number"></ion-input>
+        </ion-col>
+        <ion-col>
+          <p> m </p>
+        </ion-col>
+      </ion-row>
 
+      <ion-row class="maligne">
+        <ion-col col-6>
+          <p class="text">Taux d'hémoglobine</p>
+        </ion-col>
+        <ion-col>
+          <ion-input formControlName="taux_hemoglobine" class="monimput" type="number"></ion-input>
+        </ion-col>
+        <ion-col>
+          <p> g/dl </p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="maligne">
+        <ion-col col-6>
+          <p class="text">Tension artérielle</p>
+        </ion-col>
+        <ion-col>
+          <ion-input formControlName="tension_arterielle" class="monimput" type="number"></ion-input>
+        </ion-col>
+        <ion-col>
+          <p> mmHg </p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="maligne">
+        <ion-col col-6>
+          <p class="text">Glycémie à jeun</p>
+        </ion-col>
+        <ion-col>
+          <ion-input formControlName="gyclemie_a_jeun" class="monimput" type="number"></ion-input>
+        </ion-col>
+        <ion-col>
+          <p> g/l </p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="maligne">
+        <ion-col col-6>
+          <p class="text">Température vaginale</p>
+        </ion-col>
+        <ion-col>
+          <ion-input formControlName="temperature_vaginale" class="monimput" type="number"></ion-input>
+        </ion-col>
+        <ion-col>
+          <p> °C </p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="maligne">
+        <ion-col col-6>
+          <p class="text">Conclusion du dernier CPN </p>
+        </ion-col>
+        <ion-col>
+          <ion-select formControlName="conclusion_last_c_p_n" class="monselect">
+            <ion-option value="Habituel">Grossesse évolutive</ion-option>
+            <ion-option value="Inhabituel">Inhabituel</ion-option>
+            <ion-option value="Très abondant">Annormal</ion-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
 </ion-content>
 
 <ion-footer class="monfooter">
   <ion-row>
     <ion-col>
-      <button class="buttonanuler">Annuler</button>
+      <button class="buttonanuler" (click)="cancel()">Annuler</button>
     </ion-col>
     <ion-col>
-      <button class="buttonenregistrer">Enregistrer</button>
+      <button class="buttonenregistrer" (click)="submit()">Enregistrer</button>
     </ion-col>
   </ion-row>
   <button></button>

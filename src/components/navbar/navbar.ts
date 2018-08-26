@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Network} from "@ionic-native/network";
+import {ServiceProvider} from "../../providers/service";
 
 
 @Component({
@@ -14,28 +15,27 @@ export class NavbarComponent {
   private showNetworkStatus = false
   private colorNetworkStatus = 'red'
 
-  constructor(public network: Network) {
-
-    console.log(this.network.type);
-    this.checkNetwork();
+  constructor(public network: Network, public service: ServiceProvider) {
+    console.log(this.network.type)
+    this.checkNetwork()
   }
 
   checkNetwork() {
     this.network.onDisconnect().subscribe(next => {
-      this.msg_network = 'Network was disconnected'
-      this.colorNetworkStatus = 'red'
-      this.showNetworkStatus = true
+      this.initNetworkStatus(false);
     });
 
     this.network.onConnect().subscribe(next => {
-      this.msg_network = 'Network connected'
-      this.colorNetworkStatus = 'green'
-      this.showNetworkStatus = true
+      this.initNetworkStatus(true);
       setTimeout(() => {
         this.showNetworkStatus = false
       }, 2000)
     });
   }
 
-  
+  initNetworkStatus(status) {
+    this.msg_network = status ? 'Network connected' : 'Network was disconnected'
+    this.colorNetworkStatus = status ? 'green' : 'red'
+    this.showNetworkStatus = status
+  }
 }

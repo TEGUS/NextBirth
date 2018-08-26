@@ -15,6 +15,7 @@ import {Calendar} from "@ionic-native/calendar";
 import {Network} from "@ionic-native/network";
 import {Camera} from '@ionic-native/camera';
 import {CameraMock} from '../mocks/camera.mock';
+import {NetworkInterface} from "@ionic-native/network-interface";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {CameraMock} from '../mocks/camera.mock';
     {provide: Camera, useClass: CameraMock},
     AuthenticationProvider,
     ServiceProvider,
-    LocalNotifications
+    LocalNotifications,
+    NetworkInterface
   ]
 })
 export class AppModule {
