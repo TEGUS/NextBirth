@@ -42,14 +42,17 @@
           </span>
         </ion-col>
 
-        <ion-col col-1 *ngFor="let day of daysInThisMonth" (click)="selectDate(day)">
-          <span class="event" [style.background-color]="day.color"
-                *ngIf="currentDate != day.day && day.color != 'white'">
-            {{day.day}}
+        <ion-col col-1 *ngFor="let item of daysInThisMonth" (click)="selectDate(item)">
+          <span class="event" [style.background-color]="item.color"
+                *ngIf="currentDate != item.day && item.color != 'white'">
+            {{item.day}}
           </span>
-          <div *ngIf="day.color == 'white'">
-            <span class="currentDate" *ngIf="currentDate === day.day; else otherDate">{{day.day}}</span>
-            <ng-template #otherDate class="otherDate">{{day.day}}</ng-template>
+          <div *ngIf="item.color == 'white'">
+            <span class="currentDate"
+                  *ngIf="currentDate === item.day; else otherDate">
+              {{item.day}}
+            </span>
+            <ng-template #otherDate class="otherDate">{{item.day}}</ng-template>
           </div>
         </ion-col>
 
@@ -67,7 +70,9 @@
 
     <ion-grid class="showpreviousnext">
       <ion-row (click)="goToLastMonth()">{{previousMonth | slice:0:3}}.</ion-row>
-      <ion-row (click)="goToThisMonth()" *ngIf="today != undefined && date != undefined && today.getDate() != date.getDate()">Today.</ion-row>
+      <ion-row (click)="goToThisMonth()"
+               *ngIf="today != undefined && date != undefined && today.getDate() != date.getDate()">Today.
+      </ion-row>
       <ion-row (click)="goToNextMonth()">{{nextMonth | slice:0:3}}.</ion-row>
     </ion-grid>
   </div>

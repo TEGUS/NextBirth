@@ -13,6 +13,8 @@ import {ServiceProvider} from '../providers/service';
 import {LocalStorageProvider} from '../providers/localstorage';
 import {Calendar} from "@ionic-native/calendar";
 import {Network} from "@ionic-native/network";
+import {Camera} from '@ionic-native/camera';
+import {CameraMock} from '../mocks/camera.mock';
 
 @NgModule({
   declarations: [
@@ -35,10 +37,10 @@ import {Network} from "@ionic-native/network";
     StatusBar,
     Calendar,
     Network,
-    // Storage,
     LocalStorageProvider,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: Camera, useClass: CameraMock},
     AuthenticationProvider,
     ServiceProvider,
     LocalNotifications
