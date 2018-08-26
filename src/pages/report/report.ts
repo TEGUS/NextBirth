@@ -19,7 +19,8 @@ export class ReportPage {
       image:'0'
   }
 
-  constructor(public navCtrl: NavController,private modal: ModalController,private alertCtrl: AlertController, private base64: Base64, public navParams: NavParams, private localNotifications: LocalNotifications,
+  constructor(public navCtrl: NavController,private modal: ModalController,private alertCtrl: AlertController,
+              private base64: Base64, public navParams: NavParams, private localNotifications: LocalNotifications,
               public loadingCtrl: LoadingController,private camera: Camera, public services: ServiceProvider
   ) {
     // Schedule delayed notification
@@ -29,7 +30,7 @@ export class ReportPage {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getArticles().subscribe(next => {
-      
+
       this.items = next
     }, error => {
       loading.dismiss();
@@ -67,7 +68,7 @@ export class ReportPage {
           name: 'description',
           placeholder: 'Description'
         }
-        
+
       ],
       buttons: [
         {
@@ -86,7 +87,7 @@ export class ReportPage {
             console.log(data);
             console.log(this.noteGrosesse);
             console.log("=============================");
-           
+
           }
         }
       ]
@@ -98,7 +99,7 @@ export class ReportPage {
    this.presentPrompt()
   }
 
-  
+
   takephotos(){
 
     const options: CameraOptions = {
@@ -111,14 +112,14 @@ export class ReportPage {
     this.camera.getPicture(options).then((ImageData) => {
           let base64Image = ImageData;
               this.base64.encodeFile(base64Image).then((base64File: string)=>{
-                
+
                 this.noteGrosesse.image = base64File;
-          
-            }, (err) =>{  
+
+            }, (err) =>{
           })
-           
-            
-            
+
+
+
         }, (err) =>{
 
         })
@@ -130,25 +131,25 @@ export class ReportPage {
         const myModalOptions: ModalOptions = {
           enableBackdropDismiss: false
         };
-    
+
         const myModalData = {
           name: 'Paul Halliday',
           occupation: 'Developer'
         };
-    
+
         const myModal: Modal = this.modal.create('MonmodalPage', { data: myModalData }, myModalOptions);
-    
+
         myModal.present();
-    
+
         myModal.onDidDismiss((data) => {
           console.log("I have dismissed.");
           console.log(data);
         });
-    
+
         myModal.onWillDismiss((data) => {
          
         });
-  
+
     }
 
     mesbonmoment(){
@@ -156,9 +157,9 @@ export class ReportPage {
       })
     }
 
-    
 
-    
+
+
 
 }
 

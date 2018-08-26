@@ -75,7 +75,7 @@ export class ServiceProvider {
   selectMode(id): Observable<any> {
     return this.http.post(
       this.host + 'choice-modes',
-      { 
+      {
         categorie:{
           id: id
         }
@@ -247,7 +247,6 @@ export class ServiceProvider {
   }
 
 
-  
   /**
    * Get all treatments
    * @returns {Observable<any>}
@@ -255,6 +254,19 @@ export class ServiceProvider {
   allTreatments(): Observable<any> {
     return this.http.get(
       this.host + 'medicaments',
+      this.headers
+    );
+  }
+
+  /**
+   * Update Vital Infos
+   * @param object
+   * @returns {Observable<any>}
+   */
+  vitalInfo(object): Observable<any> {
+    return this.http.patch(
+      this.host + 'patient/vital-info',
+      object,
       this.headers
     );
   }
