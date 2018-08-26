@@ -158,8 +158,6 @@ export class ChooseModePage {
       }
     }, error => {
       loading.dismiss();
-      console.log("===================================");
-      console.log("===================================");
       console.error(error);
     });
   }
@@ -168,7 +166,7 @@ export class ChooseModePage {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getCategories().subscribe(next => {
-      console.log(next);
+     
       this.modes = next;
     }, error => {
       loading.dismiss();

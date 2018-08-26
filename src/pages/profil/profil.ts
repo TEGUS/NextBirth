@@ -26,6 +26,8 @@ export class ProfilPage {
   public phone = null;
   errorpath = null;
   errormessage = null;
+  public internalerror = null;
+  public internalemesage = null;
 
   modeSelectedExist = false;
 
@@ -146,7 +148,7 @@ export class ProfilPage {
 
       this.object.account = {
         "username": this.username,
-        "phone": this.phone,
+        "phone": '+237' + this.phone,
         "date_naissance": this.ladate
       }
 
@@ -157,8 +159,16 @@ export class ProfilPage {
         this.localStorage.updatePatientStorage(next);
       }, error => {
         loading.dismiss(); 
-        this.errorpath = error.error[0].property_path;
-        this.errormessage = error.error[0].message;
+        
+        if(undefined!=error.error[0]){
+          this.errorpath = error.error[0].property_path;
+          this.errormessage = error.error[0].message;
+        }else{
+          this.internalerror = 1;
+          this.presentToast(error.error.message);
+          this.internalemesage = error.error.message;
+        }
+        
       }, () => {
         loading.dismiss();
         this.localStorage.getKey('modeSelected').then(mode => {

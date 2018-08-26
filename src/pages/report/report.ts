@@ -66,7 +66,6 @@ export class ReportPage {
         {
           name: 'description',
           placeholder: 'Description'
-          
         }
         
       ],
@@ -147,14 +146,12 @@ export class ReportPage {
         });
     
         myModal.onWillDismiss((data) => {
-          console.log("I'm about to dismiss");
-          console.log(data);
+         
         });
   
     }
 
     mesbonmoment(){
-
       this.navCtrl.push("MesbonmomentPage", {
       })
     }

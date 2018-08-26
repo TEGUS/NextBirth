@@ -3,6 +3,8 @@
 </ion-header>
 
 <ion-content padding>
+
+  <p *ngIf="internalerror === 1" style="color: red; font-weight: bold">{{internalemesage}}</p>
   <div class="content">
     <show-date
       [libelle]="'Date de naissance'"
@@ -113,6 +115,7 @@
       ></input-element>
     </ion-col>
   </ion-row>
+
 </ion-content>
 
 <ion-footer>
