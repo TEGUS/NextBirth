@@ -15,6 +15,8 @@ export class SignUpPage {
 
   object = null;
   error = null;
+  errorpath = null;
+  errormessage = null;
   showError = null;
 
 
@@ -26,9 +28,10 @@ export class SignUpPage {
   }
 
   ionViewWillLoad() {
+
     this.object = {
 
-      debutDernieresMenstrues: null,
+     /* debutDernieresMenstrues: null,
       dureeMenstrues: null,
 
       account: {
@@ -39,8 +42,21 @@ export class SignUpPage {
           first: null,
           second: null
         }
+      }*/
+
+      debut_dernieres_menstrues: null,
+      duree_menstrues: null,
+      account: {
+          nom: null,
+          prenom: null,
+          email: null,
+          password: null,
+          repeatpass: null
       }
-    }
+ 
+	}
+
+
   }
 
   ionViewDidLoad() {
@@ -48,12 +64,12 @@ export class SignUpPage {
   }
 
   dateLastMentruation(date) {
-    console.log(date);
-    this.object.debutDernieresMenstrues = date;
+    var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
+    this.object.debut_dernieres_menstrues = madate;
   }
 
   getDurationMenstruation(duree) {
-    this.object.dureeMenstrues = parseInt(duree)
+    this.object.duree_menstrues = parseInt(duree)
   }
 
   getEmail(email) {
@@ -61,22 +77,23 @@ export class SignUpPage {
   }
 
   getPassword(pwd) {
-    this.object.account.plainPassword.first = pwd
+    this.object.account.password = pwd
   }
 
   getRepeatPassword(repwd) {
-    this.object.account.plainPassword.second = repwd
+    this.object.account.repeatpass = repwd
   }
 
   signUp() {
     if (checkField(this.object.account.email) &&
-      checkField(this.object.account.plainPassword.first) &&
-      checkField(this.object.account.plainPassword.second) &&
-      checkField(this.object.dateDernieresMenstrues) &&
-      checkField(this.object.dureeMenstrues)
+      checkField(this.object.account.password) &&
+      checkField(this.object.account.repeatpass) &&
+      checkField(this.object.debut_dernieres_menstrues) &&
+      checkField(this.object.duree_menstrues)
     ) {
-      if (this.object.account.plainPassword.first === this.object.account.plainPassword.second) {
-        console.log(this.object);
+      if (this.object.account.password === this.object.account.repeatpass) {
+       
+        
         let loading = this.loadingCtrl.create();
         loading.present();
         this.authProvider.signUp(this.object).subscribe(next => {
@@ -91,8 +108,8 @@ export class SignUpPage {
           });
         }, error => {
           loading.dismiss();
-          console.log(error);
-         // this.error = error.error.errors.children.account.children;
+          this.errorpath = error.error[0].property_path;
+          this.errormessage = error.error[0].message;
           console.log(this.error);
         }, () => {
 

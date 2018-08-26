@@ -65,11 +65,11 @@ export class MonmodalPage {
 
     this.camera.getPicture(options).then((ImageData) => {
           let base64Image = ImageData;
-              this.base64.encodeFile(base64Image).then((base64File: string)=>{
+          this.base64.encodeFile(base64Image).then((base64File: string)=>{
                 
                 this.noteGrosesse.image = base64File;
           
-            }, (err) =>{  
+              }, (err) =>{  
           })
            
             

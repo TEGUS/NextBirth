@@ -8,16 +8,19 @@
       [libelle]="'Date de naissance'"
       (outputDate)="dateDeNaissance($event)">
     </show-date>
+    <p *ngIf="errorpath === 'account.date_naissance'" style="color: red">{{errormessage}}</p>
     <input-element
       [libelle]="'Pseudonyme'"
       [type]="'text'"
       (outputValue)="getUsername($event)">
     </input-element>
+    <p *ngIf="errorpath === 'account.username'" style="color: red">{{errormessage}}</p>
     <input-element
       [libelle]="'Numéro de téléphone'"
       [type]="'text'"
       (outputValue)="getPhone($event)">
     </input-element>
+    <p *ngIf="errorpath === 'account.phone'" style="color: red">{{errormessage}}</p>
 
   </div>
   <div style="padding-left: 50px; padding-right: 50px;">

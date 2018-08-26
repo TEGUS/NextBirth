@@ -29,7 +29,7 @@ export class ReportPage {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getArticles().subscribe(next => {
-      console.log(next);
+      
       this.items = next
     }, error => {
       loading.dismiss();

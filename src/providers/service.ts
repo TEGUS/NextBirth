@@ -75,7 +75,12 @@ export class ServiceProvider {
   selectMode(id): Observable<any> {
     return this.http.post(
       this.host + 'choice-modes',
-      {categorie: id},
+      { 
+        categorie:{
+          id: id
+        }
+      },
+
       this.headers
     );
   }

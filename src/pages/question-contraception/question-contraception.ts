@@ -23,21 +23,21 @@ export class QuestionContraceptionPage {
     this.infos_desir_grossesse = this.navParams.get('infos_desir_grossesse');
 
     this.object = {
-      maritalStatus: null,
-      frequenceSaignement: null,
-      etatEsprit: null,
+      marital_status: null,
+      frequence_saignement: null,
+      etat_esprit: null,
       profession: null,
-      dureeDesirGrossesse: null,
+      duree_desir_grossesse: null,
       diagnostique: null
     }
 
     if (this.infos_desir_grossesse !== null) {
       this.object = {
-        maritalStatus: this.infos_desir_grossesse.marital_status,
-        frequenceSaignement: this.infos_desir_grossesse.frequence_saignement,
-        etatEsprit: this.infos_desir_grossesse.etat_esprit,
+        marital_status: this.infos_desir_grossesse.marital_status,
+        frequence_saignement: this.infos_desir_grossesse.frequence_saignement,
+        etat_esprit: this.infos_desir_grossesse.etat_esprit,
         profession: this.infos_desir_grossesse.profession,
-        dureeDesirGrossesse: this.infos_desir_grossesse.duree_desir_grossesse,
+        duree_desir_grossesse: this.infos_desir_grossesse.duree_desir_grossesse,
         diagnostique: this.infos_desir_grossesse.diagnostique
       }
 
@@ -102,16 +102,16 @@ export class QuestionContraceptionPage {
   listenChange(event, question) {
     switch (question.code) {
       case 'maritalStatus':
-        this.object.maritalStatus = event;
+        this.object.marital_status = event;
         break;
       case 'frequenceSaignement':
-        this.object.frequenceSaignement = event;
+        this.object.frequence_saignement = event;
         break;
       case 'etatEsprit':
-        this.object.etatEsprit = event;
+        this.object.etat_esprit = event;
         break;
       case 'dureeDesirGrossesse':
-        this.object.dureeDesirGrossesse = event;
+        this.object.duree_desir_grossesse = event;
         break;
       case 'profession':
         this.object.profession = event;
@@ -122,13 +122,16 @@ export class QuestionContraceptionPage {
     }
   }
 
+
+  
+
   checkFieldNotNull() {
     return new Promise((resolve, reject) => {
       if (
-        this.object.maritalStatus === null ||
-        this.object.frequenceSaignement === null ||
-        this.object.etatEsprit === null ||
-        this.object.dureeDesirGrossesse === null ||
+        this.object.marital_status === null ||
+        this.object.frequence_saignement === null ||
+        this.object.etat_esprit === null ||
+        this.object.duree_desir_grossesse === null ||
         this.object.profession === null ||
         this.object.diagnostique === null
       ) {

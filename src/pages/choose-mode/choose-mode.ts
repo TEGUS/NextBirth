@@ -158,6 +158,8 @@ export class ChooseModePage {
       }
     }, error => {
       loading.dismiss();
+      console.log("===================================");
+      console.log("===================================");
       console.error(error);
     });
   }

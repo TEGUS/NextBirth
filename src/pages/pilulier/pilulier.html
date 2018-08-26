@@ -41,7 +41,7 @@
             <!--<option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</option>-->
           <!--</select>-->
 
-          <ion-select #select formControlName="frequencePrise">
+          <ion-select  class="monselect" #select formControlName="frequencePrise">
             <ion-option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</ion-option>
           </ion-select>
         </ion-col>
@@ -107,16 +107,14 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
-        <ion-col>
-          <button ion-button type="submit" [disabled]="!form.valid">
+
+      
+
+     
+          <button style="border-radius:50px; height: 60px; float: right; margin-top: 10% " bottom right ion-button type="submit" [disabled]="!form.valid">
             {{currentTreatment == null ? 'Add' : 'Update'}}
           </button>
-        </ion-col>
-        <ion-col>
-          <button ion-button type="reset">Cancel</button>
-        </ion-col>
-      </ion-row>
+        
 
       <!--<ion-fab bottom right>-->
       <!--<button ion-fab mini type="reset">-->

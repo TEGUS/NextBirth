@@ -22,7 +22,7 @@ export class MyprofilsPage {
   ionViewDidLoad() {
     this.localStorage.getKey('session').then(next => {
         console.log("======================================");
-        console.log(next.patient);
+        console.log(next);
         console.log("======================================");
     }, error => {
       console.log(error);

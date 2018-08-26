@@ -113,12 +113,12 @@ export class PilulierPage {
     if (this.form.valid) {
       const object = {
         name: this.form.value.name,
-        frequencePrise: Number(this.form.value.frequencePrise),
-        dureeTraitement: Number(this.form.value.dureeTraitement),
-        dateDebutTraitement: this.dateDebutTraitement,
-        horaireFirstPrise: this.heureDebutTraitement,
-        jourCycle: Number(this.form.value.jourCycle),
-        evaluationEvolution: this.form.value.evaluationEvolution
+        frequence_prise: Number(this.form.value.frequencePrise),
+        duree_traitement: Number(this.form.value.dureeTraitement),
+        date_debut_traitement: this.dateDebutTraitement,
+        horaire_firstPrise: this.heureDebutTraitement,
+        jour_cycle: Number(this.form.value.jourCycle),
+        evaluation_evolution: this.form.value.evaluationEvolution
       }
 
       console.log(object);

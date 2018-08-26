@@ -24,6 +24,8 @@ export class ProfilPage {
   public ladate = null;
   public username = null;
   public phone = null;
+  errorpath = null;
+  errormessage = null;
 
   modeSelectedExist = false;
 
@@ -46,40 +48,43 @@ export class ProfilPage {
       diabete: 0,
       hta: 0,
       drepano: 0,
-      agePremiereRegle: null,
-      dureeSaignement: null,
-      dureeCycle: null,
-      cycleRegulier: 0,
-      douleurRegle: 0,
-      nombreGrossesse: null,
-      nombrePremature: null,
-      nombreFosseCouche: null,
-      nombreEnfantVivant: null
+      age_premiere_regle: null,
+      duree_saignement: null,
+      duree_cycle: null,
+      cycle_regulier: 0,
+      douleur_regle: 0,
+      nombre_grossesse: null,
+      nombre_premature: null,
+      nombre_fosse_couche: null,
+      nombre_enfant_vivant: null
     }
   }
 
+
+
   dateDeNaissance(date) {
-    this.ladate = date;
+    var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
+    this.ladate = madate;
   }
 
   getDureeSaignement(dureeSaignement) {
-    this.object.dureeSaignement = dureeSaignement;
+    this.object.duree_saignement = dureeSaignement;
   }
 
   getDureeCycle(dureeCycle) {
-    this.object.dureeCycle = dureeCycle;
+    this.object.duree_cycle = dureeCycle;
   }
 
   getCycleRegulier(cycleRegulier) {
-    this.object.cycleRegulier = cycleRegulier;
+    this.object.cycle_regulier = cycleRegulier;
   }
 
   getAgePremiereRegle(agePremiereRegle) {
-    this.object.agePremiereRegle = agePremiereRegle;
+    this.object.age_premiere_regle = agePremiereRegle;
   }
 
   getDouleur(douleurRegle) {
-    this.object.douleurRegle = douleurRegle;
+    this.object.douleur_regle = douleurRegle;
   }
 
   getUsername(username) {
@@ -99,28 +104,28 @@ export class ProfilPage {
   }
 
   getNombreGrossesse(nombreGrossesse) {
-    this.object.nombreGrossesse = nombreGrossesse;
+    this.object.nombre_grossesse = nombreGrossesse;
   }
 
   getNombrePremature(nombrePremature) {
-    this.object.nombrePremature = nombrePremature;
+    this.object.nombre_premature = nombrePremature;
   }
 
   getNombreFosseCouche(nombreFosseCouche) {
-    this.object.nombreFosseCouche = nombreFosseCouche;
+    this.object.nombre_fosse_couche = nombreFosseCouche;
   }
 
   getNombreEnfantVivant(nombreEnfantVivant) {
-    this.object.nombreEnfantVivant = nombreEnfantVivant;
+    this.object.nombre_enfant_vivant = nombreEnfantVivant;
   }
 
   checkValues() {
     return new Promise((resolve, reject) => {
       if (
-        this.object.agePremiereRegle === null ||
-        this.object.dureeSaignement === null || this.object.dureeCycle === null ||
-        this.object.nombreGressesse === null || this.object.nombrePremature === null ||
-        this.object.nombreFosseCouche === null || this.object.nombreEnfantVivant === null
+        this.object.age_premiere_regle === null ||
+        this.object.duree_saignement === null || this.object.duree_cycle === null ||
+        this.object.nombre_grossesse === null || this.object.nombre_premature === null ||
+        this.object.nombre_fosse_couche === null || this.object.nombre_enfant_vivant === null
       ) {
         reject(false)
       } else {
@@ -129,19 +134,20 @@ export class ProfilPage {
     });
   }
 
+
   updateProfile() {
     this.checkValues().then(next => {
       this.object.diabete = this.object.diabete ? 1 : 0;
       this.object.hta = this.object.hta ? 1 : 0;
       this.object.drepano = this.object.drepano ? 1 : 0;
-      this.object.douleurRegle = this.object.douleurRegle ? 1 : 0;
-      this.object.douleurRegle = this.object.douleurRegle ? 1 : 0;
-      this.object.cycleRegulier = this.object.cycleRegulier ? 1 : 0;
+      this.object.douleur_regle = this.object.douleur_regle ? 1 : 0;
+      this.object.douleur_regle = this.object.douleur_regle ? 1 : 0;
+      this.object.cycle_regulier = this.object.cycle_regulier ? 1 : 0;
 
       this.object.account = {
         "username": this.username,
         "phone": this.phone,
-        "dateNaissance": this.ladate
+        "date_naissance": this.ladate
       }
 
       let loading = this.loadingCtrl.create();
@@ -150,8 +156,9 @@ export class ProfilPage {
         console.log(next)
         this.localStorage.updatePatientStorage(next);
       }, error => {
-        loading.dismiss();
-        console.log(error);
+        loading.dismiss(); 
+        this.errorpath = error.error[0].property_path;
+        this.errormessage = error.error[0].message;
       }, () => {
         loading.dismiss();
         this.localStorage.getKey('modeSelected').then(mode => {

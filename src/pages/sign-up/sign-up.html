@@ -28,20 +28,18 @@
       [type]="'email'"
       (outputValue)="getEmail($event)">
     </input-element>
-    <p class="error"
+    <!--<p class="error"
        *ngIf="error != null && error.email.errors != undefined">
       {{error.email.errors[0]}}
-    </p>
+    </p>-->
+    <p *ngIf="errorpath === 'account.email'" style="color: red">{{errormessage}}</p>
 
     <input-element
       [libelle]="'Mot de passe'"
       [type]="'password'"
       (outputValue)="getPassword($event)">
     </input-element>
-    <p class="error"
-       *ngIf="error != null && error.plainPassword.children.first.errors != undefined">
-      {{error.plainPassword.children.first.errors[0]}}
-    </p>
+    <p *ngIf="errorpath === 'account.password'" style="color: red">{{errormessage}}</p>
 
     <input-element
       [libelle]="'Repetez le mot de passe'"

@@ -31,12 +31,15 @@ export class LocalStorageProvider {
 
   updatePatientStorage(patient) {
     this.getKey(this.key).then(session => {
+      console.log("===================================");
+      console.log(session);
+      console.log("===================================");
       session.user._embedded.patient = patient;
       this.setKey(this.key, session);
     });
   }
 
-  
+
   getModeInSession() {
     return new Promise((resolve, failed) => {
       this.storage.get(this.keymode).then((data) => {
