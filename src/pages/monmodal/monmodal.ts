@@ -27,10 +27,12 @@ export class MonmodalPage {
   public testeur = 0;
 
 
-  constructor(private base64: Base64, public loadingCtrl: LoadingController, public navCtrl: NavController, private camera: Camera, public services: ServiceProvider, public navParams: NavParams, private view: ViewController) {
+  constructor(private base64: Base64, public loadingCtrl: LoadingController, public navCtrl: NavController,
+              private camera: Camera, public services: ServiceProvider, public navParams: NavParams, private view: ViewController) {
   }
 
   ionViewDidLoad() {
+    this.services.initHeaders();
     console.log('ionViewDidLoad MonmodalPage');
   }
 
@@ -66,14 +68,14 @@ export class MonmodalPage {
     this.camera.getPicture(options).then((ImageData) => {
           let base64Image = ImageData;
           this.base64.encodeFile(base64Image).then((base64File: string)=>{
-                
+
                 this.noteGrosesse.image = base64File;
-          
-              }, (err) =>{  
+
+              }, (err) =>{
           })
-           
-            
-            
+
+
+
         }, (err) =>{
 
         })
@@ -81,7 +83,7 @@ export class MonmodalPage {
 
 
     takegalerie(){
-      
+
       this.testeur = 1;
 
       const options: CameraOptions = {
@@ -90,22 +92,22 @@ export class MonmodalPage {
         encodingType:this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
         sourceType: 0
-  
+
       }
-  
+
       this.camera.getPicture(options).then((ImageData) => {
             let base64Image = ImageData;
                 this.base64.encodeFile(base64Image).then((base64File: string)=>{
-                  
+
                   this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
-            
-              }, (err) =>{  
+
+              }, (err) =>{
             })
-             
-              
-              
+
+
+
           }, (err) =>{
-  
+
           })
       }
 
@@ -120,8 +122,8 @@ export class MonmodalPage {
 
 
   save(){
-     
-   
+
+
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.saveNote(this.noteGrosesse).subscribe(next => {

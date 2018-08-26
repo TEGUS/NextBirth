@@ -13,6 +13,7 @@ export class Img8Page {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public alertCtrl: AlertController, public loadingCtrl: LoadingController, public services: ServiceProvider) {
 
+    this.services.initHeaders();
   }
 
   presentAlert() {
@@ -47,5 +48,5 @@ export class Img8Page {
     })
   }
 
-  
+
 }

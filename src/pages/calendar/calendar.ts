@@ -43,6 +43,7 @@ export class CalendarPage {
   }
 
   ionViewDidLoad() {
+    this.services.initHeaders();
     console.log('ionViewDidLoad CalendarPage');
   }
 

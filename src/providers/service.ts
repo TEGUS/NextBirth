@@ -12,8 +12,8 @@ import {LocalStorageProvider} from "./localstorage";
 */
 @Injectable()
 export class ServiceProvider {
-  host: any;
-  headers: any;
+  private host: any;
+  private headers: any;
 
   constructor(public http: HttpClient, public localStorage: LocalStorageProvider) {
     this.initHeaders().then(next => {
@@ -25,22 +25,21 @@ export class ServiceProvider {
   initHeaders() {
     return new Promise((resolve, reject) => {
       this.localStorage.getKey('session').then(next => {
-        let o = {
+        let headers = {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
-        };
-        if (next !== null) {
-          o['Authorization'] = 'Bearer ' + next.token;
         }
-        console.log(o);
+        if (next !== null) {
+          headers['Authorization'] = 'Bearer ' + next.token;
+        }
+        console.log(headers);
         resolve({
-          headers: new HttpHeaders(o)
+          headers: new HttpHeaders(headers)
         });
       }, error => {
         reject('No session on local storage!');
       })
     });
-
   }
 
   ///// ** Modes

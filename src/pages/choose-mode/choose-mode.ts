@@ -24,6 +24,7 @@ export class ChooseModePage {
   }
 
   ionViewWillLoad() {
+    this.services.initHeaders();
   }
 
   ionViewDidLoad() {

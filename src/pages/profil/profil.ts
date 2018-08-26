@@ -34,6 +34,7 @@ export class ProfilPage {
   }
 
   ionViewDidLoad() {
+    this.services.initHeaders();
     console.log('ionViewDidLoad ProfilsPage');
   }
 
@@ -156,7 +157,7 @@ export class ProfilPage {
         console.log(next)
         this.localStorage.updatePatientStorage(next);
       }, error => {
-        loading.dismiss(); 
+        loading.dismiss();
         this.errorpath = error.error[0].property_path;
         this.errormessage = error.error[0].message;
       }, () => {

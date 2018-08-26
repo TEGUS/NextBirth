@@ -23,7 +23,9 @@ export class MesbonmomentPage {
 
 
 
-  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public services: ServiceProvider, public navParams: NavParams, private view: ViewController) {
+  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public services: ServiceProvider,
+              public navParams: NavParams, private view: ViewController) {
+    this.services.initHeaders();
   }
 
   ionViewDidLoad() {

@@ -39,19 +39,7 @@ export class MyApp {
       {title: 'Paramètres', component: null, icon: 'icon8'},
       {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
       {title: 'Mise en garde', component: "Img8Page", icon: 'icon10'},
-      {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'},
-
-      /* {title: 'Calendrier', component: null, icon: 'icon1'},
-       {title: 'Mes situations à risque', component: null, icon: 'icon2'},
-       {title: 'Mon médecin', component: null, icon: 'icon3'},
-       {title: 'Mes mises à jour', component: null, icon: 'icon4'},
-       {title: 'Gynéco à proximité', component: null, icon: 'icon5'},
-       {title: 'Outils surveillance', component: null, icon: 'icon6'},
-       {title: 'FAQ', component: null, icon: 'icon7'},
-       {title: 'Paramètres', component: null, icon: 'icon8'},
-       {title: 'Pilulier', component: null, icon: 'icon9'},
-       {title: 'Mise en garde', component: null, icon: 'icon10'},
-       {title: 'Humeur et état d\'esprit', component: null, icon: 'icon11'},*/
+      {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'}
     ];
   }
 
