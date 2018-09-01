@@ -71,7 +71,7 @@ export class PilulierPage {
         month: date.getMonth() + 1,
         day: date.getDate()
       }
-      
+
       this.dateDebutTraitementChanged(this.datePickerModel)
 
       let horaire: Date = new Date(this.currentTreatment.horaire_first_prise);
@@ -80,28 +80,6 @@ export class PilulierPage {
         minute: horaire.getMinutes()
       }
       this.heureDebutTraitementChanged(this.timePickerModel)
-
-
-      // const item = this.currentTreatment;
-      // let initDate = new Date(item.date_debut_traitement)
-      // console.log(initDate);
-      //
-      // let initHoraire: Date = new Date(item.horaire_first_prise);
-      // initDate.setHours(initHoraire.getHours(), initHoraire.getMinutes())
-      // console.log(initDate);
-      //
-      // const dureeTreatment = item.duree_traitement * 24 // 1jr = 24h
-      // console.log(dureeTreatment);
-      // const frequencePrise = item.frequence_prise === 0 ? 6 : (item.frequence_prise === 1 ? 8 : 10)
-      // console.log(frequencePrise);
-      // let nombrePrise: number = (dureeTreatment / frequencePrise) - 1;
-      // console.log(nombrePrise);
-      //
-      // while(nombrePrise >= 1) {
-      //   initDate.setHours(initDate.getHours() + frequencePrise)
-      //   console.log(initDate);
-      //   nombrePrise--;
-      // }
     }
   }
 
@@ -125,7 +103,7 @@ export class PilulierPage {
     }else{
       this.monheure = event.hour + ':0' + event.minute + ':00';
     }
-    
+
     this.form.patchValue({horaireFirstPrise: event.hour + ':' + event.minute})
   }
 

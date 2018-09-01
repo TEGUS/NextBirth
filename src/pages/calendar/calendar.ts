@@ -39,11 +39,11 @@ export class CalendarPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private calendar: Calendar,
               public localStorage: LocalStorageProvider, public services: ServiceProvider) {
+    this.services.initHeaders();
     this.monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   }
 
   ionViewDidLoad() {
-    this.services.initHeaders();
     console.log('ionViewDidLoad CalendarPage');
   }
 

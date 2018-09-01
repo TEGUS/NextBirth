@@ -1,5 +1,5 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {currentHost} from "../host/host";
 import {LocalStorageProvider} from "./localstorage";
@@ -11,7 +11,7 @@ import {LocalStorageProvider} from "./localstorage";
   and Angular DI.
 */
 @Injectable()
-export class ServiceProvider {
+export class ServiceProvider implements OnInit{
   private host: any;
   private headers: any;
 
@@ -20,6 +20,12 @@ export class ServiceProvider {
       this.headers = next;
     });
     this.host = currentHost;
+  }
+
+  ngOnInit(): void {
+    this.initHeaders().then(next => {
+      this.headers = next;
+    });
   }
 
   initHeaders() {

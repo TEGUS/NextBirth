@@ -153,6 +153,7 @@ export class ProfilPage {
         "date_naissance": this.ladate
       }
 
+      console.log(this.object);
       let loading = this.loadingCtrl.create();
       loading.present();
       this.services.updateprofile(this.object).subscribe(next => {
