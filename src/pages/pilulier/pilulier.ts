@@ -163,7 +163,7 @@ export class PilulierPage {
           console.log(next)
         }, error => {
           console.error(error)
-          loading.dismiss()
+          loading.dismiss();
         }, () => {
           loading.dismiss();
           loading.onDidDismiss(() => {

@@ -7,6 +7,7 @@ import {AuthenticationProvider} from "../../providers/authentication";
 import {SignUpPage} from "../sign-up/sign-up";
 import {checkField} from "../../variables/functions";
 import {LocalStorageProvider} from '../../providers/localstorage';
+import { ServiceProvider } from '../../providers/service';
 
 /**
  * Generated class for the LoginPage page.
@@ -27,7 +28,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider,
-              public menuCtrl: MenuController, public alertCtrl: AlertController) {
+              public menuCtrl: MenuController, public services: ServiceProvider, public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -56,6 +57,7 @@ export class LoginPage {
       this.authProvider.logIn(this.object).subscribe(next => {
         console.log(next);
         this.mylocalstorage.storeSession(next).then(() => {
+          this.services.faitTravail();
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.presentToast('Finish Login!');
