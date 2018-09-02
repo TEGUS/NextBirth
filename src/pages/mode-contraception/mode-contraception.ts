@@ -18,6 +18,7 @@ export class ModeContraceptionPage {
   }
 
   ionViewDidLoad() {
+    this.services.initHeaders();
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getArticles().subscribe(next => {

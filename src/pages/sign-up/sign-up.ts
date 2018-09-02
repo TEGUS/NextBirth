@@ -20,7 +20,6 @@ export class SignUpPage {
   showError = null;
 
 
-
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider,
@@ -28,35 +27,17 @@ export class SignUpPage {
   }
 
   ionViewWillLoad() {
-
     this.object = {
-
-     /* debutDernieresMenstrues: null,
-      dureeMenstrues: null,
-
+      debut_dernieres_menstrues: null,
+      duree_menstrues: null,
       account: {
         nom: null,
         prenom: null,
         email: null,
-        plainPassword: {
-          first: null,
-          second: null
-        }
-      }*/
-
-      debut_dernieres_menstrues: null,
-      duree_menstrues: null,
-      account: {
-          nom: null,
-          prenom: null,
-          email: null,
-          password: null,
-          repeatpass: null
+        password: null,
+        repeatpass: null
       }
- 
-	}
-
-
+    }
   }
 
   ionViewDidLoad() {
@@ -92,8 +73,6 @@ export class SignUpPage {
       checkField(this.object.duree_menstrues)
     ) {
       if (this.object.account.password === this.object.account.repeatpass) {
-       
-        
         let loading = this.loadingCtrl.create();
         loading.present();
         this.authProvider.signUp(this.object).subscribe(next => {

@@ -37,6 +37,8 @@ export class PilulierPage {
   }
 
   ionViewWillLoad() {
+    this.services.initHeaders();
+
     this.initForm();
 
     this.services.getFrequencesPrise().subscribe((next: any) => {

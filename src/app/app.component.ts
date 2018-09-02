@@ -1,16 +1,11 @@
 import {Component, ViewChild} from '@angular/core';
 import {AlertController, LoadingController, MenuController, Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
-
-
 import {LocalStorageProvider} from "../providers/localstorage";
 import * as codesMode from "../components/mode/mode";
-import {ServiceProvider} from "../providers/service";
-import {Network} from "@ionic-native/network";
 import {FluxReglePage} from '../pages/flux-regle/flux-regle';
 import {SurveillancePage} from '../pages/surveillance/surveillance';
-import {LocalNotifications} from "@ionic-native/local-notifications";
+import {ServiceProvider} from "../providers/service";
 
 @Component({
   templateUrl: 'app.html'
@@ -22,9 +17,10 @@ export class MyApp {
 
   pages: Array<any>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-              public localStorage: LocalStorageProvider, public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController,
-              private localNotifications: LocalNotifications, public alertCtrl: AlertController) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public localStorage: LocalStorageProvider,
+              public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController,
+              public alertCtrl: AlertController) {
+    this.services.initHeaders();
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -40,19 +36,7 @@ export class MyApp {
       {title: 'Paramètres', component: null, icon: 'icon8'},
       {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
       {title: 'Mise en garde', component: "Img8Page", icon: 'icon10'},
-      {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'},
-
-      /* {title: 'Calendrier', component: null, icon: 'icon1'},
-       {title: 'Mes situations à risque', component: null, icon: 'icon2'},
-       {title: 'Mon médecin', component: null, icon: 'icon3'},
-       {title: 'Mes mises à jour', component: null, icon: 'icon4'},
-       {title: 'Gynéco à proximité', component: null, icon: 'icon5'},
-       {title: 'Outils surveillance', component: null, icon: 'icon6'},
-       {title: 'FAQ', component: null, icon: 'icon7'},
-       {title: 'Paramètres', component: null, icon: 'icon8'},
-       {title: 'Pilulier', component: null, icon: 'icon9'},
-       {title: 'Mise en garde', component: null, icon: 'icon10'},
-       {title: 'Humeur et état d\'esprit', component: null, icon: 'icon11'},*/
+      {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'}
     ];
   }
 

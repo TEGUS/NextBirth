@@ -20,6 +20,7 @@ export class ArticleDetailPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public loadingCtrl: LoadingController, public services: ServiceProvider) {
+    this.services.initHeaders();
   }
 
   ionViewDidLoad() {

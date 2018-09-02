@@ -20,6 +20,7 @@ export class QuestionContraceptionPage {
   }
 
   ionViewDidLoad() {
+    this.services.initHeaders();
     this.infos_desir_grossesse = this.navParams.get('infos_desir_grossesse');
 
     this.object = {
@@ -123,7 +124,7 @@ export class QuestionContraceptionPage {
   }
 
 
-  
+
 
   checkFieldNotNull() {
     return new Promise((resolve, reject) => {

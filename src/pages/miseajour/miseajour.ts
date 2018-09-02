@@ -26,6 +26,7 @@ export class MiseajourPage {
   }
 
   ionViewDidLoad() {
+    this.services.initHeaders();
     console.log('ionViewDidLoad MiseajourPage');
     this.initForm();
   }

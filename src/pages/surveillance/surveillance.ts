@@ -42,13 +42,10 @@ export class SurveillancePage {
 
 
   debuter(){
-
-    
-
       if(this.testeurdebut == 0){
         clearInterval(this.timer2);
         this.couleurbouton =1;
-        this.timer1 = setInterval(() => { 
+        this.timer1 = setInterval(() => {
             this.contraceptionseconde = this.contraceptionseconde + 1;
             if(this.contraceptionseconde==60){
               this.contraceptionminutes=this.contraceptionminutes+1;
@@ -57,34 +54,28 @@ export class SurveillancePage {
         }, 1000);
 
       }else if(this.testeurdebut == 1){
-          ///////////////////////////////////////////////////////////////////////////////// 
+          /////////////////////////////////////////////////////////////////////////////////
           // c'est la deuxieme fois qu'on lance le debut de contraception              . //
           /////////////////////////////////////////////////////////////////////////////////
           clearInterval(this.timer2);
           this.testeurfin = 1;
           this.couleurbouton =1;
-          this.timer3 = setInterval(() => { 
+          this.timer3 = setInterval(() => {
               this.contraceptionseconde2 = this.contraceptionseconde2 + 1;
               if(this.contraceptionseconde2==60){
                 this.contraceptionminutes2=this.contraceptionminutes2+1;
                 this.contraceptionseconde2=0;
               }
           }, 1000);
-
       }
-        
-
   }
 
   stoper(){
     this.couleurbouton =0;
-
-    
-
     if(this.testeurfin == 0){
           clearInterval(this.timer1);
           this.testeurdebut = 1;
-          this.timer2 = setInterval(() => { 
+          this.timer2 = setInterval(() => {
               this.intervalseconde = this.intervalseconde + 1;
               if(this.intervalseconde==60){
                 this.intervalminutes=this.intervalminutes+1;
@@ -92,14 +83,14 @@ export class SurveillancePage {
               }
           }, 1000);
     }else if(this.testeurfin == 1){
-      ///////////////////////////////////////////////////////////////////////////////// 
+      /////////////////////////////////////////////////////////////////////////////////
       // c'est la deuxieme fois qu'on apuis sur stop il faut recommencer le process. //
       /////////////////////////////////////////////////////////////////////////////////
-      
-      
+
+
       // il faut stoker l'interval et reenitialiser.
 
-      
+
 
       var element = {
          cle:2,
@@ -117,7 +108,7 @@ export class SurveillancePage {
       });
 
       this.minutecontraception = total/this.listesiterval.length;
-      
+
 
       clearInterval(this.timer1);
       clearInterval(this.timer2);
@@ -130,13 +121,13 @@ export class SurveillancePage {
       this.intervalminutes = 0;
       this.testeurdebut = 0;
       this.testeurfin = 0;
-      
-    }
-        
 
-    
+    }
+
+
+
   }
-  
+
 
   actionSurOui(){
      this.testeur = 1;
@@ -159,19 +150,19 @@ export class SurveillancePage {
 
 
   colorverdatre(){
-    this.presentToast("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf"); 
+    this.presentToast("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf");
   }
 
   colorbrunatre(){
-    this.presentToast("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf"); 
+    this.presentToast("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf");
   }
 
   colortroube(){
-    this.presentToast("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf"); 
+    this.presentToast("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf");
   }
 
   colorpurulente(){
-    this.presentToast("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf"); 
+    this.presentToast("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf");
   }
 
   colorclaire(){
