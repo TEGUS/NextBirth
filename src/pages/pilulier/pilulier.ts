@@ -27,8 +27,6 @@ export class PilulierPage {
   private heureDebutTraitement = new Date().toISOString()
 
   private currentTreatment = null;
-  private datePickerModel = null;
-  private timePickerModel = null;
   private madate = null;
   private monheure = null;
 
@@ -36,7 +34,7 @@ export class PilulierPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
-              private localNotifications: LocalNotifications,) {}
+              private localNotifications: LocalNotifications) {}
 
   ionViewWillLoad() {
     this.services.initHeaders();
@@ -70,26 +68,26 @@ export class PilulierPage {
       // let date: Date = new Date(this.currentTreatment.date_debut_traitement);
       let date = new Date((this.currentTreatment.date_debut_traitement).split('T')[0]);
       console.log(date);
-      this.datePickerModel = {
+      const datePickerModel = {
         year: date.getFullYear(),
         month: date.getMonth() + 1,
         day: date.getDate()
       }
-      this.dateDebutTraitementChanged(this.datePickerModel)
+      this.dateDebutTraitementChanged(datePickerModel)
       let date_ = new Date()
-      date_.setFullYear(this.datePickerModel.year, this.datePickerModel.month - 1, this.datePickerModel.day)
+      date_.setFullYear(datePickerModel.year, datePickerModel.month - 1, datePickerModel.day)
       this.dateDebutTraitement = new Date(date_).toISOString()
       console.log(this.dateDebutTraitement);
 
       // let horaire: Date = new Date(this.currentTreatment.horaire_first_prise);
       let horaire: Array<any> = (this.currentTreatment.horaire_first_prise).split(':')
-      this.timePickerModel = {
+      const timePickerModel = {
         hour: Number(horaire[0]),
         minute: Number(horaire[1])
       }
-      this.heureDebutTraitementChanged(this.timePickerModel)
+      this.heureDebutTraitementChanged(timePickerModel)
       let heure = new Date()
-      heure.setHours(this.timePickerModel.hour, this.timePickerModel.minute)
+      heure.setHours(timePickerModel.hour, timePickerModel.minute)
       this.heureDebutTraitement = new Date(heure).toLocaleTimeString()
       console.log(this.heureDebutTraitement);
     }
@@ -161,6 +159,7 @@ export class PilulierPage {
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.cancel();
+            this.presentDialogAlert('Médicament crée avec succès!');
             this.initScheduleTreatement();
           })
         });
@@ -175,6 +174,7 @@ export class PilulierPage {
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.cancel();
+            this.presentDialogAlert('Médicament mis à jour avec succès!');
             this.initScheduleTreatement();
           })
         });
@@ -229,13 +229,16 @@ export class PilulierPage {
             loading.present();
             this.services.deleteTreatment(item.id).subscribe((next: any) => {
               console.log(next)
-              this.deleteSchedules(next);
+              if (next !== null) {
+                this.deleteSchedules(next);
+              }
             }, error => {
               console.error(error)
               loading.dismiss()
             }, () => {
               loading.dismiss();
               loading.onDidDismiss(() => {
+                this.presentDialogAlert('Médicament supprimé avec succès');
                 this.getTreatments();
               })
             });
@@ -307,5 +310,13 @@ export class PilulierPage {
     ids.forEach(id => {
       this.localNotifications.clear(`Treatement ${id}`);
     })
+  }
+
+  presentDialogAlert(message) {
+    let alert = this.alertCtrl.create({
+      title: message,
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 }
