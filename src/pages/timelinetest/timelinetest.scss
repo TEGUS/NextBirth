@@ -1,37 +1,42 @@
 page-timelinetest {
 
+  .monbody {
+    background-color: #e3e3e3;
+  }
 
-    .monbody{
-        background-color: #e3e3e3;
-      }
+  .question {
+    width: 100%;
+    height: 30px;
+    margin-left: 0px;
+    margin-top: 0px;
 
-      .question{
-        width: 100%;
-        height: 30px;
-        margin-left: 0px;
-        margin-top: 0px;
-       
-      }
-      .montext{
-        text-align: center;
-        margin-left: 40%;
-        padding-top: 9px;
-        color: #ff0026;
-      }
+  }
+  .montext {
+    text-align: center;
+    margin-left: 40%;
+    padding-top: 9px;
+    color: #ff0026;
+  }
 
-      .question2{
-        width: 100%;
-        height: 40px;
-        margin-left: 0px;
-        margin-top: -11px;
-        background-color: #959595;
-       
-      }
-      .montext2{
-        text-align: center;
-        padding-top: 2px;
-        font-size: 12px;
-        color:white;
-      }
+  .question2 {
+    width: 100%;
+    height: 40px;
+    margin-left: 0px;
+    margin-top: -11px;
+    background-color: #959595;
 
+  }
+  .montext2 {
+    text-align: center;
+    padding-top: 2px;
+    font-size: 12px;
+    color: white;
+  }
+
+
+  ion-scroll {
+    .scroll-content {
+      display: flex;
+    }
+  }
 }
