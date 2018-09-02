@@ -25,28 +25,22 @@
     </ion-row>
   </ion-card>
 
-  <ion-scroll scrollX="true" scrollY="false">
-      <ion-card *ngFor="let item of items">
-        <ion-card-header>
-          {{item.title}}
-        </ion-card-header>
-        <ion-card-content>
-          {{item.content}}
-        </ion-card-content>
-      </ion-card>
-  </ion-scroll>
+  
 
   <timeline endIcon="call">
     <timeline-item *ngFor="let item of items">
       <timeline-time [time]="item.time"></timeline-time>
       <ion-icon [name]="item.icon"></ion-icon>
-          <ion-card class="cardspecial">
-              <ion-card-header>
-                {{item.title}}
-              </ion-card-header>
-              <ion-card-content>
-                {{item.content}}
-              </ion-card-content>
+          <ion-card >
+              <ion-scroll scrollX="true">
+                  <div style="display: flex; flex-direction: row;">
+                    <div class="mondive"  *ngFor="let item of items">
+                      <p class="datecard">{{item.time.subTitle}}</p>
+                      <p class="titrecard">{{item.title}}</p>
+                      <p>{{item.content}}</p>
+                     </div>
+                  </div>
+               </ion-scroll>
           </ion-card>
     </timeline-item>
   </timeline>
