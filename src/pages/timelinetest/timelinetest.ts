@@ -52,7 +52,7 @@ export class TimelinetestPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TimelinetestPage');
+    
   }
 
 }
