@@ -9,38 +9,41 @@
 </ion-header>
 
 
-
-<ion-content  class="monbody">
+<ion-content class="monbody">
   <ion-card class="question">
-      <ion-row class="montext">
-          Grossesse
-      </ion-row>   
+    <ion-row class="montext">
+      Grossesse
+    </ion-row>
   </ion-card>
-  
-  <ion-card class="question2">
-       <ion-row class="montext2">
-           <ion-col col-3>Consultation</ion-col>
-           <ion-col col-3>Soins</ion-col>
-           <ion-col col-3>TAF</ion-col>
-           <ion-col col-3>Bilan Recommandé</ion-col>
-      </ion-row>   
-  </ion-card> 
-  
 
-  <timeline  endIcon="call">
+  <ion-card class="question2">
+    <ion-row class="montext2">
+      <ion-col col-3>Consultation</ion-col>
+      <ion-col col-3>Soins</ion-col>
+      <ion-col col-3>TAF</ion-col>
+      <ion-col col-3>Bilan Recommandé</ion-col>
+    </ion-row>
+  </ion-card>
+
+ 
+
+  <timeline endIcon="call">
     <timeline-item *ngFor="let item of items">
       <timeline-time [time]="item.time"></timeline-time>
       <ion-icon [name]="item.icon"></ion-icon>
-      <ion-card class="cardspecial">
-          <ion-card-header>
-            {{item.title}}
-          </ion-card-header>
-          <ion-card-content>
-            {{item.content}}
-          </ion-card-content>
-      </ion-card>
+          <ion-card class="cardspecial">
+              <ion-card-header>
+                {{item.title}}
+              </ion-card-header>
+              <ion-card-content>
+                {{item.content}}
+              </ion-card-content>
+          </ion-card>
     </timeline-item>
   </timeline>
 
 
+  <ion-infinite-scroll (ionInfinite)="doInfiniteBottom($event)" threshold="2%">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
