@@ -16,12 +16,10 @@ export class ServiceProvider {
   private headers: any;
 
   constructor(public http: HttpClient, public localStorage: LocalStorageProvider) {
-    console.log('-------------')
     this.initHeaders().then(next => {
       this.headers = next;
     });
     this.host = currentHost;
-    console.log('-------------')
   }
 
   initHeaders() {
@@ -73,8 +71,6 @@ export class ServiceProvider {
    * @returns {Observable<any>}
    */
   selectMode(id): Observable<any> {
-    console.log('------Select mode-------')
-    console.log(this.headers)
     return this.http.post(
       this.host + 'choice-modes',
       {
@@ -216,8 +212,6 @@ export class ServiceProvider {
       this.headers
     );
   }
-
-
 
 
   //////////////////////////////
