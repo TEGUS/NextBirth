@@ -36,31 +36,31 @@ export class TimelinetestPage {
       title: 'Courgette',
       content: 'Parsley amaranth tigernut .',
       icon: 'calendar',
-      time: {subtitle: '4/16/2013', title: '21:30'}
+      time: {subTitle: '4/16/2013', title: '21:30'}
     },
     {
       title: 'Courgette',
       content: 'Parsley amaranth tigernut .',
       icon: 'calendar',
-      time: {subtitle: '4/16/2013', title: '21:30'}
+      time: {subTitle: '4/16/2013', title: '21:30'}
     },
     {
       title: 'Courgette',
       content: 'Parsley amaranth tigernut .',
       icon: 'calendar',
-      time: {subtitle: '4/16/2013', title: '21:30'}
+      time: {subTitle: '4/16/2013', title: '21:30'}
     },
     {
       title: 'Courgette daikon',
       content: 'Parsley amaranth tigernut .',
       icon: 'calendar',
-      time: {subtitle: 'January', title: '29'}
+      time: {subTitle: 'January', title: '29'}
     },
     {
       title: 'Courgette daikon',
       content: 'Parsley amaranth tigernut .',
       icon: 'calendar',
-      time: {subtitle: 'January', title: '31'}
+      time: {subTitle: 'January', title: '31'}
     }
   ]
 
@@ -85,9 +85,9 @@ export class TimelinetestPage {
 interface DataTime {
   title: String;
   content: String;
-  icon?: String;
+  icon: String;
   time: {
     title: String;
-    subtitle?: String;
+    subTitle?: String;
   };
 }
