@@ -14,8 +14,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'timelinetest.html',
 })
 export class TimelinetestPage {
-
-  items = [
+  items: DataTime[] = [
     {
       title: 'Courgette',
       content: 'Parsley amaranth tigernut .',
@@ -48,11 +47,28 @@ export class TimelinetestPage {
     }
   ]
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TimelinetestPage');
   }
 
+  doInfiniteBottom(infiniteScroll) {
+    setTimeout(() => {
+      this.items = this.items.concat(this.items);
+
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 500);
+  }
+}
+
+interface DataTime {
+  title: String;
+  content: String;
+  icon?: String;
+  time: {
+    title: String;
+    subTitle?: String;
+  };
 }
