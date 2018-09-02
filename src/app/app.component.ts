@@ -111,8 +111,24 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    if (page.component != null)
-      this.nav.setRoot(page.component);
+    if (page.component != null){
+      if(page.component==="CalendarPage"){
+        
+        this.localStorage.getKey('mode').then(mode => {
+         
+          if (mode !== null) {
+              if(mode.code === "MO1"){
+                this.nav.setRoot("TimelinetestPage");
+              }
+          }
+        });
+
+      }else{
+        this.nav.setRoot(page.component);
+      }
+      
+    }
+      
   }
 
   signOut() {

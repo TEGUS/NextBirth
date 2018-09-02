@@ -156,7 +156,7 @@ export class PilulierPage {
           this.schedules = next;
         }, error => {
           console.error(error)
-          loading.dismiss()
+          loading.dismiss();
         }, () => {
           loading.dismiss();
           loading.onDidDismiss(() => {

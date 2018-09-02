@@ -22,6 +22,14 @@ export class ServiceProvider {
     this.host = currentHost;
   }
 
+  
+  faitTravail(){
+      this.initHeaders().then(next => {
+        this.headers = next;
+      });
+  }
+  
+
   initHeaders() {
     return new Promise((resolve, reject) => {
       this.localStorage.getKey('session').then(next => {
