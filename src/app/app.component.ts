@@ -25,7 +25,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      {title: 'Acceuil', component: "ReportPage", icon: 'icon1'},
+      {title: 'Acceuil', component: "Start", icon: 'icon1'},
       {title: 'Profil', component: "MyprofilsPage", icon: 'icon3'},
       {title: 'Calendrier', component: "CalendarPage", icon: 'icon1'},
       {title: 'Mes situations à risque', component: "MessituationarisquePage", icon: 'icon2'},
@@ -42,7 +42,6 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       // this.statusBar.styleDefault();
@@ -51,50 +50,52 @@ export class MyApp {
       this.statusBar.styleLightContent();
 
       this.menuCtrl.enable(false);
+      this.initRootPage().then(page => {
+        this.rootPage = page
+      })
+    });
+  }
 
+  initRootPage() {
+    return new Promise((resolve, reject) => {
       this.localStorage.getKey('session').then(next => {
         if (next !== null) {
           this.menuCtrl.enable(true, 'sideMenu');
           this.localStorage.getKey('mode').then(mode => {
-
-            //this.rootPage = "ChooseModePage";
-            //this.rootPage = "TimelinetestPage";
             if (mode !== null) {
               switch (mode.code) {
                 case codesMode.CONTPL:
-                  this.rootPage = "ModeContraceptionPage"
+                  resolve("ModeContraceptionPage");
                   break;
                 case codesMode.CONTPR:
-                  this.rootPage = "ModeContraceptionPage"
+                  resolve("ModeContraceptionPage");
                   break;
                 case codesMode.GRS:
                   let loading = this.loadingCtrl.create();
                   loading.present();
                   this.checkProfileDesirGrossesse().then((next: any) => {
                     loading.dismiss()
-                    this.rootPage = next.status ? "ReportPage" : "QuestionContraceptionPage";
+                    resolve(next.status ? "ReportPage" : "QuestionContraceptionPage")
                   }, error => {
                     console.error(error)
                     loading.dismiss();
                   })
                   break;
                 case codesMode.GEST:
-                  this.rootPage = "ReportPage"
+                  resolve("ReportPage")
                   break;
               }
             } else {
-              this.rootPage = "ChooseModePage"
+              resolve("ChooseModePage")
             }
           });
         } else {
-          this.rootPage = "LoginPage";
-          //this.rootPage = "TimelinetestPage";
-          //this.rootPage = 'FluxReglePage';
+          resolve("LoginPage")
         }
       }, error => {
         console.log(error);
       });
-    });
+    })
   }
 
   checkProfileDesirGrossesse() {
@@ -111,24 +112,26 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    if (page.component != null){
-      if(page.component==="CalendarPage"){
-        
-        this.localStorage.getKey('mode').then(mode => {
-         
-          if (mode !== null) {
-              if(mode.code === "MO1"){
-                this.nav.setRoot("TimelinetestPage");
-              }
-          }
-        });
-
-      }else{
-        this.nav.setRoot(page.component);
+    if (page.component != null) {
+      switch (page.component) {
+        case "Start":
+          this.initRootPage().then(page => {
+            this.nav.setRoot(page);
+          })
+          break;
+        case "CalendarPage":
+          this.localStorage.getKey('mode').then(mode => {
+            this.nav.setRoot(
+              (mode !== null && mode.code === "MO1") ?
+                "TimelinetestPage" : "CalendarPage"
+            );
+          });
+          break;
+        default:
+          this.nav.setRoot(page.component);
+          break;
       }
-      
     }
-      
   }
 
   signOut() {
