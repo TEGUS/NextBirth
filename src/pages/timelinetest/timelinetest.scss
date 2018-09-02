@@ -33,9 +33,11 @@ page-timelinetest {
     color: white;
   }
 
-
   ion-scroll {
+    width: 100%;
+    height: 150px;
     .scroll-content {
+      overflow-x: auto;
       display: flex;
     }
   }
