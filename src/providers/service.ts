@@ -11,21 +11,17 @@ import {LocalStorageProvider} from "./localstorage";
   and Angular DI.
 */
 @Injectable()
-export class ServiceProvider implements OnInit{
+export class ServiceProvider {
   private host: any;
   private headers: any;
 
   constructor(public http: HttpClient, public localStorage: LocalStorageProvider) {
+    console.log('-------------')
     this.initHeaders().then(next => {
       this.headers = next;
     });
     this.host = currentHost;
-  }
-
-  ngOnInit(): void {
-    this.initHeaders().then(next => {
-      this.headers = next;
-    });
+    console.log('-------------')
   }
 
   initHeaders() {
@@ -38,7 +34,6 @@ export class ServiceProvider implements OnInit{
         if (next !== null) {
           headers['Authorization'] = 'Bearer ' + next.token;
         }
-        console.log(headers);
         resolve({
           headers: new HttpHeaders(headers)
         });
@@ -78,6 +73,8 @@ export class ServiceProvider implements OnInit{
    * @returns {Observable<any>}
    */
   selectMode(id): Observable<any> {
+    console.log('------Select mode-------')
+    console.log(this.headers)
     return this.http.post(
       this.host + 'choice-modes',
       {
@@ -85,7 +82,6 @@ export class ServiceProvider implements OnInit{
           id: id
         }
       },
-
       this.headers
     );
   }

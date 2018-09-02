@@ -87,9 +87,11 @@ export class SignUpPage {
           });
         }, error => {
           loading.dismiss();
-          this.errorpath = error.error[0].property_path;
-          this.errormessage = error.error[0].message;
-          console.log(this.error);
+          console.log(error);
+          if (error.error[0] !== undefined) {
+            this.errorpath = error.error[0].property_path;
+            this.errormessage = error.error[0].message;
+          }
         }, () => {
 
 

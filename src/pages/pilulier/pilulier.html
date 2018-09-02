@@ -38,10 +38,10 @@
         </ion-col>
         <ion-col>
           <!--<select (click)="select.open()" formControlName="frequencePrise" class="monselect">-->
-            <!--<option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</option>-->
+          <!--<option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</option>-->
           <!--</select>-->
 
-          <ion-select  class="monselect" #select formControlName="frequencePrise">
+          <ion-select class="monselect" #select formControlName="frequencePrise">
             <ion-option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</ion-option>
           </ion-select>
         </ion-col>
@@ -69,7 +69,9 @@
       </ion-row>
 
       <ion-datetime #datePicker text-center
-                    (ionChange)="dateDebutTraitementChanged($event)" hidden="true">
+                    (ionChange)="dateDebutTraitementChanged($event)"
+                    hidden="true" [(ngModel)]="dateDebutTraitement"
+                    [ngModelOptions]="{standalone: true}">
       </ion-datetime>
 
       <ion-row class="maligne">
@@ -86,7 +88,8 @@
 
       <ion-datetime #timePicker text-center pickerFormat="HH mm"
                     (ionChange)="heureDebutTraitementChanged($event)"
-                    hidden="true">
+                    hidden="true" [(ngModel)]="heureDebutTraitement"
+                    [ngModelOptions]="{standalone: true}">
       </ion-datetime>
 
       <ion-row class="maligne">
@@ -108,13 +111,11 @@
       </ion-row>
 
 
-      
+      <button style="border-radius:50px; height: 60px; float: right; margin-top: 10% " bottom right ion-button
+              type="submit" [disabled]="!form.valid">
+        {{currentTreatment == null ? 'Add' : 'Upd'}}
+      </button>
 
-     
-          <button style="border-radius:50px; height: 60px; float: right; margin-top: 10% " bottom right ion-button type="submit" [disabled]="!form.valid">
-            {{currentTreatment == null ? 'Add' : 'Upd'}}
-          </button>
-        
 
       <!--<ion-fab bottom right>-->
       <!--<button ion-fab mini type="reset">-->
