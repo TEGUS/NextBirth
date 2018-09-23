@@ -42,7 +42,8 @@ export class PilulierPage {
     this.initForm();
 
     this.services.getFrequencesPrise().subscribe((next: any) => {
-      this.frequencesPrise = next
+      console.log(next);
+      this.frequencesPrise = next[0]
     }, error => {
       console.error(error);
     }, () => {
@@ -164,22 +165,39 @@ export class PilulierPage {
           })
         });
       } else {
-        this.services.updateTreatment(this.currentTreatment.id, object).subscribe((next: Schedule[]) => {
-          console.log(next)
-          this.schedules = next;
+        this.getAlerts(this.currentTreatment.id).then((alerts : Array<any>) => {
+          this.deleteSchedules(alerts);
+          this.services.updateTreatment(this.currentTreatment.id, object).subscribe((next: Schedule[]) => {
+            console.log(next)
+            this.schedules = next;
+          }, error => {
+            console.error(error)
+            loading.dismiss()
+          }, () => {
+            loading.dismiss();
+            loading.onDidDismiss(() => {
+              this.cancel();
+              this.presentDialogAlert('Médicament mis à jour avec succès!');
+              this.initScheduleTreatement();
+            })
+          });
         }, error => {
-          console.error(error)
-          loading.dismiss()
-        }, () => {
+          console.error(error);
           loading.dismiss();
-          loading.onDidDismiss(() => {
-            this.cancel();
-            this.presentDialogAlert('Médicament mis à jour avec succès!');
-            this.initScheduleTreatement();
-          })
         });
       }
     }
+  }
+
+  getAlerts(id_treatment) {
+    return new Promise((resolve, reject) => {
+      this.services.getAlertsTreatment(id_treatment).subscribe(next => {
+        console.log(next);
+        resolve(next.alerts);
+      }, error => {
+        reject(error);
+      })
+    });
   }
 
   getTreatments() {
@@ -229,8 +247,8 @@ export class PilulierPage {
             loading.present();
             this.services.deleteTreatment(item.id).subscribe((next: any) => {
               console.log(next)
-              if (next !== null) {
-                this.deleteSchedules(next);
+              if (next !== null && next.alerts !== undefined) {
+                this.deleteSchedules(next.alerts);
               }
             }, error => {
               console.error(error)
