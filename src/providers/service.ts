@@ -73,6 +73,17 @@ export class ServiceProvider {
     );
   }
 
+   /**
+   * Toutes les catégories
+   * @returns {Observable<any>}
+   */
+  getAllEvents(): Observable<any> {
+    return this.http.get(
+      this.host + 'evenement-grossesse',
+      this.headers
+    );
+  }
+
   /**
    * Selection d'un mode
    * @param id

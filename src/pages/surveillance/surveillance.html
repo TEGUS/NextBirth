@@ -7,15 +7,15 @@
 
     <ion-card class="question">
           <ion-row class="montext">
-              Tocomètre
+              Parturiometre
           </ion-row>   
     </ion-card>
     <div class="contenu">
-        <button  *ngIf="couleurbouton == 0" (click)="debuter()" class="buttondebut">Débuter</button>
-        <button  *ngIf="couleurbouton == 1" (click)="stoper()" class="buttondebut1">Stop</button>
+        <button  *ngIf="couleurbouton == 0" (click)="debuter()" class="buttondebut">Début</button>
+        <button  *ngIf="couleurbouton == 1" (click)="stoper()" class="buttondebut1">Fin</button>
         <ion-row class="maligne">
             <ion-col>
-              <p class="special">Fin des contractions</p> 
+              <p class="special">Durée de contraction</p> 
               <ion-card class="moncard" *ngIf="contraceptionseconde < 10">
                 <p class="textbouton">{{contraceptionminutes}}:0{{contraceptionseconde}}</p>  
               </ion-card>
@@ -23,102 +23,158 @@
                 <p class="textbouton">{{contraceptionminutes}}:{{contraceptionseconde}}</p>  
               </ion-card>
             </ion-col>
+
             <ion-col>
-              <p class="special2"> Début des contractions </p> 
-              
-              <ion-card class="moncard2" *ngIf="contraceptionseconde2 < 10">
-                <p class="textbouton">{{contraceptionminutes2}}:0{{contraceptionseconde2}}</p>  
+              <p class="special2">Durée entre deux contractions</p> 
+              <ion-card class="moncard2" *ngIf="intervalseconde < 10">
+                <p class="textbouton">{{intervalminutes}}:0{{intervalseconde}}</p>  
               </ion-card>
-              <ion-card class="moncard2" *ngIf="contraceptionseconde2 >= 10">
-                <p class="textbouton">{{contraceptionminutes2}}:{{contraceptionseconde2}}</p>  
+              <ion-card class="moncard2" *ngIf="intervalseconde >= 10">
+                <p class="textbouton">{{intervalminutes}}:{{intervalseconde}}</p>  
               </ion-card>
             </ion-col>
+            
         </ion-row>
         <ion-row class="maligne">
+        
           <ion-col>
-            <p class="special">Durée moyenne des contractions yes yes</p> 
-            <ion-card class="moncard" *ngIf="intervalseconde < 10">
-              <p class="textbouton">{{intervalminutes}}:0{{intervalseconde}}</p>  
+            <p class="special"> Durée derniere contraction </p> 
+            
+            <ion-card class="moncard" *ngIf="contraceptionseconde2 < 10">
+              <p class="textbouton">{{contraceptionminutes2}}:0{{contraceptionseconde2}}</p>  
             </ion-card>
-            <ion-card class="moncard" *ngIf="intervalseconde >= 10">
-              <p class="textbouton">{{intervalminutes}}:{{intervalseconde}}</p>  
+            <ion-card class="moncard" *ngIf="contraceptionseconde2 >= 10">
+              <p class="textbouton">{{contraceptionminutes2}}:{{contraceptionseconde2}}</p>  
             </ion-card>
           </ion-col>
           <ion-col>
             <p class="special2"> Fréquence des contractions </p> 
             <ion-card class="moncard2" *ngIf="minutecontraception == 0">
-              <p class="textbouton">0/0 sec</p>  
+              <p class="textbouton">0/00 min</p>  
             </ion-card>
             <ion-card class="moncard2" *ngIf="minutecontraception != 0">
-              <p class="textbouton">2/{{minutecontraception}} sec</p>  
+              <p class="textbouton">1/{{minutecontraceptionNet}}min</p>  
             </ion-card>
           </ion-col>
         </ion-row>
         <button (click)="renitialiser()" class="buttondebut2">Rénitialiser</button>
+
+        <ion-card class="carddoleur">
+            <p class="titlecard2"> localisation de la douleur </p>
+              <ion-list radio-group (ionChange)="radioCheckedlocal($event)"  [(ngModel)]="lacaldouleur">
+                <ion-item>
+                  <ion-label>Douleur au ventre uniquement</ion-label>
+                  <ion-radio  value="dv"></ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Douleur au ventre et au dos</ion-label>
+                  <ion-radio  value="ddv"></ion-radio>
+                </ion-item>
+              </ion-list>
+        </ion-card>
+
+
         <ion-row>
           <ion-col>
-            <p>Intensité des contractions</p>
+            <p class="montexte">Intensité des contractions</p>
           </ion-col>
           <ion-col>
-            <button class="monbutonrond1"></button>
-            <button class="monbutonrond2"></button>
-            <button class="monbutonrond3"></button>
-            <button class="monbutonrond4"></button>
-            <button class="monbutonrond5"></button>
+            <!--<button (click)="intensitedouleur(1)" class="monbutonrond1"></button>
+            <button (click)="intensitedouleur(3)" class="monbutonrond2"></button>
+            <button (click)="intensitedouleur(5)" class="monbutonrond3"></button>
+            <button (click)="intensitedouleur(7)" class="monbutonrond4"></button>
+            <button (click)="intensitedouleur(8)" class="monbutonrond5"></button>
+            <button (click)="intensitedouleur(10)" class="monbutonrond6"></button>-->
+            <button (click)="intensitedouleur(0)" class="monbutonrond1"></button>
+            <button (click)="intensitedouleur(2)" class="monbutonrond2"></button>
+            <button (click)="intensitedouleur(4)" class="monbutonrond3"></button>
+            <button (click)="intensitedouleur(6)" class="monbutonrond4"></button>
+            <button (click)="intensitedouleur(8)" class="monbutonrond5"></button>
+            <button (click)="intensitedouleur(10)" class="monbutonrond6"></button>
           </ion-col>
         </ion-row>
-        <ion-row class="dernierrow">
+
+        <ion-card class="carddoleur" *ngIf="testaction == 1">
+              <p class="titlecard2"> Envie marjeur actuellement </p>
+                <ion-list radio-group (ionChange)="radioChecked($event)"  [(ngModel)]="envies">
+                  <ion-item>
+                    <ion-label>Envie de pouser</ion-label>
+                    <ion-radio  value="ep" checked></ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Envie de faire les selles</ion-label>
+                    <ion-radio  value="efs"></ion-radio>
+                  </ion-item>
+                </ion-list>
+        </ion-card>
+
+        <br>
+        
+      <ion-row class="dernierrow">
           <ion-col>
-            <p>Rupture des membranes</p>
+            <p class="montexte">Ecoulement liquidien par le vagin</p>
           </ion-col>
           <ion-col>
           <button class="boutonoui" (click)="actionSurOui()">Oui</button>
-          <button class="boutonon">Non</button>
+          <button class="boutonon" (click)="actionSurNon()">Non</button>
         </ion-col>
       </ion-row>
+
+      <ion-card class="recapitulatif2" *ngIf="testeur == 1">
+              <p class="titlecard"> Le liquide qui coule est : </p>
+              <ion-row>
+                  <ion-col>
+                    <button (click)="colorclaire()" class="buttonclaire"> claire </button>
+                  </ion-col>
+                  <ion-col>
+                  <button (click)="colorpurulente()" class="buttonpuru"> Purulente </button>
+                  </ion-col>
+              </ion-row>
+              <ion-row>
+              <ion-col >
+                  <button (click)="colortroube()" class="buttontroube"> Trouble </button>
+              </ion-col>
+              <ion-col>
+                <button (click)="colorbrunatre()" class="buttonbrunatre"> brunâtre </button>
+              </ion-col>
+              </ion-row>
+              <ion-row>
+              <ion-col >
+                  <button (click)="colorverdatre()" class="buttonverdatre"> Verdâtre </button>
+              </ion-col>
+              <ion-col >
+                <button (click)="colorsanglant()" class="buttonsanglant"> Sanglant </button>
+              </ion-col>
+              </ion-row>
+              
+        </ion-card>
       
-      <ion-card class="recapitulatif" *ngIf="testeur == 0">
+      <ion-card class="recapitulatif">
+        <p class="titlecard2"> Récapitulatif : </p> 
         <ion-card-content>
-          <ion-row class="montext1">
-              Récapitulatif:
+         
+          <ion-row class="montext2" *ngIf="minutecontraceptionNet == 0">
+            Fréquence de contraction: 0/0{{minutecontraceptionNet}} min
+          </ion-row>
+          <ion-row class="montext2" *ngIf="minutecontraceptionNet != 0">
+              Fréquence de contraction: 1/{{minutecontraceptionNet}} min
+            </ion-row>   
+          <ion-row class="montext2">
+            Localisation de la douleur: {{vallocaldouleur}}
           </ion-row> 
           <ion-row class="montext2">
-            Durée moyenne des contractions
-          </ion-row>   
+            Intensité des contractions: {{numerateur}}/{{denominateur}}
+          </ion-row>
           <ion-row class="montext2">
-            Durée moyenne des contractions
+            duree de contraction: {{contraceptionminutes2}}:{{contraceptionseconde2}}    <!--      {{madureeenminutes}} minutes -->
           </ion-row> 
           <ion-row class="montext2">
-            Durée moyenne des contractions
+            Ecoulement du liquide par le Vagin: {{couleurduliquide}}
           </ion-row> 
         </ion-card-content>
       </ion-card>
       
-      <ion-card class="recapitulatif2" *ngIf="testeur == 1">
-           <p class="titlecard"> choisir la couleur </p>
-           <ion-row>
-               <ion-col >
-                  <button (click)="colorclaire()" class="buttonclaire"> claire </button>
-               </ion-col>
-               <ion-col>
-                <button (click)="colorpurulente()" class="buttonpuru"> Purulente </button>
-               </ion-col>
-           </ion-row>
-           <ion-row>
-            <ion-col >
-               <button (click)="colortroube()" class="buttontroube"> Trouble </button>
-            </ion-col>
-            <ion-col>
-             <button (click)="colorbrunatre()" class="buttonbrunatre"> brunâtre </button>
-            </ion-col>
-           </ion-row>
-           <ion-row>
-            <ion-col >
-               <button (click)="colorverdatre()" class="buttonverdatre"> Verdâtre </button>
-            </ion-col>
-           </ion-row>
-           
-      </ion-card>
+      
 
 
   </div>

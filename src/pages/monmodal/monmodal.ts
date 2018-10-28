@@ -33,7 +33,10 @@ export class MonmodalPage {
 
   ionViewDidLoad() {
     this.services.initHeaders();
-    console.log('ionViewDidLoad MonmodalPage');
+    var data = this.navParams.get('data');
+    if(data.image == 1){
+        this.takephotos();
+    }
   }
 
   annuler(){
@@ -55,7 +58,7 @@ export class MonmodalPage {
 
   takephotos(){
 
-    this.testeur = 1;
+    
     const options: CameraOptions = {
       quality:100,
       destinationType:1,
@@ -68,7 +71,7 @@ export class MonmodalPage {
     this.camera.getPicture(options).then((ImageData) => {
           let base64Image = ImageData;
           this.base64.encodeFile(base64Image).then((base64File: string)=>{
-
+                this.testeur = 1;
                 this.noteGrosesse.image = base64File;
 
               }, (err) =>{
@@ -84,7 +87,7 @@ export class MonmodalPage {
 
     takegalerie(){
 
-      this.testeur = 1;
+      
 
       const options: CameraOptions = {
         quality:100,
@@ -98,7 +101,7 @@ export class MonmodalPage {
       this.camera.getPicture(options).then((ImageData) => {
             let base64Image = ImageData;
                 this.base64.encodeFile(base64Image).then((base64File: string)=>{
-
+                  this.testeur = 1;
                   this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
 
               }, (err) =>{
