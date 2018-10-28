@@ -13,6 +13,7 @@ import {LocalNotifications} from '@ionic-native/local-notifications';
 import {ServiceProvider} from "../../providers/service";
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {Base64} from '@ionic-native/base64';
+import { LocalStorageProvider } from '../../providers/localstorage';
 
 @IonicPage()
 @Component({
@@ -28,13 +29,43 @@ export class ReportPage {
     image: '0'
   }
 
-  constructor(public navCtrl: NavController, private modal: ModalController, private alertCtrl: AlertController,
+  public nombresemaine: any;
+  public nombrejourrestant: any;
+  public dpa: any;
+
+  constructor(public navCtrl: NavController, public mylocalstorage: LocalStorageProvider, private modal: ModalController, private alertCtrl: AlertController,
               private base64: Base64, public navParams: NavParams, private localNotifications: LocalNotifications,
               public loadingCtrl: LoadingController, private camera: Camera, public services: ServiceProvider) {
     this.services.initHeaders();
   }
 
   ionViewDidLoad() {
+
+   
+   
+    this.mylocalstorage.getSession().then((result:any) =>{
+
+      
+      var dataprofile = '' + result.user._embedded.patient.debut_dernieres_menstrues;
+      console.log(dataprofile);
+      var ladate = dataprofile.substring(0,16)+'Z';
+      var premieredate = new Date(ladate).getTime();
+      var dateaujourdui = new Date().getTime();
+      var nombremilliseconde = dateaujourdui - premieredate;
+      var nombresjours = Math.ceil( ((((nombremilliseconde/1000)/60)/60)/24));
+      var nomrejoursavantacc = 280 - nombresjours;
+      this.nombrejourrestant = (nombresjours) % 7;
+      this.nombresemaine = Math.floor((nombresjours) / 7);
+      var time = new Date().getTime();
+      var dateaccouchement = new Date(time + nomrejoursavantacc*24*60*60*1000);  
+      this.dpa = dateaccouchement.toLocaleDateString("fr");
+     
+    // 280 jour pour donné naissance
+      
+    })
+ 
+
+
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getArticles().subscribe(next => {
@@ -92,11 +123,6 @@ export class ReportPage {
           handler: data => {
             this.noteGrosesse.libele = data.libele;
             this.noteGrosesse.description = data.description;
-            console.log("=============================");
-            console.log(data);
-            console.log(this.noteGrosesse);
-            console.log("=============================");
-
           }
         }
       ]
@@ -134,7 +160,7 @@ export class ReportPage {
   }
 
 
-  openModal() {
+  openModalImage() {
 
     const myModalOptions: ModalOptions = {
       enableBackdropDismiss: false
@@ -142,7 +168,9 @@ export class ReportPage {
 
     const myModalData = {
       name: 'Paul Halliday',
-      occupation: 'Developer'
+      occupation: 'Developer',
+      image:1,
+      note:0
     };
 
     const myModal: Modal = this.modal.create('MonmodalPage', {data: myModalData}, myModalOptions);
@@ -150,8 +178,33 @@ export class ReportPage {
     myModal.present();
 
     myModal.onDidDismiss((data) => {
-      console.log("I have dismissed.");
-      console.log(data);
+    });
+
+    myModal.onWillDismiss((data) => {
+
+    });
+
+  }
+
+
+  openModalNote() {
+
+    const myModalOptions: ModalOptions = {
+      enableBackdropDismiss: false
+    };
+
+    const myModalData = {
+      name: 'Paul Halliday',
+      occupation: 'Developer',
+      image:0,
+      note:1
+    };
+
+    const myModal: Modal = this.modal.create('MonmodalPage', {data: myModalData}, myModalOptions);
+
+    myModal.present();
+
+    myModal.onDidDismiss((data) => {
     });
 
     myModal.onWillDismiss((data) => {

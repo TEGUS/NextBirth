@@ -14,22 +14,22 @@ import {LocalStorageProvider} from "./localstorage";
 export class ServiceProvider {
   private host: any;
   private headers: any;
-  
+
   constructor(public http: HttpClient, public localStorage: LocalStorageProvider) {
     this.initHeaders().then(next => {
       this.headers = next;
     });
     this.host = currentHost;
   }
-  
-  
-  faitTravail() {
-    this.initHeaders().then(next => {
-      this.headers = next;
-    });
+
+
+  faitTravail(){
+      this.initHeaders().then(next => {
+        this.headers = next;
+      });
   }
-  
-  
+
+
   initHeaders() {
     return new Promise((resolve, reject) => {
       this.localStorage.getKey('session').then(next => {
@@ -48,9 +48,9 @@ export class ServiceProvider {
       })
     });
   }
-  
+
   ///// ** Modes
-  
+
   /**
    * Le mode courant
    * @returns {Observable<any>}
@@ -61,7 +61,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   /**
    * Toutes les catégories
    * @returns {Observable<any>}
@@ -72,7 +72,16 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+  /**
+   * Toutes les catégories
+   * @returns {Observable<any>}
+   */
+  getAllEvents(): Observable<any> {
+    return this.http.get(
+      this.host + 'evenement-grossesse',
+      this.headers
+    );
+  }
   /**
    * Selection d'un mode
    * @param id
@@ -82,14 +91,14 @@ export class ServiceProvider {
     return this.http.post(
       this.host + 'choice-modes',
       {
-        categorie: {
+        categorie:{
           id: id
         }
       },
       this.headers
     );
   }
-  
+
   updateprofile(utilisateurs: any): Observable<any> {
     return this.http.put(
       this.host + 'patient/profile/complete',
@@ -97,9 +106,9 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   ///// ** Profile
-  
+
   /**
    * Check Profile
    * @returns {Observable<any>}
@@ -110,7 +119,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   /**
    * Get Configs Désir de grossesse
    * @returns {Observable<any>}
@@ -121,7 +130,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   /**
    * Complete Desir Grossesse
    * @param object
@@ -134,7 +143,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   /**
    * Vérification des informations nécessaires pour la mode désir de grossesse
    * @returns {Observable<any>}
@@ -145,7 +154,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   /**
    * Retourne les articles portant sur le mode choisi
    * @returns {Observable<any>}
@@ -156,8 +165,8 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
-  
+
+
   /**
    * Retourne les détails sur un article
    * @returns {Observable<any>}
@@ -168,8 +177,8 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
-  
+
+
   ////--- PILULIER
   
   /**
@@ -194,7 +203,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   /**
    * Mise à jour d'un traitement
    * @param treatment
@@ -207,7 +216,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   /**
    * Supprimer un traitement
    * @param id
@@ -219,7 +228,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   /**
    * Les différentes fréquences de prise de traitement
    * @returns {Observable<any>}
@@ -230,7 +239,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   /**
    * Les différentes alerts d'un treatment
    * @returns {Observable<any>}
@@ -241,12 +250,12 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
-  
+
+
   //////////////////////////////
-  
-  
-  /**
+
+
+   /**
    * Ajouter une traitement(produit) au Pilulier
    * @param treatment
    * @returns {Observable<any>}
@@ -258,7 +267,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   /**
    * Les différentes fréquences de prise de traitement
    * @returns {Observable<any>}
@@ -269,8 +278,8 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
-  
+
+
   /**
    * Get all treatments
    * @returns {Observable<any>}
@@ -281,7 +290,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-  
+
   /**
    * Update Vital Infos
    * @param object

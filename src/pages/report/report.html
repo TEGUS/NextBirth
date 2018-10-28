@@ -8,41 +8,41 @@
     <div class="params">
       <div class="param">
         <div class="libelle-param">Terme</div>
-        <div class="value-param">S/JN</div>
+        <div class="value-param">{{nombresemaine}}S/{{nombrejourrestant}}J</div>
       </div>
       <div class="param">
-        <div class="libelle-param">CPN</div>
-        <div class="value-param">-Jr</div>
+        <div class="libelle-param">Visite</div>
+        <div class="value-param">-5J</div>
       </div>
       <div class="param">
         <div class="libelle-param">VAT</div>
-        <div class="value-param">-Jr</div>
+        <div class="value-param">-6J</div>
       </div>
       <div class="param">
         <div class="libelle-param">DPA</div>
-        <div class="value-param">J/M/A</div>
+        <div class="value-param">{{dpa}}</div>
       </div>
     </div>
 
     <div class="report-profile" >
       <img (click)="mesbonmoment()" class="profils" src="assets/imgs/user.jpg" alt="">
       <div class="profile">
-        <div class="rep-prof-libelle">
+        <div (click)="mesbonmoment()" class="rep-prof-libelle">
           <label>MA GROSSESSE</label>
-          <p>Texte</p>
+          <p>Journal Intime</p>
 
         </div>
 
         <div class="options">
-          <div class="option">
+          <div (click)="openModalNote()" class="option">
             <ion-icon name="document"></ion-icon>
             <div>Note</div>
           </div>
-          <div class="option">
+          <div (click)="openModalImage()" class="option">
             <ion-icon name="camera"></ion-icon>
             <div>Image</div>
           </div>
-          <div class="option2">
+          <div (click)="mesbonmoment()" class="option2">
             <img src="assets/imgs/flecheblanche.png" alt="" width="15" height="30" style="margin-top: -70px;">
           </div>
         </div>
@@ -82,9 +82,9 @@
         <button ion-fab>Youtube</button>
       </ion-fab-list>-->
       <ion-fab-list side="left">
-
-        <button (click)="openModal()"  ion-fab style="background-color:#eb5350"><ion-icon name="document"></ion-icon></button>
-        <button (click)="openModal()"   ion-fab style="background-color:#eb5350"><ion-icon name="camera"></ion-icon></button>
+        
+        <button (click)="openModalNote()"  ion-fab style="background-color:#eb5350"><ion-icon name="document"></ion-icon></button>
+        <button (click)="openModalImage()"   ion-fab style="background-color:#eb5350"><ion-icon name="camera"></ion-icon></button>
       </ion-fab-list>
   </ion-fab>
 

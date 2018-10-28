@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { ServiceProvider } from '../../providers/service';
 
 /**
  * Generated class for the TimelinetestPage page.
@@ -64,11 +65,28 @@ export class TimelinetestPage {
     }
   ]
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public services: ServiceProvider, public navParams: NavParams) {}
 
   ionViewDidLoad() {
 
-   
+    //getAllEvents
+
+    let loading = this.loadingCtrl.create();
+    loading.present();
+    this.services.getAllEvents().subscribe(next => {
+
+      
+      console.log("==================================");
+      console.log(next);
+      console.log("==================================");
+
+
+    }, error => {
+      loading.dismiss();
+      console.error(error);
+    }, () => {
+      loading.dismiss();
+    });
     
   }
 

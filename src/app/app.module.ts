@@ -17,6 +17,7 @@ import {Calendar} from "@ionic-native/calendar";
 import {Network} from "@ionic-native/network";
 import {Camera} from '@ionic-native/camera';
 import {CameraMock} from '../mocks/camera.mock';
+import { Vibration } from '@ionic-native/vibration';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {CameraMock} from '../mocks/camera.mock';
     StatusBar,
     Calendar,
     Network,
+    Vibration,
     LocalStorageProvider,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

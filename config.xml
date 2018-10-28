@@ -89,6 +89,7 @@
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <plugin name="com-badrit-base64" spec="^0.2.0" />
     <plugin name="cordova-plugin-networkinterface" spec="^2.0.0" />
+    <plugin name="cordova-plugin-vibration" spec="^3.1.0" />
     <engine name="android" spec="^7.0.0" />
     <engine name="browser" spec="5.0.4" />
 </widget>

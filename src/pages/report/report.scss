@@ -18,11 +18,11 @@ page-report {
       .param {
         @include comp(row, space-between);
         .libelle-param {
-          padding: 5px;
+          padding: 3px;
         }
         .value-param {
           color: color($colors, primary);
-          padding: 5px;
+          padding: 3px;
           background-color: white;
         }
       }
