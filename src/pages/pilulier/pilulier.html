@@ -131,20 +131,22 @@
                      placeholder="Entrez le nom du médicament" (ionCancel)="cancelSearchbar($event)">
       </ion-searchbar>
       
-      <ion-list>
-        <ion-item *ngFor="let item of listMedicaments" (click)="selectMedicament(item)">
-          {{ item.name }}
-        </ion-item>
-      </ion-list>
-      
-      <ion-card *ngIf="showResultMedicaent && listMedicaments.length == 0 && medicament_search != undefined && medicament_search.trim() != ''">
-        <ion-card-header>Nom du Médicament</ion-card-header>
-        <ion-card-content>{{medicament_search}}</ion-card-content>
-      </ion-card>
-      
-      <button ion-button (click)="nextPart()">
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
+      <div padding>
+        <ion-list>
+          <ion-item *ngFor="let item of listMedicaments" (click)="selectMedicament(item)">
+            {{ item.name }}
+          </ion-item>
+        </ion-list>
+  
+        <!--<ion-card *ngIf="showResultMedicaent && listMedicaments.length == 0 && medicament_search != undefined && medicament_search.trim() != ''">-->
+          <!--<ion-card-header>Nom du Médicament</ion-card-header>-->
+          <!--<ion-card-content>{{medicament_search}}</ion-card-content>-->
+        <!--</ion-card>-->
+  
+        <!--<button ion-button (click)="nextPart()">-->
+          <!--<ion-icon name="arrow-forward"></ion-icon>-->
+        <!--</button>-->
+      </div>
     </div>
     
     <div *ngIf="part==2">

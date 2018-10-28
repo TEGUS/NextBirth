@@ -39,6 +39,15 @@ export class PilulierPage {
   private subscription = null;
   private showResultMedicaent = false;
   
+  private actions = [
+    {
+      identifier: 'TAKE',
+      title: 'Take',
+      activationMode: 'background',
+      destructive: false,
+    },
+  ];
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
               private localNotifications: LocalNotifications) {
@@ -48,9 +57,11 @@ export class PilulierPage {
     this.initForm();
     
     this.services.initHeaders().then(r => {
+      let val = [];
       this.services.getFrequencesPrise().subscribe((next: any) => {
         console.log(next);
-        this.frequencesPrise = next[0]
+        this.frequencesPrise = next.frequences_prise
+        console.log(this.frequencesPrise);
       }, error => {
         console.error(error);
       });
@@ -73,14 +84,19 @@ export class PilulierPage {
       this.cancelSearchbar(null);
       
       const val = (ev.target.value).trim();
-  
+      
       // if the value is an empty string don't filter the items
       if (val && val.trim() != '') {
-        this.medicament_search = val;
-    
         this.subscription = this.services.getMedicamentByName(val).subscribe(next => {
           console.log(next);
-          this.listMedicaments = next.medicaments
+          if (next.medicaments.length === 0) {
+            this.listMedicaments[0] = {
+              name: val
+            };
+          } else {
+            this.listMedicaments = next.medicaments
+          }
+          
           this.showResultMedicaent = true
         }, error => {
           console.error(error)
@@ -90,9 +106,11 @@ export class PilulierPage {
   }
   
   nextPart() {
-    if (this.medicament_search !== undefined && this.medicament_search !== null && this.medicament_search.trim() !== '') {
-      this.part = 2;
-      this.form.patchValue({'name' : this.medicament_search})
+    if (this.listMedicaments.length !== 0) {
+      if (this.medicament_search !== undefined && this.medicament_search !== null && this.medicament_search.trim() !== '') {
+        this.part = 2;
+        this.form.patchValue({'name': this.medicament_search})
+      }
     }
   }
   
@@ -154,10 +172,12 @@ export class PilulierPage {
   
   
   getFrequencePrise(id_frequence) {
-    return (this.frequencesPrise[this.frequencesPrise.findIndex(item => item.key === id_frequence)]).value;
+    const id = this.frequencesPrise.findIndex(item => item.key === id_frequence);
+    return (id != -1) ? (this.frequencesPrise[id]).value : 'NULL';
   }
   
   convertDatetime(time) {
+    console.log(time);
     return functions.convertDatetime(time);
   }
   
@@ -349,10 +369,16 @@ export class PilulierPage {
           at: new Date(new Date(initDate).getTime())
         },
         led: 'FF0000',
-        sound: 'file://assets/imgs/notification.mp3'
+        sound: 'file://assets/imgs/notification.mp3',
+        actions: this.actions
       });
     });
     this.localNotifications.schedule(notifications);
+    this.localNotifications.on('TAKE').subscribe(next => {
+      console.log(next);
+    }, error => {
+      console.error(error);
+    })
     
     // this.getTreatments().then(next => {
     //   if (this.treatments.length === 0)
