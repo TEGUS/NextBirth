@@ -22,13 +22,13 @@ export class ServiceProvider {
     this.host = currentHost;
   }
 
-  
+
   faitTravail(){
       this.initHeaders().then(next => {
         this.headers = next;
       });
   }
-  
+
 
   initHeaders() {
     return new Promise((resolve, reject) => {
@@ -228,6 +228,17 @@ export class ServiceProvider {
   getFrequencesPrise(): Observable<any> {
     return this.http.get(
       this.host + 'medicament/config',
+      this.headers
+    );
+  }
+
+  /**
+   * Les différentes alerts d'un treatment
+   * @returns {Observable<any>}
+   */
+  getAlertsTreatment(id): Observable<any> {
+    return this.http.get(
+      `${this.host}medicaments/${id}/alerts`,
       this.headers
     );
   }
