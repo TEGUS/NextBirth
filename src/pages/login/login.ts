@@ -7,7 +7,8 @@ import {AuthenticationProvider} from "../../providers/authentication";
 import {SignUpPage} from "../sign-up/sign-up";
 import {checkField} from "../../variables/functions";
 import {LocalStorageProvider} from '../../providers/localstorage';
-import { ServiceProvider } from '../../providers/service';
+import {ServiceProvider} from '../../providers/service';
+import {MbscSelectOptions} from "@mobiscroll/angular";
 
 /**
  * Generated class for the LoginPage page.
@@ -16,14 +17,15 @@ import { ServiceProvider } from '../../providers/service';
  * Ionic pages and navigation.
  */
 
+
 @IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  object = null
-  error = null
+  object = null;
+  error = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,

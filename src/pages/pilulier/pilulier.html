@@ -5,11 +5,11 @@
 <ion-content class="monbody">
   <ion-card class="question">
     <ion-row class="montext">
-      <ion-col (click)="changetesteur1()"> Nouveau produits</ion-col>
-      <ion-col (click)="changetesteur2()">traitement en cours</ion-col>
+      <ion-col (click)="changetesteur1()">Nouveau produits</ion-col>
+      <ion-col (click)="changetesteur2()">Traitement en cours</ion-col>
     </ion-row>
   </ion-card>
-
+  
   <ion-row>
     <ion-col>
       <ion-card class="supercard" *ngIf="testeur==0"></ion-card>
@@ -18,131 +18,260 @@
       <ion-card class="supercard2" *ngIf="testeur==1"></ion-card>
     </ion-col>
   </ion-row>
-
+  
   <br>
-
+  
   <div *ngIf="testeur==0">
-    <form [formGroup]="form" (submit)="addTreatment()" (reset)="cancel()">
-      <ion-row>
-        <ion-col>
-          <p class="text">Non du produit</p>
-        </ion-col>
-        <ion-col>
-          <ion-input class="monimput" type="text" formControlName="name"></ion-input>
-        </ion-col>
-      </ion-row>
-
-      <ion-row class="maligne">
-        <ion-col>
-          <p class="text">Frequence de prise</p>
-        </ion-col>
-        <ion-col>
-          <!--<select (click)="select.open()" formControlName="frequencePrise" class="monselect">-->
-          <!--<option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</option>-->
-          <!--</select>-->
-
-          <ion-select class="monselect" #select formControlName="frequencePrise">
-            <ion-option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</ion-option>
-          </ion-select>
-        </ion-col>
-      </ion-row>
-
-      <ion-row class="maligne">
-        <ion-col>
-          <p class="text">Durée du traitement</p>
-        </ion-col>
-        <ion-col>
-          <ion-input class="monimput" type="number" formControlName="dureeTraitement"></ion-input>
-        </ion-col>
-      </ion-row>
-
-      <ion-row class="maligne">
-        <ion-col col-6>
-          <p class="text">Date du début</p>
-        </ion-col>
-        <ion-col col-4>
-          <ion-input class="monimput2" disabled="true" type="text" formControlName="dateDebutTraitement"></ion-input>
-        </ion-col>
-        <ion-col col-2 (click)="datePicker.open()">
-          <ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>
-        </ion-col>
-      </ion-row>
-
-      <ion-datetime #datePicker text-center
-                    (ionChange)="dateDebutTraitementChanged($event)"
-                    hidden="true" [(ngModel)]="dateDebutTraitement"
-                    [ngModelOptions]="{standalone: true}">
-      </ion-datetime>
-
-      <ion-row class="maligne">
-        <ion-col col-6>
-          <p class="text">Horaire de la 1ère prise</p>
-        </ion-col>
-        <ion-col col-4>
-          <ion-input class="monimput" disabled="true" type="text" formControlName="horaireFirstPrise"></ion-input>
-        </ion-col>
-        <ion-col col-2 (click)="timePicker.open()">
-          <ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>
-        </ion-col>
-      </ion-row>
-
-      <ion-datetime #timePicker text-center pickerFormat="HH mm"
-                    (ionChange)="heureDebutTraitementChanged($event)"
-                    hidden="true" [(ngModel)]="heureDebutTraitement"
-                    [ngModelOptions]="{standalone: true}">
-      </ion-datetime>
-
-      <ion-row class="maligne">
-        <ion-col>
-          <p class="text">Jour du cycle</p>
-        </ion-col>
-        <ion-col>
-          <ion-input class="monimput" type="number" formControlName="jourCycle"></ion-input>
-        </ion-col>
-      </ion-row>
-
-      <ion-row class="maligne">
-        <ion-col>
-          <p class="text">Evaluation de l'évolution</p>
-        </ion-col>
-        <ion-col>
-          <ion-input class="monimput" type="text" formControlName="evaluationEvolution"></ion-input>
-        </ion-col>
-      </ion-row>
-
-
-      <button style="border-radius:50px; height: 60px; float: right; margin-top: 10% " bottom right ion-button
-              type="submit" [disabled]="!form.valid">
-        {{currentTreatment == null ? 'Add' : 'Upd'}}
+    <div>
+      <!--<form [formGroup]="form" (submit)="addTreatment()" (reset)="cancel()">-->
+    <!--<ion-row>-->
+    <!--<ion-col>-->
+    <!--<p class="text">Non du produit</p>-->
+    <!--</ion-col>-->
+    <!--<ion-col>-->
+    <!--<ion-input class="monimput" type="text" formControlName="name"></ion-input>-->
+    <!--</ion-col>-->
+    <!--</ion-row>-->
+    <!---->
+    <!--<ion-row class="maligne">-->
+    <!--<ion-col>-->
+    <!--<p class="text">Frequence de prise</p>-->
+    <!--</ion-col>-->
+    <!--<ion-col>-->
+    <!--<ion-select class="monselect" #select formControlName="frequencePrise">-->
+    <!--<ion-option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</ion-option>-->
+    <!--</ion-select>-->
+    <!--</ion-col>-->
+    <!--</ion-row>-->
+    <!---->
+    <!--<ion-row class="maligne">-->
+    <!--<ion-col>-->
+    <!--<p class="text">Durée du traitement</p>-->
+    <!--</ion-col>-->
+    <!--<ion-col>-->
+    <!--<ion-input class="monimput" type="number" formControlName="dureeTraitement"></ion-input>-->
+    <!--</ion-col>-->
+    <!--</ion-row>-->
+    <!---->
+    <!--<ion-row class="maligne">-->
+    <!--<ion-col col-6>-->
+    <!--<p class="text">Date du début</p>-->
+    <!--</ion-col>-->
+    <!--<ion-col col-4>-->
+    <!--<ion-input class="monimput2" disabled="true" type="text" formControlName="dateDebutTraitement"></ion-input>-->
+    <!--</ion-col>-->
+    <!--<ion-col col-2 (click)="datePicker.open()">-->
+    <!--<ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>-->
+    <!--</ion-col>-->
+    <!--</ion-row>-->
+    <!---->
+    <!--<ion-datetime #datePicker text-center-->
+    <!--(ionChange)="dateDebutTraitementChanged($event)"-->
+    <!--hidden="true" [(ngModel)]="dateDebutTraitement"-->
+    <!--[ngModelOptions]="{standalone: true}">-->
+    <!--</ion-datetime>-->
+    <!---->
+    <!--<ion-row class="maligne">-->
+    <!--<ion-col col-6>-->
+    <!--<p class="text">Horaire de la 1ère prise</p>-->
+    <!--</ion-col>-->
+    <!--<ion-col col-4>-->
+    <!--<ion-input class="monimput" disabled="true" type="text" formControlName="horaireFirstPrise"></ion-input>-->
+    <!--</ion-col>-->
+    <!--<ion-col col-2 (click)="timePicker.open()">-->
+    <!--<ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>-->
+    <!--</ion-col>-->
+    <!--</ion-row>-->
+    <!---->
+    <!--<ion-datetime #timePicker text-center pickerFormat="HH mm"-->
+    <!--(ionChange)="heureDebutTraitementChanged($event)"-->
+    <!--hidden="true" [(ngModel)]="heureDebutTraitement"-->
+    <!--[ngModelOptions]="{standalone: true}">-->
+    <!--</ion-datetime>-->
+    <!---->
+    <!--&lt;!&ndash;<ion-row class="maligne">&ndash;&gt;-->
+    <!--&lt;!&ndash;<ion-col>&ndash;&gt;-->
+    <!--&lt;!&ndash;<p class="text">Jour du cycle</p>&ndash;&gt;-->
+    <!--&lt;!&ndash;</ion-col>&ndash;&gt;-->
+    <!--&lt;!&ndash;<ion-col>&ndash;&gt;-->
+    <!--&lt;!&ndash;<ion-input class="monimput" type="number" formControlName="jourCycle"></ion-input>&ndash;&gt;-->
+    <!--&lt;!&ndash;</ion-col>&ndash;&gt;-->
+    <!--&lt;!&ndash;</ion-row>&ndash;&gt;-->
+    <!---->
+    <!--&lt;!&ndash;<ion-row class="maligne">&ndash;&gt;-->
+    <!--&lt;!&ndash;<ion-col>&ndash;&gt;-->
+    <!--&lt;!&ndash;<p class="text">Evaluation de l'évolution</p>&ndash;&gt;-->
+    <!--&lt;!&ndash;</ion-col>&ndash;&gt;-->
+    <!--&lt;!&ndash;<ion-col>&ndash;&gt;-->
+    <!--&lt;!&ndash;<ion-input class="monimput" type="text" formControlName="evaluationEvolution"></ion-input>&ndash;&gt;-->
+    <!--&lt;!&ndash;</ion-col>&ndash;&gt;-->
+    <!--&lt;!&ndash;</ion-row>&ndash;&gt;-->
+    <!---->
+    <!--<ion-row class="maligne">-->
+    <!--<ion-col>-->
+    <!--<p class="text">En observance ?</p>-->
+    <!--</ion-col>-->
+    <!--<ion-col>-->
+    <!--<ion-select class="monselect">-->
+    <!--<ion-option value="oui" selected>Oui</ion-option>-->
+    <!--<ion-option value="non">Non</ion-option>-->
+    <!--</ion-select>-->
+    <!--</ion-col>-->
+    <!--</ion-row>-->
+    <!---->
+    <!--<button style="border-radius:50px; height: 60px; float: right; margin-top: 10% " bottom right ion-button-->
+    <!--type="submit" [disabled]="!form.valid">-->
+    <!--{{currentTreatment == null ? 'Add' : 'Upd'}}-->
+    <!--</button>-->
+    <!--</form>-->
+    </div>
+    
+    <div *ngIf="part==1">
+      <ion-searchbar (ionInput)="getMedicaments($event)" showCancelButton="true" animated="true"
+                     placeholder="Entrez le nom du médicament" (ionCancel)="cancelSearchbar($event)">
+      </ion-searchbar>
+      
+      <ion-list>
+        <ion-item *ngFor="let item of listMedicaments" (click)="selectMedicament(item)">
+          {{ item.name }}
+        </ion-item>
+      </ion-list>
+      
+      <ion-card *ngIf="showResultMedicaent && listMedicaments.length == 0 && medicament_search != undefined && medicament_search.trim() != ''">
+        <ion-card-header>Nom du Médicament</ion-card-header>
+        <ion-card-content>{{medicament_search}}</ion-card-content>
+      </ion-card>
+      
+      <button ion-button (click)="nextPart()">
+        <ion-icon name="arrow-forward"></ion-icon>
       </button>
-
-
-      <!--<ion-fab bottom right>-->
-      <!--<button ion-fab mini type="reset">-->
-      <!--<ion-icon name="close"></ion-icon>-->
-      <!--</button>-->
-      <!--<button ion-fab mini type="submit" [disabled]="!form.valid">-->
-      <!--<ion-icon name="checkmark-circle"></ion-icon>-->
-      <!--</button>-->
-      <!--</ion-fab>-->
-    </form>
+    </div>
+    
+    <div *ngIf="part==2">
+      <form [formGroup]="form" (submit)="addTreatment()" (reset)="cancel()">
+        <ion-row>
+          <ion-col>
+            <p class="text">Non du produit</p>
+          </ion-col>
+          <ion-col>
+            <ion-input class="monimput" disabled type="text" formControlName="name"></ion-input>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row class="maligne">
+          <ion-col>
+            <p class="text">Frequence de prise</p>
+          </ion-col>
+          <ion-col>
+            <ion-select class="monselect" #select formControlName="frequencePrise">
+              <ion-option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</ion-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row class="maligne">
+          <ion-col>
+            <p class="text">Durée du traitement</p>
+          </ion-col>
+          <ion-col>
+            <ion-input class="monimput" type="number" formControlName="dureeTraitement"></ion-input>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row class="maligne">
+          <ion-col col-6>
+            <p class="text">Date du début</p>
+          </ion-col>
+          <ion-col col-4>
+            <ion-input class="monimput2" disabled="true" type="text" formControlName="dateDebutTraitement"></ion-input>
+          </ion-col>
+          <ion-col col-2 (click)="datePicker.open()">
+            <ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>
+          </ion-col>
+        </ion-row>
+    
+        <ion-datetime #datePicker text-center
+                      (ionChange)="dateDebutTraitementChanged($event)"
+                      hidden="true" [(ngModel)]="dateDebutTraitement"
+                      [ngModelOptions]="{standalone: true}">
+        </ion-datetime>
+    
+        <ion-row class="maligne">
+          <ion-col col-6>
+            <p class="text">Horaire de la 1ère prise</p>
+          </ion-col>
+          <ion-col col-4>
+            <ion-input class="monimput" disabled="true" type="text" formControlName="horaireFirstPrise"></ion-input>
+          </ion-col>
+          <ion-col col-2 (click)="timePicker.open()">
+            <ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>
+          </ion-col>
+        </ion-row>
+    
+        <ion-datetime #timePicker text-center pickerFormat="HH mm"
+                      (ionChange)="heureDebutTraitementChanged($event)"
+                      hidden="true" [(ngModel)]="heureDebutTraitement"
+                      [ngModelOptions]="{standalone: true}">
+        </ion-datetime>
+    
+        <!--<ion-row class="maligne">-->
+        <!--<ion-col>-->
+        <!--<p class="text">Jour du cycle</p>-->
+        <!--</ion-col>-->
+        <!--<ion-col>-->
+        <!--<ion-input class="monimput" type="number" formControlName="jourCycle"></ion-input>-->
+        <!--</ion-col>-->
+        <!--</ion-row>-->
+    
+        <!--<ion-row class="maligne">-->
+        <!--<ion-col>-->
+        <!--<p class="text">Evaluation de l'évolution</p>-->
+        <!--</ion-col>-->
+        <!--<ion-col>-->
+        <!--<ion-input class="monimput" type="text" formControlName="evaluationEvolution"></ion-input>-->
+        <!--</ion-col>-->
+        <!--</ion-row>-->
+    
+        <ion-row class="maligne">
+          <ion-col>
+            <p class="text">En observance ?</p>
+          </ion-col>
+          <ion-col>
+            <ion-select class="monselect">
+              <ion-option value="oui" selected>Oui</ion-option>
+              <ion-option value="non">Non</ion-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+  
+        <button ion-button (click)="part = 1;" *ngIf="this.currentTreatment == null">
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+    
+        <button style="border-radius:50px; height: 60px; float: right; margin-top: 10% " bottom right ion-button
+                type="submit" [disabled]="!form.valid">
+          {{currentTreatment == null ? 'Add' : 'Upd'}}
+        </button>
+      </form>
+    </div>
   </div>
-
+  
   <div *ngIf="testeur==1">
     <div *ngFor="let item of treatments">
       Nom: {{item.name}}<br>
-      Duree: {{item.duree_traitement}}<br>
-      Date Debut: {{item.date_debut_traitement}}<br>
+      Duree: {{item.duree_traitement}} Jrs<br>
+      Date Debut: {{convertDatetime(item.date_debut_traitement)}}<br>
       Première prise: {{item.horaire_first_prise}}<br>
-      Fréquence de prise: {{item.frequence_prise}}<br>
-      Jour Cycle: {{item.jour_cycle}}<br>
-      Evaluation Evolution: {{item.evaluation_evolution}}<br>
-
+      Fréquence de prise: {{getFrequencePrise(item.frequence_prise)}}<br>
+      <!--Jour Cycle: {{item.jour_cycle}}<br>-->
+      <!--Evaluation Evolution: {{item.evaluation_evolution}}<br>-->
+      
       <button ion-button (click)="gotoUpdate(item)">Update</button>
       <button ion-button (click)="gotoDelete(item)">Delete</button>
+      <button ion-button (click)="take(item)">Take</button>
     </div>
   </div>
-
+  
   <ion-fab bottom right class="monsuperbutton" *ngIf="testeur==1">
     <button ion-fab (click)="changetesteur1()">
       <ion-icon name="add"></ion-icon>

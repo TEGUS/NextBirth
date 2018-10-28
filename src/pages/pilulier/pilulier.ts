@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ServiceProvider} from "../../providers/service";
 import {LocalNotifications} from "@ionic-native/local-notifications";
 import Schedule from "../../models/Schedule";
+import * as functions from "../../variables/functions";
 
 /**
  * Generated class for the PilulierPage page.
@@ -19,51 +20,103 @@ import Schedule from "../../models/Schedule";
 })
 export class PilulierPage {
   private testeur: any;
+  private part: any;
   private form: FormGroup;
   private treatments = [];
   private frequencesPrise = [];
-
-  private dateDebutTraitement = new Date().toISOString()
-  private heureDebutTraitement = new Date().toISOString()
-
+  
+  private medicament_search = null;
+  private listMedicaments = [];
+  
+  private dateDebutTraitement = new Date().toISOString();
+  private heureDebutTraitement = new Date().toISOString();
+  
   private currentTreatment = null;
   private madate = null;
   private monheure = null;
-
+  
   private schedules: Schedule[];
-
+  private subscription = null;
+  private showResultMedicaent = false;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
-              private localNotifications: LocalNotifications) {}
-
+              private localNotifications: LocalNotifications) {
+  }
+  
   ionViewWillLoad() {
-    this.services.initHeaders();
-
     this.initForm();
-
-    this.services.getFrequencesPrise().subscribe((next: any) => {
-      console.log(next);
-      this.frequencesPrise = next[0]
-    }, error => {
-      console.error(error);
-    }, () => {
+    
+    this.services.initHeaders().then(r => {
+      this.services.getFrequencesPrise().subscribe((next: any) => {
+        console.log(next);
+        this.frequencesPrise = next[0]
+      }, error => {
+        console.error(error);
+      });
     });
   }
-
+  
+  //region Searchbar Medicament Name
+  
+  cancelSearchbar(ev: any) {
+    if (this.subscription !== undefined && this.subscription !== null) {
+      this.subscription.unsubscribe()
+      this.medicament_search = ''
+      this.listMedicaments = []
+    }
+  }
+  
+  getMedicaments(ev: any) {
+    // set val to the value of the searchbar
+    if (ev.target.value !== undefined) {
+      this.cancelSearchbar(null);
+      
+      const val = (ev.target.value).trim();
+  
+      // if the value is an empty string don't filter the items
+      if (val && val.trim() != '') {
+        this.medicament_search = val;
+    
+        this.subscription = this.services.getMedicamentByName(val).subscribe(next => {
+          console.log(next);
+          this.listMedicaments = next.medicaments
+          this.showResultMedicaent = true
+        }, error => {
+          console.error(error)
+        })
+      }
+    }
+  }
+  
+  nextPart() {
+    if (this.medicament_search !== undefined && this.medicament_search !== null && this.medicament_search.trim() !== '') {
+      this.part = 2;
+      this.form.patchValue({'name' : this.medicament_search})
+    }
+  }
+  
+  selectMedicament(item) {
+    this.medicament_search = item.name
+    this.nextPart()
+  }
+  
+  //endregion
+  
   initForm() {
     this.dateDebutTraitement = new Date().toISOString();
     this.heureDebutTraitement = new Date().toISOString();
-
+    
     this.form = this.formBuilder.group({
       name: [this.currentTreatment == null ? '' : this.currentTreatment.name, Validators.required],
       frequencePrise: [this.currentTreatment == null ? '' : this.currentTreatment.frequence_prise, Validators.required],
       dureeTraitement: [this.currentTreatment == null ? '' : this.currentTreatment.duree_traitement, Validators.required],
       dateDebutTraitement: ['', Validators.required],
       horaireFirstPrise: ['', Validators.required],
-      jourCycle: [this.currentTreatment == null ? '' : this.currentTreatment.jour_cycle, Validators.required],
-      evaluationEvolution: [this.currentTreatment == null ? '' : this.currentTreatment.evaluation_evolution, Validators.required],
-    })
-
+      // jourCycle: [this.currentTreatment == null ? '' : this.currentTreatment.jour_cycle, Validators.required],
+      // evaluationEvolution: [this.currentTreatment == null ? '' : this.currentTreatment.evaluation_evolution, Validators.required],
+    });
+    
     if (this.currentTreatment !== null) {
       console.log(this.currentTreatment);
       // let date: Date = new Date(this.currentTreatment.date_debut_traitement);
@@ -73,39 +126,48 @@ export class PilulierPage {
         year: date.getFullYear(),
         month: date.getMonth() + 1,
         day: date.getDate()
-      }
-      this.dateDebutTraitementChanged(datePickerModel)
-      let date_ = new Date()
-      date_.setFullYear(datePickerModel.year, datePickerModel.month - 1, datePickerModel.day)
-      this.dateDebutTraitement = new Date(date_).toISOString()
+      };
+      this.dateDebutTraitementChanged(datePickerModel);
+      let date_ = new Date();
+      date_.setFullYear(datePickerModel.year, datePickerModel.month - 1, datePickerModel.day);
+      this.dateDebutTraitement = new Date(date_).toISOString();
       console.log(this.dateDebutTraitement);
-
+      
       // let horaire: Date = new Date(this.currentTreatment.horaire_first_prise);
-      let horaire: Array<any> = (this.currentTreatment.horaire_first_prise).split(':')
+      let horaire: Array<any> = (this.currentTreatment.horaire_first_prise).split(':');
       const timePickerModel = {
         hour: Number(horaire[0]),
         minute: Number(horaire[1])
-      }
-      this.heureDebutTraitementChanged(timePickerModel)
-      let heure = new Date()
-      heure.setHours(timePickerModel.hour, timePickerModel.minute)
-      this.heureDebutTraitement = new Date(heure).toLocaleTimeString()
+      };
+      this.heureDebutTraitementChanged(timePickerModel);
+      let heure = new Date();
+      heure.setHours(timePickerModel.hour, timePickerModel.minute);
+      this.heureDebutTraitement = new Date(heure).toLocaleTimeString();
       console.log(this.heureDebutTraitement);
     }
   }
-
+  
   ionViewDidLoad() {
     this.testeur = 0;
-    console.log('ionViewDidLoad PilulierPage !');
+    this.part = 1;
   }
-
+  
+  
+  getFrequencePrise(id_frequence) {
+    return (this.frequencesPrise[this.frequencesPrise.findIndex(item => item.key === id_frequence)]).value;
+  }
+  
+  convertDatetime(time) {
+    return functions.convertDatetime(time);
+  }
+  
   dateDebutTraitementChanged(event) {
     console.log(event);
     // this.dateDebutTraitement = event;
     this.madate = event.year + '-' + event.month + '-' + event.day + 'T19:46:57.118Z';
     this.form.patchValue({dateDebutTraitement: event.day + '/' + event.month + '/' + event.year})
   }
-
+  
   heureDebutTraitementChanged(event) {
     console.log(event);
     // this.heureDebutTraitement = event;
@@ -114,25 +176,28 @@ export class PilulierPage {
     } else {
       this.monheure = event.hour + ':0' + event.minute + ':00';
     }
-
+    
     this.form.patchValue({horaireFirstPrise: event.hour + ':' + event.minute})
   }
-
+  
   changetesteur1() {
     this.testeur = 0;
+    this.part = 1;
+    this.currentTreatment = null;
+    this.initForm();
   }
-
+  
   changetesteur2() {
     this.testeur = 1;
     this.currentTreatment = null;
     this.getTreatments();
   }
-
+  
   cancel() {
     this.currentTreatment = null;
     this.initForm();
   }
-
+  
   addTreatment() {
     if (this.form.valid) {
       const object = {
@@ -141,20 +206,20 @@ export class PilulierPage {
         duree_traitement: Number(this.form.value.dureeTraitement),
         date_debut_traitement: this.madate,
         horaire_first_prise: this.monheure,
-        jour_cycle: Number(this.form.value.jourCycle),
-        evaluation_evolution: this.form.value.evaluationEvolution
-      }
-
+        // jour_cycle: Number(this.form.value.jourCycle),
+        // evaluation_evolution: this.form.value.evaluationEvolution
+      };
+      
       console.log(object);
-
+      
       let loading = this.loadingCtrl.create();
       loading.present();
       if (this.currentTreatment == null) {
         this.services.addTreatment(object).subscribe((next: Schedule[]) => {
-          console.log(next)
+          console.log(next);
           this.schedules = next;
         }, error => {
-          console.error(error)
+          console.error(error);
           loading.dismiss();
         }, () => {
           loading.dismiss();
@@ -165,13 +230,13 @@ export class PilulierPage {
           })
         });
       } else {
-        this.getAlerts(this.currentTreatment.id).then((alerts : Array<any>) => {
+        this.getAlerts(this.currentTreatment.id).then((alerts: Array<any>) => {
           this.deleteSchedules(alerts);
           this.services.updateTreatment(this.currentTreatment.id, object).subscribe((next: Schedule[]) => {
-            console.log(next)
+            console.log(next);
             this.schedules = next;
           }, error => {
-            console.error(error)
+            console.error(error);
             loading.dismiss()
           }, () => {
             loading.dismiss();
@@ -188,7 +253,7 @@ export class PilulierPage {
       }
     }
   }
-
+  
   getAlerts(id_treatment) {
     return new Promise((resolve, reject) => {
       this.services.getAlertsTreatment(id_treatment).subscribe(next => {
@@ -199,7 +264,7 @@ export class PilulierPage {
       })
     });
   }
-
+  
   getTreatments() {
     return new Promise(resolve => {
       let loading = this.loadingCtrl.create();
@@ -208,7 +273,7 @@ export class PilulierPage {
         this.treatments = next;
         console.log(next)
       }, error => {
-        console.error(error)
+        console.error(error);
         loading.dismiss()
       }, () => {
         loading.dismiss();
@@ -218,13 +283,14 @@ export class PilulierPage {
       });
     })
   }
-
+  
   gotoUpdate(item) {
-    this.currentTreatment = item
-    this.changetesteur1();
+    this.currentTreatment = item;
+    this.testeur = 0;
+    this.part = 2
     this.initForm();
   }
-
+  
   gotoDelete(item) {
     // const date = new Date("1970-01-01T10:48:00-05:00");
     // console.log(date.getUTCHours())
@@ -246,12 +312,12 @@ export class PilulierPage {
             let loading = this.loadingCtrl.create();
             loading.present();
             this.services.deleteTreatment(item.id).subscribe((next: any) => {
-              console.log(next)
+              console.log(next);
               if (next !== null && next.alerts !== undefined) {
                 this.deleteSchedules(next.alerts);
               }
             }, error => {
-              console.error(error)
+              console.error(error);
               loading.dismiss()
             }, () => {
               loading.dismiss();
@@ -266,10 +332,14 @@ export class PilulierPage {
     });
     alert.present();
   }
-
+  
+  take(item) {
+    console.log(item);
+  }
+  
   initScheduleTreatement() {
     console.log(this.schedules);
-    let notifications = []
+    let notifications = [];
     this.schedules.forEach(item => {
       let initDate = new Date(item.date_alert);
       notifications.push({
@@ -281,9 +351,9 @@ export class PilulierPage {
         led: 'FF0000',
         sound: 'file://assets/imgs/notification.mp3'
       });
-    })
+    });
     this.localNotifications.schedule(notifications);
-
+    
     // this.getTreatments().then(next => {
     //   if (this.treatments.length === 0)
     //     return;
@@ -323,13 +393,13 @@ export class PilulierPage {
     //   alert.present();
     // })
   }
-
+  
   deleteSchedules(ids: Array<number>) {
     ids.forEach(id => {
       this.localNotifications.clear(`Treatement ${id}`);
     })
   }
-
+  
   presentDialogAlert(message) {
     let alert = this.alertCtrl.create({
       title: message,
