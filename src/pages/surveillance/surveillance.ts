@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { Vibration } from '@ionic-native/vibration';
 import { LocalStorageProvider } from '../../providers/localstorage';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { TimerCounter} from '../../configs/configs';
 
 /**
  * Generated class for the SurveillancePage page.
@@ -349,8 +350,38 @@ export class SurveillancePage {
     this.couleurduliquide = "Claire";
     if((this.contraceptionminutes*60 + this.contraceptionseconde)==0){
        /// ici nous allons ajouter une heure plus tard
-      this.presentToast("Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner");
-      this.declancherAlerte("Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner", 2);
+
+
+
+       TimerCounter.tempsDatente.reload = ()=>{
+            try{
+
+                if(TimerCounter.tempsDatente.timer != null){
+                    clearInterval(TimerCounter.tempsDatente.timer);
+                }	
+
+            }catch(r){
+              
+            }
+        
+            TimerCounter.tempsDatente.timer = setInterval(()=>{
+
+              if((this.contraceptionminutes*60 + this.contraceptionseconde)==0){
+                  this.presentToast("Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner");
+                  this.declancherAlerte("Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner", 2);
+                  clearInterval(TimerCounter.tempsDatente.timer);
+              }
+              
+            }, TimerCounter.tempsDatente.value);
+         }
+         
+       
+        
+        TimerCounter.tempsDatente.reload();
+
+        ///////////////////////////////////////////////////////////////////////////////
+
+
     }else{
       this.presentToast("Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner");
       this.declancherAlerte("Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner", 2);
