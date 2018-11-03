@@ -2,7 +2,13 @@ import {Component} from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ServiceProvider} from "../../providers/service";
-import {LocalNotifications} from "@ionic-native/local-notifications";
+import {
+  ELocalNotificationTriggerUnit,
+  ILocalNotification,
+  ILocalNotificationAction,
+  ILocalNotificationActionType,
+  LocalNotifications
+} from "@ionic-native/local-notifications";
 import Schedule from "../../models/Schedule";
 import * as functions from "../../variables/functions";
 
@@ -39,12 +45,12 @@ export class PilulierPage {
   private subscription = null;
   private showResultMedicaent = false;
   
-  private actions = [
+  private actions: Array<ILocalNotificationAction> = [
     {
-      identifier: 'TAKE',
+      id: 'TAKE',
       title: 'Take',
-      activationMode: 'background',
-      destructive: false,
+      type: ILocalNotificationActionType.BUTTON,
+      icon: 'checkmark-circle-outline'
     },
   ];
   
@@ -168,6 +174,21 @@ export class PilulierPage {
   ionViewDidLoad() {
     this.testeur = 0;
     this.part = 1;
+  
+    // this.localNotifications.schedule({
+    //   id: 1,
+    //   text: 'Single ILocalNotification',
+    //   data: { secret: 'AZERTYUIOP' },
+    //   led: 'FF0000',
+    //   sound: 'file://assets/imgs/notification.mp3',
+    //   icon: 'notifications',
+    //   actions: this.actions
+    // });
+    // this.localNotifications.on('TAKE').subscribe(next => {
+    //   this.presentDialogAlert(JSON.stringify(next));
+    // }, error => {
+    //   console.error(error);
+    // })
   }
   
   
@@ -178,7 +199,7 @@ export class PilulierPage {
   
   convertDatetime(time) {
     console.log(time);
-    return functions.convertDatetime(time);
+    return functions.convertDatetimeToDate(time);
   }
   
   dateDebutTraitementChanged(event) {
@@ -359,71 +380,33 @@ export class PilulierPage {
   
   initScheduleTreatement() {
     console.log(this.schedules);
-    let notifications = [];
     this.schedules.forEach(item => {
-      let initDate = new Date(item.date_alert);
-      notifications.push({
-        id: `Treatement ${item.id}`,
+      const initDate = new Date(((item.date_alert).substring(0, 16)) + 'Z').getTime();
+      const notif: ILocalNotification = {
+        id: item.id,
+        title: 'Prise de médicament',
         text: item.message,
         trigger: {
-          at: new Date(new Date(initDate).getTime())
+          at: new Date(initDate),
+          unit: ELocalNotificationTriggerUnit.MINUTE,
+          count: 5
         },
         led: 'FF0000',
         sound: 'file://assets/imgs/notification.mp3',
-        actions: this.actions
-      });
+        vibrate: true,
+        actions: this.actions,
+      };
+      this.localNotifications.schedule(notif);
+      this.localNotifications.on('TAKE').subscribe(next => {
+        this.presentDialogAlert(JSON.stringify(next));
+      }, error => {
+        console.error(error);
+      })
     });
-    this.localNotifications.schedule(notifications);
-    this.localNotifications.on('TAKE').subscribe(next => {
-      console.log(next);
-    }, error => {
-      console.error(error);
-    })
-    
-    // this.getTreatments().then(next => {
-    //   if (this.treatments.length === 0)
-    //     return;
-    //
-    //   let notifications = []
-    //   this.treatments.forEach((item: any) => {
-    //     let initDate = new Date(item.date_debut_traitement)
-    //
-    //     let initHoraire: Date = new Date(item.horaire_first_prise);
-    //     initDate.setHours(initHoraire.getHours(), initHoraire.getMinutes())
-    //
-    //     const dureeTreatment = item.duree_traitement * 24 // 1jr = 24h => duree_traitement * 24
-    //     const frequencePrise = item.frequence_prise === 0 ? 6 : (item.frequence_prise === 1 ? 8 : 10) //En Heure
-    //     let nombrePrise: number = (dureeTreatment / frequencePrise) - 1;
-    //
-    //     while(nombrePrise >= 1) {
-    //       initDate.setHours(initDate.getHours() + frequencePrise)
-    //       notifications.push({
-    //         id: 'Treatement-' + initDate.getTime(),
-    //         text: 'Prise du médicament : ' + item.name,
-    //         trigger: {
-    //           at: new Date(new Date(initDate).getTime())
-    //         },
-    //         led: 'FF0000',
-    //         sound: 'file://assets/imgs/notification.mp3'
-    //       });
-    //       nombrePrise--;
-    //     }
-    //   })
-    //
-    //   this.localNotifications.schedule(notifications);
-    // }, error => {
-    //   let alert = this.alertCtrl.create({
-    //     title: error,
-    //     buttons: ['Dismiss']
-    //   });
-    //   alert.present();
-    // })
   }
   
   deleteSchedules(ids: Array<number>) {
-    ids.forEach(id => {
-      this.localNotifications.clear(`Treatement ${id}`);
-    })
+    ids.forEach(id => this.localNotifications.clear(id));
   }
   
   presentDialogAlert(message) {
