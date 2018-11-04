@@ -11,6 +11,8 @@ import {
 } from "@ionic-native/local-notifications";
 import Schedule from "../../models/Schedule";
 import * as functions from "../../variables/functions";
+import * as v from "../../variables/variables_";
+import {LocalStorageProvider} from "../../providers/localstorage";
 
 /**
  * Generated class for the PilulierPage page.
@@ -56,7 +58,7 @@ export class PilulierPage {
   
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
-              private localNotifications: LocalNotifications) {
+              private localNotifications: LocalNotifications, private localStorageProvider: LocalStorageProvider) {
   }
   
   ionViewWillLoad() {
@@ -174,18 +176,28 @@ export class PilulierPage {
   ionViewDidLoad() {
     this.testeur = 0;
     this.part = 1;
-  
+    
+    // const id = Math.round(Math.random() * 255).toString(16);
     // this.localNotifications.schedule({
     //   id: 1,
     //   text: 'Single ILocalNotification',
-    //   data: { secret: 'AZERTYUIOP' },
+    //   data: {secret: 'AZERTYUIOP'},
     //   led: 'FF0000',
     //   sound: 'file://assets/imgs/notification.mp3',
     //   icon: 'notifications',
-    //   actions: this.actions
+    //   actions: [
+    //     {
+    //       id: id,
+    //       title: 'Take',
+    //       type: ILocalNotificationActionType.BUTTON,
+    //       icon: 'checkmark-circle-outline'
+    //     },
+    //   ]
     // });
-    // this.localNotifications.on('TAKE').subscribe(next => {
-    //   this.presentDialogAlert(JSON.stringify(next));
+    // this.localNotifications.on(id).subscribe(next => {
+    //   this.makeTakingTreatment(next.id).then(on => {
+    //     this.presentDialogAlert('Taked');
+    //   })
     // }, error => {
     //   console.error(error);
     // })
@@ -394,11 +406,18 @@ export class PilulierPage {
         led: 'FF0000',
         sound: 'file://assets/imgs/notification.mp3',
         vibrate: true,
-        actions: this.actions,
+        actions: [{
+          id: `TAKE${item.id}`,
+          title: 'Take',
+          type: ILocalNotificationActionType.BUTTON,
+          icon: 'checkmark-circle-outline'
+        }],
       };
       this.localNotifications.schedule(notif);
-      this.localNotifications.on('TAKE').subscribe(next => {
-        this.presentDialogAlert(JSON.stringify(next));
+      this.localNotifications.on(`TAKE${item.id}`).subscribe(next => {
+        this.makeTakingTreatment(next.id).then(on => {
+          this.presentDialogAlert('Taked');
+        })
       }, error => {
         console.error(error);
       })
@@ -415,5 +434,27 @@ export class PilulierPage {
       buttons: ['Ok']
     });
     alert.present();
+  }
+  
+  makeTakingTreatment(id_alert) {
+    return new Promise(resolve => {
+      // if (this.services.statusNetwork) {
+      //
+      // } else {
+      //
+      // }
+      this.localStorageProvider.getKey(v.LOCAL_STRG_TAKED_TREATEMENT).then((res: any) => {
+        this.presentDialogAlert(JSON.stringify(res));
+        if (res !== undefined && res !== null) {
+          res.push(id_alert);
+        } else {
+          res = [];
+          res.push(id_alert);
+        }
+        this.localStorageProvider.setKey(v.LOCAL_STRG_TAKED_TREATEMENT, res).then(on => {
+          resolve(true);
+        });
+      });
+    })
   }
 }

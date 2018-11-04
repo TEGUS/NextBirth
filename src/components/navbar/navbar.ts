@@ -37,5 +37,6 @@ export class NavbarComponent {
     this.msg_network = status ? 'Network connected' : 'Network was disconnected'
     this.colorNetworkStatus = status ? 'green' : 'red'
     this.showNetworkStatus = status
+    this.service.statusNetwork = status;
   }
 }

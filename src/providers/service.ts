@@ -14,6 +14,15 @@ import {LocalStorageProvider} from "./localstorage";
 export class ServiceProvider {
   private host: any;
   private headers: any;
+  
+  private _statusNetwork = null;
+  get statusNetwork(): any {
+    return this._statusNetwork;
+  }
+  
+  set statusNetwork(value: any) {
+    this._statusNetwork = value;
+  }
 
   constructor(public http: HttpClient, public localStorage: LocalStorageProvider) {
     this.initHeaders().then(next => {
