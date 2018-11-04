@@ -15,7 +15,7 @@
       Grossesse
     </ion-row>
   </ion-card>
-
+  
   <ion-card class="question2">
     <ion-row class="montext2">
       <ion-col col-3>Consultation</ion-col>
@@ -24,28 +24,27 @@
       <ion-col col-3>Bilan Recommandé</ion-col>
     </ion-row>
   </ion-card>
-
   
-
+  
   <timeline endIcon="call">
     <timeline-item *ngFor="let item of items">
       <timeline-time [time]="item.time"></timeline-time>
       <ion-icon [name]="item.icon"></ion-icon>
-          <ion-card >
-              <ion-scroll scrollX="true">
-                  <div style="display: flex; flex-direction: row;">
-                    <div class="mondive"  *ngFor="let item of items">
-                      <p class="datecard">{{item.time.subTitle}}</p>
-                      <p class="titrecard">{{item.title}}</p>
-                      <p>{{item.content}}</p>
-                     </div>
-                  </div>
-               </ion-scroll>
-          </ion-card>
+      <ion-card>
+        <ion-scroll scrollX="true">
+          <div style="display: flex; flex-direction: row;">
+            <div class="mondive" *ngFor="let item of items">
+              <p class="datecard">{{item.time.subTitle}}</p>
+              <p class="titrecard">{{item.title}}</p>
+              <p>{{item.content}}</p>
+            </div>
+          </div>
+        </ion-scroll>
+      </ion-card>
     </timeline-item>
   </timeline>
-
-
+  
+  
   <ion-infinite-scroll (ionInfinite)="doInfiniteBottom($event)" threshold="2%">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>

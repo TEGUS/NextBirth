@@ -10,7 +10,7 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {IonicStorageModule} from '@ionic/storage';
 import {AuthenticationProvider} from '../providers/authentication';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {ServiceProvider} from '../providers/service';
 import {LocalStorageProvider} from '../providers/localstorage';
 import {Calendar} from "@ionic-native/calendar";
@@ -18,6 +18,12 @@ import {Network} from "@ionic-native/network";
 import {Camera} from '@ionic-native/camera';
 import {CameraMock} from '../mocks/camera.mock';
 import { Vibration } from '@ionic-native/vibration';
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -33,6 +39,13 @@ import { Vibration } from '@ionic-native/vibration';
       driverOrder: ['localstorage', 'indexeddb', 'sqlite', 'websql']
     }),
     HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

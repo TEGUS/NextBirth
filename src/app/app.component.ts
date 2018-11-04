@@ -6,6 +6,7 @@ import * as codesMode from "../components/mode/mode";
 import {FluxReglePage} from '../pages/flux-regle/flux-regle';
 import {SurveillancePage} from '../pages/surveillance/surveillance';
 import {ServiceProvider} from "../providers/service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   templateUrl: 'app.html'
@@ -19,7 +20,7 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar, public localStorage: LocalStorageProvider,
               public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController, public translate: TranslateService) {
     this.services.initHeaders();
     this.initializeApp();
 
@@ -33,7 +34,7 @@ export class MyApp {
       {title: 'Outils surveillance', component: "SurveillancePage", icon: 'icon6'},
 
       {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
-      {title: 'Paramètres', component: null, icon: 'icon8'},
+      {title: 'Paramètres', component: "SettingsPage", icon: 'icon8'},
       {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
       {title: 'Mise en garde', component: "Img8Page", icon: 'icon10'},
       {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'}
@@ -52,7 +53,9 @@ export class MyApp {
       this.menuCtrl.enable(false);
       this.initRootPage().then(page => {
         this.rootPage = page
-      })
+      });
+  
+      this.translate.setDefaultLang('fr');
     });
   }
 
