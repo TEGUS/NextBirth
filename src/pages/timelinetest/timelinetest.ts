@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { ServiceProvider } from '../../providers/service';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams, LoadingController} from 'ionic-angular';
+import {ServiceProvider} from '../../providers/service';
 
 /**
  * Generated class for the TimelinetestPage page.
@@ -15,8 +15,10 @@ import { ServiceProvider } from '../../providers/service';
   templateUrl: 'timelinetest.html',
 })
 export class TimelinetestPage {
-
-  public avatars:any = [
+  
+  public timelines = [];
+  
+  public avatars: any = [
     {
       icon: 'icon1.png',
       titre: 'le mokai'
@@ -30,8 +32,8 @@ export class TimelinetestPage {
       titre: 'le mokai'
     }
   ];
-
-
+  
+  
   items: DataTime[] = [
     {
       title: 'Courgette',
@@ -64,36 +66,67 @@ export class TimelinetestPage {
       time: {subTitle: 'January', title: '31'}
     }
   ]
-
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public services: ServiceProvider, public navParams: NavParams) {}
-
+  
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public services: ServiceProvider, public navParams: NavParams) {
+  }
+  
   ionViewDidLoad() {
-
+    
     //getAllEvents
-
+    
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getAllEvents().subscribe(next => {
-
-      
-      console.log("==================================");
+      console.log("================================");
       console.log(next);
-      console.log("==================================");
-
-
+      console.log("================================");
+      next = next.evenements;
+      let timelinestmp = [];
+      this.timelines = [];
+      let firstdebut = 0;
+      let cache = [];
+      
+      next.forEach((el, i) => {
+        firstdebut = (i === 0) ? el.delai_jours_debut : firstdebut + 14;
+        console.log(el);
+        console.log(i);
+        console.log(firstdebut);
+        
+        next.forEach((element) => {
+          if (cache.find(x => element.id === x.id) === undefined) {
+            cache.push(element);
+            if (element.delai_jours_debut <= firstdebut) {
+              let toto = {
+                ...element,
+                title: element.event_type,
+                content: element.name,
+                icon: 'calendar',
+                time: {subTitle: 'January', title: '29'}
+              };
+              timelinestmp.push(toto);
+            } else {
+              this.timelines.push({
+                elements: timelinestmp,
+                icon: 'calendar',
+                time: firstdebut
+              });
+              console.log(this.timelines);
+            }
+          }
+        });
+      });
     }, error => {
       loading.dismiss();
       console.error(error);
     }, () => {
       loading.dismiss();
     });
-    
   }
-
+  
   doInfiniteBottom(infiniteScroll) {
     setTimeout(() => {
       this.items = this.items.concat(this.items);
-
+      
       console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 500);
