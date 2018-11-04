@@ -16,6 +16,8 @@ import { ServiceProvider } from '../../providers/service';
 })
 export class TimelinetestPage {
 
+  public timelines=[];
+  
   public avatars:any = [
     {
       icon: 'icon1.png',
@@ -76,10 +78,47 @@ export class TimelinetestPage {
     this.services.getAllEvents().subscribe(next => {
 
       
-      console.log("==================================");
+      console.log("================================");
       console.log(next);
-      console.log("==================================");
+      console.log("================================");
+      next = next.evenements;
+     
+      let timelinestmp=[];
+      this.timelines = [];
+      var firstdebut = 0;
+      var testeur = 0;
+      next.forEach((el,i) => {
+        firstdebut = (i === 0) ? el.delai_jours_debut + 14 : firstdebut + 14;
+        
+        next.forEach((element,i) => {
+            if(element.delai_jours_debut<=firstdebut && testeur<element.delai_jours_debut){
+                var toto = {
+                  title: element.event_type,
+                  content: element.name,
+                  icon: 'calendar',
+                  time: {subTitle: 'January', title: '29'}
+                }
+               
+                timelinestmp.push(toto); 
+            } else  {
+              
+              testeur = element.delai_jours_debut;
+              this.timelines.push({
+                elements: timelinestmp,
+                icon: 'calendar',
+                time: el.delai_jours_debut
+              })
+            }
+        });
+      });
 
+      console.log("================================");
+      console.log(this.timelines);
+      console.log("================================");
+      
+
+      
+     
 
     }, error => {
       loading.dismiss();
