@@ -169,7 +169,7 @@ export class TimelinetestPage {
     return new Promise((resolve, reject) => {
       this.localStorage.getKey('session').then(session => {
         if (session !== null) {
-          resolve((new Date(session.user._embedded.patient.debut_dernieres_menstrues)));
+          resolve((new Date((session.user._embedded.patient.debut_dernieres_menstrues).substring(0,16)+'Z')));
         } else {
           reject(false);
         }
