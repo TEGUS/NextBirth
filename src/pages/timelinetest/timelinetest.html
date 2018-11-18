@@ -27,7 +27,7 @@
   
   
   <timeline endIcon="call">
-    <timeline-item *ngFor="let item of timelines">
+    <timeline-item *ngFor="let item of timelines; index as i">
       <timeline-time [time]="item.time"></timeline-time>
       <ion-icon [name]="item.icon"></ion-icon>
       <ion-card>

@@ -40,9 +40,6 @@ export class ReportPage {
   }
 
   ionViewDidLoad() {
-
-   
-   
     this.mylocalstorage.getSession().then((result:any) =>{
 
       

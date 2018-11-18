@@ -128,8 +128,17 @@ export class PilulierPage {
   }
   
   selectMedicament(item) {
-    this.medicament_search = item.name
-    this.nextPart()
+    if (this.treatments.find(x => x.name === item.name) === undefined) {
+      this.medicament_search = item.name;
+      this.nextPart()
+    } else {
+      let alert = this.alertCtrl.create({
+        subTitle: 'Médicament existant !',
+        message: 'Présence de ce médicament dans la liste des Traitements',
+        buttons: ['Okay']
+      });
+      alert.present();
+    }
   }
   
   //endregion
@@ -179,33 +188,8 @@ export class PilulierPage {
   }
   
   ionViewDidLoad() {
-    this.onglet = 0;
+    this.gotoOnglet_2();
     this.part = 1;
-    
-    // const id = Math.round(Math.random() * 255).toString(16);
-    // this.localNotifications.schedule({
-    //   id: 1,
-    //   text: 'Single ILocalNotification',
-    //   data: {secret: 'AZERTYUIOP'},
-    //   led: 'FF0000',
-    //   sound: 'file://assets/imgs/notification.mp3',
-    //   icon: 'notifications',
-    //   actions: [
-    //     {
-    //       id: id,
-    //       title: 'Take',
-    //       type: ILocalNotificationActionType.BUTTON,
-    //       icon: 'checkmark-circle-outline'
-    //     },
-    //   ]
-    // });
-    // this.localNotifications.on(id).subscribe(next => {
-    //   this.makeTakingTreatment(next.id).then(on => {
-    //     this.presentDialogAlert('Taked');
-    //   })
-    // }, error => {
-    //   console.error(error);
-    // })
   }
   
   
@@ -238,14 +222,14 @@ export class PilulierPage {
     this.form.patchValue({horaireFirstPrise: event.hour + ':' + event.minute})
   }
   
-  changetesteur1() {
+  gotoOnglet_1() {
     this.onglet = 0;
     this.part = 1;
     this.currentTreatment = null;
     this.initForm();
   }
   
-  changetesteur2() {
+  gotoOnglet_2() {
     this.onglet = 1;
     this.currentTreatment = null;
     this.getTreatments();

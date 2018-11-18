@@ -5,8 +5,8 @@
 <ion-content class="monbody">
   <ion-card class="question">
     <ion-row class="montext">
-      <ion-col (click)="changetesteur1()">Nouveau produits</ion-col>
-      <ion-col (click)="changetesteur2()">Traitement en cours</ion-col>
+      <ion-col (click)="gotoOnglet_1()">Nouveau produits</ion-col>
+      <ion-col (click)="gotoOnglet_2()">Traitement en cours</ion-col>
     </ion-row>
   </ion-card>
   
@@ -280,7 +280,7 @@
   </div>
   
   <ion-fab bottom right class="monsuperbutton" *ngIf="onglet==1">
-    <button ion-fab (click)="changetesteur1()">
+    <button ion-fab (click)="gotoOnglet_1()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
