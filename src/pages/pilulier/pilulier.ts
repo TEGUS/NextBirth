@@ -1,5 +1,12 @@
 import {Component} from '@angular/core';
-import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {
+  AlertController,
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+  PopoverController
+} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ServiceProvider} from "../../providers/service";
 import {
@@ -59,7 +66,8 @@ export class PilulierPage {
   
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
-              private localNotifications: LocalNotifications, private localStorageProvider: LocalStorageProvider) {
+              private localNotifications: LocalNotifications, private localStorageProvider: LocalStorageProvider,
+              public popoverCtrl: PopoverController) {
   }
   
   ionViewWillLoad() {
@@ -267,8 +275,7 @@ export class PilulierPage {
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.cancel();
-            this.presentDialogAlert('Médicament crée avec succès!');
-            this.onglet = 1;
+            this.presentDialogAlert('Médicament crée avec succès!', () => this.gotoOnglet_2());
             this.initScheduleTreatement();
           })
         });
@@ -285,8 +292,7 @@ export class PilulierPage {
             loading.dismiss();
             loading.onDidDismiss(() => {
               this.cancel();
-              this.onglet = 1;
-              this.presentDialogAlert('Médicament mis à jour avec succès!');
+              this.presentDialogAlert('Médicament mis à jour avec succès!', () => this.gotoOnglet_2());
               this.initScheduleTreatement();
             })
           });
@@ -297,6 +303,19 @@ export class PilulierPage {
       }
     }
   }
+  
+  presentPopover(item) {
+    let popover = this.popoverCtrl.create('PopoverTreatementOptionsPage');
+    popover.present();
+    popover.onDidDismiss(data => {
+      if (data === 1) {
+        this.gotoUpdate(item)
+      } else if (data === 2) {
+        this.gotoDelete(item)
+      }
+    });
+  }
+  
   
   getAlerts(id_treatment) {
     return new Promise((resolve, reject) => {
@@ -419,10 +438,18 @@ export class PilulierPage {
     ids.forEach(id => this.localNotifications.clear(id));
   }
   
-  presentDialogAlert(message) {
+  presentDialogAlert(message, callback: () => void = null) {
     let alert = this.alertCtrl.create({
       title: message,
-      buttons: ['Ok']
+      buttons: [{
+        text: 'Okay',
+        handler: () => {
+          if (callback() !== null) {
+            callback();
+          }
+        }
+      }]
+    
     });
     alert.present();
   }
