@@ -444,7 +444,7 @@ export class PilulierPage {
       buttons: [{
         text: 'Okay',
         handler: () => {
-          if (callback() !== null) {
+          if (callback !== null) {
             callback();
           }
         }
