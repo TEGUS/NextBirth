@@ -8,10 +8,14 @@ import {ServiceProvider} from "../../providers/service";
   templateUrl: 'navbar.html'
 })
 export class NavbarComponent {
+  
+  private _title = 'NextBirth';
+  
+  @Input()
   set title(value: string) {
     this._title = value === null ? 'NextBirth' : value;
   }
-  @Input() private _title = 'NextBirth'
+  
   @Input() showMenuToggle = true
 
   private msg_network = 'msg network'

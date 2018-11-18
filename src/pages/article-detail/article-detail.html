@@ -4,11 +4,13 @@
 
 <ion-content padding>
   <div *ngIf="article != null">
+    <h4 style="font-size: x-large;">{{article.title}}</h4>
+    
     <img
       [src]="article._embedded.miniature != null ? article._embedded.miniature._embedded.url_photo : '/assets/imgs/background.jpg'"
       alt="" width="180" height="180">
     <br>
-    {{article.title}} <br><br>
+    
     <div [innerHtml]="article.content"></div> <br>
   </div>
 </ion-content>

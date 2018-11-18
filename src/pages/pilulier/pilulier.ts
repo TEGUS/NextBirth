@@ -27,7 +27,7 @@ import {LocalStorageProvider} from "../../providers/localstorage";
   templateUrl: 'pilulier.html',
 })
 export class PilulierPage {
-  private testeur: any;
+  private onglet: any;
   private part: any;
   private form: FormGroup;
   private treatments = [];
@@ -55,6 +55,7 @@ export class PilulierPage {
       icon: 'checkmark-circle-outline'
     },
   ];
+  private showSpinner: boolean = false;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
@@ -79,6 +80,7 @@ export class PilulierPage {
   //region Searchbar Medicament Name
   
   cancelSearchbar(ev: any) {
+    this.showSpinner = false;
     if (this.subscription !== undefined && this.subscription !== null) {
       this.subscription.unsubscribe()
       this.medicament_search = ''
@@ -95,6 +97,7 @@ export class PilulierPage {
       
       // if the value is an empty string don't filter the items
       if (val && val.trim() != '') {
+        this.showSpinner = true;
         this.subscription = this.services.getMedicamentByName(val).subscribe(next => {
           console.log(next);
           if (next.medicaments.length === 0) {
@@ -106,8 +109,10 @@ export class PilulierPage {
           }
           
           this.showResultMedicaent = true
+          this.showSpinner = false;
         }, error => {
           console.error(error)
+          this.showSpinner = false;
         })
       }
     }
@@ -174,7 +179,7 @@ export class PilulierPage {
   }
   
   ionViewDidLoad() {
-    this.testeur = 0;
+    this.onglet = 0;
     this.part = 1;
     
     // const id = Math.round(Math.random() * 255).toString(16);
@@ -234,14 +239,14 @@ export class PilulierPage {
   }
   
   changetesteur1() {
-    this.testeur = 0;
+    this.onglet = 0;
     this.part = 1;
     this.currentTreatment = null;
     this.initForm();
   }
   
   changetesteur2() {
-    this.testeur = 1;
+    this.onglet = 1;
     this.currentTreatment = null;
     this.getTreatments();
   }
@@ -279,6 +284,7 @@ export class PilulierPage {
           loading.onDidDismiss(() => {
             this.cancel();
             this.presentDialogAlert('Médicament crée avec succès!');
+            this.onglet = 1;
             this.initScheduleTreatement();
           })
         });
@@ -295,6 +301,7 @@ export class PilulierPage {
             loading.dismiss();
             loading.onDidDismiss(() => {
               this.cancel();
+              this.onglet = 1;
               this.presentDialogAlert('Médicament mis à jour avec succès!');
               this.initScheduleTreatement();
             })
@@ -339,7 +346,7 @@ export class PilulierPage {
   
   gotoUpdate(item) {
     this.currentTreatment = item;
-    this.testeur = 0;
+    this.onglet = 0;
     this.part = 2
     this.initForm();
   }

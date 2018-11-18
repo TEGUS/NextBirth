@@ -24,19 +24,23 @@ export class ArticleDetailPage {
   }
 
   ionViewDidLoad() {
-    let loading = this.loadingCtrl.create();
-    loading.present();
-    this.services.getArticle(this.navParams.get('id')).subscribe(next => {
-      console.log(next);
-      this.article = next
-      this.title = this.article.title
-    }, error => {
-      loading.dismiss();
-      console.error(error);
-    }, () => {
-      loading.dismiss();
-    });
-    console.log('ionViewDidLoad ArticleDetailPage');
+    if (!this.navParams.data.hasOwnProperty('id')) {
+      this.navCtrl.pop();
+    } else {
+      let loading = this.loadingCtrl.create();
+      loading.present();
+      
+      this.services.getArticle(this.navParams.get('id')).subscribe(next => {
+        console.log(next);
+        this.article = next;
+        this.title = this.article.title
+      }, error => {
+        loading.dismiss();
+        console.error(error);
+      }, () => {
+        loading.dismiss();
+      });
+    }
   }
 
 }
