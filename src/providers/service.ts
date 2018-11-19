@@ -86,11 +86,10 @@ export class ServiceProvider {
    * Toutes les catégories
    * @returns {Observable<any>}
    */
-  getAllEvents(): Observable<any> {
-    return this.http.get(
-      this.host + 'evenement-grossesse',
-      this.headers
-    );
+  getAllEvents(delai_min, delai_max): Observable<any> {
+    const url =`${this.host}evenement-grossesse?delai_jour_min=${delai_min}&delai_jour_max=${delai_max}`;
+    console.log(url);
+    return this.http.get(url, this.headers);
   }
   
   /**
@@ -314,4 +313,4 @@ export class ServiceProvider {
       this.headers
     );
   }
-}
+} 

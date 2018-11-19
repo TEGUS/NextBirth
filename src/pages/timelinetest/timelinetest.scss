@@ -43,7 +43,7 @@ page-timelinetest {
   }
 
   .mondive{
-     background-color: #afdcf8;
+     background-color: #ddd;
      height: 120px;
      width: 120px;
      margin-left: 10px;
@@ -51,12 +51,12 @@ page-timelinetest {
      text-align: center;
   }
   .datecard{
-    color: red;
+    color: color($colors, primary);
     font-weight: bold;
   }
 
   .titrecard{
-    color: blue;
+    color: #222;
     font-weight: bold;
   }
   

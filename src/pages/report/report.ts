@@ -69,9 +69,7 @@ export class ReportPage {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getArticles().subscribe(next => {
-      console.log("================================");
-      console.log(next);
-      console.log("================================");
+      
 
       this.items = next
     }, error => {

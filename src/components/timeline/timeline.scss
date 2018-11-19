@@ -4,7 +4,7 @@ timeline {
 
 
   .timeline {
-    margin: 30px 0 0 0;
+    margin: 35px 0 0 0;
     padding: 0;
     position: relative;
 
@@ -15,7 +15,7 @@ timeline {
       bottom: 0;
       width: 10px;
       background: #afdcf8;
-      left: 20%;
+      left: 30%;
       margin-left: -10px;
     }
     timeline-item {
@@ -31,7 +31,7 @@ timeline {
           display: block;
           text-align: right;
           &:last-child {
-            font-size: 1.9em;
+            font-size: 1.0em;
             color:3594cb;
           }
         }
@@ -64,7 +64,7 @@ timeline {
             width: 0;
             position: absolute;
             pointer-events: none;
-            border-left-color: #afdcf8;
+            border-left-color: color($colors, primary);
             border-width: 10px;
             top: 10px;
           }
@@ -82,25 +82,25 @@ timeline {
     @media screen and (max-width: map-get($grid-breakpoints,'lg')){
       timeline-item{
         timeline-time{
-          font-size: 0.7em;
+          font-size: 0.8em;
         }
       }
     }
     @media screen and (max-width: map-get($grid-breakpoints,'md')){
       &:before{
-        left: 30px;
+        left: 44px;
       }
 
       // deplacement de notre grande bare
       timeline-item{
         ion-card{
-          margin-left: 8px !important;
+          margin-left: 7px !important;
         }
         ion-icon{
-          left: -15px;
+          left: -1px;
         }
         timeline-time{
-          font-size: 0.7em;
+          font-size: 0.8em;
           width: 100%;
           left: 80px;
           position: relative;
@@ -145,8 +145,9 @@ timeline {
 
         // proprieté du mesage
         ion-card{
-          width: calc(58% - 1px) !important;
-          margin-left: 140px !important;
+          width: calc(55% - 1px) !important;
+          margin-left: 145px !important;
+          padding: 5px;
         }
       }
     }

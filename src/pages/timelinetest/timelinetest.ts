@@ -4,6 +4,7 @@ import {ServiceProvider} from '../../providers/service';
 import {el} from "../../../node_modulesback/@angular/platform-browser/testing/src/browser_util";
 import {LocalStorageProvider} from "../../providers/localstorage";
 import {error} from "util";
+import {hasOwnProperty} from "../../../node_modulesback/tslint/lib/utils";
 
 /**
  * Generated class for the TimelinetestPage page.
@@ -18,6 +19,9 @@ import {error} from "util";
   templateUrl: 'timelinetest.html',
 })
 export class TimelinetestPage {
+  start = 0;
+  end = 0;
+  mainInterval = 200;
   
   public timelines = [];
   
@@ -35,8 +39,6 @@ export class TimelinetestPage {
       titre: 'le mokai'
     }
   ];
-  
-  
   items: DataTime[] = [
     {
       title: 'Courgette',
@@ -77,12 +79,17 @@ export class TimelinetestPage {
   }
   
   ionViewDidLoad() {
+    this.start = 0;
+    this.end = this.mainInterval;
+    
     let loading = this.loadingCtrl.create();
     loading.present();
-    this.services.getAllEvents().subscribe(next => {
+    this.services.getAllEvents(this.start, this.end).subscribe(next => {
       this.getDateDernierMenstrues().then(ddm => {
+        console.log(ddm.getDate());
+        console.log(ddm.getDay());
         this.debut_dernieres_menstrues = ddm;
-        this.timelines = this.getTimelines(next.evenements);
+        this.timelines = this.getTimelines(next.data);
       }, err => console.error(err));
     }, error => {
       loading.dismiss();
@@ -93,83 +100,88 @@ export class TimelinetestPage {
   }
   
   getTimelines(events: Array<any>) {
+    console.log(this.start);
+    console.log(this.end);
     let timelines = [];
-    const cache = [];
-    const nbJourInterval = 14;
-    let timelinestmp = [];
-    let firstdebut = events[0].delai_jours_debut + nbJourInterval;
-    let dateDernierMentrues = this.debut_dernieres_menstrues;
+    if (events !== undefined && events !== null && events.length !== 0) {
+      const cache = [];
+      const nbJourInterval = 14;
+      let timelinestmp = [];
+      let firstdebut = events[0].delai_jours_debut + nbJourInterval;
+      let dateDernierMentrues = this.debut_dernieres_menstrues;
   
-    while (cache.length !== events.length) {
-      events.forEach((element, j) => {
-        if (cache.find(x => element.id === x.id) === undefined && element.delai_jours_debut <= firstdebut) {
-          let d = this.debut_dernieres_menstrues;
-          d.setDate(dateDernierMentrues.getDate() + element.delai_jours_debut);
-          
-          timelinestmp.push({
-            ...element,
-            title: element.event_type,
-            content: element.name,
-            icon: 'calendar',
-            time: {subTitle: d.toDateString(), title: d.toDateString()}
-          });
+      while (cache.length !== events.length) {
+        events.forEach((element, j) => {
+          if (cache.find(x => element.id === x.id) === undefined && element.delai_jours_debut <= firstdebut) {
+            let d = this.getCurrentDateWith(this.debut_dernieres_menstrues, element.delai_jours_debut);
         
-          if (!(element.take_interval instanceof Array)) {
-            let interval = [];
-            let i = 1;
-            while (element.take_interval[i] !== undefined) {
-              interval.push(Number(element.take_interval[i++]));
-            }
-            element.take_interval = interval;
-          }
-        
-          if (element.take_interval.length !== 0) {
-            element.take_interval.forEach(ti => {
-              let v = {
-                ...element,
-                delai_jours_debut: element.delai_jours_debut + Number(ti),
-                take_interval: [],
-                title: element.event_type,
-                content: element.name,
-                icon: 'calendar',
-                time: {subTitle: '', title: ''}
-              };
-  
-              let d = this.debut_dernieres_menstrues;
-              d.setDate(dateDernierMentrues.getDate() + v.delai_jours_debut);
-              
-              v.time.subTitle = d.toDateString();
-              v.time.title = v.time.subTitle;
-            
-              timelinestmp.push(v);
+            timelinestmp.push({
+              ...element,
+              title: element.event_type,
+              content: element.name,
+              icon: 'calendar',
+              time: {subTitle: d.toDateString(), title: d.toDateString()}
             });
+        
+            if (!(element.take_interval instanceof Array)) {
+              let interval = [];
+              let i = 1;
+              while (element.take_interval[i] !== undefined) {
+                interval.push(Number(element.take_interval[i++]));
+              }
+              element.take_interval = interval;
+            }
+        
+            if (element.take_interval.length !== 0) {
+              element.take_interval.forEach(ti => {
+                let v = {
+                  ...element,
+                  delai_jours_debut: element.delai_jours_debut + Number(ti),
+                  take_interval: [],
+                  title: element.event_type,
+                  content: element.name,
+                  icon: 'calendar',
+                  time: {subTitle: '', title: ''}
+                };
+  
+                let d = this.getCurrentDateWith(this.debut_dernieres_menstrues, v.delai_jours_debut);
+                
+                v.time.subTitle = d.toDateString();
+                v.time.title = v.time.subTitle;
+            
+                timelinestmp.push(v);
+              });
+            }
+        
+            cache.push(element);
           }
-        
-          cache.push(element);
-        }
       
-        if (j === (events.length - 1) && timelinestmp.length !== 0) {
-          let d = this.debut_dernieres_menstrues;
-          d.setDate(dateDernierMentrues.getDate() + firstdebut - nbJourInterval);
+          if (j === (events.length - 1) && timelinestmp.length !== 0) {
+            let d = this.getCurrentDateWith(this.debut_dernieres_menstrues, (firstdebut - nbJourInterval));
         
-          timelines.push({
-            elements: timelinestmp,
-            icon: 'calendar',
-            time: {subTitle: d.toDateString(), title: d.toDateString()}
-          });
-          timelinestmp = [];
-        }
-      });
-      firstdebut += nbJourInterval;
+            timelines.push({
+              elements: timelinestmp,
+              icon: 'calendar',
+              time: {subTitle: d.toDateString(), title: d.toDateString()}
+            });
+            timelinestmp = [];
+          }
+        });
+        firstdebut += nbJourInterval;
+      }
     }
     return timelines;
   }
   
+  getCurrentDateWith(dateStart: Date, nbJour: number) {
+    return new Date((dateStart.getTime()) + (nbJour*24*60*60*1000))
+  }
+  
   getDateDernierMenstrues() {
-    return new Promise((resolve, reject) => {
+    return new Promise<Date>((resolve, reject) => {
       this.localStorage.getKey('session').then(session => {
         if (session !== null) {
-          resolve((new Date(session.user._embedded.patient.debut_dernieres_menstrues)));
+          resolve((new Date((session.user._embedded.patient.debut_dernieres_menstrues).substring(0,16)+'Z')));
         } else {
           reject(false);
         }
@@ -179,11 +191,20 @@ export class TimelinetestPage {
   
   doInfiniteBottom(infiniteScroll) {
     setTimeout(() => {
-      this.items = this.items.concat(this.items);
+      // this.items = this.items.concat(this.items);
+      // console.log('Async operation has ended');
+  
+      this.start += this.mainInterval;
+      this.end += this.mainInterval;
+  
+      this.services.getAllEvents(this.start, this.end).subscribe(next => {
+        this.timelines = this.timelines.concat(this.getTimelines(next.data));
+      }, error => {
+        console.error(error);
+      });
       
-      console.log('Async operation has ended');
       infiniteScroll.complete();
-    }, 500);
+    }, 1000);
   }
 }
 

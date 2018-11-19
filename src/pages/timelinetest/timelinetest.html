@@ -28,10 +28,22 @@
   
   <timeline endIcon="call">
     <timeline-item *ngFor="let item of timelines">
-      <timeline-time [time]="item.time"></timeline-time>
+      <timeline-time [time]="item.time" ></timeline-time>
       <ion-icon [name]="item.icon"></ion-icon>
       <ion-card>
-        <ion-scroll scrollX="true">
+
+          <!--<ion-slides > 
+             
+                <ion-slide class="mondive" *ngFor="let item of item.elements">
+                  <p class="datecard">{{item.time.subTitle}}</p>
+                  <p class="titrecard">{{item.title}}</p>
+                  <p>{{item.content}}</p>
+                </ion-slide>
+              
+          </ion-slides>  --> 
+
+
+          <ion-scroll>
           <div style="display: flex; flex-direction: row;">
             <div class="mondive" *ngFor="let item of item.elements">
               <p class="datecard">{{item.time.subTitle}}</p>
