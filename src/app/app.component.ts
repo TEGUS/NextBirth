@@ -3,10 +3,10 @@ import {AlertController, LoadingController, MenuController, Nav, Platform} from 
 import {StatusBar} from '@ionic-native/status-bar';
 import {LocalStorageProvider} from "../providers/localstorage";
 import * as codesMode from "../components/mode/mode";
-import {FluxReglePage} from '../pages/flux-regle/flux-regle';
-import {SurveillancePage} from '../pages/surveillance/surveillance';
 import {ServiceProvider} from "../providers/service";
 import {TranslateService} from "@ngx-translate/core";
+
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,16 +20,17 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar, public localStorage: LocalStorageProvider,
               public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController,
-              public alertCtrl: AlertController, public translate: TranslateService) {
+              public alertCtrl: AlertController, private sqlite: SQLite, public translate: TranslateService) {
     this.services.initHeaders();
     this.initializeApp();
+    this.intiliazedatabase();
 
     // used for an example of ngFor and navigation
     this.pages = [
       {title: 'Acceuil', component: "Start", icon: 'icon12'},
       {title: 'Profil', component: "MyprofilsPage", icon: 'icon3'},
       {title: 'Calendrier', component: "CalendarPage", icon: 'icon1'},
-      {title: 'Mes situations à risque', component: "MessituationarisquePage", icon: 'icon2'},
+      {title: 'Mise en garde', component: "MessituationarisquePage", icon: 'icon2'},
       {title: 'Mes mises à jour', component: "MiseajourPage", icon: 'icon4'},
       {title: 'Outils surveillance', component: "SurveillancePage", icon: 'icon6'},
 
@@ -145,4 +146,28 @@ export class MyApp {
       console.log(error);
     })
   }
+
+
+
+  intiliazedatabase() {
+
+    this.sqlite.create({
+      name: 'nextbirth.db',
+      location: 'default'
+    }).then((db: SQLiteObject) => {
+      
+
+      db.executeSql('CREATE TABLE IF NOT EXISTS SITUATIONS (id integer primary key, date, titre, description)', [])
+      .then(res => console.log('Executed SQL'))
+      .catch(e => console.log(e));
+      
+
+    }).catch(e => console.log(e));
+  }
+
+
+
+
+
+
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ServiceProvider } from '../../providers/service';
 
 /**
  * Generated class for the MessituationarisquePage page.
@@ -15,11 +16,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MessituationarisquePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  items = [];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,public services: ServiceProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MessituationarisquePage');
+    this.services.getAllSituations().then((result:any) =>{
+        this.items = result;
+    });
   }
 
 }

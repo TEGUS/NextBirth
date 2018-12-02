@@ -105,10 +105,9 @@ export class TimelinetestPage {
     let timelines = [];
     if (events !== undefined && events !== null && events.length !== 0) {
       const cache = [];
-      const nbJourInterval = 14;
+      const nbJourInterval = 7;
       let timelinestmp = [];
       let firstdebut = events[0].delai_jours_debut + nbJourInterval;
-      let dateDernierMentrues = this.debut_dernieres_menstrues;
   
       while (cache.length !== events.length) {
         events.forEach((element, j) => {
@@ -156,7 +155,8 @@ export class TimelinetestPage {
             cache.push(element);
           }
       
-          if (j === (events.length - 1) && timelinestmp.length !== 0) {
+          // if (j === (events.length - 1) && timelinestmp.length !== 0) {
+          if (j === (events.length - 1)) {
             let d = this.getCurrentDateWith(this.debut_dernieres_menstrues, (firstdebut - nbJourInterval));
         
             timelines.push({

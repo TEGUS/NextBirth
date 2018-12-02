@@ -26,6 +26,8 @@ export class MonmodalPage {
 
   public testeur = 0;
 
+  public imageaafficher = "";
+
 
   constructor(private base64: Base64, public loadingCtrl: LoadingController, public navCtrl: NavController,
               private camera: Camera, public services: ServiceProvider, public navParams: NavParams, private view: ViewController) {
@@ -69,18 +71,23 @@ export class MonmodalPage {
     }
 
     this.camera.getPicture(options).then((ImageData) => {
+
           let base64Image = ImageData;
+          this.imageaafficher = "data:image/jpeg;base64," + ImageData;
+          
           this.base64.encodeFile(base64Image).then((base64File: string)=>{
                 this.testeur = 1;
+                this.imageaafficher = base64File;
                 this.noteGrosesse.image = base64File;
 
               }, (err) =>{
+                alert(err);
           })
 
 
 
         }, (err) =>{
-
+          alert(err);
         })
     }
 
@@ -100,17 +107,20 @@ export class MonmodalPage {
 
       this.camera.getPicture(options).then((ImageData) => {
             let base64Image = ImageData;
-                this.base64.encodeFile(base64Image).then((base64File: string)=>{
+            this.imageaafficher = "data:image/jpeg;base64," + ImageData;
+           
+              this.base64.encodeFile(base64Image).then((base64File: string)=>{
                   this.testeur = 1;
                   this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
 
               }, (err) =>{
+                alert(err);
             })
 
 
 
           }, (err) =>{
-
+            alert(err);
           })
       }
 

@@ -63,11 +63,17 @@ export class LoginPage {
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.presentToast('Finish Login!');
+            this.mylocalstorage.storeKeydpv(0).then(() => {});
+            this.mylocalstorage.storeKeydpvacc(0).then(() => {});
             this.navCtrl.setRoot('ChooseModePage', {});
             this.menuCtrl.enable(true, 'sideMenu');
           });
 
         });
+
+        
+
+
       }, error => {
         loading.dismiss();
         console.log(error);

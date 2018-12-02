@@ -3,6 +3,8 @@ import {Injectable, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {currentHost} from "../host/host";
 import {LocalStorageProvider} from "./localstorage";
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { ToastController } from 'ionic-angular';
 
 /*
   Generated class for the ServiceProvider provider.
@@ -24,7 +26,7 @@ export class ServiceProvider {
     this._statusNetwork = value;
   }
   
-  constructor(public http: HttpClient, public localStorage: LocalStorageProvider) {
+  constructor(public http: HttpClient, public localStorage: LocalStorageProvider,public toastCtrl: ToastController, private sqlite: SQLite) {
     this.initHeaders().then(next => {
       this.headers = next;
     });
@@ -313,4 +315,105 @@ export class ServiceProvider {
       this.headers
     );
   }
+
+
+
+
+  ///////////////////////////////////////////////////////////////
+
+         ///// base de données local ///////////
+      
+  //////////////////////////////////////////////////////////////
+
+
+
+  createSituations(situations) {
+
+    return new Promise((resolve)=>{
+            this.sqlite.create({
+              name: 'nextbirth.db',
+              location: 'default'
+            }).then((db: SQLiteObject) => {
+              db.executeSql('INSERT INTO SITUATIONS VALUES(NULL,?,?,?)',[situations.date, situations.titre, situations.description])
+                .then(res => {
+                     
+                    resolve(res);
+                })
+                .catch(e => {
+                  this.presentToast('table pays donst exist!');
+                  resolve(e);
+                });
+            }).catch(e => {
+                  this.presentToast('database donst exist!');
+                  resolve(e);
+            });
+      });
+  }
+
+
+  getAllSituations(){
+
+    return new Promise((resolve)=>{
+
+      this.sqlite.create({
+        name: 'nextbirth.db',
+        location: 'default'
+      }).then((db: SQLiteObject) => {
+
+            db.executeSql('SELECT * FROM SITUATIONS ', [])
+            .then(res => {
+              let expenses = [];
+              for(var i=0; i<res.rows.length; i++) {
+                expenses.push({id:res.rows.item(i).id,date:res.rows.item(i).date,titre:res.rows.item(i).titre,description:res.rows.item(i).description})
+              } 
+              resolve(expenses);
+            })
+            .catch(e => {
+              console.log(e);
+              resolve(0);
+            });
+
+
+      }).catch(e => {
+        this.presentToast('database donst exist!');
+      });
+          
+    });
+          
+
+
+  }
+
+
+  deletteAllSituations(){
+    return new Promise((resolve)=>{
+      this.sqlite.create({
+        name: 'nextbirth.db',
+        location: 'default'
+      }).then((db: SQLiteObject) => {
+            db.executeSql('DELETE FROM SITUATIONS', [])
+            .then(res => {
+              resolve(1);
+            })
+            .catch(e => {
+              console.log(e);
+              resolve(0);
+            });
+      }).catch(e => {
+        this.presentToast('database donst exist!');
+      });   
+    });
+  }
+
+////////////////////////////////////////////////////////////////////////
+
+
+    presentToast(message: any) {
+      let toast = this.toastCtrl.create({
+        message: message,
+        duration: 3000
+      });
+      toast.present();
+    }
+
 } 

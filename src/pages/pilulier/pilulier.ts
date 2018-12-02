@@ -1,5 +1,12 @@
 import {Component} from '@angular/core';
-import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {
+  AlertController,
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+  PopoverController
+} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ServiceProvider} from "../../providers/service";
 import {
@@ -27,7 +34,7 @@ import {LocalStorageProvider} from "../../providers/localstorage";
   templateUrl: 'pilulier.html',
 })
 export class PilulierPage {
-  private testeur: any;
+  private onglet: any;
   private part: any;
   private form: FormGroup;
   private treatments = [];
@@ -55,10 +62,12 @@ export class PilulierPage {
       icon: 'checkmark-circle-outline'
     },
   ];
+  private showSpinner: boolean = false;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
-              private localNotifications: LocalNotifications, private localStorageProvider: LocalStorageProvider) {
+              private localNotifications: LocalNotifications, private localStorageProvider: LocalStorageProvider,
+              public popoverCtrl: PopoverController) {
   }
   
   ionViewWillLoad() {
@@ -79,6 +88,7 @@ export class PilulierPage {
   //region Searchbar Medicament Name
   
   cancelSearchbar(ev: any) {
+    this.showSpinner = false;
     if (this.subscription !== undefined && this.subscription !== null) {
       this.subscription.unsubscribe()
       this.medicament_search = ''
@@ -95,6 +105,7 @@ export class PilulierPage {
       
       // if the value is an empty string don't filter the items
       if (val && val.trim() != '') {
+        this.showSpinner = true;
         this.subscription = this.services.getMedicamentByName(val).subscribe(next => {
           console.log(next);
           if (next.medicaments.length === 0) {
@@ -106,8 +117,10 @@ export class PilulierPage {
           }
           
           this.showResultMedicaent = true
+          this.showSpinner = false;
         }, error => {
           console.error(error)
+          this.showSpinner = false;
         })
       }
     }
@@ -123,8 +136,17 @@ export class PilulierPage {
   }
   
   selectMedicament(item) {
-    this.medicament_search = item.name
-    this.nextPart()
+    if (this.treatments.find(x => x.name === item.name) === undefined) {
+      this.medicament_search = item.name;
+      this.nextPart()
+    } else {
+      let alert = this.alertCtrl.create({
+        subTitle: 'Médicament existant !',
+        message: 'Présence de ce médicament dans la liste des Traitements',
+        buttons: ['Okay']
+      });
+      alert.present();
+    }
   }
   
   //endregion
@@ -174,33 +196,8 @@ export class PilulierPage {
   }
   
   ionViewDidLoad() {
-    this.testeur = 0;
+    this.gotoOnglet_2();
     this.part = 1;
-    
-    // const id = Math.round(Math.random() * 255).toString(16);
-    // this.localNotifications.schedule({
-    //   id: 1,
-    //   text: 'Single ILocalNotification',
-    //   data: {secret: 'AZERTYUIOP'},
-    //   led: 'FF0000',
-    //   sound: 'file://assets/imgs/notification.mp3',
-    //   icon: 'notifications',
-    //   actions: [
-    //     {
-    //       id: id,
-    //       title: 'Take',
-    //       type: ILocalNotificationActionType.BUTTON,
-    //       icon: 'checkmark-circle-outline'
-    //     },
-    //   ]
-    // });
-    // this.localNotifications.on(id).subscribe(next => {
-    //   this.makeTakingTreatment(next.id).then(on => {
-    //     this.presentDialogAlert('Taked');
-    //   })
-    // }, error => {
-    //   console.error(error);
-    // })
   }
   
   
@@ -233,15 +230,15 @@ export class PilulierPage {
     this.form.patchValue({horaireFirstPrise: event.hour + ':' + event.minute})
   }
   
-  changetesteur1() {
-    this.testeur = 0;
+  gotoOnglet_1() {
+    this.onglet = 0;
     this.part = 1;
     this.currentTreatment = null;
     this.initForm();
   }
   
-  changetesteur2() {
-    this.testeur = 1;
+  gotoOnglet_2() {
+    this.onglet = 1;
     this.currentTreatment = null;
     this.getTreatments();
   }
@@ -278,7 +275,7 @@ export class PilulierPage {
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.cancel();
-            this.presentDialogAlert('Médicament crée avec succès!');
+            this.presentDialogAlert('Médicament crée avec succès!', () => this.gotoOnglet_2());
             this.initScheduleTreatement();
           })
         });
@@ -295,7 +292,7 @@ export class PilulierPage {
             loading.dismiss();
             loading.onDidDismiss(() => {
               this.cancel();
-              this.presentDialogAlert('Médicament mis à jour avec succès!');
+              this.presentDialogAlert('Médicament mis à jour avec succès!', () => this.gotoOnglet_2());
               this.initScheduleTreatement();
             })
           });
@@ -306,6 +303,19 @@ export class PilulierPage {
       }
     }
   }
+  
+  presentPopover(item) {
+    let popover = this.popoverCtrl.create('PopoverTreatementOptionsPage');
+    popover.present();
+    popover.onDidDismiss(data => {
+      if (data === 1) {
+        this.gotoUpdate(item)
+      } else if (data === 2) {
+        this.gotoDelete(item)
+      }
+    });
+  }
+  
   
   getAlerts(id_treatment) {
     return new Promise((resolve, reject) => {
@@ -339,7 +349,7 @@ export class PilulierPage {
   
   gotoUpdate(item) {
     this.currentTreatment = item;
-    this.testeur = 0;
+    this.onglet = 0;
     this.part = 2
     this.initForm();
   }
@@ -428,10 +438,18 @@ export class PilulierPage {
     ids.forEach(id => this.localNotifications.clear(id));
   }
   
-  presentDialogAlert(message) {
+  presentDialogAlert(message, callback: () => void = null) {
     let alert = this.alertCtrl.create({
       title: message,
-      buttons: ['Ok']
+      buttons: [{
+        text: 'Okay',
+        handler: () => {
+          if (callback !== null) {
+            callback();
+          }
+        }
+      }]
+    
     });
     alert.present();
   }

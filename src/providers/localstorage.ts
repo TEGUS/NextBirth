@@ -13,6 +13,8 @@ import {HttpClient} from "@angular/common/http";
 export class LocalStorageProvider {
   private key = 'session';
   private keymode = 'mode';
+  private keydpv = 'keydpv';
+  private keydpvacc = 'keydpvacc';
 
   constructor(private http: HttpClient, private storage: Storage) {
     console.log('Hello LocalStorageProvider Provider');
@@ -61,6 +63,8 @@ export class LocalStorageProvider {
     return this.storage.set(this.key, data);
   }
 
+  
+
   getSession() {
     return new Promise((resolve, failed) => {
       this.storage.get(this.key).then((data) => {
@@ -69,6 +73,46 @@ export class LocalStorageProvider {
         }else {
           Session.user = data;
           Session.token = data.token;
+          resolve(data);
+        }
+      }).catch((error) => {
+        failed();
+      });
+    });
+  }
+
+
+  storeKeydpv(data) {
+    return this.storage.set(this.keydpv, data);
+  }
+
+
+  getKeydpv() {
+    return new Promise((resolve, failed) => {
+      this.storage.get(this.keydpv).then((data) => {
+        if (data == null) {
+          failed();
+        }else {
+          resolve(data);
+        }
+      }).catch((error) => {
+        failed();
+      });
+    });
+  }
+
+
+  storeKeydpvacc(data) {
+    return this.storage.set(this.keydpvacc, data);
+  }
+
+
+  getKeydpvacc() {
+    return new Promise((resolve, failed) => {
+      this.storage.get(this.keydpvacc).then((data) => {
+        if (data == null) {
+          failed();
+        }else {
           resolve(data);
         }
       }).catch((error) => {

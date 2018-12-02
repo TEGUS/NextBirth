@@ -4,6 +4,7 @@ import { Vibration } from '@ionic-native/vibration';
 import { LocalStorageProvider } from '../../providers/localstorage';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { TimerCounter} from '../../configs/configs';
+import { ServiceProvider } from '../../providers/service';
 
 /**
  * Generated class for the SurveillancePage page.
@@ -48,7 +49,7 @@ export class SurveillancePage {
   public tmp = null;
   public numerateur = 0;
   public denominateur = 0;
-  constructor(public navCtrl: NavController, private localNotifications: LocalNotifications, public mylocalstorage: LocalStorageProvider, private vibration: Vibration, public navParams: NavParams, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController,public services: ServiceProvider, private localNotifications: LocalNotifications, public mylocalstorage: LocalStorageProvider, private vibration: Vibration, public navParams: NavParams, public toastCtrl: ToastController) {
     this.testeur = 0;
     this.couleurbouton = 0;
   }
@@ -257,19 +258,40 @@ export class SurveillancePage {
       this.mylocalstorage.getSession().then((result:any) =>{
         this.presentToast("Attention " + result.user.username + " vous serez déjà en train de faire un vrai travail d’accouchement rendez-vous sans trop attendre dans votre maternité pour vous faire examiner.");
         this.declancherAlerte("Attention " + result.user.username + " vous serez déjà en train de faire un vrai travail d’accouchement rendez-vous sans trop attendre dans votre maternité pour vous faire examiner.", 2);
+        let situations = {
+           date: new Date(),
+           titre: "alerte",
+           description: "Attention " + result.user.username + " vous serez déjà en train de faire un vrai travail d’accouchement rendez-vous sans trop attendre dans votre maternité pour vous faire examiner."
+        }
+        this.services.createSituations(situations).then((result) =>{});
+     
       })   
     }
     if(((this.envies == "ep")||(this.envies == "efs"))&&(this.premierecontraction>=21600)&&(this.frequence>=(1/5))&& ( (this.contraceptionminutes*60 + this.contraceptionseconde)>60) && (this.intensite>=(8/10))){
       this.mylocalstorage.getSession().then((result:any) =>{
       this.presentToast("Attention " + result.user.username + " votre accouchement est probablement imminent. Vous risquez accoucher dans moins d’une heure. Si vous ne vous rendez pas dans la maternité la plus proche dans un bref délai, vous risquez accoucher dans un cadre inapproprié et mettre en danger la vie de votre bébé et même la vôtre.");
       this.declancherAlerte("Attention " + result.user.username + " votre accouchement est probablement imminent. Vous risquez accoucher dans moins d’une heure. Si vous ne vous rendez pas dans la maternité la plus proche dans un bref délai, vous risquez accoucher dans un cadre inapproprié et mettre en danger la vie de votre bébé et même la vôtre.", 2);
-     }) 
+      let situations = {
+        date: new Date(),
+        titre: "alerte",
+        description: "Attention " + result.user.username + " votre accouchement est probablement imminent. Vous risquez accoucher dans moins d’une heure. Si vous ne vous rendez pas dans la maternité la plus proche dans un bref délai, vous risquez accoucher dans un cadre inapproprié et mettre en danger la vie de votre bébé et même la vôtre."
+      }
+      this.services.createSituations(situations).then((result) =>{});
+    
+    }) 
     }
 
     // coooooooooooooooooooooooooooooooolllllllllllllllllllllllllllllllllll
     if((this.intensite>=(8/10))&&(this.frequence>=(4/10))&&((this.contraceptionminutes*60 + this.contraceptionseconde)>60)){
       this.presentToast("Vous risquez une rupture utérine veillez-vous rendre immédiatement dans une maternité au plateau technique élevé");
       this.declancherAlerte("Vous risquez une rupture utérine veillez-vous rendre immédiatement dans une maternité au plateau technique élevé", 2);
+      let situations = {
+        date: new Date(),
+        titre: "alerte",
+        description: "Vous risquez une rupture utérine veillez-vous rendre immédiatement dans une maternité au plateau technique élevé"
+      }
+      this.services.createSituations(situations).then((result) =>{});
+   
     }else{
       //this.presentToast(" Votre fœtus subit probablement une souffrance importante. Veillez-vous rendre à la maternité en urgence pour vous faire examiner");
     }
@@ -309,6 +331,13 @@ export class SurveillancePage {
 
     this.presentToast(" Votre fœtus subit probablement une souffrance importante. Veillez-vous rendre à la maternité en urgence pour vous faire examiner");
     this.declancherAlerte("Votre fœtus subit probablement une souffrance importante. Veillez-vous rendre à la maternité en urgence pour vous faire examiner", 2);
+    let situations = {
+      date: new Date(),
+      titre: "alerte",
+      description: " Votre fœtus subit probablement une souffrance importante. Veillez-vous rendre à la maternité en urgence pour vous faire examiner"
+    }
+    this.services.createSituations(situations).then((result) =>{});
+  
   }
 
   colorbrunatre(){
@@ -316,6 +345,13 @@ export class SurveillancePage {
     this.couleurduliquide = "Brunatre";
     this.presentToast("Les saignements par le vagin au troisième trimestre peuvent être des signes d’une urgence vitale. Faite vous absolument examiner dans une maternité le plutôt possible");
     this.declancherAlerte("Les saignements par le vagin au troisième trimestre peuvent être des signes d’une urgence vitale. Faite vous absolument examiner dans une maternité le plutôt possible", 2);
+    let situations = {
+      date: new Date(),
+      titre: "alerte",
+      description: " Les saignements par le vagin au troisième trimestre peuvent être des signes d’une urgence vitale. Faite vous absolument examiner dans une maternité le plutôt possible"
+    }
+    this.services.createSituations(situations).then((result) =>{});
+  
   }
 
   colorsanglant(){
@@ -323,6 +359,13 @@ export class SurveillancePage {
     this.couleurduliquide = "Sanglant";
     this.presentToast("Les saignements par le vagin au troisième trimestre peuvent être des signes d’une urgence vitale. Faite vous absolument examiner dans une maternité le plutôt possible");
     this.declancherAlerte("Les saignements par le vagin au troisième trimestre peuvent être des signes d’une urgence vitale. Faite vous absolument examiner dans une maternité le plutôt possible", 2);
+    let situations = {
+      date: new Date(),
+      titre: "alerte",
+      description: " Les saignements par le vagin au troisième trimestre peuvent être des signes d’une urgence vitale. Faite vous absolument examiner dans une maternité le plutôt possible"
+    }
+    this.services.createSituations(situations).then((result) =>{});
+  
   }
 
   colortroube(){
@@ -332,9 +375,23 @@ export class SurveillancePage {
         /// ici nous allons ajouter une heure plus tard
         this.presentToast("Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner");
         this.declancherAlerte("Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner", 2);
-    }else{
+        let situations = {
+          date: new Date(),
+          titre: "alerte",
+          description: " Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner"
+        }
+        this.services.createSituations(situations).then((result) =>{});
+    
+      }else{
       this.presentToast("Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner");
       this.declancherAlerte("Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner", 2);
+      let situations = {
+        date: new Date(),
+        titre: "alerte",
+        description: " Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner"
+      }
+      this.services.createSituations(situations).then((result) =>{});
+    
     }
   }
 
@@ -343,6 +400,13 @@ export class SurveillancePage {
     this.couleurduliquide = "Purulente";
     this.presentToast("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf");
     this.declancherAlerte("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf", 2);
+    let situations = {
+      date: new Date(),
+      titre: "alerte",
+      description: " vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf"
+    }
+    this.services.createSituations(situations).then((result) =>{});
+  
   }
 
   colorclaire(){
@@ -370,7 +434,14 @@ export class SurveillancePage {
                   this.presentToast("Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner");
                   this.declancherAlerte("Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner", 2);
                   clearInterval(TimerCounter.tempsDatente.timer);
-              }
+                  let situations = {
+                    date: new Date(),
+                    titre: "alerte",
+                    description: " Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner"
+                  }
+                  this.services.createSituations(situations).then((result) =>{});
+              
+                }
               
             }, TimerCounter.tempsDatente.value);
          }
@@ -385,6 +456,12 @@ export class SurveillancePage {
     }else{
       this.presentToast("Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner");
       this.declancherAlerte("Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner", 2);
+      let situations = {
+        date: new Date(),
+        titre: "alerte",
+        description: " Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner"
+      }
+      this.services.createSituations(situations).then((result) =>{});
     }
     
   }

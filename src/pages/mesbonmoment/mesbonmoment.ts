@@ -41,11 +41,12 @@ export class MesbonmomentPage {
       });
   }
 
-  selectNode(id, libelle, description){
+  selectNode(id, libelle, description, images){
     this.testeur = 1;
 
     this.libelle = libelle;
     this.description = description;
+    this.images = images;
   }
 
 }

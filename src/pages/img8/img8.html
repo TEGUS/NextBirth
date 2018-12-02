@@ -46,8 +46,6 @@
     </p>
 
 
-  
-
   <ion-grid>
     <ion-row style="height: 105px;" *ngFor="let item of items" (click)="selectArticle(item.id)">
       <ion-col col-4>
@@ -57,11 +55,14 @@
       </ion-col>
       <ion-col class="item-list">
         <label>{{item.title}}</label>
-        <p>{{item.content | slice:0:30}}...</p>
+        <!--<p>{{item.content | slice:0:30}}...</p>-->
       </ion-col>
       <ion-col col-2 class="button-submit">
-        <img src="assets/imgs/maflecherouge.png" alt="" width="20" height="40">
+        <img src="assets/imgs/maflecherouge.png" alt="" width="15" height="30">
       </ion-col>
     </ion-row>
   </ion-grid>
+
+
+
 </ion-content>

@@ -20,6 +20,8 @@ import {CameraMock} from '../mocks/camera.mock';
 import { Vibration } from '@ionic-native/vibration';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import { SQLite } from '@ionic-native/sqlite';
+import { DatePicker } from '@ionic-native/date-picker';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -58,6 +60,8 @@ export function createTranslateLoader(http: HttpClient) {
     Vibration,
     LocalStorageProvider,
     SplashScreen,
+    SQLite,
+    DatePicker,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: Camera, useClass: CameraMock},
     AuthenticationProvider,

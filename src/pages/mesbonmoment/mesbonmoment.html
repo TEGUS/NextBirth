@@ -8,14 +8,17 @@
 
   <ion-grid *ngIf="testeur == 0">
      <div *ngFor="let item of items">
-        <ion-row style="height: 100px;"  (click)="selectNode(item.id, item.libelle, item.description)" >
+        <ion-row style="height: 100px;"  (click)="selectNode(item.id, item.libelle, item.description, item._embedded.image._embedded.url_photo)" >
             <ion-col col-4>
-              <img src="assets/imgs/background.jpg" alt="" width="100" height="70">
+              <!-- <img src="assets/imgs/background.jpg" alt="" width="100" height="70">-->
+              <img
+                [src]="item._embedded.image != null ? item._embedded.image._embedded.url_photo : '/assets/imgs/background.jpg'"
+                alt="" width="100" height="70">
             </ion-col>
             <ion-col class="item-list">
               <label>{{item.libelle}}</label>
               <!--<p>{{item.content | slice:0:30}}...</p>-->
-              <p>{{item.description | slice:0:30}}...</p>
+              <p>{{item.description | slice:0:50}}...</p>
             </ion-col>
             <ion-col col-2 class="mafleche">
                 <img src="assets/imgs/maflecherouge.png" alt="" width="20" height="40">
@@ -30,7 +33,7 @@
 
   <ion-card *ngIf="testeur == 1">
 
-      <img src="assets/imgs/background.jpg"/>
+      <img src="{{images}}"/>
   
       <ion-card-content>
         <ion-card-title>
