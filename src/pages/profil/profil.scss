@@ -2,7 +2,27 @@ page-profil {
   ion-label {
     text-align: center;
   }
-
+  
+  .logo {
+    position: center;
+    width: 40%;
+    margin-top: 5%;
+    margin-bottom: 0%;
+    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    transform: translate3d(0, 0, 0);
+    border: none;
+    border-radius: 50%;
+  }
+  .logologin {
+    background-color: #eb5350;
+  }
+  .textelogin {
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 0%;
+    text-align: center;
+  }
+  
   .ion-col-1 {
     color: color($colors, libelle-text);
     display: flex;
@@ -10,19 +30,19 @@ page-profil {
     align-items: center;
     justify-content: center;
   }
-
+  
   ion-footer {
     background-color: #fcf366;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
     justify-content: flex-end;
-
+    
     h5 {
       font-weight: 900;
     }
   }
-
+  
   .content {
     display: flex;
     flex-direction: column;
@@ -30,15 +50,15 @@ page-profil {
     justify-content: space-between;
     text-align: center;
     width: 100%;
-
+    
     input-element {
       width: inherit;
     }
-
+    
     show-date {
       width: inherit;
     }
-
+    
     .error {
       width: 70%;
       color: red;
@@ -47,7 +67,7 @@ page-profil {
       padding: 0;
       background-color: white;
     }
-
+    
     .create-account {
       display: flex;
       flex-direction: column;
@@ -55,11 +75,11 @@ page-profil {
       justify-content: center;
       margin-top: 15px;
       width: 70%;
-
+      
       .libelle {
         width: 90%;
       }
-
+      
       input {
         margin-top: 10px;
         background-color: color($colors, secondary);

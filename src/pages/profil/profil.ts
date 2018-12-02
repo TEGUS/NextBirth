@@ -18,7 +18,7 @@ import * as codesMode from "../../components/mode/mode";
   templateUrl: 'profil.html',
 })
 export class ProfilPage {
-
+  
   public object = null;
   public error = null;
   public ladate = null;
@@ -28,25 +28,27 @@ export class ProfilPage {
   errormessage = null;
   public internalerror = null;
   public internalemesage = null;
-
+  
   modeSelectedExist = false;
-
+  
+  imageB64 = null;
+  
   constructor(public navCtrl: NavController, public services: ServiceProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider, public alertCtrl: AlertController) {
   }
-
+  
   ionViewDidLoad() {
     this.services.initHeaders();
     console.log('ionViewDidLoad ProfilsPage');
   }
-
+  
   ionViewWillLoad() {
     this.localStorage.getKey('modeSelected').then(mode => {
       console.log(mode);
       this.modeSelectedExist = mode !== null ? true : false;
     });
-
-
+    
+    
     this.object = {
       diabete: 0,
       hta: 0,
@@ -62,66 +64,65 @@ export class ProfilPage {
       nombre_enfant_vivant: null
     }
   }
-
-
-
+  
+  
   dateDeNaissance(date) {
     var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
     this.ladate = madate;
   }
-
+  
   getDureeSaignement(dureeSaignement) {
     this.object.duree_saignement = dureeSaignement;
   }
-
+  
   getDureeCycle(dureeCycle) {
     this.object.duree_cycle = dureeCycle;
   }
-
+  
   getCycleRegulier(cycleRegulier) {
     this.object.cycle_regulier = cycleRegulier;
   }
-
+  
   getAgePremiereRegle(agePremiereRegle) {
     this.object.age_premiere_regle = agePremiereRegle;
   }
-
+  
   getDouleur(douleurRegle) {
     this.object.douleur_regle = douleurRegle;
   }
-
+  
   getUsername(username) {
     this.username = username;
   }
-
+  
   getPhone(phone) {
     this.phone = phone;
   }
-
+  
   getAge(age) {
-
+  
   }
-
+  
   getPoids(poids) {
-
+  
   }
-
+  
   getNombreGrossesse(nombreGrossesse) {
     this.object.nombre_grossesse = nombreGrossesse;
   }
-
+  
   getNombrePremature(nombrePremature) {
     this.object.nombre_premature = nombrePremature;
   }
-
+  
   getNombreFosseCouche(nombreFosseCouche) {
     this.object.nombre_fosse_couche = nombreFosseCouche;
   }
-
+  
   getNombreEnfantVivant(nombreEnfantVivant) {
     this.object.nombre_enfant_vivant = nombreEnfantVivant;
   }
-
+  
   checkValues() {
     return new Promise((resolve, reject) => {
       if (
@@ -136,8 +137,8 @@ export class ProfilPage {
       }
     });
   }
-
-
+  
+  
   updateProfile() {
     this.checkValues().then(next => {
       this.object.diabete = this.object.diabete ? 1 : 0;
@@ -146,13 +147,13 @@ export class ProfilPage {
       this.object.douleur_regle = this.object.douleur_regle ? 1 : 0;
       this.object.douleur_regle = this.object.douleur_regle ? 1 : 0;
       this.object.cycle_regulier = this.object.cycle_regulier ? 1 : 0;
-
+      
       this.object.account = {
         "username": this.username,
         "phone": '+237' + this.phone,
         "date_naissance": this.ladate
-      }
-
+      };
+      
       console.log(this.object);
       let loading = this.loadingCtrl.create();
       loading.present();
@@ -161,16 +162,16 @@ export class ProfilPage {
         this.localStorage.updatePatientStorage(next);
       }, error => {
         loading.dismiss();
-
-        if(undefined!=error.error[0]){
+        
+        if (undefined != error.error[0]) {
           this.errorpath = error.error[0].property_path;
           this.errormessage = error.error[0].message;
-        }else{
+        } else {
           this.internalerror = 1;
           this.presentToast(error.error.message);
           this.internalemesage = error.error.message;
         }
-
+        
       }, () => {
         loading.dismiss();
         this.localStorage.getKey('modeSelected').then(mode => {
@@ -185,7 +186,7 @@ export class ProfilPage {
       alert.present();
     })
   }
-
+  
   presentToast(message: any) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -193,7 +194,7 @@ export class ProfilPage {
     });
     toast.present();
   }
-
+  
   selectMode(mode) {
     let loading = this.loadingCtrl.create();
     loading.present();
@@ -206,7 +207,7 @@ export class ProfilPage {
       loading.onDidDismiss(() => {
         this.localStorage.removeKey('modeSelected');
         this.localStorage.setKey("mode", mode);
-
+        
         switch (mode.code) {
           case codesMode.CONTPL:
             this.navCtrl.setRoot("ModeContraceptionPage", {
@@ -227,5 +228,27 @@ export class ProfilPage {
         }
       });
     });
+  }
+  
+  
+  openDialogChangePhoto() {
+    let alert = this.alertCtrl.create({
+      title: "Upload image",
+      buttons: [
+        {
+          text: 'camera',
+          handler: () => {
+            console.log('Camera clicked');
+          }
+        },
+        {
+          text: 'Gallery',
+          handler: () => {
+            console.log('Gallery clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

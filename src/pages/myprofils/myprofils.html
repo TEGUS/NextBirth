@@ -1,240 +1,212 @@
 <ion-header>
-  <navbar title="Profils"></navbar>
+  <navbar title="Profils" [ionButtons]="ionButtonsEnd"
+          (getClickedButton)="getClickedButton($event)">
+  </navbar>
 </ion-header>
 
 
 <ion-content class="backgroundcorps">
-
-
-  <div class="logologin">
-      <img class="logo" src="assets/imgs/user.jpg">   
-      <p class="textelogin">doumtsopmelifranck@yahoo.fr</p>
+  <div *ngIf="user != null">
+    <div class="logologin">
+      <img class="logo" src="assets/imgs/user.jpg">
+      <p class="textelogin">{{user.email}}</p>
+    </div>
+    <br>
+  
+    <ion-row>
+      <ion-col class="dateheure2">
+        Username :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user.username}}
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col class="dateheure2">
+        Email :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user.email}}
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col class="dateheure2">
+        prenom :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user.nom || user.prenom || user.username}}
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col class="dateheure2">
+        age_premiere_regle :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.age_premiere_regle}}
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col class="dateheure2">
+        cycle_regulier :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{formatBool(user._embedded.patient.cycle_regulier)}}
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col class="dateheure2">
+        debut_dernieres_menstrues :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{formatDate(user._embedded.patient.debut_dernieres_menstrues) | date: 'dd/MM/yyyy'}}
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col class="dateheure2">
+        diabete :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{formatBool(user._embedded.patient.diabete)}}
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col class="dateheure2">
+        diagnostique :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{formatBool(user._embedded.patient.drepano)}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        douleur_regle :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{formatBool(user._embedded.patient.douleur_regle)}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        duree_cycle :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.duree_cycle}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        duree_desir_grossesse :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.duree_desir_grossesse || '__'}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        duree_menstrues :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.duree_menstrues}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        duree_saignement :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.duree_saignement}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        etat_esprit :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.etat_esprit || '__'}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        frequence_saignement :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.frequence_saignement || '__'}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        hta :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{formatBool(user._embedded.patient.hta)}}
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col class="dateheure2">
+        marital_status :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.marital_status || '__'}}
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col class="dateheure2">
+        nombre_enfant_vivant :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.nombre_enfant_vivant}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        nombre_fosse_couche :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.nombre_fosse_couche}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        nombre_grossesse :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.nombre_grossesse}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        nombre_premature :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{user._embedded.patient.nombre_premature}}
+      </ion-col>
+    </ion-row>
   </div>
- <br>
-   <ion-row>
-      <ion-col class="dateheure2">
-          Username :
-      </ion-col>
-      <ion-col class="dateheure3">
-          mokai@yahoo.fr
-      </ion-col>
-   </ion-row>
-
-   <ion-row>
-      <ion-col class="dateheure2">
-          Ville :
-      </ion-col>
-      <ion-col class="dateheure3">
-          Douala
-      </ion-col>
-   </ion-row>
-   <ion-row>
-      <ion-col class="dateheure2">
-          Email :
-      </ion-col>
-      <ion-col class="dateheure3">
-          Proslexus
-      </ion-col>
-   </ion-row>
-
-   <ion-row>
-      <ion-col class="dateheure2">
-          prenom :
-      </ion-col>
-      <ion-col class="dateheure3">
-          dddddddddddddddd
-      </ion-col>
-   </ion-row>
-   <ion-row>
-      <ion-col class="dateheure2">
-          Pays :
-      </ion-col>
-      <ion-col class="dateheure3">
-         skslsklsskslsksl
-      </ion-col>
-   </ion-row>
-
-   <ion-row>
-    <ion-col class="dateheure2">
-      age_premiere_regle :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col class="dateheure2">
-      cycle_regulier :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col class="dateheure2">
-      debut_dernieres_menstrues :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col class="dateheure2">
-      diabete :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col class="dateheure2">
-      diagnostique :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col class="dateheure2">
-      diagnostique :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      douleur_regle :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col class="dateheure2">
-      drepano :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      duree_cycle :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      duree_desir_grossesse :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      duree_menstrues :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      duree_saignement :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      etat_esprit :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      frequence_saignement :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      hta :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col class="dateheure2">
-      marital_status :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col class="dateheure2">
-      nombre_enfant_vivant :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      nombre_fosse_couche :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      nombre_grossesse :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      nombre_premature :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="dateheure2">
-      profession :
-    </ion-col>
-    <ion-col class="dateheure3">
-       skslsklsskslsksl
-      </ion-col>
-  </ion-row>
-
+  
   <br>
   <br>
   <br>
   <br>
-   
+
 
 </ion-content>

@@ -401,12 +401,13 @@ export class PilulierPage {
   }
   
   initScheduleTreatement() {
-    console.log(this.schedules);
+    console.log(this.schedules)
+    const title = 'Prise de médicament';
     this.schedules.forEach(item => {
       const initDate = new Date(((item.date_alert).substring(0, 16)) + 'Z').getTime();
       const notif: ILocalNotification = {
         id: item.id,
-        title: 'Prise de médicament',
+        title: title,
         text: item.message,
         trigger: {
           at: new Date(initDate),
@@ -424,13 +425,20 @@ export class PilulierPage {
         }],
       };
       this.localNotifications.schedule(notif);
+      
       this.localNotifications.on(`TAKE${item.id}`).subscribe(next => {
         this.makeTakingTreatment(next.id).then(on => {
           this.presentDialogAlert('Taked');
         })
       }, error => {
         console.error(error);
-      })
+      });
+      
+      this.services.createSituations({
+        date: new Date(),
+        titre: title,
+        description: item.message
+      }).then(() => {});
     });
   }
   
@@ -449,18 +457,13 @@ export class PilulierPage {
           }
         }
       }]
-    
+      
     });
     alert.present();
   }
   
   makeTakingTreatment(id_alert) {
     return new Promise(resolve => {
-      // if (this.services.statusNetwork) {
-      //
-      // } else {
-      //
-      // }
       this.localStorageProvider.getKey(v.LOCAL_STRG_TAKED_TREATEMENT).then((res: any) => {
         this.presentDialogAlert(JSON.stringify(res));
         if (res !== undefined && res !== null) {

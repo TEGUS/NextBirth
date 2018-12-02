@@ -3,6 +3,12 @@
     <ion-icon name="menu"></ion-icon>
   </button>
   <ion-title>{{_title}}</ion-title>
+  
+  <ion-buttons end *ngIf="ionButtons != undefined && ionButtons.length != 0">
+    <button ion-button *ngFor="let item of ionButtons" (click)="goTo(item)">
+      <ion-icon [name]="item.icon"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-navbar>
 
 <div style="height: 13px; font-size: 11px; color: white; text-align: center;"

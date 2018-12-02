@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Network} from "@ionic-native/network";
-import {ServiceProvider} from "../../providers/service";
+import {IonButtonEnd, ServiceProvider} from "../../providers/service";
 
 
 @Component({
@@ -16,7 +16,10 @@ export class NavbarComponent {
     this._title = value === null ? 'NextBirth' : value;
   }
   
-  @Input() showMenuToggle = true
+  @Input() showMenuToggle = true;
+  
+  @Input() ionButtons: Array<IonButtonEnd> = [];
+  @Output() getClickedButton = new EventEmitter();
 
   private msg_network = 'msg network'
   private showNetworkStatus = false
@@ -45,5 +48,9 @@ export class NavbarComponent {
     this.colorNetworkStatus = status ? 'green' : 'red'
     this.showNetworkStatus = status
     this.service.statusNetwork = status;
+  }
+  
+  goTo(item) {
+    this.getClickedButton.emit(item);
   }
 }
