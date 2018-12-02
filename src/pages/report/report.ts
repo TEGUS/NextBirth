@@ -7,7 +7,8 @@ import {
   AlertController,
   ModalController,
   ModalOptions,
-  Modal
+  Modal,
+  ToastController
 } from 'ionic-angular';
 import {LocalNotifications} from '@ionic-native/local-notifications';
 import {ServiceProvider} from "../../providers/service";
@@ -41,7 +42,7 @@ export class ReportPage {
   public dpv: any; 
   public dpvacc: any; 
 
-  constructor(public navCtrl: NavController, public mylocalstorage: LocalStorageProvider, private modal: ModalController, private alertCtrl: AlertController,
+  constructor(public navCtrl: NavController, public mylocalstorage: LocalStorageProvider,public toastCtrl: ToastController, private modal: ModalController, private alertCtrl: AlertController,
               private base64: Base64, public navParams: NavParams, private localNotifications: LocalNotifications,
               public loadingCtrl: LoadingController, private camera: Camera, public services: ServiceProvider, private datePicker: DatePicker) {
 
@@ -69,6 +70,14 @@ export class ReportPage {
             if(nombresjours>0){
               this.dpv = nombresjours;
               this.testeurdpv = 1;
+            }else if(nombresjours==1){
+
+              // Bonjour Rahim n'oubliez pas votre visite demain demain 
+              this.mylocalstorage.getSession().then((result:any) =>{
+                this.presentToast("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain");
+                this.declancherAlerte("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain", 2);
+              }) 
+
             }else{
               this.testeurdpv = 0;
             }
@@ -87,6 +96,15 @@ export class ReportPage {
             if(nombresjours>0){
               this.dpvacc = nombresjours;
               this.testeurdpvcac = 1;
+            }else if(nombresjours==1){
+
+              // Bonjour Rahim n'oubliez pas votre vaccin demain 
+
+              this.mylocalstorage.getSession().then((result:any) =>{
+                this.presentToast("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain demain");
+                this.declancherAlerte("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain demain", 2);
+              }) 
+
             }else{
               this.testeurdpvcac = 0;
             }
@@ -438,6 +456,27 @@ export class ReportPage {
   mesbonmoment() {
     this.navCtrl.push("MesbonmomentPage", {})
   }
+
+
+  presentToast(message: any) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 10000
+    });
+    toast.present();
+  }
+
+  declancherAlerte(message: any, nombreseconde: any) {
+
+    this.localNotifications.schedule({
+      text: message,
+      trigger: {at: new Date(new Date().getTime() + nombreseconde * 1000)},
+      led: 'FF0000',
+      sound: 'file://assets/imgs/notification.mp3'
+    });
+
+  }
+
 
 
 }

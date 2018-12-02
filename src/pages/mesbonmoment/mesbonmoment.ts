@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service';
+import moment from 'moment';
+
 
 /**
  * Generated class for the MesbonmomentPage page.
@@ -26,6 +28,8 @@ export class MesbonmomentPage {
   constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public services: ServiceProvider,
               public navParams: NavParams, private view: ViewController) {
     this.services.initHeaders();
+
+    moment.locale('fr');
   }
 
   ionViewDidLoad() {
@@ -33,6 +37,9 @@ export class MesbonmomentPage {
       loading.present();
       this.services.getAllNote().subscribe(next => {
           this.items = next;
+          console.log("==============================");
+          console.log(next);
+          console.log("==============================");
       }, error => {
         loading.dismiss();
         console.error(error);
@@ -47,6 +54,12 @@ export class MesbonmomentPage {
     this.libelle = libelle;
     this.description = description;
     this.images = images;
+  }
+
+
+  parseDate(date, format) {
+    var ladate = date.substring(0,16)+'Z'
+    return moment(new Date(ladate)).format(format);
   }
 
 }
