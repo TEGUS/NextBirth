@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { LocalStorageProvider } from '../../providers/localstorage';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {LocalStorageProvider} from '../../providers/localstorage';
+import {IonButtonEnd} from "../../providers/service";
 
 /**
  * Generated class for the MyprofilsPage page.
@@ -15,18 +16,40 @@ import { LocalStorageProvider } from '../../providers/localstorage';
   templateUrl: 'myprofils.html',
 })
 export class MyprofilsPage {
-
-  constructor(public navCtrl: NavController, public localStorage: LocalStorageProvider, public navParams: NavParams) {
+  ionButtonsEnd: Array<IonButtonEnd> = [];
+  user = null;
+  
+  constructor(public navCtrl: NavController, public localStorage: LocalStorageProvider,
+              public navParams: NavParams) {
   }
-
+  
   ionViewDidLoad() {
     this.localStorage.getKey('session').then(next => {
-        console.log("======================================");
-        console.log(next);
-        console.log("======================================");
+      this.user = next.user;
     }, error => {
-      console.log(error);
+      console.error(error);
     });
+    
+    this.ionButtonsEnd.push({
+      icon: 'create',
+      code: 'update',
+      title: 'Mise à jour'
+    })
   }
-
+  
+  getClickedButton(button: IonButtonEnd) {
+    switch (button.code) {
+      case 'update':
+        this.navCtrl.push('ProfilPage');
+        break;
+    }
+  }
+  
+  formatBool(bool: boolean) {
+    return bool ? 'Oui' : 'Non';
+  }
+  
+  formatDate(date: string) {
+    return new Date(('' + date).substring(0,16)+'Z');
+  }
 }

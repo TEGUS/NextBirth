@@ -327,14 +327,14 @@ export class ServiceProvider {
 
 
 
-  createSituations(situations) {
+  createSituations(situation: Situation) {
 
     return new Promise((resolve)=>{
             this.sqlite.create({
               name: 'nextbirth.db',
               location: 'default'
             }).then((db: SQLiteObject) => {
-              db.executeSql('INSERT INTO SITUATIONS VALUES(NULL,?,?,?)',[situations.date, situations.titre, situations.description])
+              db.executeSql('INSERT INTO SITUATIONS VALUES(NULL,?,?,?)',[situation.date, situation.titre, situation.description])
                 .then(res => {
                      
                     resolve(res);
@@ -416,4 +416,17 @@ export class ServiceProvider {
       toast.present();
     }
 
-} 
+}
+
+export interface Situation {
+  date: Date,
+  titre: string;
+  description: string
+}
+
+
+export interface IonButtonEnd {
+  title?: string,
+  icon?: string,
+  code: string
+}
