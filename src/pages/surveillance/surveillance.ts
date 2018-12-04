@@ -315,6 +315,7 @@ export class SurveillancePage {
     this.testeurfin = 0;
     this.minutecontraception = 0;
     this.minutecontraceptionNet = 0;
+    this.couleurbouton = 0;
   }
 
   

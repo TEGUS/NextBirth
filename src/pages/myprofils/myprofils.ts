@@ -18,12 +18,18 @@ import {IonButtonEnd} from "../../providers/service";
 export class MyprofilsPage {
   ionButtonsEnd: Array<IonButtonEnd> = [];
   user = null;
+  public imageaafficher = "";
   
   constructor(public navCtrl: NavController, public localStorage: LocalStorageProvider,
               public navParams: NavParams) {
   }
   
   ionViewDidLoad() {
+
+    this.localStorage.getSession().then((result:any) =>{
+        this.imageaafficher = result.user._embedded.photo;
+    })
+
     this.localStorage.getKey('session').then(next => {
       this.user = next.user;
     }, error => {

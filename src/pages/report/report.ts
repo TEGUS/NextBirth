@@ -41,6 +41,7 @@ export class ReportPage {
   public dpa: any; 
   public dpv: any; 
   public dpvacc: any; 
+  public imageaafficher = "";
 
   constructor(public navCtrl: NavController, public mylocalstorage: LocalStorageProvider,public toastCtrl: ToastController, private modal: ModalController, private alertCtrl: AlertController,
               private base64: Base64, public navParams: NavParams, private localNotifications: LocalNotifications,
@@ -57,6 +58,11 @@ export class ReportPage {
     /*this.mylocalstorage.getSession().then((result:any) =>{
        
     })*/
+
+
+    this.mylocalstorage.getSession().then((result:any) =>{
+        this.imageaafficher = result.user._embedded.photo;
+    })
 
 
         this.mylocalstorage.getKeydpv().then((result:any) =>{ 

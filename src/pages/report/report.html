@@ -28,7 +28,7 @@
     </div>
 
     <div class="report-profile" >
-      <img (click)="mesbonmoment()" class="profils" src="assets/imgs/user.jpg" alt="">
+      <img (click)="mesbonmoment()" class="profils" [src]="imageaafficher != null ? imageaafficher : 'assets/imgs/user.jpg'" alt="">
       <div class="profile">
         <div (click)="mesbonmoment()" class="rep-prof-libelle">
           <label>MA GROSSESSE</label>

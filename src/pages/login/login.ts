@@ -69,9 +69,7 @@ export class LoginPage {
             this.menuCtrl.enable(true, 'sideMenu');
           });
 
-        });
-
-        
+        }); 
 
 
       }, error => {
