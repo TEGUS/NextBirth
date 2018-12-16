@@ -36,6 +36,9 @@ export class ShowDateComponent {
   
   dateChanged(event) {
     this.dateToShow = event;
+    if (this.date === null) {
+      this.date = this.dateToShow.date.toISOString();
+    }
     this.outputDate.emit(this.dateToShow);
   }
 }

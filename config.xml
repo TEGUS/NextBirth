@@ -94,4 +94,5 @@
     <plugin name="cordova-plugin-datepicker" spec="^0.9.3" />
     <engine name="android" spec="^7.0.0" />
     <engine name="browser" spec="5.0.4" />
+    <plugin name="cordova-plugin-decimal-keyboard" spec="1.0.0" />
 </widget>

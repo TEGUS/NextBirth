@@ -22,7 +22,13 @@ page-miseajour {
          margin-top: -18px;
      }
 
-    
+    .validator-error {
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      color: red;
+    }
 
      .monselect{
         margin-top: 10px;

@@ -116,6 +116,8 @@ export class PilulierPage {
             this.listMedicaments = next.medicaments
           }
           
+          console.log(this.listMedicaments);
+          
           this.showResultMedicaent = true
           this.showSpinner = false;
         }, error => {
@@ -415,12 +417,20 @@ export class PilulierPage {
         led: 'FF0000',
         sound: 'file://assets/imgs/notification.mp3',
         vibrate: true,
-        actions: [{
-          id: `TAKE${item.id}`,
-          title: 'Take',
-          type: ILocalNotificationActionType.BUTTON,
-          icon: 'checkmark-circle-outline'
-        }],
+        actions: [
+          {
+            id: `OPEN${item.id}`,
+            title: 'Open',
+            type: ILocalNotificationActionType.BUTTON,
+            icon: 'checkmark-circle-outline'
+          },
+          {
+            id: `TAKE${item.id}`,
+            title: 'Take',
+            type: ILocalNotificationActionType.BUTTON,
+            icon: 'checkmark-circle-outline'
+          }
+        ],
       };
       this.localNotifications.schedule(notif);
       
@@ -428,6 +438,12 @@ export class PilulierPage {
         this.makeTakingTreatment(next.id).then(on => {
           this.presentDialogAlert('Taked');
         })
+      }, error => {
+        console.error(error);
+      });
+      
+      this.localNotifications.on(`OPEN${item.id}`).subscribe(next => {
+        
       }, error => {
         console.error(error);
       });
@@ -464,7 +480,7 @@ export class PilulierPage {
   makeTakingTreatment(id_alert) {
     return new Promise(resolve => {
       this.localStorageProvider.getKey(v.LOCAL_STRG_TAKED_TREATEMENT).then((res: any) => {
-        this.presentDialogAlert(JSON.stringify(res));
+        // this.presentDialogAlert(JSON.stringify(res));
         if (res !== undefined && res !== null) {
           res.push(id_alert);
         } else {

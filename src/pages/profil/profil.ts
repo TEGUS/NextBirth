@@ -23,6 +23,7 @@ export class ProfilPage {
   public object = null;
   public error = null;
   public ladate = null;
+  public dateDernieresMenstrues = null;
   public username = null;
   public phone = null;
   errorpath = null;
@@ -33,6 +34,7 @@ export class ProfilPage {
   modeSelectedExist = false;
   
   user = null;
+  date_naissance = null;
   
   constructor(public navCtrl: NavController, public services: ServiceProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider, public alertCtrl: AlertController) {
@@ -50,7 +52,12 @@ export class ProfilPage {
     });
   
     this.localStorage.getKey('session').then(next => {
+      console.log(next);
       this.user = next.user;
+      
+      if (this.user !== null) {
+        this.date_naissance = this.formatDate(this.user.date_naissance)
+      }
     }, error => {
       console.error(error);
     });
@@ -86,6 +93,11 @@ export class ProfilPage {
       };
     }
   }
+  
+  // dateDeDernieresRegles(date) {
+  //   var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
+  //   this.object.date_dernier_menstrue = madate;
+  // }
   
   dateDeNaissance(date) {
     var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
