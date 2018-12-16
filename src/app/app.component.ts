@@ -37,7 +37,7 @@ export class MyApp {
       {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
       {title: 'Paramètres', component: "SettingsPage", icon: 'icon8'},
       {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
-      //{title: 'Mise en garde', component: "Img8Page", icon: 'icon10'},
+      // {title: 'Mise en garde', component: "Img8Page", icon: 'icon10'},
       {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'}
     ];
   }

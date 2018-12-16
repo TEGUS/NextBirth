@@ -7,18 +7,6 @@
   <br><br><br>
   <div *ngIf="form != null">
     <form [formGroup]="form">
-      <!--<ion-row class="maligne">-->
-        <!--<ion-col col-6>-->
-          <!--<p class="text">Date</p>-->
-        <!--</ion-col>-->
-        <!--<ion-col>-->
-          <!--<ion-input (click)="datePicker.open()" disabled="true" formControlName="updated_date" class="monimput" type="text"></ion-input>-->
-        <!--</ion-col>-->
-      <!--</ion-row>-->
-      <!--<ion-datetime #datePicker text-center-->
-                    <!--(ionChange)="dateDebutTraitementChanged($event)" hidden="true">-->
-      <!--</ion-datetime>-->
-
       <ion-row class="maligne">
         <ion-col col-6>
           <p class="text">Poids</p>
@@ -29,6 +17,9 @@
         <ion-col>
           <p class="text2"> kg </p>
         </ion-col>
+      </ion-row>
+      <ion-row class="maligne validator-error" *ngIf="!form.controls.poids.valid && form.controls.poids.dirty">
+        Veuillez entrer un poids valide.
       </ion-row>
 
       <ion-row class="maligne">
@@ -42,6 +33,9 @@
           <p class="text2"> m </p>
         </ion-col>
       </ion-row>
+      <ion-row class="maligne validator-error" *ngIf="!form.controls.taille.valid && form.controls.taille.dirty">
+        Veuillez entrer un taille valide.
+      </ion-row>
 
       <ion-row class="maligne">
         <ion-col col-6>
@@ -53,6 +47,9 @@
         <ion-col>
           <p class="text2"> g/dl </p>
         </ion-col>
+      </ion-row>
+      <ion-row class="maligne validator-error" *ngIf="!form.controls.taux_hemoglobine.valid && form.controls.taux_hemoglobine.dirty">
+        Veuillez entrer un Taux d'hémoglobine valide.
       </ion-row>
 
       <ion-row class="maligne">
@@ -66,6 +63,9 @@
           <p class="text2"> mmHg </p>
         </ion-col>
       </ion-row>
+      <ion-row class="maligne validator-error" *ngIf="!form.controls.tension_arterielle.valid && form.controls.tension_arterielle.dirty">
+        Veuillez entrer un Tension artérielle valide.
+      </ion-row>
 
       <ion-row class="maligne">
         <ion-col col-6>
@@ -78,6 +78,9 @@
           <p class="text2"> g/l </p>
         </ion-col>
       </ion-row>
+      <ion-row class="maligne validator-error" *ngIf="!form.controls.gyclemie_a_jeun.valid && form.controls.gyclemie_a_jeun.dirty">
+        Veuillez entrer une Glycémie à jeun valide.
+      </ion-row>
 
       <ion-row class="maligne">
         <ion-col col-6>
@@ -89,6 +92,9 @@
         <ion-col>
           <p class="text2"> °C </p>
         </ion-col>
+      </ion-row>
+      <ion-row class="maligne validator-error" *ngIf="!form.controls.temperature_vaginale.valid && form.controls.temperature_vaginale.dirty">
+        Veuillez entrer une Température vaginale valide.
       </ion-row>
 
       <ion-row class="maligne">

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ServiceProvider} from "../../providers/service";
 import {LocalStorageProvider} from "../../providers/localstorage";
 
@@ -19,6 +19,8 @@ import {LocalStorageProvider} from "../../providers/localstorage";
 export class MiseajourPage {
   private form: FormGroup = null;
   private object_to_save : MesMiseAJourObject
+  
+  private  NUMBER_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public services: ServiceProvider, public loadingCtrl: LoadingController,
@@ -35,12 +37,12 @@ export class MiseajourPage {
   initForm() {
     this.localStorage.getKey('vital_info').then(next => {
       this.form = this.formBuilder.group({
-        poids: [next === null ? '' : next.poids],
-        taille: [next === null ? '' : next.taille],
-        taux_hemoglobine: [next === null ? '' : next.taux_hemoglobine],
-        tension_arterielle: [next === null ? '' : next.tension_arterielle],
-        gyclemie_a_jeun: [next === null ? '' : next.gyclemie_a_jeun],
-        temperature_vaginale: [next === null ? '' : next.temperature_vaginale],
+        poids: [next === null ? '' : next.poids, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
+        taille: [next === null ? '' : next.taille, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
+        taux_hemoglobine: [next === null ? '' : next.taux_hemoglobine, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
+        tension_arterielle: [next === null ? '' : next.tension_arterielle, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
+        gyclemie_a_jeun: [next === null ? '' : next.gyclemie_a_jeun, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
+        temperature_vaginale: [next === null ? '' : next.temperature_vaginale, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
         conclusion_last_c_p_n: [next === null ? '' : next.conclusion_last_c_p_n]
       })
     });
@@ -80,6 +82,8 @@ export class MiseajourPage {
           })
         })
       });
+    } else {
+      console.log(this.form);
     }
   }
 

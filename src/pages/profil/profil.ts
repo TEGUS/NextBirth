@@ -25,6 +25,7 @@ export class ProfilPage {
   public object = null;
   public error = null;
   public ladate = null;
+  public dateDernieresMenstrues = null;
   public username = null;
   public phone = null;
   errorpath = null;
@@ -38,6 +39,8 @@ export class ProfilPage {
   imageB64 = null;
 
   user = null;
+  date_naissance = null;
+  debut_dernieres_menstrues = null;
   
   constructor(public navCtrl: NavController,public mylocalstorage: LocalStorageProvider, private base64: Base64, private camera: Camera, public services: ServiceProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider, public alertCtrl: AlertController) {
@@ -59,7 +62,13 @@ export class ProfilPage {
     })
   
     this.localStorage.getKey('session').then(next => {
+      console.log(next);
       this.user = next.user;
+      
+      if (this.user !== null) {
+        this.date_naissance = this.formatDate(this.user.date_naissance)
+        this.debut_dernieres_menstrues = this.formatDate(this.user._embedded.patient.debut_dernieres_menstrues)
+      }
     }, error => {
       console.error(error);
     });
@@ -77,7 +86,8 @@ export class ProfilPage {
       nombre_grossesse: null,
       nombre_premature: null,
       nombre_fosse_couche: null,
-      nombre_enfant_vivant: null
+      nombre_enfant_vivant: null,
+      debut_dernieres_menstrues: null
     }
   }
   
@@ -86,7 +96,6 @@ export class ProfilPage {
       return null;
     } else {
       const d = new Date(('' + date).substring(0,16)+'Z');
-      console.log(d);
       return {
         day: d.getDate(),
         month: d.getMonth(),
@@ -94,6 +103,11 @@ export class ProfilPage {
         date: d
       };
     }
+  }
+  
+  dateDeDernieresRegles(date) {
+    var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
+    this.object.debut_dernieres_menstrues = madate;
   }
   
   dateDeNaissance(date) {
