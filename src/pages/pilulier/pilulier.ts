@@ -255,9 +255,7 @@ export class PilulierPage {
         frequence_prise: Number(this.form.value.frequencePrise),
         duree_traitement: Number(this.form.value.dureeTraitement),
         date_debut_traitement: this.madate,
-        horaire_first_prise: this.monheure,
-        // jour_cycle: Number(this.form.value.jourCycle),
-        // evaluation_evolution: this.form.value.evaluationEvolution
+        horaire_first_prise: this.monheure
       };
       
       console.log(object);
@@ -438,7 +436,8 @@ export class PilulierPage {
         date: new Date(),
         titre: title,
         description: item.message
-      }).then(() => {});
+      }).then(() => {
+      });
     });
   }
   

@@ -1,6 +1,6 @@
 <div class="libelle">{{libelle}}</div>
 
-<div class="show" (click)="datePicker.open()">
+<div class="show" *ngIf="dateToShow != undefined && dateToShow != null" (click)="datePicker.open()">
   <div class="day">{{dateToShow.day}}</div>
   <div class="month">{{dateToShow.month}}</div>
   <div class="year">{{dateToShow.year}}</div>

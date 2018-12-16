@@ -360,7 +360,7 @@ export class ServiceProvider {
         location: 'default'
       }).then((db: SQLiteObject) => {
 
-            db.executeSql('SELECT * FROM SITUATIONS ', [])
+            db.executeSql('SELECT * FROM SITUATIONS ORDER BY date DESC', [])
             .then(res => {
               let expenses = [];
               for(var i=0; i<res.rows.length; i++) {

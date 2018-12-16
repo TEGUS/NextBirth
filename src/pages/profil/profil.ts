@@ -6,6 +6,7 @@ import {ServiceProvider} from "../../providers/service";
 import * as codesMode from "../../components/mode/mode";
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {Base64} from '@ionic-native/base64';
+import * as moment from "moment";
 
 /**
  * Generated class for the ProfilsPage page.
@@ -36,6 +37,7 @@ export class ProfilPage {
   
   imageB64 = null;
 
+  user = null;
   
   constructor(public navCtrl: NavController,public mylocalstorage: LocalStorageProvider, private base64: Base64, private camera: Camera, public services: ServiceProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider, public alertCtrl: AlertController) {
@@ -55,6 +57,12 @@ export class ProfilPage {
     this.mylocalstorage.getSession().then((result:any) =>{
         this.imageaafficher = result.user._embedded.photo;
     })
+  
+    this.localStorage.getKey('session').then(next => {
+      this.user = next.user;
+    }, error => {
+      console.error(error);
+    });
     
     
     this.object = {
@@ -73,6 +81,20 @@ export class ProfilPage {
     }
   }
   
+  formatDate(date: string) {
+    if (date === null) {
+      return null;
+    } else {
+      const d = new Date(('' + date).substring(0,16)+'Z');
+      console.log(d);
+      return {
+        day: d.getDate(),
+        month: d.getMonth(),
+        year: d.getFullYear(),
+        date: d
+      };
+    }
+  }
   
   dateDeNaissance(date) {
     var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
@@ -105,14 +127,6 @@ export class ProfilPage {
   
   getPhone(phone) {
     this.phone = phone;
-  }
-  
-  getAge(age) {
-  
-  }
-  
-  getPoids(poids) {
-  
   }
   
   getNombreGrossesse(nombreGrossesse) {

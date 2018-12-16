@@ -149,12 +149,12 @@ export class ReportPage {
     });
 
     console.log('ionViewDidLoad ReportPage');
-    this.localNotifications.schedule({
+    /*this.localNotifications.schedule({
       text: 'Debut du seignement dans  une semaine',
       trigger: {at: new Date(new Date().getTime() + 60 * 1000)},
       led: 'FF0000',
       sound: 'file://assets/imgs/notification.mp3'
-    });
+    });*/
   }
 
   selectArticle(id) {
@@ -248,7 +248,7 @@ export class ReportPage {
                 this.dpvacc = nombresjours;
                 if(this.dpvacc>0){
                   this.mylocalstorage.storeKeydpvacc(datepv).then(() => {});
-                  this.testeurdpv = 1;
+                  this.testeurdpvcac = 1;
                 }
             
             });

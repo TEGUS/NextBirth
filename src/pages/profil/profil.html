@@ -14,6 +14,7 @@
   <p *ngIf="internalerror === 1" style="color: red; font-weight: bold">{{internalemesage}}</p>
   <div class="content">
     <show-date
+      [initValue]="user != null ? formatDate(user.date_naissance) : null"
       [libelle]="'Date de naissance'"
       (outputDate)="dateDeNaissance($event)">
     </show-date>
@@ -21,12 +22,14 @@
     <input-element
       [libelle]="'Pseudonyme'"
       [type]="'text'"
+      [initValue]="user != null ? user.username : null"
       (outputValue)="getUsername($event)">
     </input-element>
     <p *ngIf="errorpath === 'account.username'" style="color: red">{{errormessage}}</p>
     <input-element
       [libelle]="'Numéro de téléphone'"
       [type]="'text'"
+      [initValue]="user != null ? user.phone : null"
       (outputValue)="getPhone($event)">
     </input-element>
     <p *ngIf="errorpath === 'account.phone'" style="color: red">{{errormessage}}</p>
@@ -36,15 +39,15 @@
     <ion-row>
       <ion-col class="ion-col-1">
         <ion-label>Diabète</ion-label>
-        <ion-checkbox color="dark" [(ngModel)]="object.diabete"></ion-checkbox>
+        <ion-checkbox [checked]="user != null && user._embedded.patient.diabete" color="dark" [(ngModel)]="object.diabete"></ion-checkbox>
       </ion-col>
       <ion-col class="ion-col-1">
         <ion-label>HTA</ion-label>
-        <ion-checkbox color="dark" [(ngModel)]="object.hta"></ion-checkbox>
+        <ion-checkbox [checked]="user != null && user._embedded.patient.hta" color="dark" [(ngModel)]="object.hta"></ion-checkbox>
       </ion-col>
       <ion-col class="ion-col-1">
         <ion-label>Drépano</ion-label>
-        <ion-checkbox color="dark" [(ngModel)]="object.drepano"></ion-checkbox>
+        <ion-checkbox [checked]="user != null && user._embedded.patient.drepano" color="dark" [(ngModel)]="object.drepano"></ion-checkbox>
       </ion-col>
     </ion-row>
   </div>
@@ -55,6 +58,7 @@
         [libelle]="'Age des premières règles'"
         [type]="'text'"
         [direction]="'row'"
+        [initValue]="user != null ? user._embedded.patient.age_premiere_regle : null"
         (outputValue)="getAgePremiereRegle($event)"
       ></input-element>
     </ion-col>
@@ -63,6 +67,7 @@
         [libelle]="'Durée des seignements'"
         [type]="'text'"
         [direction]="'row'"
+        [initValue]="user != null ? user._embedded.patient.duree_saignement : null"
         (outputValue)="getDureeSaignement($event)"
       ></input-element>
     </ion-col>
@@ -72,6 +77,7 @@
         [libelle]="'Durée du cycle régulier'"
         [type]="'text'"
         [direction]="'row'"
+        [initValue]="user != null ? user._embedded.patient.duree_cycle : null"
         (outputValue)="getDureeCycle($event)"
       ></input-element>
     </ion-col>
@@ -80,6 +86,7 @@
         [libelle]="'Cycle Regulier'"
         [type]="'checkbox'"
         [direction]="'row'"
+        [initValue]="user != null ? user._embedded.patient.cycle_regulier : null"
         (outputValue)="getCycleRegulier($event)"></input-element>
     </ion-col>
     <ion-col col-12>
@@ -87,6 +94,7 @@
         [libelle]="'Douleur pendant les règles'"
         [type]="'checkbox'"
         [direction]="'row'"
+        [initValue]="user != null ? user._embedded.patient.douleur_regle : null"
         (outputValue)="getDouleur($event)"></input-element>
     </ion-col>
     <ion-col col-12>
@@ -94,8 +102,8 @@
         [libelle]="'Nombre de grossesse'"
         [type]="'number'"
         [direction]="'row'"
+        [initValue]="user != null ? user._embedded.patient.nombre_grossesse : null"
         (outputValue)="getNombreGrossesse($event)"
-
       ></input-element>
     </ion-col>
     <ion-col col-12>
@@ -103,6 +111,7 @@
         [libelle]="'Nombre de prématurés'"
         [type]="'text'"
         [direction]="'row'"
+        [initValue]="user != null ? user._embedded.patient.nombre_premature : null"
         (outputValue)="getNombrePremature($event)"
       ></input-element>
     </ion-col>
@@ -111,6 +120,7 @@
         [libelle]="'Nombre de fausses couches ou avortement'"
         [type]="'text'"
         [direction]="'row'"
+        [initValue]="user != null ? user._embedded.patient.nombre_fosse_couche : null"
         (outputValue)="getNombreFosseCouche($event)"
       ></input-element>
     </ion-col>
@@ -118,6 +128,7 @@
       <input-element
         [libelle]="'Nombre denfant vivant'"
         [type]="'text'" [direction]="'row'"
+        [initValue]="user != null ? user._embedded.patient.nombre_enfant_vivant : null"
         (outputValue)="getNombreEnfantVivant($event)"
       ></input-element>
     </ion-col>

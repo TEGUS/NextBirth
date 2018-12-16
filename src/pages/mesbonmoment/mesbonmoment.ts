@@ -37,9 +37,6 @@ export class MesbonmomentPage {
       loading.present();
       this.services.getAllNote().subscribe(next => {
           this.items = next;
-          console.log("==============================");
-          console.log(next);
-          console.log("==============================");
       }, error => {
         loading.dismiss();
         console.error(error);

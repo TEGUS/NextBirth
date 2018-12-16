@@ -17,11 +17,23 @@ export class ShowDateComponent {
   @Output() outputDate: EventEmitter<any> = new EventEmitter();
   dateToShow = null;
   date = null;
-
+  
+  _initValue = null;
+  
+  @Input()
+  set initValue(value) {
+    if (value) {
+      this._initValue = value;
+      this.dateChanged(value);
+    } else {
+      this.dateToShow = {day: 'DD', month: 'MM', year: 'YYYY'}
+    }
+  };
+  
   constructor() {
     this.dateToShow = {day: 'DD', month: 'MM', year: 'YYYY'}
   }
-
+  
   dateChanged(event) {
     this.dateToShow = event;
     this.outputDate.emit(this.dateToShow);
