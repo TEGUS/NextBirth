@@ -19,6 +19,18 @@ export class LocalStorageProvider {
   constructor(private http: HttpClient, private storage: Storage) {
     console.log('Hello LocalStorageProvider Provider');
   }
+  
+  setObjectUpdateProfile(object) {
+    this.setKey('objectUpdateProfile', object);
+  }
+  
+  getObjectUpdateProfile() {
+    return new Promise(resolve => {
+      this.getKey('objectUpdateProfile').then(val => {
+        resolve(val);
+      })
+    })
+  }
 
   storeModeInSession(mode) {
     Session.mode = mode;
