@@ -35,6 +35,7 @@ export class ProfilPage {
   
   user = null;
   date_naissance = null;
+  debut_dernieres_menstrues = null;
   
   constructor(public navCtrl: NavController, public services: ServiceProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider, public alertCtrl: AlertController) {
@@ -57,6 +58,7 @@ export class ProfilPage {
       
       if (this.user !== null) {
         this.date_naissance = this.formatDate(this.user.date_naissance)
+        this.debut_dernieres_menstrues = this.formatDate(this.user._embedded.patient.debut_dernieres_menstrues)
       }
     }, error => {
       console.error(error);
@@ -75,7 +77,8 @@ export class ProfilPage {
       nombre_grossesse: null,
       nombre_premature: null,
       nombre_fosse_couche: null,
-      nombre_enfant_vivant: null
+      nombre_enfant_vivant: null,
+      debut_dernieres_menstrues: null
     }
   }
   
@@ -84,7 +87,6 @@ export class ProfilPage {
       return null;
     } else {
       const d = new Date(('' + date).substring(0,16)+'Z');
-      console.log(d);
       return {
         day: d.getDate(),
         month: d.getMonth(),
@@ -94,10 +96,10 @@ export class ProfilPage {
     }
   }
   
-  // dateDeDernieresRegles(date) {
-  //   var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
-  //   this.object.date_dernier_menstrue = madate;
-  // }
+  dateDeDernieresRegles(date) {
+    var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
+    this.object.debut_dernieres_menstrues = madate;
+  }
   
   dateDeNaissance(date) {
     var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';

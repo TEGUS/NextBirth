@@ -10,12 +10,12 @@
   
   <p *ngIf="internalerror === 1" style="color: red; font-weight: bold">{{internalemesage}}</p>
   <div class="content">
-    <!--<show-date-->
-      <!--[initValue]="user != null ? formatDate(user.date_naissance) : null"-->
-      <!--[libelle]="'Date de dernières règles'"-->
-      <!--(outputDate)="dateDeDernieresRegles($event)">-->
-    <!--</show-date>-->
-    <!--<p *ngIf="errorpath === 'account.date_naissance'" style="color: red">{{errormessage}}</p>-->
+    <show-date
+      [initValue]="debut_dernieres_menstrues"
+      [libelle]="'Date de dernières règles'"
+      (outputDate)="dateDeDernieresRegles($event)">
+    </show-date>
+    <p *ngIf="errorpath === 'debut_dernieres_menstrues'" style="color: red">{{errormessage}}</p>
     
     <show-date
       [initValue]="date_naissance"
