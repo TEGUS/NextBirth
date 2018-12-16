@@ -118,6 +118,15 @@ export class ServiceProvider {
       this.headers
     );
   }
+
+
+  dateprochaineVisite(data: any): Observable<any> {
+    return this.http.put(
+      this.host + ' grossesse/date-next-visite',
+      data,
+      this.headers
+    );
+  }
   
   ///// ** Profile
   

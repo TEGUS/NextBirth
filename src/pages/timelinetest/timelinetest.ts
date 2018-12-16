@@ -21,7 +21,13 @@ import {hasOwnProperty} from "../../../node_modulesback/tslint/lib/utils";
 export class TimelinetestPage {
   start = 0;
   end = 0;
+  public testeur = 0;
+  public titre: any;
+  public description: any;
   mainInterval = 200;
+
+
+
   
   public timelines = [];
   
@@ -188,6 +194,18 @@ export class TimelinetestPage {
       })
     })
   }
+
+  selectArticle(content, description){
+    this.testeur = 1;
+    this.titre = content;
+    this.description = description;
+  }
+
+  goodArticle(){
+    this.testeur = 0;
+  }
+
+
   
   doInfiniteBottom(infiniteScroll) {
     setTimeout(() => {

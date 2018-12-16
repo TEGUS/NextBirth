@@ -186,7 +186,7 @@ export class ProfilPage {
       
       this.object.account = {
         "username": this.username,
-        "phone": '+237' + this.phone,
+        "phone": this.phone,
         "date_naissance": this.ladate
       };
       
@@ -210,6 +210,12 @@ export class ProfilPage {
         
       }, () => {
         loading.dismiss();
+  
+        this.localStorage.setObjectUpdateProfile(this.object);
+        /*this.localStorage.getObjectUpdateProfile().then(mode => {
+          
+        });*/
+        
         this.localStorage.getKey('modeSelected').then(mode => {
           (mode !== null) ? this.selectMode(mode) : this.navCtrl.pop();
         })

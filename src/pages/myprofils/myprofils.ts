@@ -24,12 +24,7 @@ export class MyprofilsPage {
               public navParams: NavParams) {
   }
   
-  ionViewDidLoad() {
-
-    this.localStorage.getSession().then((result:any) =>{
-        this.imageaafficher = result.user._embedded.photo;
-    })
-
+  ionViewWillLoad() {
     this.localStorage.getKey('session').then(next => {
       this.user = next.user;
     }, error => {

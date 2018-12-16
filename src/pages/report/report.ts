@@ -52,15 +52,16 @@ export class ReportPage {
     this.services.initHeaders();
   }
   
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     
     
-    this.mylocalstorage.getSession().then((result:any) =>{
-         console.log("===================================================");
-         console.log(result.user._embedded.patient);
-         console.log("===================================================");
-    })
-
+   // this.mylocalstorage.setObjectUpdateProfile(this.object);
+    this.mylocalstorage.getObjectUpdateProfile().then(mode => {
+         if(mode==null){
+          this.navCtrl.push('ProfilPage');
+         }
+    });
+   
 
     this.mylocalstorage.getSession().then((result:any) =>{
         this.imageaafficher = result.user._embedded.photo;
@@ -182,7 +183,7 @@ export class ReportPage {
       // 280 jour pour donné naissance
       
     })
-    
+
     
     let loading = this.loadingCtrl.create();
     loading.present();
@@ -300,6 +301,15 @@ export class ReportPage {
             }).then((date) => {
 
                 //var datepv = new Date(JSON.stringify(date)).getTime();
+                var data = { 
+                  "date_visite": date
+                }
+            
+                this.services.dateprochaineVisite(data).subscribe(next => {
+                  this.items = next
+                }, error => {
+                }, () => {
+                });
                 var dateaujourdui = new Date().getTime();
                 var datepv = date.getTime();
                 var nombremilliseconde = datepv - dateaujourdui;
@@ -364,25 +374,35 @@ export class ReportPage {
                 this.mylocalstorage.storeSession(result).then(() => {
                   // c'est update doit aussi aller au serveur
 
-                      
-                  
-                  this.mylocalstorage.getSession().then((result: any) => {
-                    var dataprofile = '' + result.user._embedded.patient.debut_dernieres_menstrues;
-                    var ladate = dataprofile.substring(0, 16) + 'Z';
-                    var premieredate = new Date(ladate).getTime();
-                    var dateaujourdui = new Date().getTime();
-                    var nombremilliseconde = dateaujourdui - premieredate;
-                    var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
-                    var nomrejoursavantacc = 280 - nombresjours;
-                    this.nombrejourrestant = (nombresjours) % 7;
-                    this.nombresemaine = Math.floor((nombresjours) / 7);
-                    var time = new Date().getTime();
-                    var dateaccouchement = new Date(time + nomrejoursavantacc * 24 * 60 * 60 * 1000);
-                    this.dpa = dateaccouchement.toLocaleDateString("fr");
-                    
-                    // 280 jour pour donné naissance
-                    
-                  })
+                        this.mylocalstorage.getSession().then((result: any) => {
+                          var dataprofile = '' + result.user._embedded.patient.debut_dernieres_menstrues;
+                           // this.mylocalstorage.setObjectUpdateProfile(this.object);
+                          this.mylocalstorage.getObjectUpdateProfile().then((mode: any) => {
+                                if(mode!=null){
+                                   mode.debut_dernieres_menstrues = dataprofile.substring(0, 16) + 'Z';
+                                   this.services.updateprofile(mode).subscribe(next => {
+                                    this.mylocalstorage.updatePatientStorage(next);
+                                  }, error => {
+                                  }, () => {
+                                    this.mylocalstorage.setObjectUpdateProfile(mode);
+                                  });
+                                }
+                          });
+                          var ladate = dataprofile.substring(0, 16) + 'Z';
+                          var premieredate = new Date(ladate).getTime();
+                          var dateaujourdui = new Date().getTime();
+                          var nombremilliseconde = dateaujourdui - premieredate;
+                          var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
+                          var nomrejoursavantacc = 280 - nombresjours;
+                          this.nombrejourrestant = (nombresjours) % 7;
+                          this.nombresemaine = Math.floor((nombresjours) / 7);
+                          var time = new Date().getTime();
+                          var dateaccouchement = new Date(time + nomrejoursavantacc * 24 * 60 * 60 * 1000);
+                          this.dpa = dateaccouchement.toLocaleDateString("fr");
+                          
+                          // 280 jour pour donné naissance
+                          
+                        })
                   
                 });
               })
