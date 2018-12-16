@@ -273,6 +273,18 @@ export class ServiceProvider {
   }
   
   
+  /**
+   * Marquer la prise des médicaments
+   * @returns {Observable<any>}
+   */
+  takedMedicament(idAlert): Observable<any> {
+    return this.http.put(
+      `${this.host}medicament/alert/${idAlert}/take`,
+      this.headers
+    );
+  }
+  
+  
   //////////////////////////////
   
   

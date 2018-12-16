@@ -24,7 +24,7 @@ export class MyprofilsPage {
               public navParams: NavParams) {
   }
   
-  ionViewWillLoad() {
+  ionViewWillEnter() {
     this.localStorage.getKey('session').then(next => {
       this.user = next.user;
     }, error => {
