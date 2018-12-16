@@ -95,14 +95,20 @@ export class PilulierPage {
     const today = new Date();
     let msg = null;
     
-    let dateEndFirstTrimestre: Date = this.debut_dernieres_menstrues;
+    let dateEndFirstTrimestre: Date = new Date(this.debut_dernieres_menstrues);
     dateEndFirstTrimestre.setDate(dateEndFirstTrimestre.getDate() + 105);
     
-    let dateEndSecondTrimestre: Date = dateEndFirstTrimestre;
+    let dateEndSecondTrimestre: Date = new Date(dateEndFirstTrimestre);
     dateEndSecondTrimestre.setDate(dateEndFirstTrimestre.getDate() + 90);
     
-    let dateEndThirdTrimestre: Date = dateEndSecondTrimestre;
+    let dateEndThirdTrimestre: Date = new Date(dateEndSecondTrimestre);
     dateEndSecondTrimestre.setDate(dateEndSecondTrimestre.getDate() + 93);
+  
+    console.clear()
+    console.log(this.debut_dernieres_menstrues);
+    console.log(dateEndFirstTrimestre);
+    console.log(dateEndSecondTrimestre);
+    console.log(dateEndThirdTrimestre);
     
     if (today <= dateEndFirstTrimestre) {
       msg = this.getCurrentStatusMessage(treatement.status_first_trimestre);
