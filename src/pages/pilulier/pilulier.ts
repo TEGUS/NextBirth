@@ -20,6 +20,7 @@ import Schedule from "../../models/Schedule";
 import * as functions from "../../variables/functions";
 import * as v from "../../variables/variables_";
 import {LocalStorageProvider} from "../../providers/localstorage";
+import {formatDate, getDate} from "../../variables/functions";
 
 /**
  * Generated class for the PilulierPage page.
@@ -63,11 +64,78 @@ export class PilulierPage {
     },
   ];
   private showSpinner: boolean = false;
+  private isModeGrs: boolean = false;
+  
+  private debut_dernieres_menstrues: Date = null;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
               private localNotifications: LocalNotifications, private localStorageProvider: LocalStorageProvider,
-              public popoverCtrl: PopoverController) {
+              public popoverCtrl: PopoverController, private localStorage: LocalStorageProvider) {
+  }
+  
+  ionViewWillEnter() {
+    this.localStorage.getKey('mode').then(mode => {
+      this.isModeGrs = mode !== null && mode.code === "MO1";
+      
+      console.log(this.isModeGrs)
+      
+      if (this.isModeGrs) {
+        this.localStorage.getKey('session').then(next => {
+          let user = next.user;
+          if (user !== null) {
+            this.debut_dernieres_menstrues = getDate(user._embedded.patient.debut_dernieres_menstrues)
+          }
+        }, error => console.error(error));
+      }
+    });
+  }
+  
+  checkTrim(treatement): any {
+    const today = new Date();
+    let msg = null;
+    
+    let dateEndFirstTrimestre: Date = this.debut_dernieres_menstrues;
+    dateEndFirstTrimestre.setDate(dateEndFirstTrimestre.getDate() + 105);
+    
+    let dateEndSecondTrimestre: Date = dateEndFirstTrimestre;
+    dateEndSecondTrimestre.setDate(dateEndFirstTrimestre.getDate() + 90);
+    
+    let dateEndThirdTrimestre: Date = dateEndSecondTrimestre;
+    dateEndSecondTrimestre.setDate(dateEndSecondTrimestre.getDate() + 93);
+    
+    if (today <= dateEndFirstTrimestre) {
+      msg = this.getCurrentStatusMessage(treatement.status_first_trimestre);
+    } else if (today <= dateEndSecondTrimestre) {
+      msg = {
+        status: 'warning',
+        msg: this.getCurrentStatusMessage(treatement.status_second_trimestre)
+      };
+    } else {
+      msg = {
+        status: 'danger',
+        msg: this.getCurrentStatusMessage(treatement.status_third_trimestre)
+      };
+    }
+    
+    console.log(msg);
+    
+    return msg;
+  }
+  
+  getCurrentStatusMessage(status): string {
+    switch (status) {
+      case 1:
+        return null;
+      case 2:
+        return "Attention ! L'usage de ce médicament serait déconseillé " +
+          "durant ce trimestre de votre grossesse. \nRapprochez-vous " +
+          "du prescipteur pour plus de précisions.";
+      case 3:
+        return "Attention ! L'usage de ce médicament serait dangereux et interdit " +
+          "durant ce trimestre de votre grossesse. \nRapprochez-vous du prescipteur " +
+          "pour plus de précisions.";
+    }
   }
   
   ionViewWillLoad() {
@@ -332,8 +400,22 @@ export class PilulierPage {
     return new Promise(resolve => {
       let loading = this.loadingCtrl.create();
       loading.present();
+      this.treatments = [];
       this.services.allTreatments().subscribe((next: any) => {
-        this.treatments = next;
+        if (this.isModeGrs) {
+          next.forEach(m => {
+            if (m._embedded.core_medicament !== null) {
+              m = {
+                ...m,
+                msg_alert: this.checkTrim(m._embedded.core_medicament)
+              }
+            }
+            this.treatments.push(m);
+          })
+        } else {
+          this.treatments = next;
+        }
+        
         console.log(next)
       }, error => {
         console.error(error);
@@ -436,17 +518,18 @@ export class PilulierPage {
       
       this.localNotifications.on(`TAKE${item.id}`).subscribe(next => {
         this.makeTakingTreatment(next.id).then(on => {
-          this.presentDialogAlert('Taked');
+          let loading = this.loadingCtrl.create();
+          loading.present();
+          this.services.takedMedicament(next.id).subscribe(r => {
+            loading.dismiss();
+            this.presentDialogAlert('Taked');
+          })
         })
-      }, error => {
-        console.error(error);
-      });
+      }, error => console.error(error));
       
       this.localNotifications.on(`OPEN${item.id}`).subscribe(next => {
         
-      }, error => {
-        console.error(error);
-      });
+      }, error => console.error(error));
       
       this.services.createSituations({
         date: new Date(),

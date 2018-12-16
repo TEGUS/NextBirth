@@ -77,4 +77,18 @@ page-pilulier {
     stroke: #444;
     fill: #222;
   }
+  
+  .msg-danger {
+    border: 2px solid #ff0026;
+    background-color: #ff0026;
+    padding: 5px;
+    color: black;
+  }
+  
+  .msg-warning {
+    border: 2px solid orange;
+    background-color: orange;
+    padding: 5px;
+    color: black;
+  }
 }

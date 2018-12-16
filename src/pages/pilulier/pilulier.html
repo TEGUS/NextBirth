@@ -256,6 +256,12 @@
           Première prise: {{item.horaire_first_prise}}<br>
           Fréquence de prise: {{getFrequencePrise(item.frequence_prise)}}<br>
         </ion-card-content>
+        
+        <div *ngIf="item.msg_alert !== undefined && item.msg_alert !== null">
+          <ion-card-content [ngClass]="item.msg_alert.status == 2 ? 'msg-warning' : 'msg-danger'">
+            {{item.msg_alert.msg}}
+          </ion-card-content>
+        </div>
       </ion-card>
     </div>
   </div>

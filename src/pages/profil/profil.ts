@@ -5,6 +5,7 @@ import {ServiceProvider} from "../../providers/service";
 
 import * as codesMode from "../../components/mode/mode";
 import * as moment from "moment";
+import {formatDate} from "../../variables/functions";
 
 /**
  * Generated class for the ProfilsPage page.
@@ -57,8 +58,8 @@ export class ProfilPage {
       this.user = next.user;
       
       if (this.user !== null) {
-        this.date_naissance = this.formatDate(this.user.date_naissance)
-        this.debut_dernieres_menstrues = this.formatDate(this.user._embedded.patient.debut_dernieres_menstrues)
+        this.date_naissance = formatDate(this.user.date_naissance)
+        this.debut_dernieres_menstrues = formatDate(this.user._embedded.patient.debut_dernieres_menstrues)
       }
     }, error => {
       console.error(error);
@@ -82,19 +83,6 @@ export class ProfilPage {
     }
   }
   
-  formatDate(date: string) {
-    if (date === null) {
-      return null;
-    } else {
-      const d = new Date(('' + date).substring(0,16)+'Z');
-      return {
-        day: d.getDate(),
-        month: d.getMonth(),
-        year: d.getFullYear(),
-        date: d
-      };
-    }
-  }
   
   dateDeDernieresRegles(date) {
     var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
