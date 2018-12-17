@@ -115,10 +115,9 @@ export class PilulierPage {
     } else if (today <= dateEndSecondTrimestre) {
       msg = this.getCurrentStatusMessage(treatement.status_second_trimestre);
     } else {
-      msg = this.getCurrentStatusMessage(3);
+      msg = this.getCurrentStatusMessage(treatement.status_third_trimestre);
     }
     
-    console.clear();
     console.log(msg);
     
     return msg;
