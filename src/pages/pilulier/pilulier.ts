@@ -113,34 +113,35 @@ export class PilulierPage {
     if (today <= dateEndFirstTrimestre) {
       msg = this.getCurrentStatusMessage(treatement.status_first_trimestre);
     } else if (today <= dateEndSecondTrimestre) {
-      msg = {
-        status: 'warning',
-        msg: this.getCurrentStatusMessage(treatement.status_second_trimestre)
-      };
+      msg = this.getCurrentStatusMessage(treatement.status_second_trimestre);
     } else {
-      msg = {
-        status: 'danger',
-        msg: this.getCurrentStatusMessage(treatement.status_third_trimestre)
-      };
+      msg = this.getCurrentStatusMessage(3);
     }
     
+    console.clear();
     console.log(msg);
     
     return msg;
   }
   
-  getCurrentStatusMessage(status): string {
+  getCurrentStatusMessage(status): any {
     switch (status) {
       case 1:
         return null;
       case 2:
-        return "Attention ! L'usage de ce médicament serait déconseillé " +
-          "durant ce trimestre de votre grossesse. \nRapprochez-vous " +
-          "du prescipteur pour plus de précisions.";
+        return {
+          status: 'warning',
+          msg: "Attention ! L'usage de ce médicament serait déconseillé " +
+            "durant ce trimestre de votre grossesse. \nRapprochez-vous " +
+            "du prescipteur pour plus de précisions."
+        }
       case 3:
-        return "Attention ! L'usage de ce médicament serait dangereux et interdit " +
-          "durant ce trimestre de votre grossesse. \nRapprochez-vous du prescipteur " +
-          "pour plus de précisions.";
+        return {
+          status: 'danger',
+          msg: "Attention ! L'usage de ce médicament serait dangereux et interdit " +
+            "durant ce trimestre de votre grossesse. \nRapprochez-vous du prescipteur " +
+            "pour plus de précisions."
+        };
     }
   }
   
