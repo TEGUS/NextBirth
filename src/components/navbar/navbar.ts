@@ -26,16 +26,23 @@ export class NavbarComponent {
   private colorNetworkStatus = 'red'
 
   constructor(public network: Network, public service: ServiceProvider) {
-    console.log(this.network.type)
+  }
+  
+  ngOnInit() {
+    console.log(this.network)
     this.checkNetwork()
   }
 
   checkNetwork() {
     this.network.onDisconnect().subscribe(next => {
+      console.log(next)
+      console.log(this.network)
       this.initNetworkStatus(false);
     });
 
     this.network.onConnect().subscribe(next => {
+      console.log(next)
+      console.log(this.network)
       this.initNetworkStatus(true);
       setTimeout(() => {
         this.showNetworkStatus = false

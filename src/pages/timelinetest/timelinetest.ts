@@ -1,10 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, LoadingController} from 'ionic-angular';
 import {ServiceProvider} from '../../providers/service';
-import {el} from "../../../node_modulesback/@angular/platform-browser/testing/src/browser_util";
 import {LocalStorageProvider} from "../../providers/localstorage";
-import {error} from "util";
-import {hasOwnProperty} from "../../../node_modulesback/tslint/lib/utils";
 
 /**
  * Generated class for the TimelinetestPage page.
