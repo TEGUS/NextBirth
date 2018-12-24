@@ -9,6 +9,7 @@ import {checkField} from "../../variables/functions";
 import {LocalStorageProvider} from '../../providers/localstorage';
 import {ServiceProvider} from '../../providers/service';
 import {MbscSelectOptions} from "@mobiscroll/angular";
+import {MyApp} from "../../app/app.component";
 
 /**
  * Generated class for the LoginPage page.
@@ -60,20 +61,26 @@ export class LoginPage {
         console.log(next);
         this.mylocalstorage.storeSession(next).then(() => {
           this.services.faitTravail();
-          loading.dismiss();
-          loading.onDidDismiss(() => {
-            this.presentToast('Finish Login!');
-            this.mylocalstorage.storeKeydpv(0).then(() => {});
-            this.mylocalstorage.storeKeydpvacc(0).then(() => {});
-            this.navCtrl.setRoot('ChooseModePage', {});
+          
+          this.mylocalstorage.storeKeydpv(0).then(() => {});
+          this.mylocalstorage.storeKeydpvacc(0).then(() => {});
+  
+          this.services.getMode().subscribe(mode => {
+            if (mode !== null) {
+              this.mylocalstorage.storeModeInSession(mode._embedded.categorie);
+              this.navCtrl.setRoot(MyApp)
+            } else {
+              this.navCtrl.setRoot('ChooseModePage', {});
+            }
+            
+            loading.dismiss();
             this.menuCtrl.enable(true, 'sideMenu');
+          }, error => {
+            console.error(error);
+            loading.dismiss();
           });
-
         });
-
         
-
-
       }, error => {
         loading.dismiss();
         console.log(error);

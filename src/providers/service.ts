@@ -68,7 +68,7 @@ export class ServiceProvider {
    */
   getMode(): Observable<any> {
     return this.http.get(
-      this.host + 'choice-modes',
+      this.host + 'choice-mode',
       this.headers
     );
   }
