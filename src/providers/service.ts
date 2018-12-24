@@ -377,7 +377,6 @@ export class ServiceProvider {
         name: 'nextbirth.db',
         location: 'default'
       }).then((db: SQLiteObject) => {
-<<<<<<< HEAD
 
             db.executeSql('SELECT * FROM SITUATIONS ORDER BY date DESC', [])
             .then(res => {
@@ -393,28 +392,6 @@ export class ServiceProvider {
             });
 
 
-=======
-        
-        db.executeSql('SELECT * FROM SITUATIONS ', [])
-          .then(res => {
-            let expenses = [];
-            for (var i = 0; i < res.rows.length; i++) {
-              expenses.push({
-                id: res.rows.item(i).id,
-                date: res.rows.item(i).date,
-                titre: res.rows.item(i).titre,
-                description: res.rows.item(i).description
-              })
-            }
-            resolve(expenses);
-          })
-          .catch(e => {
-            console.log(e);
-            resolve(0);
-          });
-        
-        
->>>>>>> 495e71a9dbd26758048a64820fb4bfbfcd80a83a
       }).catch(e => {
         this.presentToast('database donst exist!');
       });

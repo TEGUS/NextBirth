@@ -100,10 +100,10 @@ export class MonmodalPage {
       const options: CameraOptions = {
         quality:100,
         destinationType:0,
+        allowEdit:true,
         encodingType:this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
-        sourceType: 0,
-        allowEdit:true
+        sourceType: 0
 
       }
 
