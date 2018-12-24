@@ -38,13 +38,17 @@ export class ProfilPage {
   modeSelectedExist = false;
   
   imageB64 = null;
-
+  images = {
+    "image":""
+  }
   user = null;
   date_naissance = null;
   debut_dernieres_menstrues = null;
   
-  constructor(public navCtrl: NavController,public mylocalstorage: LocalStorageProvider, private base64: Base64, private camera: Camera, public services: ServiceProvider, public loadingCtrl: LoadingController,
-              public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,public mylocalstorage: LocalStorageProvider, private base64: Base64,
+              private camera: Camera, public services: ServiceProvider, public loadingCtrl: LoadingController,
+              public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider,
+              public alertCtrl: AlertController) {
   }
   
   ionViewDidLoad() {
@@ -207,6 +211,17 @@ export class ProfilPage {
       this.services.updateprofile(this.object).subscribe(next => {
         console.log(next)
         this.localStorage.updatePatientStorage(next);
+         
+        if(this.images.image != ""){
+          this.services.editImage(this.images).subscribe(next => { 
+          }, error => {
+          }, () => {
+          }) 
+        }
+          
+        
+
+
       }, error => {
         console.error(error);
         loading.dismiss();
@@ -331,19 +346,12 @@ export class ProfilPage {
       
         this.mylocalstorage.getSession().then((result:any) =>{
            result.user._embedded.photo = this.imageaafficher;
+           this.images.image = this.imageaafficher;
            this.mylocalstorage.storeSession(result).then(() => {
            });
         })
           
        
-     
-        this.base64.encodeFile(base64Image).then((base64File: string)=>{
-            
-           // this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
-
-        }, (err) =>{
-          alert(err);
-      })
 
 
 
@@ -376,24 +384,13 @@ export class ProfilPage {
 
          this.camera.getPicture(options).then((ImageData) => {
             let base64Image = ImageData;
-            
+            this.imageaafficher = "data:image/jpeg;base64," + ImageData;
             this.mylocalstorage.getSession().then((result:any) =>{
                 result.user._embedded.photo = this.imageaafficher;
+                this.images.image = this.imageaafficher;
                 this.mylocalstorage.storeSession(result).then(() => {
                 });
             })
-
-            this.imageaafficher = "data:image/jpeg;base64," + ImageData;
-           
-              this.base64.encodeFile(base64Image).then((base64File: string)=>{
-                 
-                 // this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
-
-              }, (err) =>{
-                alert(err);
-            })
-
-
 
           }, (err) =>{
             alert(err);

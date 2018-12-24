@@ -63,16 +63,6 @@ export class ChooseModePage {
           let listesNotification = [];
           var i = 0;
           alerts.forEach((element) => {
-            /*console.log("==========================================");
-            console.log(new Date().getTime() + (60*1000)*(i+1))
-            console.log(new Date());
-            console.log(new Date(element.date_alert));
-            alert(new Date(element.date_alert));
-            console.log(new Date(element.date_alert).getTime());
-            console.log(element._embedded.conseil.description);
-            console.log("==========================================");
-            */
-
             let manotification = {
               id: i + 1,
               text: element._embedded.conseil.description,

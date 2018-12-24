@@ -68,7 +68,7 @@ export class ServiceProvider {
    */
   getMode(): Observable<any> {
     return this.http.get(
-      this.host + 'choice-modes',
+      this.host + 'choice-mode',
       this.headers
     );
   }
@@ -118,8 +118,8 @@ export class ServiceProvider {
       this.headers
     );
   }
-
-
+  
+  
   dateprochaineVisite(data: any): Observable<any> {
     return this.http.put(
       this.host + ' grossesse/date-next-visite',
@@ -300,6 +300,23 @@ export class ServiceProvider {
       this.headers
     );
   }
+
+
+
+  /**
+   * Ajouter une traitement(produit) au Pilulier
+   * @param treatment
+   * @returns {Observable<any>}
+   */
+  editImage(image): Observable<any> {
+    return this.http.post(
+      this.host + 'profile/picture/edit',
+      image,
+      this.headers
+    );
+  }
+
+
   
   /**
    * Les différentes fréquences de prise de traitement
@@ -370,7 +387,6 @@ export class ServiceProvider {
   
   
   getAllSituations() {
-    
     return new Promise((resolve) => {
       
       this.sqlite.create({
@@ -393,12 +409,10 @@ export class ServiceProvider {
 
 
       }).catch(e => {
-        this.presentToast('database donst exist!');
+        // this.presentToast('database donst exist!');
+        console.error(e)
       });
-      
     });
-    
-    
   }
   
   
