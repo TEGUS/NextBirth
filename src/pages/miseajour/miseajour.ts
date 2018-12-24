@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ServiceProvider} from "../../providers/service";
 import {LocalStorageProvider} from "../../providers/localstorage";
@@ -25,7 +25,7 @@ export class MiseajourPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public services: ServiceProvider, public loadingCtrl: LoadingController,
               private formBuilder: FormBuilder, public localStorage: LocalStorageProvider,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController, private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -72,11 +72,13 @@ export class MiseajourPage {
       }, () => {
         loading.dismiss()
         loading.onDidDismiss(() => {
-          let alert = this.alertCtrl.create({
-            title: "Mises à jour effectuées",
-            buttons: ['Ok']
+          let toast = this.toastCtrl.create({
+            message: 'Mises à jour effectuées',
+            duration: 3000,
+            position: 'bottom'
           });
-          alert.present();
+          toast.present();
+          
           this.localStorage.setKey('vital_info', vitalInfo).then(onful => {
             this.initForm();
           })

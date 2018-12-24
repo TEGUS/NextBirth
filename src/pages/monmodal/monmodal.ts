@@ -66,7 +66,8 @@ export class MonmodalPage {
       destinationType:1,
       encodingType:this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: 1
+      sourceType: 1,
+      allowEdit:true
 
     }
 
@@ -101,7 +102,8 @@ export class MonmodalPage {
         destinationType:0,
         encodingType:this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
-        sourceType: 0
+        sourceType: 0,
+        allowEdit:true
 
       }
 

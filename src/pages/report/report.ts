@@ -128,24 +128,27 @@ export class ReportPage {
         var nombremilliseconde = dateaujourdui - premieredate;
         var nombresjours = Math.ceil( ((((nombremilliseconde/1000)/60)/60)/24));
         var nomrejoursavantacc = 280 - nombresjours;
+        if(nomrejoursavantacc<0){
+          this.navCtrl.setRoot('ChooseModePage', {});
+        }
         this.nombrejourrestant = (nombresjours) % 7;
         this.nombresemaine = Math.floor((nombresjours) / 7);
         var time = new Date().getTime();
         var dateaccouchement = new Date(time + nomrejoursavantacc*24*60*60*1000);  
         this.dpa = dateaccouchement.toLocaleDateString("fr");
       
-      var dateaujourdui = new Date().getTime();
-      var datepv = result;
-      var nombremilliseconde = datepv - dateaujourdui;
-      var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
-      
-      
-      if (nombresjours > 0) {
-        this.dpv = nombresjours;
-        this.testeurdpv = 1;
-      } else {
-        this.testeurdpv = 0;
-      }
+        var dateaujourdui = new Date().getTime();
+        var datepv = result;
+        var nombremilliseconde = datepv - dateaujourdui;
+        var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
+        
+        
+        if (nombresjours > 0) {
+          this.dpv = nombresjours;
+          this.testeurdpv = 1;
+        } else {
+          this.testeurdpv = 0;
+        }
     });
     
     
@@ -174,6 +177,9 @@ export class ReportPage {
       var nombremilliseconde = dateaujourdui - premieredate;
       var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
       var nomrejoursavantacc = 280 - nombresjours;
+      if(nomrejoursavantacc<0){
+        this.navCtrl.setRoot('ChooseModePage', {});
+      }
       this.nombrejourrestant = (nombresjours) % 7;
       this.nombresemaine = Math.floor((nombresjours) / 7);
       var time = new Date().getTime();

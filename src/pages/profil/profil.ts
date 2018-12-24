@@ -7,7 +7,7 @@ import * as codesMode from "../../components/mode/mode";
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {Base64} from '@ionic-native/base64';
 import * as moment from "moment";
-import {formatDate} from "../../variables/functions";
+import {formatDate, formatNumberOfDate} from "../../variables/functions";
 
 /**
  * Generated class for the ProfilsPage page.
@@ -57,11 +57,7 @@ export class ProfilPage {
       console.log(mode);
       this.modeSelectedExist = mode !== null ? true : false;
     });
-
-    this.mylocalstorage.getSession().then((result:any) =>{
-        this.imageaafficher = result.user._embedded.photo;
-    })
-  
+    
     this.localStorage.getKey('session').then(next => {
       console.log(next);
       this.user = next.user;
@@ -79,48 +75,46 @@ export class ProfilPage {
       diabete: 0,
       hta: 0,
       drepano: 0,
-      age_premiere_regle: null,
-      duree_saignement: null,
-      duree_cycle: null,
-      cycle_regulier: 0,
-      douleur_regle: 0,
-      nombre_grossesse: null,
-      nombre_premature: null,
-      nombre_fosse_couche: null,
-      nombre_enfant_vivant: null,
-      debut_dernieres_menstrues: null
+      agePremiereRegle: null,
+      dureeSaignement: null,
+      dureeCycle: null,
+      cycleRegulier: 0,
+      douleurRegle: 0,
+      nombreGrossesse: null,
+      nombrePremature: null,
+      nombreFosseCouche: null,
+      nombreEnfantVivant: null,
+      debutDernieresMenstrues: null
     }
   }
   
   
   dateDeDernieresRegles(date) {
-    var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
-    this.object.debut_dernieres_menstrues = madate;
+    this.object.debutDernieresMenstrues = `${formatNumberOfDate(date.day)}-${formatNumberOfDate(date.month)}-${date.year}`;
   }
   
   dateDeNaissance(date) {
-    var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
-    this.ladate = madate;
+    this.ladate = `${formatNumberOfDate(date.day)}-${formatNumberOfDate(date.month)}-${date.year}`;
   }
   
   getDureeSaignement(dureeSaignement) {
-    this.object.duree_saignement = dureeSaignement;
+    this.object.dureeSaignement = dureeSaignement;
   }
   
   getDureeCycle(dureeCycle) {
-    this.object.duree_cycle = dureeCycle;
+    this.object.dureeCycle = dureeCycle;
   }
   
   getCycleRegulier(cycleRegulier) {
-    this.object.cycle_regulier = cycleRegulier;
+    this.object.cycleRegulier = cycleRegulier;
   }
   
   getAgePremiereRegle(agePremiereRegle) {
-    this.object.age_premiere_regle = agePremiereRegle;
+    this.object.agePremiereRegle = agePremiereRegle;
   }
   
   getDouleur(douleurRegle) {
-    this.object.douleur_regle = douleurRegle;
+    this.object.douleurRegle = douleurRegle;
   }
   
   getUsername(username) {
@@ -132,28 +126,29 @@ export class ProfilPage {
   }
   
   getNombreGrossesse(nombreGrossesse) {
-    this.object.nombre_grossesse = nombreGrossesse;
+    this.object.nombreGrossesse = nombreGrossesse;
   }
   
   getNombrePremature(nombrePremature) {
-    this.object.nombre_premature = nombrePremature;
+    this.object.nombrePremature = nombrePremature;
   }
   
   getNombreFosseCouche(nombreFosseCouche) {
-    this.object.nombre_fosse_couche = nombreFosseCouche;
+    this.object.nombreFosseCouche = nombreFosseCouche;
   }
   
   getNombreEnfantVivant(nombreEnfantVivant) {
-    this.object.nombre_enfant_vivant = nombreEnfantVivant;
+    this.object.nombreEnfantVivant = nombreEnfantVivant;
   }
   
   checkValues() {
     return new Promise((resolve, reject) => {
       if (
-        this.object.age_premiere_regle === null ||
-        this.object.duree_saignement === null || this.object.duree_cycle === null ||
-        this.object.nombre_grossesse === null || this.object.nombre_premature === null ||
-        this.object.nombre_fosse_couche === null || this.object.nombre_enfant_vivant === null
+        this.object.agePremiereRegle === null ||
+        this.object.dureeSaignement === null || this.object.dureeCycle === null ||
+        this.object.nombreGrossesse === null || this.object.nombrePremature === null ||
+        this.object.nombreFosseCouche === null || this.object.nombreEnfantVivant === null ||
+        this.username === '' || this.username === null || this.phone === '' || this.phone === null
       ) {
         reject(false)
       } else {
@@ -163,19 +158,47 @@ export class ProfilPage {
   }
   
   
+  checkErrorPossibilities() {
+    let result = {
+      msg: '',
+      error: false
+    }
+    
+    if (this.username === this.user.email) {
+      result.msg = "Le pseudonyme doit être différent de l'adresse email !";
+      result.error = true;
+    }
+    if (this.phone === this.username) {
+      result.msg = "Le numéro de téléphone doit être différent du pseudonyme !";
+      result.error = true;
+    }
+    if (this.phone === this.user.email) {
+      result.msg = "Le numéro de téléphone doit être différent de l'adresse email !";
+      result.error = true;
+    }
+    
+    return result;
+  }
+  
+  
   updateProfile() {
+    if(this.checkErrorPossibilities().error) {
+      this.presentToast(this.checkErrorPossibilities().msg)
+      return;
+    }
+    
     this.checkValues().then(next => {
       this.object.diabete = this.object.diabete ? 1 : 0;
       this.object.hta = this.object.hta ? 1 : 0;
       this.object.drepano = this.object.drepano ? 1 : 0;
-      this.object.douleur_regle = this.object.douleur_regle ? 1 : 0;
-      this.object.douleur_regle = this.object.douleur_regle ? 1 : 0;
-      this.object.cycle_regulier = this.object.cycle_regulier ? 1 : 0;
+      this.object.douleurRegle = this.object.douleurRegle ? 1 : 0;
+      this.object.douleurRegle = this.object.douleurRegle ? 1 : 0;
+      this.object.cycleRegulier = this.object.cycleRegulier ? 1 : 0;
       
       this.object.account = {
-        "username": this.username,
-        "phone": this.phone,
-        "date_naissance": this.ladate
+        username: this.username,
+        phone: this.phone,
+        dateNaissance: this.ladate
       };
       
       console.log(this.object);
@@ -185,6 +208,7 @@ export class ProfilPage {
         console.log(next)
         this.localStorage.updatePatientStorage(next);
       }, error => {
+        console.error(error);
         loading.dismiss();
         
         if (undefined != error.error[0]) {
@@ -198,7 +222,8 @@ export class ProfilPage {
         
       }, () => {
         loading.dismiss();
-  
+        this.presentToast('Mise à jour effectué !');
+        
         this.localStorage.setObjectUpdateProfile(this.object);
         /*this.localStorage.getObjectUpdateProfile().then(mode => {
           
@@ -206,14 +231,10 @@ export class ProfilPage {
         
         this.localStorage.getKey('modeSelected').then(mode => {
           (mode !== null) ? this.selectMode(mode) : this.navCtrl.pop();
-        })
+        });
       });
     }, error => {
-      let alert = this.alertCtrl.create({
-        message: 'Veuillez remplir tous les champs!',
-        buttons: ['Okay']
-      });
-      alert.present();
+      this.presentToast('Veuillez remplir tous les champs!')
     })
   }
   
@@ -298,7 +319,8 @@ export class ProfilPage {
       destinationType:1,
       encodingType:this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: 1
+      sourceType: 1,
+      allowEdit:true
 
     }
 
@@ -346,7 +368,8 @@ export class ProfilPage {
         destinationType:0,
         encodingType:this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
-        sourceType: 0
+        sourceType: 0,
+        allowEdit:true
 
       }
 

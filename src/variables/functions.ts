@@ -19,8 +19,8 @@ export function formatDate(date: string) {
   } else {
     const d = new Date(('' + date).substring(0,16)+'Z');
     return {
-      day: d.getDate(),
-      month: d.getMonth(),
+      day: formatNumberOfDate(d.getDate()),
+      month: formatNumberOfDate(d.getMonth()),
       year: d.getFullYear(),
       date: d
     };
@@ -29,4 +29,8 @@ export function formatDate(date: string) {
 
 export function getDate(date: string): Date {
   return new Date(('' + date).substring(0,16)+'Z')
+}
+
+export function formatNumberOfDate(val) {
+  return (val < 10) ? `0${val}` : val;
 }

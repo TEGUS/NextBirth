@@ -30,7 +30,9 @@ export class MyprofilsPage {
     }, error => {
       console.error(error);
     });
-    
+  }
+  
+  ionViewDidLoad() {
     this.ionButtonsEnd.push({
       icon: 'create',
       code: 'update',

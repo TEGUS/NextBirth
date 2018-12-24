@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {LocalStorageProvider} from "../../providers/localstorage";
 import {ServiceProvider} from "../../providers/service";
 
@@ -16,7 +16,7 @@ export class QuestionContraceptionPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public loadingCtrl: LoadingController, public localStorage: LocalStorageProvider, public services: ServiceProvider,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController, private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -24,21 +24,21 @@ export class QuestionContraceptionPage {
     this.infos_desir_grossesse = this.navParams.get('infos_desir_grossesse');
 
     this.object = {
-      marital_status: null,
-      frequence_saignement: null,
-      etat_esprit: null,
+      maritalStatus: null,
+      frequenceSaignement: null,
+      etatEsprit: null,
       profession: null,
-      duree_desir_grossesse: null,
+      dureeDesirGrossesse: null,
       diagnostique: null
     }
 
     if (this.infos_desir_grossesse !== null) {
       this.object = {
-        marital_status: this.infos_desir_grossesse.marital_status,
-        frequence_saignement: this.infos_desir_grossesse.frequence_saignement,
-        etat_esprit: this.infos_desir_grossesse.etat_esprit,
+        maritalStatus: this.infos_desir_grossesse.marital_status,
+        frequenceSaignement: this.infos_desir_grossesse.frequence_saignement,
+        etatEsprit: this.infos_desir_grossesse.etat_esprit,
         profession: this.infos_desir_grossesse.profession,
-        duree_desir_grossesse: this.infos_desir_grossesse.duree_desir_grossesse,
+        dureeDesirGrossesse: this.infos_desir_grossesse.duree_desir_grossesse,
         diagnostique: this.infos_desir_grossesse.diagnostique
       }
 
@@ -103,16 +103,16 @@ export class QuestionContraceptionPage {
   listenChange(event, question) {
     switch (question.code) {
       case 'maritalStatus':
-        this.object.marital_status = event;
+        this.object.maritalStatus = event;
         break;
       case 'frequenceSaignement':
-        this.object.frequence_saignement = event;
+        this.object.frequenceSaignement = event;
         break;
       case 'etatEsprit':
-        this.object.etat_esprit = event;
+        this.object.etatEsprit = event;
         break;
       case 'dureeDesirGrossesse':
-        this.object.duree_desir_grossesse = event;
+        this.object.duree_desirGrossesse = event;
         break;
       case 'profession':
         this.object.profession = event;
@@ -123,16 +123,13 @@ export class QuestionContraceptionPage {
     }
   }
 
-
-
-
   checkFieldNotNull() {
     return new Promise((resolve, reject) => {
       if (
-        this.object.marital_status === null ||
-        this.object.frequence_saignement === null ||
-        this.object.etat_esprit === null ||
-        this.object.duree_desir_grossesse === null ||
+        this.object.maritalStatus === null ||
+        this.object.frequenceSaignement === null ||
+        this.object.etatEsprit === null ||
+        this.object.dureeDesirGrossesse === null ||
         this.object.profession === null ||
         this.object.diagnostique === null
       ) {
@@ -159,12 +156,12 @@ export class QuestionContraceptionPage {
         })
       });
     }, error => {
-      let alert = this.alertCtrl.create({
-        title: 'Erreur',
+      let toast = this.toastCtrl.create({
         message: 'Veuillez remplir tous les champs !',
-        buttons: ['Okay']
+        duration: 3000,
+        position: 'top'
       });
-      alert.present();
+      toast.present();
     });
   }
 }
