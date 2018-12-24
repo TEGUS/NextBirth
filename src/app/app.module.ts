@@ -16,12 +16,13 @@ import {LocalStorageProvider} from '../providers/localstorage';
 import {Calendar} from "@ionic-native/calendar";
 import {Network} from "@ionic-native/network";
 import {Camera} from '@ionic-native/camera';
-import {CameraMock} from '../mocks/camera.mock';
+// import {CameraMock} from '../mocks/camera.mock';
 import { Vibration } from '@ionic-native/vibration';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import { SQLite } from '@ionic-native/sqlite';
 import { DatePicker } from '@ionic-native/date-picker';
+import { CameraMock } from '@ionic-native-mocks/camera';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');

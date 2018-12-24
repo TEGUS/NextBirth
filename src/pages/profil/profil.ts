@@ -38,12 +38,12 @@ export class ProfilPage {
   modeSelectedExist = false;
   
   imageB64 = null;
-
+  
   user = null;
   date_naissance = null;
   debut_dernieres_menstrues = null;
   
-  constructor(public navCtrl: NavController,public mylocalstorage: LocalStorageProvider, private base64: Base64,
+  constructor(public navCtrl: NavController, public mylocalstorage: LocalStorageProvider, private base64: Base64,
               private camera: Camera, public services: ServiceProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider,
               public alertCtrl: AlertController) {
@@ -184,7 +184,7 @@ export class ProfilPage {
   
   
   updateProfile() {
-    if(this.checkErrorPossibilities().error) {
+    if (this.checkErrorPossibilities().error) {
       this.presentToast(this.checkErrorPossibilities().msg)
       return;
     }
@@ -291,118 +291,86 @@ export class ProfilPage {
         {
           text: 'camera',
           handler: () => {
-
+            
             this.takephotos();
-
+            
           }
         },
         {
           text: 'Gallery',
-          handler: () => {  
+          handler: () => {
             
-              this.takegalerie();
-
-
+            this.takegalerie();
+            
+            
           }
         }
       ]
     });
     alert.present();
   }
-
-
-
-
-  takephotos(){
-
+  
+  
+  takephotos() {
+    
     
     const options: CameraOptions = {
-      quality:100,
-      destinationType:1,
-      encodingType:this.camera.EncodingType.JPEG,
+      quality: 100,
+      destinationType: 1,
+      encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: 1,
-      allowEdit:true
-
+      allowEdit: true
+      
     }
-
+    
     this.camera.getPicture(options).then((ImageData) => {
       let base64Image = ImageData;
-        this.imageaafficher = "data:image/jpeg;base64," + ImageData;
+      this.imageaafficher = "data:image/jpeg;base64," + ImageData;
       
-        this.mylocalstorage.getSession().then((result:any) =>{
-           result.user._embedded.photo = this.imageaafficher;
-           this.mylocalstorage.storeSession(result).then(() => {
-           });
-        })
-          
-       
-     
-        this.base64.encodeFile(base64Image).then((base64File: string)=>{
-            
-           // this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
-
-        }, (err) =>{
-          alert(err);
+      this.mylocalstorage.getSession().then((result: any) => {
+        result.user._embedded.photo = this.imageaafficher;
+        this.mylocalstorage.storeSession(result).then(() => {
+        });
       })
-
-
-
-    }, (err) =>{
+      
+      
+    }, (err) => {
       alert(err);
     })
-
     
+    
+  }
+  
+  
+  takegalerie() {
+    
+    
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: 0,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: 0,
+      allowEdit: true
+      
     }
-
-
-
-
-    takegalerie(){
-
-
+    
+    this.camera.getPicture(options).then((ImageData) => {
+      let base64Image = ImageData;
       
-
+      this.mylocalstorage.getSession().then((result: any) => {
+        result.user._embedded.photo = this.imageaafficher;
+        this.mylocalstorage.storeSession(result).then(() => {
+        });
+      })
       
-
-      const options: CameraOptions = {
-        quality:100,
-        destinationType:0,
-        encodingType:this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE,
-        sourceType: 0,
-        allowEdit:true
-
-      }
-
-         this.camera.getPicture(options).then((ImageData) => {
-            let base64Image = ImageData;
-            
-            this.mylocalstorage.getSession().then((result:any) =>{
-                result.user._embedded.photo = this.imageaafficher;
-                this.mylocalstorage.storeSession(result).then(() => {
-                });
-            })
-
-            this.imageaafficher = "data:image/jpeg;base64," + ImageData;
-           
-              this.base64.encodeFile(base64Image).then((base64File: string)=>{
-                 
-                 // this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
-
-              }, (err) =>{
-                alert(err);
-            })
-
-
-
-          }, (err) =>{
-            alert(err);
-          })
-      }
-
-
+      this.imageaafficher = "data:image/jpeg;base64," + ImageData;
       
-
-
+    }, (err) => {
+      alert(err);
+    })
+  }
+  
+  
 }
