@@ -1,37 +1,23 @@
 page-messituationarisque {
 
-    .mafleche{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        align-content: center;
-        margin-bottom: 20px;
-    }
+  .mafleche{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-content: center;
+      margin-bottom: 20px;
+  }
 
-    .monbody{
-        background-color: #e3e3e3;
-    }
+  .monbody{
+      background-color: #e3e3e3;
+  }
 
-    ion-grid {
-        margin-top: 10px;
-        padding: 10px;
-        ion-row {
-          border-bottom: 1px solid #bdbdbd;
-          ion-col {
-            height: 100px;
-          }
-          .item-list {
-            font-weight: 600;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: flex-start;
-    
-            label {
-              font-size: 18px;
-            }
-          }
-        }
-      }
+  .titles{
+      font-weight: 600;
+  }
+
+  .ladate{
+      font-style: italic;
+  }
     
 }

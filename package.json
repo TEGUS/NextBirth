@@ -43,8 +43,9 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "angular2-uuid": "^1.1.1",
     "com-badrit-base64": "^0.2.0",
-    "cordova-android": "^7.0.0",
+    "cordova-android": "6.3.0",
     "cordova-browser": "5.0.4",
+    "cordova-common": "^3.0.0",
     "cordova-plugin-badge": "^0.8.7",
     "cordova-plugin-calendar": "^5.1.2",
     "cordova-plugin-camera": "^4.0.3",
@@ -64,7 +65,7 @@
     "ionic-angular": "3.9.2",
     "ionic-swipe-all": "^1.2.0",
     "ionicons": "3.0.0",
-    "moment": "^2.22.1",
+    "moment": "^2.22.2",
     "rxjs": "5.5.8",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.20"
@@ -94,8 +95,8 @@
       "cordova-plugin-decimal-keyboard": {}
     },
     "platforms": [
-      "android",
-      "browser"
+      "browser",
+      "android"
     ]
   },
   "config": {

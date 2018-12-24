@@ -26,7 +26,7 @@
   </ion-card>
   
   
-  <timeline endIcon="call">
+  <timeline endIcon="call" *ngIf="testeur == 0">
     <timeline-item *ngFor="let item of timelines; index as i">
       <timeline-time [time]="item.time"></timeline-time>
       <ion-icon [name]="item.icon"></ion-icon>
@@ -45,7 +45,7 @@
 
           <ion-scroll>
           <div style="display: flex; flex-direction: row;">
-            <div class="mondive" *ngFor="let item of item.elements">
+            <div class="mondive" *ngFor="let item of item.elements" (click)="selectArticle(item.content, item.description)">
               <p class="datecard">{{item.time.subTitle}}</p>
               <p class="titrecard">{{item.title}}</p>
               <p>{{item.content}}</p>
@@ -55,6 +55,35 @@
       </ion-card>
     </timeline-item>
   </timeline>
+
+
+  <ion-card *ngIf="testeur == 1">
+    
+    <ion-card-content>
+      <ion-card-title>
+        {{titre}}
+      </ion-card-title>
+      <p>
+        {{description}}
+      </p>
+    </ion-card-content>
+
+    <ion-row no-padding>
+      <ion-col>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='star'></ion-icon>
+          Favorite
+        </button>
+      </ion-col>
+      <ion-col text-right  (click)="goodArticle()">
+        <button ion-button clear small color="danger" icon-start (click)="goodArticle()">
+         
+          ok
+        </button>
+      </ion-col>
+    </ion-row>
+
+</ion-card>
   
   
   <ion-infinite-scroll (ionInfinite)="doInfiniteBottom($event)" threshold="2%">

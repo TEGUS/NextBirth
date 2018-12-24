@@ -36,6 +36,7 @@ page-report {
         height: 80px;
         left: 10px;
         margin-top: -14px;
+        border-radius: 15%;
         z-index: 3;
       }
 
@@ -78,7 +79,7 @@ page-report {
             @include comp(row, space-between);
             padding: 5px;
             margin-top: -15px;
-            margin-left: 77px;
+            margin-left: 34%;
             div {
               font-weight: 600;
               padding-left: 7px;

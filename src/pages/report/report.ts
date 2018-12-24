@@ -7,7 +7,8 @@ import {
   AlertController,
   ModalController,
   ModalOptions,
-  Modal
+  Modal,
+  ToastController
 } from 'ionic-angular';
 import {LocalNotifications} from '@ionic-native/local-notifications';
 import {ServiceProvider} from "../../providers/service";
@@ -39,27 +40,103 @@ export class ReportPage {
   public dpa: any;
   public dpv: any;
   public dpvacc: any;
+  public imageaafficher = "";
+  acticlesSubscription: any;
   
-  acticlesSubscription = null;
-  
-  constructor(public navCtrl: NavController, public mylocalstorage: LocalStorageProvider, private modal: ModalController, private alertCtrl: AlertController,
+  constructor(public navCtrl: NavController, public mylocalstorage: LocalStorageProvider, public toastCtrl: ToastController,
+              private modal: ModalController, private alertCtrl: AlertController,
               private base64: Base64, public navParams: NavParams, private localNotifications: LocalNotifications,
-              public loadingCtrl: LoadingController, private camera: Camera, public services: ServiceProvider, private datePicker: DatePicker) {
+              public loadingCtrl: LoadingController, private camera: Camera, public services: ServiceProvider,
+              private datePicker: DatePicker) {
     
     this.testeurdpv = 0;
     this.testeurdpvcac = 0;
     this.services.initHeaders();
   }
   
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     
     
-    /*this.mylocalstorage.getSession().then((result:any) =>{
-       
-    })*/
+    // this.mylocalstorage.setObjectUpdateProfile(this.object);
+    this.mylocalstorage.getObjectUpdateProfile().then(mode => {
+      if (mode == null) {
+        this.navCtrl.push('ProfilPage');
+      }
+    });
+    
+    
+    this.mylocalstorage.getSession().then((result: any) => {
+      this.imageaafficher = result.user._embedded.photo;
+    })
     
     
     this.mylocalstorage.getKeydpv().then((result: any) => {
+      
+      var dateaujourdui = new Date().getTime();
+      var datepv = result;
+      var nombremilliseconde = datepv - dateaujourdui;
+      var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
+      
+      
+      if (nombresjours > 0) {
+        this.dpv = nombresjours;
+        this.testeurdpv = 1;
+      } else if (nombresjours == 1) {
+        
+        // Bonjour Rahim n'oubliez pas votre visite demain demain
+        this.mylocalstorage.getSession().then((result: any) => {
+          this.presentToast("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain");
+          this.declancherAlerte("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain", 2);
+        })
+        
+      } else {
+        this.testeurdpv = 0;
+      }
+    });
+    
+    
+    this.mylocalstorage.getKeydpvacc().then((result: any) => {
+      
+      var dateaujourdui = new Date().getTime();
+      var datepv = result;
+      var nombremilliseconde = datepv - dateaujourdui;
+      var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
+      
+      
+      if (nombresjours > 0) {
+        this.dpvacc = nombresjours;
+        this.testeurdpvcac = 1;
+      } else if (nombresjours == 1) {
+        
+        // Bonjour Rahim n'oubliez pas votre vaccin demain
+        
+        this.mylocalstorage.getSession().then((result: any) => {
+          this.presentToast("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain demain");
+          this.declancherAlerte("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain demain", 2);
+        })
+        
+      } else {
+        this.testeurdpvcac = 0;
+      }
+    });
+    
+    
+    this.mylocalstorage.getSession().then((result: any) => {
+      var dataprofile = '' + result.user._embedded.patient.debut_dernieres_menstrues;
+      var ladate = dataprofile.substring(0, 16) + 'Z';
+      var premieredate = new Date(ladate).getTime();
+      var dateaujourdui = new Date().getTime();
+      var nombremilliseconde = dateaujourdui - premieredate;
+      var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
+      var nomrejoursavantacc = 280 - nombresjours;
+      if (nomrejoursavantacc < 0) {
+        this.navCtrl.setRoot('ChooseModePage', {});
+      }
+      this.nombrejourrestant = (nombresjours) % 7;
+      this.nombresemaine = Math.floor((nombresjours) / 7);
+      var time = new Date().getTime();
+      var dateaccouchement = new Date(time + nomrejoursavantacc * 24 * 60 * 60 * 1000);
+      this.dpa = dateaccouchement.toLocaleDateString("fr");
       
       var dateaujourdui = new Date().getTime();
       var datepv = result;
@@ -101,6 +178,9 @@ export class ReportPage {
       var nombremilliseconde = dateaujourdui - premieredate;
       var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
       var nomrejoursavantacc = 280 - nombresjours;
+      if (nomrejoursavantacc < 0) {
+        this.navCtrl.setRoot('ChooseModePage', {});
+      }
       this.nombrejourrestant = (nombresjours) % 7;
       this.nombresemaine = Math.floor((nombresjours) / 7);
       var time = new Date().getTime();
@@ -124,12 +204,12 @@ export class ReportPage {
     });
     
     console.log('ionViewDidLoad ReportPage');
-    this.localNotifications.schedule({
+    /*this.localNotifications.schedule({
       text: 'Debut du seignement dans  une semaine',
       trigger: {at: new Date(new Date().getTime() + 60 * 1000)},
       led: 'FF0000',
       sound: 'file://assets/imgs/notification.mp3'
-    });
+    });*/
   }
   
   // ionViewWillLeave() {
@@ -228,6 +308,15 @@ export class ReportPage {
             }).then((date) => {
               
               //var datepv = new Date(JSON.stringify(date)).getTime();
+              var data = {
+                "date_visite": date
+              }
+              
+              this.services.dateprochaineVisite(data).subscribe(next => {
+                this.items = next
+              }, error => {
+              }, () => {
+              });
               var dateaujourdui = new Date().getTime();
               var datepv = date.getTime();
               var nombremilliseconde = datepv - dateaujourdui;
@@ -236,7 +325,7 @@ export class ReportPage {
               if (this.dpvacc > 0) {
                 this.mylocalstorage.storeKeydpvacc(datepv).then(() => {
                 });
-                this.testeurdpv = 1;
+                this.testeurdpvcac = 1;
               }
               
             });
@@ -295,6 +384,18 @@ export class ReportPage {
                   
                   this.mylocalstorage.getSession().then((result: any) => {
                     var dataprofile = '' + result.user._embedded.patient.debut_dernieres_menstrues;
+                    // this.mylocalstorage.setObjectUpdateProfile(this.object);
+                    this.mylocalstorage.getObjectUpdateProfile().then((mode: any) => {
+                      if (mode != null) {
+                        mode.debut_dernieres_menstrues = dataprofile.substring(0, 16) + 'Z';
+                        this.services.updateprofile(mode).subscribe(next => {
+                          this.mylocalstorage.updatePatientStorage(next);
+                        }, error => {
+                        }, () => {
+                          this.mylocalstorage.setObjectUpdateProfile(mode);
+                        });
+                      }
+                    });
                     var ladate = dataprofile.substring(0, 16) + 'Z';
                     var premieredate = new Date(ladate).getTime();
                     var dateaujourdui = new Date().getTime();
@@ -447,6 +548,26 @@ export class ReportPage {
   
   mesbonmoment() {
     this.navCtrl.push("MesbonmomentPage", {})
+  }
+  
+  
+  presentToast(message: any) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 10000
+    });
+    toast.present();
+  }
+  
+  declancherAlerte(message: any, nombreseconde: any) {
+    
+    this.localNotifications.schedule({
+      text: message,
+      trigger: {at: new Date(new Date().getTime() + nombreseconde * 1000)},
+      led: 'FF0000',
+      sound: 'file://assets/imgs/notification.mp3'
+    });
+    
   }
   
   

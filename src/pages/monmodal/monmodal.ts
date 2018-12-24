@@ -66,29 +66,30 @@ export class MonmodalPage {
       destinationType:1,
       encodingType:this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: 1
+      sourceType: 1,
+      allowEdit:true
 
     }
 
     this.camera.getPicture(options).then((ImageData) => {
-
-          let base64Image = ImageData;
-          this.imageaafficher = "data:image/jpeg;base64," + ImageData;
-          
-          this.base64.encodeFile(base64Image).then((base64File: string)=>{
-                this.testeur = 1;
-                this.imageaafficher = base64File;
-                this.noteGrosesse.image = base64File;
-
-              }, (err) =>{
-                alert(err);
-          })
-
-
+      let base64Image = ImageData;
+      this.imageaafficher = "data:image/jpeg;base64," + ImageData;
+     
+        this.base64.encodeFile(base64Image).then((base64File: string)=>{
+            this.testeur = 1;
+            this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
 
         }, (err) =>{
           alert(err);
-        })
+      })
+
+
+
+    }, (err) =>{
+      alert(err);
+    })
+
+    
     }
 
 
@@ -101,11 +102,12 @@ export class MonmodalPage {
         destinationType:0,
         encodingType:this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
-        sourceType: 0
+        sourceType: 0,
+        allowEdit:true
 
       }
 
-      this.camera.getPicture(options).then((ImageData) => {
+         this.camera.getPicture(options).then((ImageData) => {
             let base64Image = ImageData;
             this.imageaafficher = "data:image/jpeg;base64," + ImageData;
            

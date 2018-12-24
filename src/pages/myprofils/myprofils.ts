@@ -18,6 +18,7 @@ import {IonButtonEnd} from "../../providers/service";
 export class MyprofilsPage {
   ionButtonsEnd: Array<IonButtonEnd> = [];
   user = null;
+  public imageaafficher = "";
   
   constructor(public navCtrl: NavController, public localStorage: LocalStorageProvider,
               public navParams: NavParams) {

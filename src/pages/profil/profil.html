@@ -4,8 +4,9 @@
 
 <ion-content padding>
   <div class="logologin" (click)="openDialogChangePhoto()">
-    <img class="logo" src="assets/imgs/user.jpg">
-    <p class="textelogin">Change Picture</p>
+    <img class="logo" [src]="imageaafficher != null ? imageaafficher : 'assets/imgs/user.jpg'">
+    
+    <p class="textelogin">Change Picture </p>
   </div>
   
   <p *ngIf="internalerror === 1" style="color: red; font-weight: bold">{{internalemesage}}</p>

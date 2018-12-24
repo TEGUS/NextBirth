@@ -315,6 +315,7 @@ export class SurveillancePage {
     this.testeurfin = 0;
     this.minutecontraception = 0;
     this.minutecontraceptionNet = 0;
+    this.couleurbouton = 0;
   }
 
   
@@ -343,12 +344,12 @@ export class SurveillancePage {
   colorbrunatre(){
     this.vibration.vibrate(1000);
     this.couleurduliquide = "Brunatre";
-    this.presentToast("Les saignements par le vagin au troisième trimestre peuvent être des signes d’une urgence vitale. Faite vous absolument examiner dans une maternité le plutôt possible");
-    this.declancherAlerte("Les saignements par le vagin au troisième trimestre peuvent être des signes d’une urgence vitale. Faite vous absolument examiner dans une maternité le plutôt possible", 2);
+    this.presentToast("Attention ! Cet aspect du liquide amniotique peut être signe de danger. Faites-vous examiner sans attendre dans une paternité proche de vous.");
+    this.declancherAlerte("Attention ! Cet aspect du liquide amniotique peut être signe de danger. Faites-vous examiner sans attendre dans une paternité proche de vous.", 2);
     let situations = {
       date: new Date(),
       titre: "alerte",
-      description: " Les saignements par le vagin au troisième trimestre peuvent être des signes d’une urgence vitale. Faite vous absolument examiner dans une maternité le plutôt possible"
+      description: " Attention ! Cet aspect du liquide amniotique peut être signe de danger. Faites-vous examiner sans attendre dans une paternité proche de vous."
     }
     this.services.createSituations(situations).then((result) =>{});
   
@@ -398,12 +399,12 @@ export class SurveillancePage {
   colorpurulente(){
     this.vibration.vibrate(1000);
     this.couleurduliquide = "Purulente";
-    this.presentToast("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf");
-    this.declancherAlerte("vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf", 2);
+    this.presentToast("Attention ! Cet aspect du liquide amniotique peut être signe de danger. Faites-vous examiner sans attendre dans une paternité proche de vous.");
+    this.declancherAlerte("Attention ! Cet aspect du liquide amniotique peut être signe de danger. Faites-vous examiner sans attendre dans une paternité proche de vous.", 2);
     let situations = {
       date: new Date(),
       titre: "alerte",
-      description: " vous êtes en etas d'arestation lqksl qslmkqlsq qslqsllqs qslqsqlmlkpoeifopezof pefzefopfopefpf fpfeofjfpkpzojfzpeofjzpf pzfjozfopjf"
+      description: " Attention ! Cet aspect du liquide amniotique peut être signe de danger. Faites-vous examiner sans attendre dans une paternité proche de vous."
     }
     this.services.createSituations(situations).then((result) =>{});
   

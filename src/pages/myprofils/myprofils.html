@@ -7,8 +7,8 @@
 
 <ion-content class="backgroundcorps">
   <div *ngIf="user != null">
-    <div class="logologin">
-      <img class="logo" src="assets/imgs/user.jpg">
+    <div class="logologin" text-center>
+      <img class="logo" [src]="imageaafficher != null ? imageaafficher : 'assets/imgs/user.jpg'">
       <p class="textelogin">{{user.email}}</p>
     </div>
     <br>

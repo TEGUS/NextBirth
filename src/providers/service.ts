@@ -119,6 +119,15 @@ export class ServiceProvider {
     );
   }
   
+  
+  dateprochaineVisite(data: any): Observable<any> {
+    return this.http.put(
+      this.host + ' grossesse/date-next-visite',
+      data,
+      this.headers
+    );
+  }
+  
   ///// ** Profile
   
   /**
@@ -361,15 +370,9 @@ export class ServiceProvider {
   
   
   getAllSituations() {
-    
     return new Promise((resolve) => {
-      
-      this.sqlite.create({
-        name: 'nextbirth.db',
-        location: 'default'
-      }).then((db: SQLiteObject) => {
-        
-        db.executeSql('SELECT * FROM SITUATIONS ', [])
+      this.sqlite.create({name: 'nextbirth.db', location: 'default'}).then((db: SQLiteObject) => {
+        db.executeSql('SELECT * FROM SITUATIONS ORDER BY date DESC', [])
           .then(res => {
             let expenses = [];
             for (var i = 0; i < res.rows.length; i++) {
@@ -386,15 +389,11 @@ export class ServiceProvider {
             console.log(e);
             resolve(0);
           });
-        
-        
       }).catch(e => {
-        this.presentToast('database donst exist!');
+        // this.presentToast('database donst exist!');
+        console.error(e)
       });
-      
     });
-    
-    
   }
   
   

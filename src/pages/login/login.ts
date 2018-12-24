@@ -59,6 +59,7 @@ export class LoginPage {
       loading.present();
       this.authProvider.logIn(this.object).subscribe(next => {
         console.log(next);
+        
         this.mylocalstorage.storeSession(next).then(() => {
           this.services.faitTravail();
           

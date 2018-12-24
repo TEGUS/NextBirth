@@ -4,6 +4,8 @@ import {LocalStorageProvider} from '../../providers/localstorage';
 import {ServiceProvider} from "../../providers/service";
 
 import * as codesMode from "../../components/mode/mode";
+import {Camera, CameraOptions} from '@ionic-native/camera';
+import {Base64} from '@ionic-native/base64';
 import * as moment from "moment";
 import {formatDate, formatNumberOfDate} from "../../variables/functions";
 
@@ -31,14 +33,18 @@ export class ProfilPage {
   errormessage = null;
   public internalerror = null;
   public internalemesage = null;
+  public imageaafficher = "";
   
   modeSelectedExist = false;
   
+  imageB64 = null;
+
   user = null;
   date_naissance = null;
   debut_dernieres_menstrues = null;
   
-  constructor(public navCtrl: NavController, public services: ServiceProvider, public loadingCtrl: LoadingController,
+  constructor(public navCtrl: NavController,public mylocalstorage: LocalStorageProvider, private base64: Base64,
+              private camera: Camera, public services: ServiceProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider,
               public alertCtrl: AlertController) {
   }
@@ -221,6 +227,9 @@ export class ProfilPage {
         this.presentToast('Mise à jour effectué !');
         
         this.localStorage.setObjectUpdateProfile(this.object);
+        /*this.localStorage.getObjectUpdateProfile().then(mode => {
+          
+        });*/
         
         this.localStorage.getKey('modeSelected').then(mode => {
           (mode !== null) ? this.selectMode(mode) : this.navCtrl.pop();
@@ -282,17 +291,118 @@ export class ProfilPage {
         {
           text: 'camera',
           handler: () => {
-            console.log('Camera clicked');
+
+            this.takephotos();
+
           }
         },
         {
           text: 'Gallery',
-          handler: () => {
-            console.log('Gallery clicked');
+          handler: () => {  
+            
+              this.takegalerie();
+
+
           }
         }
       ]
     });
     alert.present();
   }
+
+
+
+
+  takephotos(){
+
+    
+    const options: CameraOptions = {
+      quality:100,
+      destinationType:1,
+      encodingType:this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: 1,
+      allowEdit:true
+
+    }
+
+    this.camera.getPicture(options).then((ImageData) => {
+      let base64Image = ImageData;
+        this.imageaafficher = "data:image/jpeg;base64," + ImageData;
+      
+        this.mylocalstorage.getSession().then((result:any) =>{
+           result.user._embedded.photo = this.imageaafficher;
+           this.mylocalstorage.storeSession(result).then(() => {
+           });
+        })
+          
+       
+     
+        this.base64.encodeFile(base64Image).then((base64File: string)=>{
+            
+           // this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
+
+        }, (err) =>{
+          alert(err);
+      })
+
+
+
+    }, (err) =>{
+      alert(err);
+    })
+
+    
+    }
+
+
+
+
+    takegalerie(){
+
+
+      
+
+      
+
+      const options: CameraOptions = {
+        quality:100,
+        destinationType:0,
+        encodingType:this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE,
+        sourceType: 0,
+        allowEdit:true
+
+      }
+
+         this.camera.getPicture(options).then((ImageData) => {
+            let base64Image = ImageData;
+            
+            this.mylocalstorage.getSession().then((result:any) =>{
+                result.user._embedded.photo = this.imageaafficher;
+                this.mylocalstorage.storeSession(result).then(() => {
+                });
+            })
+
+            this.imageaafficher = "data:image/jpeg;base64," + ImageData;
+           
+              this.base64.encodeFile(base64Image).then((base64File: string)=>{
+                 
+                 // this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
+
+              }, (err) =>{
+                alert(err);
+            })
+
+
+
+          }, (err) =>{
+            alert(err);
+          })
+      }
+
+
+      
+
+
 }
