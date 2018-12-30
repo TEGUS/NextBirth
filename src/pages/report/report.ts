@@ -55,6 +55,7 @@ export class ReportPage {
   }
   
   ionViewWillEnter() {
+    this.services.initHeaders();
     
     
     // this.mylocalstorage.setObjectUpdateProfile(this.object);
@@ -67,7 +68,9 @@ export class ReportPage {
     
     this.mylocalstorage.getSession().then((result: any) => {
       this.imageaafficher = result.user._embedded.photo;
-    })
+    }, error => {
+      console.error(error)
+    });
     
     
     this.mylocalstorage.getKeydpv().then((result: any) => {
@@ -87,11 +90,15 @@ export class ReportPage {
         this.mylocalstorage.getSession().then((result: any) => {
           this.presentToast("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain");
           this.declancherAlerte("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain", 2);
-        })
+        }, error => {
+          console.error(error)
+        });
         
       } else {
         this.testeurdpv = 0;
       }
+    }, error => {
+      console.error(error)
     });
     
     
@@ -113,11 +120,15 @@ export class ReportPage {
         this.mylocalstorage.getSession().then((result: any) => {
           this.presentToast("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain demain");
           this.declancherAlerte("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain demain", 2);
-        })
+        }, error => {
+          console.error(error)
+        });
         
       } else {
         this.testeurdpvcac = 0;
       }
+    }, error => {
+      console.error(error)
     });
     
     
@@ -150,6 +161,8 @@ export class ReportPage {
       } else {
         this.testeurdpv = 0;
       }
+    }, error => {
+      console.error(error)
     });
     
     
@@ -167,6 +180,8 @@ export class ReportPage {
       } else {
         this.testeurdpvcac = 0;
       }
+    }, error => {
+      console.error(error)
     });
     
     
@@ -195,6 +210,7 @@ export class ReportPage {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.acticlesSubscription = this.services.getArticles().subscribe(next => {
+      console.log(next);
       this.items = next
     }, error => {
       loading.dismiss();
@@ -204,25 +220,7 @@ export class ReportPage {
     });
     
     console.log('ionViewDidLoad ReportPage');
-    /*this.localNotifications.schedule({
-      text: 'Debut du seignement dans  une semaine',
-      trigger: {at: new Date(new Date().getTime() + 60 * 1000)},
-      led: 'FF0000',
-      sound: 'file://assets/imgs/notification.mp3'
-    });*/
   }
-  
-  // ionViewWillLeave() {
-  //   if (this.acticlesSubscription !== null) {
-  //     this.acticlesSubscription.unsubscribe();
-  //   }
-  // }
-  //
-  // ionViewDidLeave() {
-  //   if (this.acticlesSubscription !== null) {
-  //     this.acticlesSubscription.unsubscribe();
-  //   }
-  // }
   
   selectArticle(id) {
     console.log(id);
