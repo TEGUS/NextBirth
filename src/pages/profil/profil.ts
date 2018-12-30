@@ -45,7 +45,7 @@ export class ProfilPage {
   date_naissance = null;
   debut_dernieres_menstrues = null;
   
-  constructor(public navCtrl: NavController,public mylocalstorage: LocalStorageProvider, private base64: Base64,
+  constructor(public navCtrl: NavController, public mylocalstorage: LocalStorageProvider, private base64: Base64,
               private camera: Camera, public services: ServiceProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public navParams: NavParams, public localStorage: LocalStorageProvider,
               public alertCtrl: AlertController) {
@@ -186,7 +186,7 @@ export class ProfilPage {
   
   
   updateProfile() {
-    if(this.checkErrorPossibilities().error) {
+    if (this.checkErrorPossibilities().error) {
       this.presentToast(this.checkErrorPossibilities().msg)
       return;
     }
@@ -304,30 +304,28 @@ export class ProfilPage {
         {
           text: 'camera',
           handler: () => {
-
+            
             this.takephotos();
-
+            
           }
         },
         {
           text: 'Gallery',
-          handler: () => {  
+          handler: () => {
             
-              this.takegalerie();
-
-
+            this.takegalerie();
+            
+            
           }
         }
       ]
     });
     alert.present();
   }
-
-
-
-
-  takephotos(){
-
+  
+  
+  takephotos() {
+    
     
     const options: CameraOptions = {
       quality:100,
@@ -339,10 +337,10 @@ export class ProfilPage {
       
 
     }
-
+    
     this.camera.getPicture(options).then((ImageData) => {
       let base64Image = ImageData;
-        this.imageaafficher = "data:image/jpeg;base64," + ImageData;
+      this.imageaafficher = "data:image/jpeg;base64," + ImageData;
       
         this.mylocalstorage.getSession().then((result:any) =>{
            result.user._embedded.photo = this.imageaafficher;
@@ -350,55 +348,44 @@ export class ProfilPage {
            this.mylocalstorage.storeSession(result).then(() => {
            });
         })
-          
-       
-
-
 
     }, (err) =>{
       alert(err);
     })
-
     
+    
+  }
+  
+  
+  takegalerie() {
+    
+    
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: 0,
+      allowEdit: true,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: 0
+      
     }
-
-
-
-
-    takegalerie(){
-
-
+    
+    this.camera.getPicture(options).then((ImageData) => {
+      let base64Image = ImageData;
+      this.imageaafficher = "data:image/jpeg;base64," + ImageData;
+      this.mylocalstorage.getSession().then((result: any) => {
+        result.user._embedded.photo = this.imageaafficher;
+        this.images.image = this.imageaafficher;
+        this.mylocalstorage.storeSession(result).then(() => {
+        });
+      })
       
-
+      this.imageaafficher = "data:image/jpeg;base64," + ImageData;
       
-
-      const options: CameraOptions = {
-        quality:100,
-        destinationType:0,
-        allowEdit:true,
-        encodingType:this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE,
-        sourceType: 0
-
-      }
-
-         this.camera.getPicture(options).then((ImageData) => {
-            let base64Image = ImageData;
-            this.imageaafficher = "data:image/jpeg;base64," + ImageData;
-            this.mylocalstorage.getSession().then((result:any) =>{
-                result.user._embedded.photo = this.imageaafficher;
-                this.images.image = this.imageaafficher;
-                this.mylocalstorage.storeSession(result).then(() => {
-                });
-            })
-
-          }, (err) =>{
-            alert(err);
-          })
-      }
-
-
-      
-
-
+    }, (err) => {
+      alert(err);
+    })
+  }
+  
+  
 }

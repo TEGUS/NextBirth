@@ -58,11 +58,11 @@ export class ReportPage {
     
     
     // this.mylocalstorage.setObjectUpdateProfile(this.object);
-    this.mylocalstorage.getObjectUpdateProfile().then(mode => {
+    /*this.mylocalstorage.getObjectUpdateProfile().then(mode => {
       if (mode == null) {
         this.navCtrl.push('ProfilPage');
       }
-    });
+    });*/
     
     
     this.mylocalstorage.getSession().then((result: any) => {
