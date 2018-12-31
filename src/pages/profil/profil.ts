@@ -213,12 +213,12 @@ export class ProfilPage {
     }
     
     this.checkValues().then(next => {
-      // this.object.diabete = this.object.diabete ? 1 : 0;
-      // this.object.hta = this.object.hta ? 1 : 0;
-      // this.object.drepano = this.object.drepano ? 1 : 0;
-      // this.object.douleurRegle = this.object.douleurRegle ? 1 : 0;
-      // this.object.douleurRegle = this.object.douleurRegle ? 1 : 0;
-      // this.object.cycleRegulier = this.object.cycleRegulier ? 1 : 0;
+      this.object.diabete = this.object.diabete ? true : false;
+      this.object.hta = this.object.hta ? true : false;
+      this.object.drepano = this.object.drepano ? true : false;
+      this.object.douleurRegle = this.object.douleurRegle ? true : false;
+      this.object.douleurRegle = this.object.douleurRegle ? true : false;
+      this.object.cycleRegulier = this.object.cycleRegulier ? true : false;
       
       this.object.account = {
         username: this.username,
@@ -252,19 +252,19 @@ export class ProfilPage {
           // this.errormessage = error.error[0].message;
           
           if (this.errorpath.account.hasOwnProperty('debut_dernieres_menstrues')) {
-            this.presentToast(this.errorpath.account.debut_dernieres_menstrues[0])
+            this.presentToast("DDR : "+this.errorpath.account.debut_dernieres_menstrues[0])
           }
           
           if (this.errorpath.account.hasOwnProperty('date_naissance')) {
-            this.presentToast(this.errorpath.account.date_naissance[0])
+            this.presentToast("Date Naissance : "+this.errorpath.account.date_naissance[0])
           }
           
           if (this.errorpath.account.hasOwnProperty('username')) {
-            this.presentToast(this.errorpath.account.username[0])
+            this.presentToast("Pseudonyme : "+this.errorpath.account.username[0])
           }
           
           if (this.errorpath.account.hasOwnProperty('phone')) {
-            this.presentToast(this.errorpath.account.phone[0])
+            this.presentToast("Numéro de téléphone : "+this.errorpath.account.phone[0])
           }
           
         } else {
