@@ -3,6 +3,7 @@ import {AlertController, IonicPage, LoadingController, NavController, NavParams,
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ServiceProvider} from "../../providers/service";
 import {LocalStorageProvider} from "../../providers/localstorage";
+import * as deepEqual from "deep-equal";
 
 /**
  * Generated class for the MiseajourPage page.
@@ -19,7 +20,8 @@ import {LocalStorageProvider} from "../../providers/localstorage";
 export class MiseajourPage {
   private form: FormGroup = null;
   private object_to_save : MesMiseAJourObject
-  
+  isChange = false;
+  vitalInfo = null;
   private  NUMBER_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -36,6 +38,8 @@ export class MiseajourPage {
 
   initForm() {
     this.localStorage.getKey('vital_info').then(next => {
+      this.isChange = next !== null;
+      this.vitalInfo = next;
       this.form = this.formBuilder.group({
         poids: [next === null ? '' : next.poids, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
         taille: [next === null ? '' : next.taille, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
@@ -51,19 +55,44 @@ export class MiseajourPage {
   dateDebutTraitementChanged(event) {
     this.form.patchValue({updated_date: event.day + '/' + event.month + '/' + event.year})
   }
+  
+  changeListener($event) {
+    if(!this.isChange) {
+      this.isChange = true;
+    }
+  }
 
   submit() {
     if(this.form.valid) {
-      this.object_to_save = {
-        ...this.form.value
+      if (!this.isChange) {
+        this.presentToast("Veuillez renseigner au moins une valeur du formulaire!")
+        return;
       }
-      console.log(this.object_to_save);
+      
+      let toCompare = {
+        ...this.form.value,
+        updated_date: 0,
+        id: 0
+      }
+  
+      this.vitalInfo = {
+        ...this.vitalInfo,
+        updated_date: 0,
+        id: 0
+      }
+  
+      if (deepEqual(toCompare,this.vitalInfo)) {
+        this.presentToast("Veuillez renseigner au moins une valeur du formulaire!")
+        return;
+      }
+      
+      console.log(this.form.value);
 
       let vitalInfo = null;
 
       let loading = this.loadingCtrl.create()
       loading.present()
-      this.services.vitalInfo(this.object_to_save).subscribe(next => {
+      this.services.vitalInfo(this.form.value).subscribe(next => {
         console.log(next);
         vitalInfo = next._embedded.vital_info;
       }, error => {
@@ -91,6 +120,14 @@ export class MiseajourPage {
 
   cancel() {
     this.initForm();
+  }
+  
+  presentToast(message: any) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
   }
 }
 

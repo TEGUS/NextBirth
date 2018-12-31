@@ -12,7 +12,7 @@
           <p class="text">Poids</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="poids" class="monimput" type="number"></ion-input>
+          <ion-input formControlName="poids" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
         <ion-col>
           <p class="text2"> kg </p>
@@ -27,7 +27,7 @@
           <p class="text">Taille</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="taille" class="monimput" type="number"></ion-input>
+          <ion-input formControlName="taille" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
         <ion-col>
           <p class="text2"> m </p>
@@ -42,7 +42,7 @@
           <p class="text">Taux d'hémoglobine</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="taux_hemoglobine" class="monimput" type="number"></ion-input>
+          <ion-input formControlName="taux_hemoglobine" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
         <ion-col>
           <p class="text2"> g/dl </p>
@@ -57,7 +57,7 @@
           <p class="text">Tension artérielle</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="tension_arterielle" class="monimput" type="number"></ion-input>
+          <ion-input formControlName="tension_arterielle" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
         <ion-col>
           <p class="text2"> mmHg </p>
@@ -72,7 +72,7 @@
           <p class="text">Glycémie à jeun</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="gyclemie_a_jeun" class="monimput" type="number"></ion-input>
+          <ion-input formControlName="gyclemie_a_jeun" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
         <ion-col>
           <p class="text2"> g/l </p>
@@ -87,7 +87,7 @@
           <p class="text">Température vaginale</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="temperature_vaginale" class="monimput" type="number"></ion-input>
+          <ion-input formControlName="temperature_vaginale" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
         <ion-col>
           <p class="text2"> °C </p>

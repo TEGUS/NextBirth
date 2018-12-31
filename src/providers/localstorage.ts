@@ -78,17 +78,17 @@ export class LocalStorageProvider {
   
 
   getSession() {
-    return new Promise((resolve, failed) => {
+    return new Promise<any>((resolve, failed) => {
       this.storage.get(this.key).then((data) => {
         if (data == null) {
-          failed();
+          failed(null);
         }else {
           Session.user = data;
           Session.token = data.token;
           resolve(data);
         }
       }).catch((error) => {
-        failed();
+        failed(error);
       });
     });
   }
@@ -100,15 +100,15 @@ export class LocalStorageProvider {
 
 
   getKeydpv() {
-    return new Promise((resolve, failed) => {
+    return new Promise<any>((resolve, failed) => {
       this.storage.get(this.keydpv).then((data) => {
         if (data == null) {
-          failed();
+          failed(null);
         }else {
           resolve(data);
         }
       }).catch((error) => {
-        failed();
+        failed(error);
       });
     });
   }
@@ -120,15 +120,15 @@ export class LocalStorageProvider {
 
 
   getKeydpvacc() {
-    return new Promise((resolve, failed) => {
+    return new Promise<any>((resolve, failed) => {
       this.storage.get(this.keydpvacc).then((data) => {
         if (data == null) {
-          failed();
+          failed(null);
         }else {
           resolve(data);
         }
       }).catch((error) => {
-        failed();
+        failed(error);
       });
     });
   }
