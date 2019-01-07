@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, LoadingController} from 'ionic-angular';
-import {ServiceProvider} from '../../providers/service';
-import {LocalStorageProvider} from "../../providers/localstorage";
+import {IonicPage, NavController, NavParams, LoadingController, AlertController} from 'ionic-angular';
+import {ServiceProvider} from '../../../providers/service';
+import {LocalStorageProvider} from "../../../providers/localstorage";
+import {getCurrentDateWith} from "../../../variables/functions";
 
 /**
  * Generated class for the TimelinetestPage page.
@@ -22,9 +23,7 @@ export class TimelinetestPage {
   public titre: any;
   public description: any;
   mainInterval = 200;
-
-
-
+  
   
   public timelines = [];
   
@@ -78,17 +77,18 @@ export class TimelinetestPage {
   debut_dernieres_menstrues = null;
   
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public services: ServiceProvider,
-              public navParams: NavParams, public localStorage: LocalStorageProvider) {
+              public navParams: NavParams, public localStorage: LocalStorageProvider,
+              public alertCtrl: AlertController) {
   }
   
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.start = 0;
     this.end = this.mainInterval;
     
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getAllEvents(this.start, this.end).subscribe(next => {
-      this.getDateDernierMenstrues().then(ddm => {
+      this.services.getDateDernierMenstrues().then(ddm => {
         console.log(ddm.getDate());
         console.log(ddm.getDay());
         this.debut_dernieres_menstrues = ddm;
@@ -111,12 +111,12 @@ export class TimelinetestPage {
       const nbJourInterval = 7;
       let timelinestmp = [];
       let firstdebut = events[0].delai_jours_debut + nbJourInterval;
-  
+      
       while (cache.length !== events.length) {
         events.forEach((element, j) => {
           if (cache.find(x => element.id === x.id) === undefined && element.delai_jours_debut <= firstdebut) {
-            let d = this.getCurrentDateWith(this.debut_dernieres_menstrues, element.delai_jours_debut);
-        
+            let d = getCurrentDateWith(this.debut_dernieres_menstrues, element.delai_jours_debut);
+            
             timelinestmp.push({
               ...element,
               title: element.event_type,
@@ -124,7 +124,7 @@ export class TimelinetestPage {
               icon: 'calendar',
               time: {subTitle: d.toDateString(), title: d.toDateString()}
             });
-        
+            
             if (!(element.take_interval instanceof Array)) {
               let interval = [];
               let i = 1;
@@ -133,7 +133,7 @@ export class TimelinetestPage {
               }
               element.take_interval = interval;
             }
-        
+            
             if (element.take_interval.length !== 0) {
               element.take_interval.forEach(ti => {
                 let v = {
@@ -145,23 +145,23 @@ export class TimelinetestPage {
                   icon: 'calendar',
                   time: {subTitle: '', title: ''}
                 };
-  
-                let d = this.getCurrentDateWith(this.debut_dernieres_menstrues, v.delai_jours_debut);
+                
+                let d = getCurrentDateWith(this.debut_dernieres_menstrues, v.delai_jours_debut);
                 
                 v.time.subTitle = d.toDateString();
                 v.time.title = v.time.subTitle;
-            
+                
                 timelinestmp.push(v);
               });
             }
-        
+            
             cache.push(element);
           }
-      
+          
           // if (j === (events.length - 1) && timelinestmp.length !== 0) {
           if (j === (events.length - 1)) {
-            let d = this.getCurrentDateWith(this.debut_dernieres_menstrues, (firstdebut - nbJourInterval));
-        
+            let d = getCurrentDateWith(this.debut_dernieres_menstrues, (firstdebut - nbJourInterval));
+            
             timelines.push({
               elements: timelinestmp,
               icon: 'calendar',
@@ -176,42 +176,25 @@ export class TimelinetestPage {
     return timelines;
   }
   
-  getCurrentDateWith(dateStart: Date, nbJour: number) {
-    return new Date((dateStart.getTime()) + (nbJour*24*60*60*1000))
-  }
-  
-  getDateDernierMenstrues() {
-    return new Promise<Date>((resolve, reject) => {
-      this.localStorage.getKey('session').then(session => {
-        if (session !== null) {
-          resolve((new Date((session.user._embedded.patient.debut_dernieres_menstrues).substring(0,16)+'Z')));
-        } else {
-          reject(false);
-        }
-      })
-    })
-  }
-
-  selectArticle(content, description){
+  selectArticle(content, description) {
     this.testeur = 1;
     this.titre = content;
     this.description = description;
   }
-
-  goodArticle(){
+  
+  goodArticle() {
     this.testeur = 0;
   }
-
-
+  
   
   doInfiniteBottom(infiniteScroll) {
     setTimeout(() => {
       // this.items = this.items.concat(this.items);
       // console.log('Async operation has ended');
-  
+      
       this.start += this.mainInterval;
       this.end += this.mainInterval;
-  
+      
       this.services.getAllEvents(this.start, this.end).subscribe(next => {
         this.timelines = this.timelines.concat(this.getTimelines(next.data));
       }, error => {
@@ -220,6 +203,45 @@ export class TimelinetestPage {
       
       infiniteScroll.complete();
     }, 1000);
+  }
+  
+  addEvent() {
+    this.navCtrl.push('BuildEventPage')
+  }
+  
+  updateEvent(event) {
+    this.navCtrl.push('BuildEventPage', {
+      item: event
+    })
+  }
+  
+  deleteEvent(event) {
+    let alert = this.alertCtrl.create({
+      message: 'Voulez vous continuer ?',
+      buttons: [
+        {
+          text: 'NON',
+          role: 'cancel',
+          handler: () => {}
+        },
+        {
+          text: 'Oui',
+          handler: () => {
+            let loading = this.loadingCtrl.create()
+            loading.present()
+            this.services.deleteEvent(event.id).subscribe(next => {
+              loading.present()
+              this.ionViewWillEnter();
+            }, error => {
+              console.log(error)
+              loading.present()
+            })
+          }
+        }
+      ]
+    });
+  
+    alert.present();
   }
 }
 

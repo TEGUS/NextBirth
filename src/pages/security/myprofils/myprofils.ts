@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {LocalStorageProvider} from '../../providers/localstorage';
-import {IonButtonEnd} from "../../providers/service";
-import {formatDate} from "../../variables/functions";
+import {LocalStorageProvider} from '../../../providers/localstorage';
+import {IonButtonEnd} from "../../../providers/service";
+import {formatDate} from "../../../variables/functions";
 
 /**
  * Generated class for the MyprofilsPage page.

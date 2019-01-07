@@ -1,0 +1,40 @@
+<ion-header>
+  <navbar [title]="'Build Event'"></navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="form != null">
+    <form [formGroup]="form" (submit)="submit()">
+      <ion-list no-margin no-padding>
+        <ion-item>
+          <ion-label color="primary" floating>Date début</ion-label>
+          <ion-datetime text-left [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="dateStart" (ionChange)="listenChangeDate($event, 'start')"
+                        displayFormat="DD MMM, YYYY"></ion-datetime>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label color="primary" floating>Date fin</ion-label>
+          <ion-datetime text-left [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="dateEnd" (ionChange)="listenChangeDate($event, 'end')"
+                        displayFormat="DD MMM, YYYY"></ion-datetime>
+        </ion-item>
+        
+        
+        <ion-item>
+          <ion-label color="primary" floating>Name</ion-label>
+          <ion-input text-left formControlName="name" type="text"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label color="primary" floating>Description</ion-label>
+          <ion-textarea text-left formControlName="description" rows="4" maxLength="300"></ion-textarea>
+        </ion-item>
+      </ion-list>
+      
+      
+      <button style="margin-top: 10%" text-capitalize ion-button full [disabled]="!form.valid">Valider</button>
+    </form>
+  </div>
+</ion-content>

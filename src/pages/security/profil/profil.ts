@@ -8,14 +8,14 @@ import {
   ToastController,
   Platform
 } from 'ionic-angular';
-import {LocalStorageProvider} from '../../providers/localstorage';
-import {ServiceProvider} from "../../providers/service";
+import {LocalStorageProvider} from '../../../providers/localstorage';
+import {ServiceProvider} from "../../../providers/service";
 
-import * as codesMode from "../../components/mode/mode";
+import * as codesMode from "../../../components/mode/mode";
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {Base64} from '@ionic-native/base64';
 import * as moment from "moment";
-import {formatDate, formatNumberOfDate} from "../../variables/functions";
+import {formatDate, formatNumberOfDate} from "../../../variables/functions";
 
 /**
  * Generated class for the ProfilsPage page.

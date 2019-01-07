@@ -213,14 +213,24 @@ export class PilulierPage {
   }
   
   selectMedicament(item) {
-    if (this.treatments.find(x => x.name === item.name) === undefined) {
+    let idOfTreatement = this.treatments.findIndex(x => x.name === item.name);
+    let idOfListSearch = this.listMedicaments.findIndex(x => x.name === item.name);
+    
+    if (idOfTreatement === -1) {
       this.medicament_search = item.name;
       this.nextPart()
     } else {
       let alert = this.alertCtrl.create({
         subTitle: 'Médicament existant !',
         message: 'Présence de ce médicament dans la liste des Traitements',
-        buttons: ['Okay']
+        buttons: [{
+          text: 'Okay',
+          handler: () => {
+            this.listMedicaments.splice(idOfListSearch, 1);
+            this.presentDialogAlert("Veuillez Changer de médicament !")
+            this.medicament_search = ''
+          }
+        }]
       });
       alert.present();
     }
@@ -349,7 +359,8 @@ export class PilulierPage {
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.cancel();
-            this.presentDialogAlert('Médicament crée avec succès!', () => this.gotoOnglet_2());
+            this.gotoOnglet_2()
+            this.presentDialogAlert('Médicament crée avec succès!');
             this.initScheduleTreatement();
           })
         });
@@ -366,7 +377,8 @@ export class PilulierPage {
             loading.dismiss();
             loading.onDidDismiss(() => {
               this.cancel();
-              this.presentDialogAlert('Médicament mis à jour avec succès!', () => this.gotoOnglet_2());
+              this.gotoOnglet_2()
+              this.presentDialogAlert('Médicament mis à jour avec succès!');
               this.initScheduleTreatement();
             })
           });
