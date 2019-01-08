@@ -44,7 +44,8 @@ export class MiseajourPage {
         poids: [next === null ? '' : next.poids, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
         taille: [next === null ? '' : next.taille, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
         taux_hemoglobine: [next === null ? '' : next.taux_hemoglobine, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
-        tension_arterielle: [next === null ? '' : next.tension_arterielle, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
+        tension_arterielle_systolique: [next === null ? '' : next.tension_arterielle_systolique, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
+        tension_arterielle_diastolique: [next === null ? '' : next.tension_arterielle_diastolique, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
         gyclemie_a_jeun: [next === null ? '' : next.gyclemie_a_jeun, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
         temperature_vaginale: [next === null ? '' : next.temperature_vaginale, Validators.compose([Validators.pattern(this.NUMBER_REGEXP)])],
         conclusion_last_c_p_n: [next === null ? '' : next.conclusion_last_c_p_n]

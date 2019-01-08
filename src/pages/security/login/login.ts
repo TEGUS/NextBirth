@@ -3,13 +3,13 @@ import {
   AlertController, IonicPage, LoadingController, MenuController, NavController, NavParams,
   ToastController
 } from 'ionic-angular';
-import {AuthenticationProvider} from "../../providers/authentication";
+import {AuthenticationProvider} from "../../../providers/authentication";
 import {SignUpPage} from "../sign-up/sign-up";
-import {checkField} from "../../variables/functions";
-import {LocalStorageProvider} from '../../providers/localstorage';
-import {ServiceProvider} from '../../providers/service';
+import {checkField} from "../../../variables/functions";
+import {LocalStorageProvider} from '../../../providers/localstorage';
+import {ServiceProvider} from '../../../providers/service';
 import {MbscSelectOptions} from "@mobiscroll/angular";
-import {MyApp} from "../../app/app.component";
+import {MyApp} from "../../../app/app.component";
 
 /**
  * Generated class for the LoginPage page.

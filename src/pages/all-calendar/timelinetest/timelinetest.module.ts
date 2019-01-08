@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TimelinetestPage } from './timelinetest';
-import { TimelineModule } from '../../components/timeline/timeline.module';
-import { NavbarModule } from '../../components/navbar/navbar.module';
+import { TimelineModule } from '../../../components/timeline/timeline.module';
+import { NavbarModule } from '../../../components/navbar/navbar.module';
 
 @NgModule({
   declarations: [

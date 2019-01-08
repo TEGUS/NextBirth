@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, LoadingController, MenuController, NavController, NavParams, ToastController} from 'ionic-angular';
-import {AuthenticationProvider} from "../../providers/authentication";
-import {checkField} from "../../variables/functions";
-import {LocalStorageProvider} from "../../providers/localstorage";
+import {AuthenticationProvider} from "../../../providers/authentication";
+import {checkField} from "../../../variables/functions";
+import {LocalStorageProvider} from "../../../providers/localstorage";
 
 
 @IonicPage()

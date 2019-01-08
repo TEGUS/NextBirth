@@ -1,9 +1,3 @@
-<!--
-  Generated template for the TimelinetestPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <navbar [title]="'Calendrier'"></navbar>
 </ion-header>
@@ -29,34 +23,47 @@
   <timeline endIcon="call" *ngIf="testeur == 0">
     <timeline-item *ngFor="let item of timelines; index as i">
       <timeline-time [time]="item.time"></timeline-time>
-      <ion-icon [name]="item.icon"></ion-icon>
+      <ion-icon [name]="item.icon" tappable (click)="addEvent()"></ion-icon>
       <ion-card>
-
-          <!--<ion-slides > 
-             
-                <ion-slide class="mondive" *ngFor="let item of item.elements">
-                  <p class="datecard">{{item.time.subTitle}}</p>
-                  <p class="titrecard">{{item.title}}</p>
-                  <p>{{item.content}}</p>
-                </ion-slide>
-              
-          </ion-slides>  --> 
-
-
-          <ion-scroll>
+        
+        <!--<ion-slides >
+           
+              <ion-slide class="mondive" *ngFor="let item of item.elements">
+                <p class="datecard">{{item.time.subTitle}}</p>
+                <p class="titrecard">{{item.title}}</p>
+                <p>{{item.content}}</p>
+              </ion-slide>
+            
+        </ion-slides>  -->
+        
+        
+        <ion-scroll>
           <div style="display: flex; flex-direction: row;">
-            <div class="mondive" *ngFor="let item of item.elements" (click)="selectArticle(item.content, item.description)">
+            <div class="mondive" *ngFor="let item of item.elements">
               <p class="datecard">{{item.time.subTitle}}</p>
               <p class="titrecard">{{item.title}}</p>
               <p>{{item.content}}</p>
+              
+              
+              <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between">
+                <button clear ion-button small full (click)="selectArticle(item.content, item.description)">
+                  <ion-icon name="eye"></ion-icon>
+                </button>
+                <button *ngIf="item.patient != null" clear ion-button small full (click)="updateEvent(item)">
+                  <ion-icon name="create"></ion-icon>
+                </button>
+                <button *ngIf="item.patient != null" clear ion-button small full (click)="deleteEvent(item)">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </div>
             </div>
           </div>
         </ion-scroll>
       </ion-card>
     </timeline-item>
   </timeline>
-
-
+  
+  
   <ion-card *ngIf="testeur == 1">
     
     <ion-card-content>
@@ -67,7 +74,7 @@
         {{description}}
       </p>
     </ion-card-content>
-
+    
     <ion-row no-padding>
       <ion-col>
         <button ion-button clear small color="danger" icon-start>
@@ -75,18 +82,25 @@
           Favorite
         </button>
       </ion-col>
-      <ion-col text-right  (click)="goodArticle()">
+      <ion-col text-right (click)="goodArticle()">
         <button ion-button clear small color="danger" icon-start (click)="goodArticle()">
-         
+          
           ok
         </button>
       </ion-col>
     </ion-row>
-
-</ion-card>
+  
+  </ion-card>
   
   
   <ion-infinite-scroll (ionInfinite)="doInfiniteBottom($event)" threshold="2%">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
+
+
+<ion-fab bottom right>
+  <button ion-fab (click)="addEvent()">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-fab>

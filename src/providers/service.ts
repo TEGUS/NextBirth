@@ -60,6 +60,21 @@ export class ServiceProvider {
     });
   }
   
+  /**
+   * Retourn la DDM
+   */
+  getDateDernierMenstrues() {
+    return new Promise<Date>((resolve, reject) => {
+      this.localStorage.getKey('session').then(session => {
+        if (session !== null) {
+          resolve((new Date((session.user._embedded.patient.debut_dernieres_menstrues).substring(0, 16) + 'Z')));
+        } else {
+          reject(false);
+        }
+      })
+    })
+  }
+  
   ///// ** Modes
   
   /**
@@ -85,7 +100,7 @@ export class ServiceProvider {
   }
   
   /**
-   * Toutes les catégories
+   * All Events
    * @returns {Observable<any>}
    */
   getAllEvents(delai_min, delai_max): Observable<any> {
@@ -94,6 +109,41 @@ export class ServiceProvider {
     return this.http.get(url, this.headers);
   }
   
+  /**
+   * Add Event
+   * @param event
+   */
+  addEvent(event): Observable<any> {
+    return this.http.post(
+      `${this.host}patient/events`,
+      event,
+      this.headers
+    );
+  }
+  
+  /**
+   * Update Event
+   * @param event
+   */
+  updateEvent(event): Observable<any> {
+    return this.http.put(
+      `${this.host}patient/events/${event.id}`,
+      event,
+      this.headers
+    );
+  }
+  
+  /**
+   * Delete Event
+   * @param event
+   */
+  deleteEvent(idEvent): Observable<any> {
+    return this.http.delete(
+      `${this.host}patient/events/${idEvent}`,
+      this.headers
+    );
+  }
+ 
   /**
    * Selection d'un mode
    * @param id
