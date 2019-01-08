@@ -17,6 +17,12 @@ import * as codesMode from "../../components/mode/mode";
 })
 export class ChooseModePage {
   modes = [];
+  public testeur = 0;
+  public nombrejrretard = 0;
+  public nombrejourseignement = 0;
+  public nombrejrovulation = 0;
+  public dateovulation = 0;
+  public datesegnement = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public services: ServiceProvider,
               public loadingCtrl: LoadingController, public alertCtrl: AlertController,
@@ -29,6 +35,71 @@ export class ChooseModePage {
 
   ionViewDidLoad() {
     this.getAllcategories();
+    this.localStorage.getSession().then((result: any) => {
+      
+          var debut_dernieres_menstrues = result.user._embedded.patient.debut_dernieres_menstrues;
+          var duree_cycle = result.user._embedded.patient.duree_menstrues;
+
+          var ladate = debut_dernieres_menstrues.substring(0, 16) + 'Z';
+          var premieredate = new Date(ladate).getTime();
+          var dateaujourdui = new Date().getTime();
+          var nombremilliseconde = dateaujourdui - premieredate;
+          var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
+        
+          if(nombresjours>duree_cycle){
+              this.testeur = 1;
+              this.nombrejrretard = nombresjours - duree_cycle;
+          }
+
+          // determination du jour d'ovulation
+
+          var deseignements:any;
+          var dateovulation:any;
+          
+
+          var datedans30jours = new Date(premieredate + duree_cycle * 24 * 60 * 60 * 1000);
+          deseignements = datedans30jours.toLocaleDateString("fr");
+
+          this.datesegnement = deseignements;
+
+          var datedans14jours = new Date(premieredate + (duree_cycle-14) * 24 * 60 * 60 * 1000);
+          dateovulation = datedans14jours.toLocaleDateString("fr");
+
+          this.dateovulation = dateovulation;
+
+          
+          deseignements = deseignements.substring(6,10) + '-' + deseignements.substring(3,5) + '-' + deseignements.substring(0,2) + "T19:46Z";
+          dateovulation = dateovulation.substring(6,10) + '-' + dateovulation.substring(3,5) + '-' + dateovulation.substring(0,2) + "T19:46Z";
+
+          var premieredate2 = new Date(dateovulation).getTime();
+          var dateaujourdui2 = new Date().getTime();
+          var nombremilliseconde2 = premieredate2 -dateaujourdui2;
+          var nombresjours2 = Math.ceil(((((nombremilliseconde2 / 1000) / 60) / 60) / 24));
+         
+          if((nombresjours2>0)&&(this.testeur!=1)){
+
+            this.testeur = 2;
+            this.nombrejrovulation = nombresjours2;
+
+          }else if(this.testeur!=1){
+
+            this.testeur = 3;
+            var premieredate3 = new Date(deseignements).getTime();
+            var dateaujourdui3 = new Date().getTime();
+            var nombremilliseconde3 = premieredate3 - dateaujourdui3;
+            var nombresjours3 = Math.ceil(((((nombremilliseconde3 / 1000) / 60) / 60) / 24));
+            this.nombrejourseignement = nombresjours3;
+
+          }
+
+
+          
+
+
+          
+    }, error => {
+      console.error(error)
+    });
   }
 
   checkProfile() {
@@ -170,3 +241,6 @@ export class ChooseModePage {
     });
   }
 }
+
+
+

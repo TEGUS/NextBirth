@@ -249,6 +249,20 @@ export class ServiceProvider {
       this.headers
     );
   }
+
+   /**
+   * Supprimer un bon bon moment
+   * @param id
+   * @returns {Observable<any>}
+   */
+  deleteBonMoment(id): Observable<any> {
+    return this.http.delete(
+      this.host + 'grossesse/notes/' + id,
+      this.headers
+    );
+  }
+
+
   
   /**
    * Les différentes fréquences de prise de traitement

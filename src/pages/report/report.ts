@@ -78,13 +78,15 @@ export class ReportPage {
       var dateaujourdui = new Date().getTime();
       var datepv = result;
       var nombremilliseconde = datepv - dateaujourdui;
-      var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
+      var nombresjourspv = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
       
+     
+
       
-      if (nombresjours > 0) {
-        this.dpv = nombresjours;
+      if(nombresjourspv > 0) {
+        this.dpv = nombresjourspv;
         this.testeurdpv = 1;
-      } else if (nombresjours == 1) {
+      }else if(nombresjourspv == 1) {
         
         // Bonjour Rahim n'oubliez pas votre visite demain demain
         this.mylocalstorage.getSession().then((result: any) => {
@@ -94,9 +96,10 @@ export class ReportPage {
           console.error(error)
         });
         
-      } else {
+      }else{
         this.testeurdpv = 0;
       }
+
     }, error => {
       console.error(error)
     });
@@ -141,7 +144,7 @@ export class ReportPage {
       var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
       var nomrejoursavantacc = 280 - nombresjours;
       if (nomrejoursavantacc < 0) {
-        this.navCtrl.setRoot('ChooseModePage', {});
+        this.alertechangementdatederneirregles();
       }
       this.nombrejourrestant = (nombresjours) % 7;
       this.nombresemaine = Math.floor((nombresjours) / 7);
@@ -155,12 +158,12 @@ export class ReportPage {
       var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
       
       
-      if (nombresjours > 0) {
+      /*if (nombresjours > 0) {
         this.dpv = nombresjours;
         this.testeurdpv = 1;
       } else {
         this.testeurdpv = 0;
-      }
+      }*/
     }, error => {
       console.error(error)
     });
@@ -194,7 +197,8 @@ export class ReportPage {
       var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
       var nomrejoursavantacc = 280 - nombresjours;
       if (nomrejoursavantacc < 0) {
-        this.navCtrl.setRoot('ChooseModePage', {});
+        this.alertechangementdatederneirregles();
+        
       }
       this.nombrejourrestant = (nombresjours) % 7;
       this.nombresemaine = Math.floor((nombresjours) / 7);
@@ -390,6 +394,97 @@ export class ReportPage {
                         mode.debut_dernieres_menstrues = dataprofile.substring(0, 16) + 'Z';
                         this.services.updateprofile(mode).subscribe(next => {
                           this.mylocalstorage.updatePatientStorage(next);
+                        }, error => {
+                        }, () => {
+                          this.mylocalstorage.setObjectUpdateProfile(mode);
+                        });
+                      }
+                    });
+                    var ladate = dataprofile.substring(0, 16) + 'Z';
+                    var premieredate = new Date(ladate).getTime();
+                    var dateaujourdui = new Date().getTime();
+                    var nombremilliseconde = dateaujourdui - premieredate;
+                    var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
+                    var nomrejoursavantacc = 280 - nombresjours;
+                    this.nombrejourrestant = (nombresjours) % 7;
+                    this.nombresemaine = Math.floor((nombresjours) / 7);
+                    var time = new Date().getTime();
+                    var dateaccouchement = new Date(time + nomrejoursavantacc * 24 * 60 * 60 * 1000);
+                    this.dpa = dateaccouchement.toLocaleDateString("fr");
+                    
+                    // 280 jour pour donné naissance
+                    
+                  })
+                  
+                });
+              })
+              
+            });
+            
+            
+          }
+        }
+      ]
+    });
+    
+    alert.present();
+    
+  }
+
+
+
+
+
+  alertechangementdatederneirregles() {
+    
+    
+    /*this.mylocalstorage.getSession().then((result:any) =>{
+          console.log("=========================================");
+          result.user._embedded.patient.debut_dernieres_menstrues = "madateepuis quoi"
+          console.log(result.user._embedded.patient.debut_dernieres_menstrues );
+          console.log("=========================================");
+    })*/
+    
+    let alert = this.alertCtrl.create({
+      title: 'Vous avez sans doute déjà mis au monde un bébé',
+      message: 'Merci de bien vouloir metre à jours votre date de dernier règle pour profiter des services de NextBirth?',
+      buttons: [
+        {
+          text: 'NON',
+          role: 'cancel',
+          handler: () => {
+            
+          
+          }
+        },
+        {
+          text: 'OUI',
+          handler: () => {
+            
+            
+            this.datePicker.show({
+              date: new Date(),
+              mode: 'date',
+              androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+            }).then((date) => {
+              
+              //var datepv = new Date(JSON.stringify(date)).getTime();
+              // update profile date des dernier règles
+              
+              this.mylocalstorage.getSession().then((result: any) => {
+                result.user._embedded.patient.debut_dernieres_menstrues = date;
+                this.mylocalstorage.storeSession(result).then(() => {
+                  // c'est update doit aussi aller au serveur
+                  
+                  this.mylocalstorage.getSession().then((result: any) => {
+                    var dataprofile = '' + result.user._embedded.patient.debut_dernieres_menstrues;
+                    // this.mylocalstorage.setObjectUpdateProfile(this.object);
+                    this.mylocalstorage.getObjectUpdateProfile().then((mode: any) => {
+                      if (mode != null) {
+                        mode.debut_dernieres_menstrues = dataprofile.substring(0, 16) + 'Z';
+                        this.services.updateprofile(mode).subscribe(next => {
+                          this.mylocalstorage.updatePatientStorage(next);
+                          this.navCtrl.setRoot('ChooseModePage', {});
                         }, error => {
                         }, () => {
                           this.mylocalstorage.setObjectUpdateProfile(mode);

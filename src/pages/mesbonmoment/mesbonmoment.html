@@ -48,20 +48,33 @@
   
       <ion-row no-padding>
         <ion-col>
-          <button ion-button clear small color="danger" icon-start>
-            <ion-icon name='star'></ion-icon>
-            Favorite
+          <button ion-button clear small color="danger" (click)="suprimemerbonmoment()"  icon-start>
+            <ion-icon name='md-trash'></ion-icon>
+            suprimer
           </button>
         </ion-col>
         <ion-col text-right>
-          <button ion-button clear small color="danger" icon-start>
-            <ion-icon name='musical-notes'></ion-icon>
-            Listen
+          <button ion-button clear small color="danger"  (click)="revientsituation()"  icon-start>
+            OK
           </button>
         </ion-col>
       </ion-row>
   
     </ion-card>
+
+    <ion-fab bottom right class="monsuperbutton">
+      <button ion-fab><ion-icon name="add"></ion-icon></button>
+      <!-- <ion-fab-list side="top">
+        <button ion-fab>Facebook</button>
+        <button ion-fab>Twitter</button>
+        <button ion-fab>Youtube</button>
+      </ion-fab-list>-->
+      <ion-fab-list side="left">
+        
+        <button (click)="openModalNote()"  ion-fab style="background-color:#eb5350"><ion-icon name="document"></ion-icon></button>
+        <button (click)="openModalImage()"   ion-fab style="background-color:#eb5350"><ion-icon name="camera"></ion-icon></button>
+      </ion-fab-list>
+   </ion-fab>
 
 
 </ion-content>
