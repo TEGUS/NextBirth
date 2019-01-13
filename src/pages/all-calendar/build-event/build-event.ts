@@ -33,16 +33,10 @@ export class BuildEventPage {
   
   ionViewWillEnter() {
     console.clear();
-    
-    this.services.getDateDernierMenstrues().then(ddm => {
-      console.log(ddm.getDate());
-      console.log(ddm.getDay());
-      this.debut_dernieres_menstrues = ddm;
-    }, err => console.error(err));
   }
   
   ionViewDidLoad() {
-    if (event === null) {
+    if (this.event === null || this.event === undefined) {
       this.form = this.formBuilder.group({
         name: ['', Validators.compose([Validators.required])],
         description: ['', Validators.compose([Validators.required])],
@@ -57,8 +51,12 @@ export class BuildEventPage {
         delaiJoursFin: [this.event.delai_jours_fin, Validators.compose([Validators.required])],
       })
       
-      this.dateStart = (getCurrentDateWith(this.debut_dernieres_menstrues, this.event.delai_jours_debut)).getTime();
-      this.dateEnd = (getCurrentDateWith(this.debut_dernieres_menstrues, this.event.delai_jours_fin)).getTime();
+      this.services.getDateDernierMenstrues().then(ddm => {
+        this.debut_dernieres_menstrues = ddm;
+        
+        this.dateStart = (getCurrentDateWith(this.debut_dernieres_menstrues, this.event.delai_jours_debut)).toISOString();
+        this.dateEnd = (getCurrentDateWith(this.debut_dernieres_menstrues, this.event.delai_jours_fin)).toISOString();
+      }, err => console.error(err));
     }
     
   }
@@ -107,7 +105,7 @@ export class BuildEventPage {
           console.error(error)
         })
       } else {
-        this.services.updateEvent({...this.form.value, id: this.event.id}).subscribe(next => {
+        this.services.updateEvent(this.form.value, this.event.id).subscribe(next => {
           loading.dismiss()
           this.navCtrl.pop()
         }, error => {

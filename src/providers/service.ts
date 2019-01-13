@@ -125,9 +125,9 @@ export class ServiceProvider {
    * Update Event
    * @param event
    */
-  updateEvent(event): Observable<any> {
+  updateEvent(event, id): Observable<any> {
     return this.http.put(
-      `${this.host}patient/events/${event.id}`,
+      `${this.host}patient/events/${id}`,
       event,
       this.headers
     );

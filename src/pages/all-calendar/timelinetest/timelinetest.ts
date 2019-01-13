@@ -211,7 +211,7 @@ export class TimelinetestPage {
   
   updateEvent(event) {
     this.navCtrl.push('BuildEventPage', {
-      item: event
+      event: event
     })
   }
   
