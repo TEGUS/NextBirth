@@ -4,16 +4,27 @@
 
 
 <ion-content>
+
   <div padding>
-    <input-element [libelle]="'Prévision des règles'" [type]="'text'"></input-element>
-    <ion-row>
-      <ion-col>
-        <input-element [libelle]="'Ovulation de'" [type]="'text'"></input-element>
-      </ion-col>
-      <ion-col>
-        <input-element [libelle]="'Aménorée de'" [type]="'text'"></input-element>
-      </ion-col>
-    </ion-row>
+
+      <ion-card class="carddoleur" *ngIf="testeur == 1">
+          <p class="titlecard2"> vous avez un retard de   </p>
+          <p class="nombrejours">{{nombrejrretard}} jours </p>  
+         
+      </ion-card>
+  
+      <ion-card class="carddoleur" *ngIf="testeur == 2">
+          <p class="titlecard2"> vous allez ovulez exactement dans  </p>
+          <p class="nombrejours">{{nombrejrovulation}} jours </p>  
+          <p class="ladate">cest à dire le {{dateovulation}}</p>
+      </ion-card>
+  
+      <ion-card class="carddoleur" *ngIf="testeur == 3">
+          <p class="titlecard2"> vous allez seigner exactement dans  </p>
+          <p class="nombrejours">{{nombrejourseignement}} jours </p>  
+          <p class="ladate">cest à dire le {{datesegnement}}</p>
+      </ion-card>
+   
     <hr>
     <h6>Adopter nos conseils en choisissant un des modes suivants:</h6>
 

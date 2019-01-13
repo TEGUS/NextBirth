@@ -43,4 +43,8 @@ export class MessituationarisquePage {
     this.description = description;
   }
 
+  revientsituation(){
+    this.testeur = 0;
+  }
+
 }

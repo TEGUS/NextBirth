@@ -46,6 +46,9 @@ export class ProfilPage {
   modeSelectedExist = false;
   
   imageB64 = null;
+  images = {
+    "image":""
+  }
   
   patient = null;
   user = null;
@@ -229,6 +232,17 @@ export class ProfilPage {
       this.services.updateprofile(this.object).subscribe(next => {
         console.log(next)
         this.localStorage.updatePatientStorage(next);
+         
+        if(this.images.image != ""){
+          this.services.editImage(this.images).subscribe(next => { 
+          }, error => {
+          }, () => {
+          }) 
+        }
+          
+        
+
+
       }, error => {
         console.error(error.error.errors);
         loading.dismiss();
@@ -361,27 +375,28 @@ export class ProfilPage {
     
     
     const options: CameraOptions = {
-      quality: 100,
-      destinationType: 1,
-      encodingType: this.camera.EncodingType.JPEG,
+      quality:100,
+      destinationType:1,
+      allowEdit:true,
+      encodingType:this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: 1,
-      allowEdit: true
+      sourceType: 1
       
+
     }
     
     this.camera.getPicture(options).then((ImageData) => {
       let base64Image = ImageData;
       this.imageaafficher = "data:image/jpeg;base64," + ImageData;
       
-      this.mylocalstorage.getSession().then((result: any) => {
-        result.user._embedded.photo = this.imageaafficher;
-        this.mylocalstorage.storeSession(result).then(() => {
-        });
-      })
-      
-      
-    }, (err) => {
+        this.mylocalstorage.getSession().then((result:any) =>{
+           result.user._embedded.photo = this.imageaafficher;
+           this.images.image = this.imageaafficher;
+           this.mylocalstorage.storeSession(result).then(() => {
+           });
+        })
+
+    }, (err) =>{
       alert(err);
     })
     
@@ -401,18 +416,19 @@ export class ProfilPage {
     const options: CameraOptions = {
       quality: 100,
       destinationType: 0,
+      allowEdit: true,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: 0,
-      allowEdit: true
+      sourceType: 0
       
     }
     
     this.camera.getPicture(options).then((ImageData) => {
       let base64Image = ImageData;
-      
+      this.imageaafficher = "data:image/jpeg;base64," + ImageData;
       this.mylocalstorage.getSession().then((result: any) => {
         result.user._embedded.photo = this.imageaafficher;
+        this.images.image = this.imageaafficher;
         this.mylocalstorage.storeSession(result).then(() => {
         });
       })

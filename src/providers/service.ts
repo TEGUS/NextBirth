@@ -299,6 +299,20 @@ export class ServiceProvider {
       this.headers
     );
   }
+
+   /**
+   * Supprimer un bon bon moment
+   * @param id
+   * @returns {Observable<any>}
+   */
+  deleteBonMoment(id): Observable<any> {
+    return this.http.delete(
+      this.host + 'grossesse/notes/' + id,
+      this.headers
+    );
+  }
+
+
   
   /**
    * Les différentes fréquences de prise de traitement
@@ -350,6 +364,23 @@ export class ServiceProvider {
       this.headers
     );
   }
+
+
+
+  /**
+   * Ajouter une traitement(produit) au Pilulier
+   * @param treatment
+   * @returns {Observable<any>}
+   */
+  editImage(image): Observable<any> {
+    return this.http.post(
+      this.host + 'profile/picture/edit',
+      image,
+      this.headers
+    );
+  }
+
+
   
   /**
    * Les différentes fréquences de prise de traitement
@@ -421,24 +452,26 @@ export class ServiceProvider {
   
   getAllSituations() {
     return new Promise((resolve) => {
-      this.sqlite.create({name: 'nextbirth.db', location: 'default'}).then((db: SQLiteObject) => {
-        db.executeSql('SELECT * FROM SITUATIONS ORDER BY date DESC', [])
-          .then(res => {
-            let expenses = [];
-            for (var i = 0; i < res.rows.length; i++) {
-              expenses.push({
-                id: res.rows.item(i).id,
-                date: res.rows.item(i).date,
-                titre: res.rows.item(i).titre,
-                description: res.rows.item(i).description
-              })
-            }
-            resolve(expenses);
-          })
-          .catch(e => {
-            console.log(e);
-            resolve(0);
-          });
+      
+      this.sqlite.create({
+        name: 'nextbirth.db',
+        location: 'default'
+      }).then((db: SQLiteObject) => {
+
+            db.executeSql('SELECT * FROM SITUATIONS ORDER BY date DESC', [])
+            .then(res => {
+              let expenses = [];
+              for(var i=0; i<res.rows.length; i++) {
+                expenses.push({id:res.rows.item(i).id,date:res.rows.item(i).date,titre:res.rows.item(i).titre,description:res.rows.item(i).description})
+              } 
+              resolve(expenses);
+            })
+            .catch(e => {
+              console.log(e);
+              resolve(0);
+            });
+
+
       }).catch(e => {
         // this.presentToast('database donst exist!');
         console.error(e)

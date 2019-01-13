@@ -38,10 +38,16 @@ export class SignUpPage {
         repeatpass: null
       }
     }
+
+
+   
+
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SignUpPage');
+      console.log('ionViewDidLoad SignUpPage');
+      
   }
 
   dateLastMentruation(date) {

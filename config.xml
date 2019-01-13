@@ -92,10 +92,6 @@
     <plugin name="cordova-sqlite-storage" spec="^2.5.2" />
     <plugin name="cordova-plugin-datepicker" spec="^0.9.3" />
     <plugin name="cordova-plugin-decimal-keyboard" spec="1.0.0" />
-<<<<<<< HEAD
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="6.3.0" />
-=======
-    <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
->>>>>>> 495e71a9dbd26758048a64820fb4bfbfcd80a83a
 </widget>
