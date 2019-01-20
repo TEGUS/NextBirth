@@ -68,6 +68,10 @@ export class MyprofilsPage {
   }
   
   formatDate(date: string) {
-    return new Date(('' + date).substring(0,16)+'Z');
+    let d = null;
+    if (date !== null) {
+      d =  new Date(('' + date).substring(0,16)+'Z')
+    }
+    return d;
   }
 }

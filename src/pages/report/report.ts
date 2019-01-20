@@ -16,6 +16,7 @@ import {Camera, CameraOptions} from '@ionic-native/camera';
 import {Base64} from '@ionic-native/base64';
 import {LocalStorageProvider} from '../../providers/localstorage';
 import {DatePicker} from '@ionic-native/date-picker';
+import {formatNumberOfDate} from "../../variables/functions";
 
 
 @IonicPage()
@@ -80,13 +81,11 @@ export class ReportPage {
       var nombremilliseconde = datepv - dateaujourdui;
       var nombresjourspv = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
       
-     
-
       
-      if(nombresjourspv > 0) {
+      if (nombresjourspv > 0) {
         this.dpv = nombresjourspv;
         this.testeurdpv = 1;
-      }else if(nombresjourspv == 1) {
+      } else if (nombresjourspv == 1) {
         
         // Bonjour Rahim n'oubliez pas votre visite demain demain
         this.mylocalstorage.getSession().then((result: any) => {
@@ -96,10 +95,10 @@ export class ReportPage {
           console.error(error)
         });
         
-      }else{
+      } else {
         this.testeurdpv = 0;
       }
-
+      
     }, error => {
       console.error(error)
     });
@@ -158,12 +157,12 @@ export class ReportPage {
       var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
       
       
-      /*if (nombresjours > 0) {
-        this.dpv = nombresjours;
-        this.testeurdpv = 1;
-      } else {
-        this.testeurdpv = 0;
-      }*/
+      //Check Date Vacin Anti Tétanique
+      this.mylocalstorage.getKey('mode').then(m => {
+        if (m !== undefined && m !== null && m.code === 'MO1') {
+          this.checkDateVaccinAntiTetanique(result.user._embedded.patient.date_vaccin_anti_tetanique);
+        }
+      })
     }, error => {
       console.error(error)
     });
@@ -214,7 +213,7 @@ export class ReportPage {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.acticlesSubscription = this.services.getArticles().subscribe(next => {
-     
+      
       this.items = next
     }, error => {
       loading.dismiss();
@@ -234,8 +233,72 @@ export class ReportPage {
   }
   
   
-  datapick() {
+  /**
+   * Check Date Vaccin antiténatique
+   * @param dateVaccinAntiTetanique
+   */
+  checkDateVaccinAntiTetanique(dateVaccinAntiTetanique) {
+    if (dateVaccinAntiTetanique !== undefined && dateVaccinAntiTetanique !== null) {
+      return;
+    }
     
+    let alert = this.alertCtrl.create({
+      title: 'Vaccin Antitétanique',
+      message: 'Avez vous déjà reçu un vaccin antitétanique ?',
+      buttons: [
+        {
+          text: 'NON',
+          handler: () => {
+            let a = this.alertCtrl.create({
+              message: 'Faites-vous vacciner au plus tôt contre le tétanos pour vous protéger et protéger votre enfant!'
+            })
+            a.present()
+          }
+        },
+        {
+          text: 'OUI',
+          handler: () => this.showDialogDateVaccinAntiTetanique()
+        }
+      ]
+    });
+    alert.present()
+  }
+  
+  /**
+   * Show Dialog to put date vaccin antitétanique
+   */
+  showDialogDateVaccinAntiTetanique() {
+    this.datePicker.show({
+      titleText: 'Quand avez-vous pris la première dose du vaccin antitétanique ?',
+      date: new Date(),
+      mode: 'date',
+      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK,
+      doneButtonLabel: 'Valider',
+      cancelButtonLabel: 'Annuler',
+      minDate: new Date(),
+    }).then((date) => {
+      console.clear();
+      console.log(date)
+      
+      let loading = this.loadingCtrl.create();
+      loading.present();
+      this.services.updateprofile({
+        date_vaccin_anti_tetanique: `${formatNumberOfDate(date.getDate())}-${formatNumberOfDate(date.getMonth())}-${date.getFullYear()}`
+      }).subscribe(next => {
+        console.log(next)
+        loading.dismiss()
+        this.mylocalstorage.updatePatientStorage(next);
+      }, err => {
+        console.error(err)
+        loading.dismiss()
+      });
+    }, err => {
+      console.error(err)
+    });
+  }
+  
+  
+  datapick() {
     let alert = this.alertCtrl.create({
       title: 'Date Prochain Visite',
       message: 'Voulez vous renseigner la date de la prochaine visite ?',
@@ -244,15 +307,11 @@ export class ReportPage {
           text: 'NON',
           role: 'cancel',
           handler: () => {
-            
-          
           }
         },
         {
           text: 'OUI',
           handler: () => {
-            
-            
             this.datePicker.show({
               date: new Date(),
               mode: 'date',
@@ -272,15 +331,11 @@ export class ReportPage {
               }
               
             });
-            
-            
           }
         }
       ]
     });
-    
     alert.present();
-    
   }
   
   
@@ -319,7 +374,7 @@ export class ReportPage {
               }, error => {
               }, () => {
               });
-
+              
               
               var dateaujourdui = new Date().getTime();
               var datepv = date.getTime();
@@ -430,11 +485,8 @@ export class ReportPage {
     alert.present();
     
   }
-
-
-
-
-
+  
+  
   alertechangementdatederneirregles() {
     
     

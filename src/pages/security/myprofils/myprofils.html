@@ -31,15 +31,6 @@
       </ion-col>
     </ion-row>
   
-    <!--<ion-row>-->
-      <!--<ion-col class="dateheure2">-->
-        <!--prenom :-->
-      <!--</ion-col>-->
-      <!--<ion-col class="dateheure3">-->
-        <!--{{user.nom || user.prenom || user.username}}-->
-      <!--</ion-col>-->
-    <!--</ion-row>-->
-  
     <ion-row>
       <ion-col class="dateheure2">
         age_premiere_regle :
@@ -63,7 +54,16 @@
         debut_dernieres_menstrues :
       </ion-col>
       <ion-col class="dateheure3">
-        {{formatDate(patient.debut_dernieres_menstrues) | date: 'dd/MM/yyyy'}}
+        {{formatDate(patient.debut_dernieres_menstrues) | date: 'dd/MM/yyyy' || '__'}}
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col class="dateheure2">
+        date_vaccin_anti_tetanique :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{formatDate(patient.date_vaccin_anti_tetanique) ? ((formatDate(patient.date_vaccin_anti_tetanique) | date: 'dd/MM/yyyy')) : '__'}}
       </ion-col>
     </ion-row>
   

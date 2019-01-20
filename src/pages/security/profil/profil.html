@@ -17,6 +17,12 @@
       (outputDate)="dateDeDernieresRegles($event)">
     </show-date>
     <p *ngIf="errorpath != null && errorpath.account.hasOwnProperty('debut_dernieres_menstrues')" style="color: red">{{errorpath.account.debut_dernieres_menstrues[0]}}</p>
+  
+    <show-date
+      [initValue]="date_vaccin_anti_tetanique"
+      [libelle]="'Date Vaccin Antitétanique'"
+      (outputDate)="DateVaccinAntitetanique($event)">
+    </show-date>
     
     <show-date
       [initValue]="date_naissance"

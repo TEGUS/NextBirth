@@ -54,6 +54,7 @@ export class ProfilPage {
   user = null;
   date_naissance = null;
   debut_dernieres_menstrues = null;
+  date_vaccin_anti_tetanique = null;
   
   constructor(public navCtrl: NavController, public mylocalstorage: LocalStorageProvider, private base64: Base64,
               private camera: Camera, public services: ServiceProvider, public loadingCtrl: LoadingController,
@@ -109,6 +110,7 @@ export class ProfilPage {
       nombrePremature: null,
       nombreFosseCouche: null,
       nombreEnfantVivant: null,
+      dateVaccinAntiTetanique: null,
       debutDernieresMenstrues: null
     }
   }
@@ -116,6 +118,10 @@ export class ProfilPage {
   
   dateDeDernieresRegles(date) {
     this.object.debutDernieresMenstrues = `${formatNumberOfDate(date.day)}-${formatNumberOfDate(date.month)}-${date.year}`;
+  }
+  
+  DateVaccinAntitetanique(date) {
+    this.object.dateVaccinAntiTetanique = `${formatNumberOfDate(date.day)}-${formatNumberOfDate(date.month)}-${date.year}`;
   }
   
   dateDeNaissance(date) {
@@ -239,10 +245,6 @@ export class ProfilPage {
           }, () => {
           }) 
         }
-          
-        
-
-
       }, error => {
         console.error(error.error.errors);
         loading.dismiss();

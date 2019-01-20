@@ -201,7 +201,7 @@ export class TimelinetestPage {
           
           // if (j === (events.length - 1) && timelinestmp.length !== 0) {
           if (j === (events.length - 1)) {
-            console.log(timelines);
+            // console.log(timelines);
             let d = getCurrentDateWith(this.debut_dernieres_menstrues, (firstdebut - nbJourInterval));
             
             timelines.push({
