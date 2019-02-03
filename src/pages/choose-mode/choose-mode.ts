@@ -16,6 +16,7 @@ import * as codesMode from "../../components/mode/mode";
 export class ChooseModePage {
   modes = [];
   public testeur = 0;
+  public testeurovulation = 0;
   public nombrejrretard = 0;
   public nombrejourseignement = 0;
   public nombrejrovulation = 0;
@@ -87,6 +88,9 @@ export class ChooseModePage {
             var nombremilliseconde3 = premieredate3 - dateaujourdui3;
             var nombresjours3 = Math.ceil(((((nombremilliseconde3 / 1000) / 60) / 60) / 24));
             this.nombrejourseignement = nombresjours3;
+            if(this.nombrejourseignement<=3){
+                this.testeurovulation = 1;
+            }
 
           }
 
