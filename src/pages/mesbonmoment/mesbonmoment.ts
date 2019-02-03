@@ -67,7 +67,7 @@ export class MesbonmomentPage {
   suprimemerbonmoment(){
 
         this.alertCtrl.create({
-          message: 'voulez vous vraiment supprimez',
+          message: 'voulez vous vraiment supprimez ?',
           buttons: [{
               text:'Non',
               handler: data => {

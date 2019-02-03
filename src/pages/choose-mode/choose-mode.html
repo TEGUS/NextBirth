@@ -14,15 +14,16 @@
       </ion-card>
   
       <ion-card class="carddoleur" *ngIf="testeur == 2">
-          <p class="titlecard2"> vous allez ovulez exactement dans  </p>
+          <p class="titlecard2"> vous allez ovuler probablement dans  </p>
           <p class="nombrejours">{{nombrejrovulation}} jours </p>  
           <p class="ladate">cest à dire le {{dateovulation}}</p>
       </ion-card>
   
       <ion-card class="carddoleur" *ngIf="testeur == 3">
-          <p class="titlecard2"> vous allez seigner exactement dans  </p>
+          <p class="titlecard2"> vous allez saigner probablement dans  </p>
           <p class="nombrejours">{{nombrejourseignement}} jours </p>  
           <p class="ladate">cest à dire le {{datesegnement}}</p>
+          <p class="ladate" *ngIf="testeurovulation == 1">Vous risquez une grossesse a cette période</p>
       </ion-card>
    
     <hr>
