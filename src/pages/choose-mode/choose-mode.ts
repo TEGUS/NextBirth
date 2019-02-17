@@ -7,6 +7,7 @@ import {ModeContraceptionPage} from "../mode-contraception/mode-contraception";
 import {ReportPage} from "../report/report";
 import {LocalNotifications} from '@ionic-native/local-notifications';
 import * as codesMode from "../../components/mode/mode";
+import {DatePicker} from '@ionic-native/date-picker';
 
 @IonicPage()
 @Component({
@@ -25,7 +26,7 @@ export class ChooseModePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public services: ServiceProvider,
               public loadingCtrl: LoadingController, public alertCtrl: AlertController,
-              public toastCtrl: ToastController, public localStorage: LocalStorageProvider, private localNotifications: LocalNotifications) {
+              public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider, private datePicker: DatePicker, public localStorage: LocalStorageProvider, private localNotifications: LocalNotifications) {
   }
 
   ionViewWillLoad() {
@@ -90,9 +91,15 @@ export class ChooseModePage {
             this.nombrejourseignement = nombresjours3;
             if(this.nombrejourseignement<=3){
                 this.testeurovulation = 1;
+                this.datepdeseignement()
             }
 
+          }else if((nombresjours2<0) && (nombresjours2 ==-1)){
+            this.testeur = 5;
+          }else if((nombresjours2<0) && (nombresjours2 ==-2)){
+            this.testeur = 6;
           }
+
 
 
           
@@ -132,6 +139,8 @@ export class ChooseModePage {
     this.checkProfile().then(next => {
       console.log(next);
       if (next) {
+        let loading2 = this.loadingCtrl.create();
+        loading2.present();
         this.services.selectMode(mode.id).subscribe(alerts => {
           let listesNotification = [];
           var i = 0;
@@ -150,6 +159,7 @@ export class ChooseModePage {
           });
 
           if (i == alerts.length) {
+            loading2.dismiss();
             this.localNotifications.schedule(
               listesNotification
             );
@@ -224,6 +234,82 @@ export class ChooseModePage {
       loading.dismiss();
       console.error(error);
     });
+  }
+
+
+  datepdeseignement() {
+    
+    
+    /*this.mylocalstorage.getSession().then((result:any) =>{
+          console.log("=========================================");
+          result.user._embedded.patient.debut_dernieres_menstrues = "madateepuis quoi"
+          console.log(result.user._embedded.patient.debut_dernieres_menstrues );
+          console.log("=========================================");
+    })*/
+    
+    let alert = this.alertCtrl.create({
+      title: 'Alerte seignement',
+      message: 'Voulez vous metre à jours votre date de dernier règle ?',
+      buttons: [
+        {
+          text: 'NON',
+          role: 'cancel',
+          handler: () => {
+            
+          
+          }
+        },
+        {
+          text: 'OUI',
+          handler: () => {
+            
+            
+            this.datePicker.show({
+              date: new Date(),
+              mode: 'date',
+              androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+            }).then((date) => {
+              
+              //var datepv = new Date(JSON.stringify(date)).getTime();
+              // update profile date des dernier règles
+              
+              this.mylocalstorage.getSession().then((result: any) => {
+                result.user._embedded.patient.debut_dernieres_menstrues = date;
+                this.mylocalstorage.storeSession(result).then(() => {
+                  // c'est update doit aussi aller au serveur
+                  
+                  this.mylocalstorage.getSession().then((result: any) => {
+                    var dataprofile = '' + result.user._embedded.patient.debut_dernieres_menstrues;
+                    // this.mylocalstorage.setObjectUpdateProfile(this.object);
+                    this.mylocalstorage.getObjectUpdateProfile().then((mode: any) => {
+                      if (mode != null) {
+                        mode.debut_dernieres_menstrues = dataprofile.substring(0, 16) + 'Z';
+                        this.services.updateprofile(mode).subscribe(next => {
+                          this.mylocalstorage.updatePatientStorage(next);
+                        }, error => {
+                        }, () => {
+                          this.mylocalstorage.setObjectUpdateProfile(mode);
+                        });
+                      }
+                    });
+                   
+                    // 280 jour pour donné naissance
+                    
+                  })
+                  
+                });
+              })
+              
+            });
+            
+            
+          }
+        }
+      ]
+    });
+    
+    alert.present();
+    
   }
 
   getAllcategories() {

@@ -18,6 +18,23 @@
           <p class="nombrejours">{{nombrejrovulation}} jours </p>  
           <p class="ladate">cest à dire le {{dateovulation}}</p>
       </ion-card>
+
+      <ion-card class="carddoleur" *ngIf="nombrejrovulation == 3">
+            <p class="titlecard2"> attention ! fort risque de conception aujourd’hui </p>
+      </ion-card>
+
+      <ion-card class="carddoleur" *ngIf="testeur == 5">
+        <p class="titlecard2"> attention ! fort risque de conception aujourd’hui </p>
+        <p class="nombrejours">car vous avez probablement ovulé il y’a 1 jours  </p>  
+       </ion-card>
+
+       <ion-card class="carddoleur" *ngIf="testeur == 6">
+        <p class="titlecard2"> attention ! fort risque de conception aujourd’hui </p>
+        <p class="nombrejours">car vous avez probablement ovulé il y’a 2 jours  </p>  
+       </ion-card>
+
+      
+       
   
       <ion-card class="carddoleur" *ngIf="testeur == 3">
           <p class="titlecard2"> vous allez saigner probablement dans  </p>
