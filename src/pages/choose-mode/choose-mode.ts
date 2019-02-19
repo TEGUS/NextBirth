@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController, LoadingController, AlertController} from 'ionic-angular';
-import {ServiceProvider} from "../../providers/service";
-import {LocalStorageProvider} from '../../providers/localstorage';
+import {ServiceProvider} from "../../providers/metier.service";
+import {LocalStorageProvider} from '../../providers/localstorage.service';
 import {QuestionContraceptionPage} from "../question-contraception/question-contraception";
 import {ModeContraceptionPage} from "../mode-contraception/mode-contraception";
 import {ReportPage} from "../report/report";
@@ -93,12 +93,6 @@ export class ChooseModePage {
             }
 
           }
-
-
-          
-
-
-          
     }, error => {
       console.error(error)
     });

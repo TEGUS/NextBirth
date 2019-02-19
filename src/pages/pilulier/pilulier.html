@@ -1,131 +1,31 @@
 <ion-header>
   <navbar [title]="'Pilulier'"></navbar>
+  
+  <ion-toolbar no-padding no-margin>
+    <div class="question">
+      <ion-row class="montext">
+        <ion-col (click)="gotoOnglet_0()">Nouveau Traitement</ion-col>
+        <ion-col (click)="gotoOnglet_1()">Traitements en cours</ion-col>
+        <ion-col (click)="gotoOnglet_2()">Traitements Terminés</ion-col>
+      </ion-row>
+    </div>
+  
+    <ion-row no-border no-margin no-padding no-lines>
+      <ion-col>
+        <div class="supercard" *ngIf="onglet==0"></div>
+      </ion-col>
+      <ion-col>
+        <div class="supercard2" *ngIf="onglet==1"></div>
+      </ion-col>
+      <ion-col>
+        <div class="supercard3" *ngIf="onglet==2"></div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="monbody">
-  <ion-card class="question">
-    <ion-row class="montext">
-      <ion-col (click)="gotoOnglet_1()">Nouveau produits</ion-col>
-      <ion-col (click)="gotoOnglet_2()">Traitement en cours</ion-col>
-    </ion-row>
-  </ion-card>
-  
-  <ion-row>
-    <ion-col>
-      <ion-card class="supercard" *ngIf="onglet==0"></ion-card>
-    </ion-col>
-    <ion-col>
-      <ion-card class="supercard2" *ngIf="onglet==1"></ion-card>
-    </ion-col>
-  </ion-row>
-  
-  <br>
-  
   <div *ngIf="onglet==0">
-    <div>
-      <!--<form [formGroup]="form" (submit)="addTreatment()" (reset)="cancel()">-->
-    <!--<ion-row>-->
-    <!--<ion-col>-->
-    <!--<p class="text">Non du produit</p>-->
-    <!--</ion-col>-->
-    <!--<ion-col>-->
-    <!--<ion-input class="monimput" type="text" formControlName="name"></ion-input>-->
-    <!--</ion-col>-->
-    <!--</ion-row>-->
-    <!---->
-    <!--<ion-row class="maligne">-->
-    <!--<ion-col>-->
-    <!--<p class="text">Frequence de prise</p>-->
-    <!--</ion-col>-->
-    <!--<ion-col>-->
-    <!--<ion-select class="monselect" #select formControlName="frequencePrise">-->
-    <!--<ion-option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</ion-option>-->
-    <!--</ion-select>-->
-    <!--</ion-col>-->
-    <!--</ion-row>-->
-    <!---->
-    <!--<ion-row class="maligne">-->
-    <!--<ion-col>-->
-    <!--<p class="text">Durée du traitement</p>-->
-    <!--</ion-col>-->
-    <!--<ion-col>-->
-    <!--<ion-input class="monimput" type="number" formControlName="dureeTraitement"></ion-input>-->
-    <!--</ion-col>-->
-    <!--</ion-row>-->
-    <!---->
-    <!--<ion-row class="maligne">-->
-    <!--<ion-col col-6>-->
-    <!--<p class="text">Date du début</p>-->
-    <!--</ion-col>-->
-    <!--<ion-col col-4>-->
-    <!--<ion-input class="monimput2" disabled="true" type="text" formControlName="dateDebutTraitement"></ion-input>-->
-    <!--</ion-col>-->
-    <!--<ion-col col-2 (click)="datePicker.open()">-->
-    <!--<ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>-->
-    <!--</ion-col>-->
-    <!--</ion-row>-->
-    <!---->
-    <!--<ion-datetime #datePicker text-center-->
-    <!--(ionChange)="dateDebutTraitementChanged($event)"-->
-    <!--hidden="true" [(ngModel)]="dateDebutTraitement"-->
-    <!--[ngModelOptions]="{standalone: true}">-->
-    <!--</ion-datetime>-->
-    <!---->
-    <!--<ion-row class="maligne">-->
-    <!--<ion-col col-6>-->
-    <!--<p class="text">Horaire de la 1ère prise</p>-->
-    <!--</ion-col>-->
-    <!--<ion-col col-4>-->
-    <!--<ion-input class="monimput" disabled="true" type="text" formControlName="horaireFirstPrise"></ion-input>-->
-    <!--</ion-col>-->
-    <!--<ion-col col-2 (click)="timePicker.open()">-->
-    <!--<ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>-->
-    <!--</ion-col>-->
-    <!--</ion-row>-->
-    <!---->
-    <!--<ion-datetime #timePicker text-center pickerFormat="HH mm"-->
-    <!--(ionChange)="heureDebutTraitementChanged($event)"-->
-    <!--hidden="true" [(ngModel)]="heureDebutTraitement"-->
-    <!--[ngModelOptions]="{standalone: true}">-->
-    <!--</ion-datetime>-->
-    <!---->
-    <!--&lt;!&ndash;<ion-row class="maligne">&ndash;&gt;-->
-    <!--&lt;!&ndash;<ion-col>&ndash;&gt;-->
-    <!--&lt;!&ndash;<p class="text">Jour du cycle</p>&ndash;&gt;-->
-    <!--&lt;!&ndash;</ion-col>&ndash;&gt;-->
-    <!--&lt;!&ndash;<ion-col>&ndash;&gt;-->
-    <!--&lt;!&ndash;<ion-input class="monimput" type="number" formControlName="jourCycle"></ion-input>&ndash;&gt;-->
-    <!--&lt;!&ndash;</ion-col>&ndash;&gt;-->
-    <!--&lt;!&ndash;</ion-row>&ndash;&gt;-->
-    <!---->
-    <!--&lt;!&ndash;<ion-row class="maligne">&ndash;&gt;-->
-    <!--&lt;!&ndash;<ion-col>&ndash;&gt;-->
-    <!--&lt;!&ndash;<p class="text">Evaluation de l'évolution</p>&ndash;&gt;-->
-    <!--&lt;!&ndash;</ion-col>&ndash;&gt;-->
-    <!--&lt;!&ndash;<ion-col>&ndash;&gt;-->
-    <!--&lt;!&ndash;<ion-input class="monimput" type="text" formControlName="evaluationEvolution"></ion-input>&ndash;&gt;-->
-    <!--&lt;!&ndash;</ion-col>&ndash;&gt;-->
-    <!--&lt;!&ndash;</ion-row>&ndash;&gt;-->
-    <!---->
-    <!--<ion-row class="maligne">-->
-    <!--<ion-col>-->
-    <!--<p class="text">En observance ?</p>-->
-    <!--</ion-col>-->
-    <!--<ion-col>-->
-    <!--<ion-select class="monselect">-->
-    <!--<ion-option value="oui" selected>Oui</ion-option>-->
-    <!--<ion-option value="non">Non</ion-option>-->
-    <!--</ion-select>-->
-    <!--</ion-col>-->
-    <!--</ion-row>-->
-    <!---->
-    <!--<button style="border-radius:50px; height: 60px; float: right; margin-top: 10% " bottom right ion-button-->
-    <!--type="submit" [disabled]="!form.valid">-->
-    <!--{{currentTreatment == null ? 'Add' : 'Upd'}}-->
-    <!--</button>-->
-    <!--</form>-->
-    </div>
-    
     <div *ngIf="part==1">
       <div [ngStyle]="{'display': showSpinner ? 'inline-flex' : 'flex'}"
            style="flex-direction: row; align-items: center; justify-content: space-between">
@@ -242,7 +142,10 @@
       <ion-card>
         <ion-card-content>
           <div style="display:flex;justify-content: space-between;align-items: center;flex-direction: row;">
-            <h4 style="font-size: x-large;">{{item.name}}</h4>
+            <div>
+              <h4 style="font-size: x-large;">{{item.name}}</h4>
+              <h6>Crée le 19/01/1992 à 12:00</h6>
+            </div>
             
             <button icon-only ion-button clear (click)="presentPopover(item)">
               <ion-icon name="more"></ion-icon>
@@ -266,8 +169,40 @@
     </div>
   </div>
   
+  <div *ngIf="onglet==2">
+      <div *ngFor="let item of archives">
+      <ion-card>
+        <ion-card-content>
+          <div style="display:flex;justify-content: space-between;align-items: center;flex-direction: row;">
+            <div>
+              <h4 style="font-size: x-large;">{{item.name}}</h4>
+              <h6>Crée le 19/01/1992 à 12:00</h6>
+            </div>
+          
+            <button icon-only ion-button clear (click)="presentPopover(item)">
+              <ion-icon name="more"></ion-icon>
+            </button>
+          </div>
+        </ion-card-content>
+      
+        <ion-card-content>
+          Duree: {{item.duree_traitement}} Jrs<br>
+          Date Debut: {{convertDatetime(item.date_debut_traitement)}}<br>
+          Première prise: {{item.horaire_first_prise}}<br>
+          Fréquence de prise: {{getFrequencePrise(item.frequence_prise)}}<br>
+        </ion-card-content>
+      
+        <div *ngIf="item.msg_alert !== undefined && item.msg_alert !== null">
+          <ion-card-content [ngClass]="item.msg_alert.status == 'warning' ? 'msg-warning' : 'msg-danger'">
+            {{item.msg_alert.msg}}
+          </ion-card-content>
+        </div>
+      </ion-card>
+    </div>
+  </div>
+  
   <ion-fab bottom right class="monsuperbutton" *ngIf="onglet==1">
-    <button ion-fab (click)="gotoOnglet_1()">
+    <button ion-fab (click)="gotoOnglet_0()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

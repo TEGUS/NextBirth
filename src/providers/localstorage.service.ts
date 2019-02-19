@@ -20,6 +20,28 @@ export class LocalStorageProvider {
     console.log('Hello LocalStorageProvider Provider');
   }
   
+  /**
+   * Store Default Language
+   * @param object
+   */
+  setDefaultLang(object: string) {
+    return new Promise<string>(resolve => {
+      this.setKey('defaultLang', object);
+      resolve(object)
+    })
+  }
+  
+  /**
+   * Get Default Language
+   */
+  getDefaultLang() {
+    return new Promise<string>(resolve => {
+      this.getKey('defaultLang').then(val => {
+        resolve(val);
+      })
+    })
+  }
+  
   setObjectUpdateProfile(object) {
     this.setKey('objectUpdateProfile', object);
   }
@@ -41,6 +63,17 @@ export class LocalStorageProvider {
         resolve();
       });
     });
+  }
+  
+  /**
+   * Get Mode
+   */
+  getMode() {
+    return new Promise<string>(resolve => {
+      this.getKey(this.keymode).then(val => {
+        resolve(val);
+      })
+    })
   }
 
   updatePatientStorage(patient) {

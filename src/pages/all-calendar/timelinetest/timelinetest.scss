@@ -44,12 +44,17 @@ page-timelinetest {
   
   .mondive {
     background-color: #afdcf8;
-    height: 120px;
+    height: -webkit-fill-available;
     width: 120px;
     margin-left: 10px;
     padding: 5px 5px 5px 5px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+    justify-content: space-between;
   }
+  
   .datecard {
     color: red;
     font-weight: bold;
@@ -59,7 +64,6 @@ page-timelinetest {
     color: blue;
     font-weight: bold;
   }
-  
   
   .vertical-text {
     transform: rotate(90deg);

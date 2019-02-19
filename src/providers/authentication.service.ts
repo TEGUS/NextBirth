@@ -1,8 +1,8 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {currentHost} from "../host/host";
-import {Observable} from "rxjs/Observable";
 import {Headers} from "@angular/http";
+import {Observable} from "rxjs";
 
 /*
   Generated class for the AuthenticationProvider provider.
@@ -40,7 +40,7 @@ export class AuthenticationProvider {
     return this.http.post(
       this.host + 'auth',
       null,
-      this.initHeaders(user.email, user.plainPassword)
+      this.initHeaders(user.phone, user.plainPassword)
     );
   }
 

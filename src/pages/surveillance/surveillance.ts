@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Vibration } from '@ionic-native/vibration';
-import { LocalStorageProvider } from '../../providers/localstorage';
+import { LocalStorageProvider } from '../../providers/localstorage.service';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { TimerCounter} from '../../configs/configs';
-import { ServiceProvider } from '../../providers/service';
+import { ServiceProvider } from '../../providers/metier.service';
 
 /**
  * Generated class for the SurveillancePage page.

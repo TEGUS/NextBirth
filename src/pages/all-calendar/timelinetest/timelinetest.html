@@ -24,36 +24,28 @@
     <timeline-item *ngFor="let item of timelines; index as i">
       <timeline-time [time]="item.time"></timeline-time>
       <ion-icon [name]="item.icon" tappable (click)="addEvent()"></ion-icon>
+      
       <ion-card>
-        
-        <!--<ion-slides >
-           
-              <ion-slide class="mondive" *ngFor="let item of item.elements">
-                <p class="datecard">{{item.time.subTitle}}</p>
-                <p class="titrecard">{{item.title}}</p>
-                <p>{{item.content}}</p>
-              </ion-slide>
-            
-        </ion-slides>  -->
-        
-        
         <ion-scroll>
           <div style="display: flex; flex-direction: row;">
             <div class="mondive" *ngFor="let item of item.elements">
               <p class="datecard">{{item.time.subTitle}}</p>
-              <p class="titrecard">{{item.title}}</p>
               <p>{{item.content}}</p>
               
               
               <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between">
-                <button clear ion-button small full (click)="selectArticle(item.content, item.description)">
-                  <ion-icon name="eye"></ion-icon>
-                </button>
-                <button *ngIf="item.patient != null" clear ion-button small full (click)="updateEvent(item)">
-                  <ion-icon name="create"></ion-icon>
-                </button>
-                <button *ngIf="item.patient != null" clear ion-button small full (click)="deleteEvent(item)">
-                  <ion-icon name="trash"></ion-icon>
+                <!--<button ion-button icon-only small full (click)="selectArticle(item.content, item.description)">-->
+                  <!--<ion-icon name="eye"></ion-icon>-->
+                <!--</button>-->
+                <!--<button *ngIf="item.patient != null" ion-button icon-only small full (click)="updateEvent(item)">-->
+                  <!--<ion-icon name="create"></ion-icon>-->
+                <!--</button>-->
+                <!--<button *ngIf="item.patient != null" ion-button icon-only small full (click)="deleteEvent(item)">-->
+                  <!--<ion-icon name="trash"></ion-icon>-->
+                <!--</button>-->
+  
+                <button ion-button icon-only small full (click)="openDialog(item)">
+                  Detail
                 </button>
               </div>
             </div>
@@ -65,7 +57,6 @@
   
   
   <ion-card *ngIf="testeur == 1">
-    
     <ion-card-content>
       <ion-card-title>
         {{titre}}
@@ -84,12 +75,10 @@
       </ion-col>
       <ion-col text-right (click)="goodArticle()">
         <button ion-button clear small color="danger" icon-start (click)="goodArticle()">
-          
           ok
         </button>
       </ion-col>
     </ion-row>
-  
   </ion-card>
   
   

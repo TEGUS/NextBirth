@@ -39,7 +39,7 @@ page-pilulier {
   
   .question {
     width: 100%;
-    height: 30px;
+    height: 45px;
     margin-left: 0px;
     margin-top: 0px;
     
@@ -49,21 +49,28 @@ page-pilulier {
     color: #ff0026;
     font-weight: bold;
   }
+  
   .supercard {
-    height: 8px;
+    height: 4px;
     background-color: #ff0026;
-    margin-top: -15px;
-    margin-left: -10px;
-    width: 170px;
+    margin-top: -10px;
+    width: inherit;
   }
+  
   .supercard2 {
-    height: 8px;
+    height: 4px;
     background-color: #ff0026;
-    margin-top: -15px;
-    width: 100%;
-    margin-right: -20px;
+    margin-top: -10px;
+    width: inherit;
   }
-
+  
+  .supercard3 {
+    height: 4px;
+    background-color: #ff0026;
+    margin-top: -10px;
+    width: inherit;
+  }
+  
   .show-buttons-options {
     display: flex;
     flex-direction: row;

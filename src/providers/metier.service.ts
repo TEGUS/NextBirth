@@ -2,7 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {currentHost} from "../host/host";
-import {LocalStorageProvider} from "./localstorage";
+import {LocalStorageProvider} from "./localstorage.service";
 import {SQLite, SQLiteObject} from '@ionic-native/sqlite';
 import {ToastController} from 'ionic-angular';
 
@@ -40,6 +40,14 @@ export class ServiceProvider {
     });
   }
   
+  checkAuthorization() {
+    return new Promise(resolve => {
+      this.initHeaders().then(next => {
+        this.headers = next;
+        resolve()
+      })
+    })
+  }
   
   initHeaders() {
     return new Promise((resolve, reject) => {

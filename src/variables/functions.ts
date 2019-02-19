@@ -32,6 +32,7 @@ export function getDate(date: string): Date {
 }
 
 export function formatNumberOfDate(val) {
+  val = Number(val);
   return (val < 10) ? `0${val}` : val;
 }
 
@@ -40,7 +41,7 @@ export function formatNumberOfDate(val) {
  * @param dateStart
  * @param nbJour
  */
-export function getCurrentDateWith(dateStart: Date, nbJour: number) {
+export function getCurrentDateWith(dateStart: Date, nbJour: number): Date {
   return new Date((dateStart.getTime()) + (nbJour * 24 * 60 * 60 * 1000))
 }
 
@@ -49,6 +50,6 @@ export function getCurrentDateWith(dateStart: Date, nbJour: number) {
  * @param dateStart
  * @param nbJour
  */
-export function getCurrentDateWithout(dateStart: Date, nbJour: number) {
+export function getCurrentDateWithout(dateStart: Date, nbJour: number): Date {
   return new Date((dateStart.getTime()) + (nbJour * 24 * 60 * 60 * 1000))
 }

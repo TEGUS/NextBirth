@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, LoadingController, MenuController, NavController, NavParams, ToastController} from 'ionic-angular';
-import {AuthenticationProvider} from "../../../providers/authentication";
-import {checkField} from "../../../variables/functions";
-import {LocalStorageProvider} from "../../../providers/localstorage";
+import {AuthenticationProvider} from "../../../providers/authentication.service";
+import {checkField, formatNumberOfDate} from "../../../variables/functions";
+import {LocalStorageProvider} from "../../../providers/localstorage.service";
 
 
 @IonicPage()
@@ -11,76 +11,86 @@ import {LocalStorageProvider} from "../../../providers/localstorage";
   templateUrl: 'sign-up.html',
 })
 export class SignUpPage {
-
-
   object = null;
   error = null;
   errorpath = null;
   errormessage = null;
   showError = null;
-
-
+  
+  
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider,
               public menuCtrl: MenuController) {
   }
-
-  ionViewWillLoad() {
+  
+  ionViewWillEnter() {
     this.object = {
-      debut_dernieres_menstrues: null,
-      duree_menstrues: null,
+      dureeCycleMin: null,
+      dureeCycleMax: null,
+      debutDernieresMenstrues: null,
+      dureeMenstrues: null,
       account: {
         nom: null,
         prenom: null,
-        email: null,
-        password: null,
-        repeatpass: null
+        phone: null,
+        plainPassword: {
+          first: null,
+          second: null
+        },
+        langue: 1,
+        dateNaissance: null
       }
     }
-
-
-   
-
-
   }
-
+  
   ionViewDidLoad() {
-      console.log('ionViewDidLoad SignUpPage');
-      
   }
-
+  
+  dateNaissance(date) {
+    this.object.account.dateNaissance = `${formatNumberOfDate(date.day)}-${formatNumberOfDate(date.month)}-${date.year}`;
+  }
+  
   dateLastMentruation(date) {
-    var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
-    this.object.debut_dernieres_menstrues = madate;
+    // var madate = date.year + '-' + date.month + '-' + date.day + 'T19:46:57.118Z';
+    this.object.debutDernieresMenstrues = `${formatNumberOfDate(date.day)}-${formatNumberOfDate(date.month)}-${date.year}`;
   }
-
+  
   getDurationMenstruation(duree) {
-    this.object.duree_menstrues = parseInt(duree)
+    this.object.dureeMenstrues = parseInt(duree)
   }
-
-  getEmail(email) {
-    this.object.account.email = email
+  
+  getDureeCycleMin(duree) {
+    this.object.dureeCycleMin = duree
   }
-
+  
+  getDureeCycleMax(duree) {
+    this.object.dureeCycleMax = duree
+  }
+  
+  getPhone(phone) {
+    this.object.account.phone = phone
+  }
+  
   getPassword(pwd) {
-    this.object.account.password = pwd
+    this.object.account.plainPassword.first = pwd
   }
-
+  
   getRepeatPassword(repwd) {
-    this.object.account.repeatpass = repwd
+    this.object.account.plainPassword.second = repwd
   }
-
+  
   signUp() {
-    if (checkField(this.object.account.email) &&
-      checkField(this.object.account.password) &&
-      checkField(this.object.account.repeatpass) &&
-      checkField(this.object.debut_dernieres_menstrues) &&
-      checkField(this.object.duree_menstrues)
+    if (checkField(this.object.dateNaissance) &&
+      checkField(this.object.account.plainPassword.first) &&
+      checkField(this.object.account.plainPassword.second) &&
+      checkField(this.object.debutDernieresMenstrues) &&
+      checkField(this.object.dureeMenstrues)
     ) {
-      if (this.object.account.password === this.object.account.repeatpass) {
+      if (this.object.account.plainPassword.first === this.object.account.plainPassword.second) {
         let loading = this.loadingCtrl.create();
         loading.present();
+        console.log(this.object);
         this.authProvider.signUp(this.object).subscribe(next => {
           console.log(next);
           this.mylocalstorage.storeSession(next).then(() => {
@@ -99,8 +109,8 @@ export class SignUpPage {
             this.errormessage = error.error[0].message;
           }
         }, () => {
-
-
+        
+        
         });
       } else {
         this.setMessageError('Les mots de passe ne sont pas identiques!')
@@ -109,14 +119,14 @@ export class SignUpPage {
       this.setMessageError('Veuillez remplir touts les champs!')
     }
   }
-
+  
   setMessageError(message) {
     this.showError = {
       message: message
     }
     return this.showError.message;
   }
-
+  
   presentToast(message: any) {
     let toast = this.toastCtrl.create({
       message: message,
