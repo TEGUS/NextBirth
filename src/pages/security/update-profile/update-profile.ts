@@ -221,14 +221,15 @@ export class UpdateProfilePage {
       result.msg = "Le pseudonyme doit être différent de l'adresse email !";
       result.error = true;
     }
-    if (this.phone === this.username) {
-      result.msg = "Le numéro de téléphone doit être différent du pseudonyme !";
-      result.error = true;
-    }
-    if (this.phone === this.user.email) {
-      result.msg = "Le numéro de téléphone doit être différent de l'adresse email !";
-      result.error = true;
-    }
+    
+    // if (this.phone === this.username) {
+    //   result.msg = "Le numéro de téléphone doit être différent du pseudonyme !";
+    //   result.error = true;
+    // }
+    // if (this.phone === this.user.email) {
+    //   result.msg = "Le numéro de téléphone doit être différent de l'adresse email !";
+    //   result.error = true;
+    // }
     
     return result;
   }

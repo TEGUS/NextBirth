@@ -33,7 +33,9 @@ export class SettingsPage {
     
     this.localStorage.getMode().then((mode: any) => {
       console.log(mode);
-      this.defaultMode = mode.code;
+      if (mode !== null) {
+        this.defaultMode = mode.code;
+      }
     });
     
     this.getAllModes();
