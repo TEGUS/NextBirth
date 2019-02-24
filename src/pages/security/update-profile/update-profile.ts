@@ -193,7 +193,9 @@ export class UpdateProfilePage {
         this.object.dureeSaignement === null || this.object.dureeCycle === null ||
         this.object.nombreGrossesse === null || this.object.nombrePremature === null ||
         this.object.nombreFosseCouche === null || this.object.nombreEnfantVivant === null ||
-        this.username === '' || this.username === null || this.phone === '' || this.phone === null
+        this.username === '' || this.username === null ||
+        // this.phone === '' ||
+        this.phone === null
       ) {
         reject(false)
       } else {
@@ -243,7 +245,7 @@ export class UpdateProfilePage {
       
       this.object.account = {
         username: this.username,
-        phone: this.phone,
+        // phone: this.phone,
         dateNaissance: this.ladate
       };
       
