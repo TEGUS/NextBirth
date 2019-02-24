@@ -4,20 +4,22 @@
 </ion-header>
 
 
-<ion-content padding>
-  <!--<ion-list radio-group>-->
-    <!--<ion-list-header>-->
-      <!--Language-->
-    <!--</ion-list-header>-->
-    <!---->
-    <!--<ion-item>-->
-      <!--<ion-label>{{'français' | translate}}</ion-label>-->
-      <!--<ion-radio checked="true" value="go"></ion-radio>-->
-    <!--</ion-item>-->
-    <!---->
-    <!--<ion-item>-->
-      <!--<ion-label>{{'anglais' | translate}}</ion-label>-->
-      <!--<ion-radio value="rust"></ion-radio>-->
-    <!--</ion-item>-->
-  <!--</ion-list>-->
+<ion-content>
+  <ion-item-group>
+    <ion-item-divider color="primary" class="bold">{{'parametre_utilisateur' | translate}}</ion-item-divider>
+    
+    <ion-item *ngIf="defaultLang != null">
+      <ion-label>{{'langue' | translate}}</ion-label>
+      <ion-select [(ngModel)]="defaultLang" cancelText="Cancel" okText="OK" (ionChange)="listenLangChange($event)">
+        <ion-option *ngFor="let item of langs" [value]="item.code">{{item.label | translate}}</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item *ngIf="defaultMode != null">
+      <ion-label>Mode</ion-label>
+      <ion-select [(ngModel)]="defaultMode" cancelText="Cancel" okText="OK" (ionChange)="listenModeChange($event)">
+        <ion-option *ngFor="let item of modes" [value]="item.code">{{item.intitule}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-item-group>
 </ion-content>

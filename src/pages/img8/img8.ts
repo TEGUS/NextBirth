@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
-import {ServiceProvider} from "../../providers/service";
+import {ServiceProvider} from "../../providers/metier.service";
 
 @IonicPage()
 @Component({

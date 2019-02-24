@@ -11,10 +11,10 @@ import {
   ToastController
 } from 'ionic-angular';
 import {LocalNotifications} from '@ionic-native/local-notifications';
-import {ServiceProvider} from "../../providers/service";
+import {ServiceProvider} from "../../providers/metier.service";
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {Base64} from '@ionic-native/base64';
-import {LocalStorageProvider} from '../../providers/localstorage';
+import {LocalStorageProvider} from '../../providers/localstorage.service';
 import {DatePicker} from '@ionic-native/date-picker';
 import {formatNumberOfDate} from "../../variables/functions";
 

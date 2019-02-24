@@ -8,8 +8,8 @@ import {
   ToastController,
   Platform
 } from 'ionic-angular';
-import {LocalStorageProvider} from '../../../providers/localstorage';
-import {ServiceProvider} from "../../../providers/service";
+import {LocalStorageProvider} from '../../../providers/localstorage.service';
+import {ServiceProvider} from "../../../providers/metier.service";
 
 import * as codesMode from "../../../components/mode/mode";
 import {Camera, CameraOptions} from '@ionic-native/camera';
@@ -26,10 +26,10 @@ import {formatDate, formatNumberOfDate} from "../../../variables/functions";
 
 @IonicPage()
 @Component({
-  selector: 'page-profil',
-  templateUrl: 'profil.html',
+  selector: 'page-update-profile ',
+  templateUrl: 'update-profile.html',
 })
-export class ProfilPage {
+export class UpdateProfilePage {
   
   public object = null;
   public error = null;
@@ -47,7 +47,7 @@ export class ProfilPage {
   
   imageB64 = null;
   images = {
-    "image":""
+    "image": ""
   }
   
   patient = null;
@@ -64,39 +64,9 @@ export class ProfilPage {
   
   ionViewDidLoad() {
     this.services.initHeaders();
-    console.log('ionViewDidLoad ProfilsPage');
   }
   
-  ionViewWillLoad() {
-    this.localStorage.getKey('modeSelected').then(mode => {
-      console.log(mode);
-      this.modeSelectedExist = mode !== null ? true : false;
-    });
-    
-    this.localStorage.getKey('session').then(next => {
-      console.log(next);
-      if (next !== undefined && next !== null) {
-        this.patient = next.user._embedded.patient;
-        
-        if (this.patient._embedded.hasOwnProperty('account')) {
-          this.user = this.patient._embedded.account;
-        } else {
-          this.user = next.user
-        }
-  
-        this.date_naissance = formatDate(this.user.date_naissance)
-        this.debut_dernieres_menstrues = formatDate(this.patient.debut_dernieres_menstrues)
-        
-        if (this.user._embedded.photo !== undefined && this.user._embedded.photo !== null) {
-          let photo = this.user._embedded.photo;
-          this.imageaafficher = photo._embedded.url_photo
-        }
-      }
-    }, error => {
-      console.error(error);
-    });
-    
-    
+  ionViewWillEnter() {
     this.object = {
       diabete: 0,
       hta: 0,
@@ -112,7 +82,35 @@ export class ProfilPage {
       nombreEnfantVivant: null,
       dateVaccinAntiTetanique: null,
       debutDernieresMenstrues: null
-    }
+    };
+    
+    this.localStorage.getKey('modeSelected').then(mode => {
+      console.log(mode);
+      this.modeSelectedExist = mode !== null ? true : false;
+    });
+    
+    this.localStorage.getKey('session').then(next => {
+      console.log(next);
+      if (next !== undefined && next !== null) {
+        this.patient = next.user._embedded.patient;
+        
+        if (this.patient._embedded.hasOwnProperty('account')) {
+          this.user = this.patient._embedded.account;
+        } else {
+          this.user = next.user
+        }
+        
+        this.date_naissance = formatDate(this.user.date_naissance)
+        this.debut_dernieres_menstrues = formatDate(this.patient.debut_dernieres_menstrues)
+        
+        if (this.user._embedded.photo !== undefined && this.user._embedded.photo !== null) {
+          let photo = this.user._embedded.photo;
+          this.imageaafficher = photo._embedded.url_photo
+        }
+      }
+    }, error => {
+      console.error(error);
+    });
   }
   
   
@@ -233,17 +231,19 @@ export class ProfilPage {
       };
       
       console.log(this.object);
+      
       let loading = this.loadingCtrl.create();
       loading.present();
+      
       this.services.updateprofile(this.object).subscribe(next => {
         console.log(next)
         this.localStorage.updatePatientStorage(next);
-         
-        if(this.images.image != ""){
-          this.services.editImage(this.images).subscribe(next => { 
+        
+        if (this.images.image != "") {
+          this.services.editImage(this.images).subscribe(next => {
           }, error => {
           }, () => {
-          }) 
+          })
         }
       }, error => {
         console.error(error.error.errors);
@@ -253,26 +253,27 @@ export class ProfilPage {
           this.errorpath = error.error.errors;
           // this.errormessage = error.error[0].message;
           
-          if (this.errorpath.account.hasOwnProperty('debut_dernieres_menstrues')) {
-            this.presentToast("DDR : "+this.errorpath.account.debut_dernieres_menstrues[0])
-          }
-          
-          if (this.errorpath.account.hasOwnProperty('date_naissance')) {
-            this.presentToast("Date Naissance : "+this.errorpath.account.date_naissance[0])
-          }
-          
-          if (this.errorpath.account.hasOwnProperty('username')) {
-            this.presentToast("Pseudonyme : "+this.errorpath.account.username[0])
-          }
-          
-          if (this.errorpath.account.hasOwnProperty('phone')) {
-            this.presentToast("Numéro de téléphone : "+this.errorpath.account.phone[0])
+          if (this.errorpath.hasOwnProperty('account')) {
+            if (this.errorpath.account.hasOwnProperty('debut_dernieres_menstrues')) {
+              this.presentToast("DDR : " + this.errorpath.account.debut_dernieres_menstrues[0])
+            }
+            
+            if (this.errorpath.account.hasOwnProperty('date_naissance')) {
+              this.presentToast("Date Naissance : " + this.errorpath.account.date_naissance[0])
+            }
+            
+            if (this.errorpath.account.hasOwnProperty('username')) {
+              this.presentToast("Pseudonyme : " + this.errorpath.account.username[0])
+            }
+            
+            if (this.errorpath.account.hasOwnProperty('phone')) {
+              this.presentToast("Numéro de téléphone : " + this.errorpath.account.phone[0])
+            }
           }
           
         } else {
           this.internalerror = 1;
           this.presentToast((error.error).toString());
-          // this.internalemesage = error.error.message;
         }
         
       }, () => {
@@ -280,9 +281,6 @@ export class ProfilPage {
         this.presentToast('Mise à jour effectué !');
         
         this.localStorage.setObjectUpdateProfile(this.object);
-        /*this.localStorage.getObjectUpdateProfile().then(mode => {
-          
-        });*/
         
         this.localStorage.getKey('modeSelected').then(mode => {
           (mode !== null) ? this.selectMode(mode) : this.navCtrl.pop();
@@ -377,28 +375,26 @@ export class ProfilPage {
     
     
     const options: CameraOptions = {
-      quality:100,
-      destinationType:1,
-      allowEdit:true,
-      encodingType:this.camera.EncodingType.JPEG,
+      quality: 100,
+      destinationType: 1,
+      allowEdit: true,
+      encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: 1
-      
-
     }
     
     this.camera.getPicture(options).then((ImageData) => {
       let base64Image = ImageData;
       this.imageaafficher = "data:image/jpeg;base64," + ImageData;
       
-        this.mylocalstorage.getSession().then((result:any) =>{
-           result.user._embedded.photo = this.imageaafficher;
-           this.images.image = this.imageaafficher;
-           this.mylocalstorage.storeSession(result).then(() => {
-           });
-        })
-
-    }, (err) =>{
+      this.mylocalstorage.getSession().then((result: any) => {
+        result.user._embedded.photo = this.imageaafficher;
+        this.images.image = this.imageaafficher;
+        this.mylocalstorage.storeSession(result).then(() => {
+        });
+      })
+      
+    }, (err) => {
       alert(err);
     })
     
@@ -411,7 +407,7 @@ export class ProfilPage {
       this.getPicture().then(img => {
         this.imageaafficher = img;
       })
-    
+      
       return;
     }
     

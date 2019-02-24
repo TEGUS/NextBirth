@@ -1,39 +1,46 @@
 import {Component, ViewChild} from '@angular/core';
 import {AlertController, LoadingController, MenuController, Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
-import {LocalStorageProvider} from "../providers/localstorage";
+import {LocalStorageProvider} from "../providers/localstorage.service";
 import * as codesMode from "../components/mode/mode";
-import {ServiceProvider} from "../providers/service";
+import {ServiceProvider} from "../providers/metier.service";
 import {TranslateService} from "@ngx-translate/core";
 
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import {SQLite, SQLiteObject} from '@ionic-native/sqlite';
+import {Globalization} from '@ionic-native/globalization';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
+  
   rootPage: any = null;
-
+  
   pages: Array<any>;
-
+  
   constructor(public platform: Platform, public statusBar: StatusBar, public localStorage: LocalStorageProvider,
               public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController,
-              public alertCtrl: AlertController, private sqlite: SQLite, public translate: TranslateService) {
+              public alertCtrl: AlertController, private sqlite: SQLite, public translate: TranslateService,
+              private globalization: Globalization) {
+    
     this.services.initHeaders();
-    this.initializeApp();
+    
+    this.initDefaultLang().then(() => {
+      this.initializeApp();
+    });
+    
     this.intiliazedatabase();
-
+    
     // used for an example of ngFor and navigation
     this.pages = [
       {title: 'Acceuil', component: "Start", icon: 'icon12'},
-      {title: 'Profil', component: "MyprofilsPage", icon: 'icon3'},
+      {title: 'Profil', component: "MyProfilePage", icon: 'icon3'},
       {title: 'Calendrier', component: "CalendarPage", icon: 'icon1'},
       {title: 'Mise en garde', component: "MessituationarisquePage", icon: 'icon2'},
       {title: 'Mes mises à jour', component: "MiseajourPage", icon: 'icon4'},
       {title: 'Outils surveillance', component: "SurveillancePage", icon: 'icon6'},
-
+      
       {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
       {title: 'Paramètres', component: "SettingsPage", icon: 'icon8'},
       {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
@@ -41,7 +48,7 @@ export class MyApp {
       {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'}
     ];
   }
-
+  
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -50,16 +57,14 @@ export class MyApp {
       // this.splashScreen.hide();
       this.statusBar.backgroundColorByHexString("#eb5350");
       this.statusBar.styleLightContent();
-
+      
       this.menuCtrl.enable(false);
       this.initRootPage().then(page => {
         this.rootPage = page
       });
-  
-      this.translate.setDefaultLang('fr');
     });
   }
-
+  
   initRootPage() {
     return new Promise((resolve, reject) => {
       this.localStorage.getKey('session').then(next => {
@@ -101,7 +106,7 @@ export class MyApp {
       });
     })
   }
-
+  
   checkProfileDesirGrossesse() {
     return new Promise((resolve, reject) => {
       this.services.checkProfileDesirGrossesse().subscribe(next => {
@@ -112,7 +117,44 @@ export class MyApp {
       })
     });
   }
-
+  
+  /**
+   * Initialisation de la langue par défaut
+   */
+  initDefaultLang() {
+    return new Promise(resolve => {
+      this.globalization.getPreferredLanguage().then(res => {
+        console.log(res.value);  // fr-CM
+        const lang = (res.value).split('-')[0];
+        
+        this.localStorage.getDefaultLang().then(defaultLang => {
+          if (defaultLang === null || defaultLang === '') {
+            this.localStorage.setDefaultLang(lang).then(lang => {
+              this.translate.setDefaultLang(lang);
+              resolve();
+            });
+          } else {
+            this.translate.setDefaultLang(defaultLang);
+            resolve();
+          }
+        });
+      }, e => {
+        console.error(e + " for globalization.getPreferredLanguage()");
+        this.localStorage.getDefaultLang().then(defaultLang => {
+          if (defaultLang === null || defaultLang === '') {
+            this.localStorage.setDefaultLang('fr').then(lang => {
+              this.translate.setDefaultLang(lang);
+              resolve();
+            });
+          } else {
+            this.translate.setDefaultLang(defaultLang);
+            resolve();
+          }
+        });
+      });
+    })
+  }
+  
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
@@ -125,10 +167,15 @@ export class MyApp {
           break;
         case "CalendarPage":
           this.localStorage.getKey('mode').then(mode => {
-            this.nav.setRoot(
-              (mode !== null && mode.code === "MO1") ?
-                "TimelinetestPage" : "CalendarPage"
-            );
+            console.log(mode)
+            if (mode === null) {
+              this.nav.setRoot('ChooseModePage', {});
+            } else {
+              this.nav.setRoot(
+                (mode !== null && mode.code === "MO1") ?
+                  "TimelinetestPage" : "CalendarPage"
+              );
+            }
           });
           break;
         default:
@@ -137,37 +184,47 @@ export class MyApp {
       }
     }
   }
-
+  
   signOut() {
-    this.localStorage.clearStorage().then(next => {
-      this.menuCtrl.enable(false);
-      this.nav.setRoot("LoginPage");
-    }, error => {
-      console.log(error);
-    })
+    this.alertCtrl.create({
+      message: 'Voulez-vous vraiment vous déconnecter ? ',
+      buttons: [
+        {
+          text: 'Non',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Oui',
+          handler: () => {
+            this.localStorage.clearStorage().then(next => {
+              this.menuCtrl.enable(false);
+              this.nav.setRoot("LoginPage");
+            }, error => {
+              console.log(error);
+            })
+          }
+        }
+      ]
+    }).present();
   }
-
-
-
+  
+  
   intiliazedatabase() {
-
+    
     this.sqlite.create({
       name: 'nextbirth.db',
       location: 'default'
     }).then((db: SQLiteObject) => {
       
-
-      db.executeSql('CREATE TABLE IF NOT EXISTS SITUATIONS (id integer primary key, date, titre, description)', [])
-      .then(res => console.log('Executed SQL'))
-      .catch(e => console.log(e));
       
-
+      db.executeSql('CREATE TABLE IF NOT EXISTS SITUATIONS (id integer primary key, date, titre, description)', [])
+        .then(res => console.log('Executed SQL'))
+        .catch(e => console.log(e));
+      
+      
     }).catch(e => console.log(e));
   }
-
-
-
-
-
-
+  
+  
 }

@@ -9,10 +9,10 @@ import {MyApp} from './app.component';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {IonicStorageModule} from '@ionic/storage';
-import {AuthenticationProvider} from '../providers/authentication';
+import {AuthenticationProvider} from '../providers/authentication.service';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {ServiceProvider} from '../providers/service';
-import {LocalStorageProvider} from '../providers/localstorage';
+import {ServiceProvider} from '../providers/metier.service';
+import {LocalStorageProvider} from '../providers/localstorage.service';
 import {Calendar} from "@ionic-native/calendar";
 import {Network} from "@ionic-native/network";
 import {Camera} from '@ionic-native/camera';
@@ -23,6 +23,7 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import { SQLite } from '@ionic-native/sqlite';
 import { DatePicker } from '@ionic-native/date-picker';
 import { CameraMock } from '@ionic-native-mocks/camera';
+import { Globalization } from '@ionic-native/globalization';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -55,19 +56,11 @@ export function createTranslateLoader(http: HttpClient) {
     MyApp
   ],
   providers: [
-    StatusBar,
-    Calendar,
-    Network,
-    Vibration,
-    LocalStorageProvider,
-    SplashScreen,
-    SQLite,
-    DatePicker,
+    StatusBar, Calendar, Network, Vibration, LocalStorageProvider, SplashScreen,
+    SQLite, DatePicker, Globalization,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: Camera, useClass: CameraMock},
-    AuthenticationProvider,
-    ServiceProvider,
-    LocalNotifications
+    AuthenticationProvider, ServiceProvider, LocalNotifications
   ]
 })
 export class AppModule {

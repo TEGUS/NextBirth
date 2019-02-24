@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Calendar} from "@ionic-native/calendar";
-import {LocalStorageProvider} from "../../../providers/localstorage";
-import {ServiceProvider} from "../../../providers/service";
+import {LocalStorageProvider} from "../../../providers/localstorage.service";
+import {ServiceProvider} from "../../../providers/metier.service";
 
 /**
  * Generated class for the CalendarPage page.
@@ -53,7 +53,7 @@ export class CalendarPage {
       if (next) {
         this.calculCycleMenstruel();
       } else {
-        this.navCtrl.push("ProfilPage");
+        this.navCtrl.push("UpdateProfilePage");
       }
     }, error => {
       console.error(error);

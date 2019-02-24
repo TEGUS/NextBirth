@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ServiceProvider} from "../../providers/service";
-import {LocalStorageProvider} from "../../providers/localstorage";
+import {ServiceProvider} from "../../providers/metier.service";
+import {LocalStorageProvider} from "../../providers/localstorage.service";
 import * as deepEqual from "deep-equal";
 
 /**

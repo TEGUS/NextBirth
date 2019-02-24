@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, LoadingController, AlertController} from 'ionic-angular';
-import {ServiceProvider} from '../../../providers/service';
-import {LocalStorageProvider} from "../../../providers/localstorage";
+import {ServiceProvider} from '../../../providers/metier.service';
+import {LocalStorageProvider} from "../../../providers/localstorage.service";
 import {getCurrentDateWith} from "../../../variables/functions";
 
 /**
@@ -283,6 +283,35 @@ export class TimelinetestPage {
       ]
     });
   
+    alert.present();
+  }
+  
+  openDialog(item) {
+    let buttons = [
+      {
+        text: 'Visualiser',
+        handler: () => this.selectArticle(item.content, item.description)
+      }
+    ];
+    
+    if (item.patient !== null) {
+      buttons = buttons.concat([
+        {
+          text: 'Modifier',
+          handler: () => this.updateEvent(item)
+        },
+        {
+          text: 'Supprimer',
+          handler: () => this.deleteEvent(item)
+        }
+      ])
+    }
+    
+    let alert = this.alertCtrl.create({
+      title: `${item.content}`,
+      subTitle: `${item.time.subTitle}`,
+      buttons: buttons
+    });
     alert.present();
   }
 }

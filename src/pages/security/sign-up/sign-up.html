@@ -1,56 +1,64 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>Signup</ion-title>
+    <ion-title>S'inscrire</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <div class="content">
-    
+    <show-date
+      [libelle]="'Date de naissance'"
+      (outputDate)="dateNaissance($event)">
+    </show-date>
     
     <show-date
-      [libelle]="'Veuillez entrer la date du premier jours de vos dernières règles'"
+      [libelle]="'Date du premier jour de vos dernières règles'"
       (outputDate)="dateLastMentruation($event)">
     </show-date>
-
-    <!--<show-date
-      [libelle]="'Ou votre date d accouchement'">
-    </show-date>-->
-
+    
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+      <input-element
+        [libelle]="'Durée des Menstruations'"
+        [type]="'number'"
+        (outputValue)="getDurationMenstruation($event)">
+      </input-element>
+      
+      <input-element
+        [libelle]="'Durée du cycle Minimal'"
+        [type]="'number'"
+        (outputValue)="getDureeCycleMin($event)">
+      </input-element>
+      
+      <input-element
+        [libelle]="'Durée du cycle Maximal'"
+        [type]="'number'"
+        (outputValue)="getDureeCycleMax($event)">
+      </input-element>
+    </div>
+    
     <input-element
-      [libelle]="'Durée du cycle'"
-      [type]="'number'"
-      (outputValue)="getDurationMenstruation($event)">
+      [libelle]="'Numéro de téléphone'"
+      [type]="'text'"
+      (outputValue)="getPhone($event)">
     </input-element>
-
-    <input-element
-      [libelle]="'Email'"
-      [type]="'email'"
-      (outputValue)="getEmail($event)">
-    </input-element>
-    <!--<p class="error"
-       *ngIf="error != null && error.email.errors != undefined">
-      {{error.email.errors[0]}}
-    </p>-->
-    <p *ngIf="errorpath === 'account.email'" style="color: red">{{errormessage}}</p>
-
+    
     <input-element
       [libelle]="'Mot de passe'"
       [type]="'password'"
       (outputValue)="getPassword($event)">
     </input-element>
     <p *ngIf="errorpath === 'account.password'" style="color: red">{{errormessage}}</p>
-
+    
     <input-element
       [libelle]="'Repetez le mot de passe'"
       [type]="'password'"
       (outputValue)="getRepeatPassword($event)">
     </input-element>
-
+    
     <p class="error" *ngIf="error == null && showError != null"> {{showError.message}} </p>
-
+    
     <div class="create-account">
-      <div class="libelle">Pour profiter d'une prise en charge complète, veuillez</div>
+      <!--<div class="libelle">Pour profiter d'une prise en charge complète, veuillez</div>-->
       <input type="button" value="CREER UN COMPTE" (click)="signUp()">
     </div>
   </div>

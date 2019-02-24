@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ServiceProvider } from '../../providers/service';
+import { ServiceProvider } from '../../providers/metier.service';
 import moment from 'moment';
 
 /**

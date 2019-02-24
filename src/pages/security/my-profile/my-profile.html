@@ -1,5 +1,5 @@
 <ion-header>
-  <navbar title="Profils" [ionButtons]="ionButtonsEnd"
+  <navbar title="Mon Profil" [ionButtons]="ionButtonsEnd"
           (getClickedButton)="getClickedButton($event)">
   </navbar>
 </ion-header>
@@ -12,73 +12,83 @@
       <p class="textelogin">{{user.email}}</p>
     </div>
     <br>
-  
+    
     <ion-row>
       <ion-col class="dateheure2">
-        Username :
+        Pseudonyme :
       </ion-col>
       <ion-col class="dateheure3">
-        {{user.username}}
+        {{user.username || 'Non défini'}}
       </ion-col>
     </ion-row>
-  
+    
     <ion-row>
       <ion-col class="dateheure2">
         Email :
       </ion-col>
       <ion-col class="dateheure3">
-        {{user.email}}
+        {{user.email || 'Non défini'}}
       </ion-col>
     </ion-row>
-  
+    
     <ion-row>
       <ion-col class="dateheure2">
-        age_premiere_regle :
+        Numéro de téléphone :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.age_premiere_regle}}
+        {{user.phone || 'Non défini'}}
       </ion-col>
     </ion-row>
-  
+    
     <ion-row>
       <ion-col class="dateheure2">
-        cycle_regulier :
+        Age des premières règles :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{patient.age_premiere_regle || 'Non défini'  + ' (jrs)'}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        Avez-vous un cycle régulier ? :
       </ion-col>
       <ion-col class="dateheure3">
         {{formatBool(patient.cycle_regulier)}}
       </ion-col>
     </ion-row>
-  
+    
     <ion-row>
       <ion-col class="dateheure2">
-        debut_dernieres_menstrues :
+        Debut des dernières menstrues :
       </ion-col>
       <ion-col class="dateheure3">
-        {{formatDate(patient.debut_dernieres_menstrues) | date: 'dd/MM/yyyy' || '__'}}
+        {{formatDate(patient.debut_dernieres_menstrues) | date: 'dd/MM/yyyy' || 'Non défini'}}
       </ion-col>
     </ion-row>
-  
+    
     <ion-row>
       <ion-col class="dateheure2">
-        date_vaccin_anti_tetanique :
+        Date du vaccin anti tétanique :
       </ion-col>
       <ion-col class="dateheure3">
-        {{formatDate(patient.date_vaccin_anti_tetanique) ? ((formatDate(patient.date_vaccin_anti_tetanique) | date: 'dd/MM/yyyy')) : '__'}}
+        {{formatDate(patient.date_vaccin_anti_tetanique) ? ((formatDate(patient.date_vaccin_anti_tetanique) | date:
+        'dd/MM/yyyy')) : 'Non défini'}}
       </ion-col>
     </ion-row>
-  
+    
     <ion-row>
       <ion-col class="dateheure2">
-        diabete :
+        Diabétique ? :
       </ion-col>
       <ion-col class="dateheure3">
         {{formatBool(patient.diabete)}}
       </ion-col>
     </ion-row>
-  
+    
     <ion-row>
       <ion-col class="dateheure2">
-        diagnostique :
+        Drépanocitaire ? :
       </ion-col>
       <ion-col class="dateheure3">
         {{formatBool(patient.drepano)}}
@@ -87,7 +97,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        douleur_regle :
+        Avez-vous des douleurs pendant les règles ? :
       </ion-col>
       <ion-col class="dateheure3">
         {{formatBool(patient.douleur_regle)}}
@@ -96,117 +106,119 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        duree_cycle :
+        Durée min du cycle :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.duree_cycle}}
+        {{patient.duree_cycle_min || 'Non défini' + ' (jrs)'}}
       </ion-col>
     </ion-row>
     
     <ion-row>
       <ion-col class="dateheure2">
-        duree_desir_grossesse :
+        Durée max du cycle :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.duree_desir_grossesse || '__'}}
+        {{patient.duree_cycle_max || 'Non défini' + ' (jrs)'}}
       </ion-col>
     </ion-row>
     
     <ion-row>
       <ion-col class="dateheure2">
-        duree_menstrues :
+        Durée désir grossesse :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.duree_menstrues}}
+        {{patient.duree_desir_grossesse || 'Non défini'}}
       </ion-col>
     </ion-row>
     
     <ion-row>
       <ion-col class="dateheure2">
-        duree_saignement :
+        Durée des menstrues :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.duree_saignement}}
+        {{patient.duree_menstrues || 'Non défini' +' (jrs)'}}
       </ion-col>
     </ion-row>
     
     <ion-row>
       <ion-col class="dateheure2">
-        etat_esprit :
+        Durée des seignement :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.etat_esprit || '__'}}
+        {{patient.duree_saignement || 'Non défini' +' (jrs)'}}
       </ion-col>
     </ion-row>
     
     <ion-row>
       <ion-col class="dateheure2">
-        frequence_saignement :
+        Etat exprit :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.frequence_saignement || '__'}}
+        {{patient.etat_esprit || 'Non défini'}}
       </ion-col>
     </ion-row>
     
     <ion-row>
       <ion-col class="dateheure2">
-        hta :
+        Fréquence de seignement :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{patient.frequence_saignement || 'Non défini'}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        Hypertendu ? :
       </ion-col>
       <ion-col class="dateheure3">
         {{formatBool(patient.hta)}}
       </ion-col>
     </ion-row>
-  
+    
     <ion-row>
       <ion-col class="dateheure2">
-        marital_status :
+        Statut matrimonial :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.marital_status || '__'}}
-      </ion-col>
-    </ion-row>
-  
-    <ion-row>
-      <ion-col class="dateheure2">
-        nombre_enfant_vivant :
-      </ion-col>
-      <ion-col class="dateheure3">
-        {{patient.nombre_enfant_vivant}}
+        {{patient.marital_status || 'Non défini'}}
       </ion-col>
     </ion-row>
     
     <ion-row>
       <ion-col class="dateheure2">
-        nombre_fosse_couche :
+        Nombre d'enfant vivant :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.nombre_fosse_couche}}
+        {{patient.nombre_enfant_vivant || 'Non défini'}}
       </ion-col>
     </ion-row>
     
     <ion-row>
       <ion-col class="dateheure2">
-        nombre_grossesse :
+        Nombre de fausses couches ou avortements :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.nombre_grossesse}}
+        {{patient.nombre_fosse_couche || 'Non défini'}}
       </ion-col>
     </ion-row>
     
     <ion-row>
       <ion-col class="dateheure2">
-        nombre_premature :
+        Nombre de grossesse :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.nombre_premature}}
+        {{patient.nombre_grossesse || 'Non défini'}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="dateheure2">
+        Nombre de prémature :
+      </ion-col>
+      <ion-col class="dateheure3">
+        {{patient.nombre_premature || 'Non défini'}}
       </ion-col>
     </ion-row>
   </div>
-  
-  <br>
-  <br>
-  <br>
-  <br>
-
-
 </ion-content>

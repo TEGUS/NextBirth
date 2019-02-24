@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
-import { ServiceProvider } from '../../providers/service';
+import { ServiceProvider } from '../../providers/metier.service';
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {Base64} from '@ionic-native/base64';
 

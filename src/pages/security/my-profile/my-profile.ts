@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {LocalStorageProvider} from '../../../providers/localstorage';
-import {IonButtonEnd} from "../../../providers/service";
+import {LocalStorageProvider} from '../../../providers/localstorage.service';
+import {IonButtonEnd} from "../../../providers/metier.service";
 import {formatDate} from "../../../variables/functions";
 
 /**
@@ -13,10 +13,10 @@ import {formatDate} from "../../../variables/functions";
 
 @IonicPage()
 @Component({
-  selector: 'page-myprofils',
-  templateUrl: 'myprofils.html',
+  selector: 'page-my-profile',
+  templateUrl: 'my-profile.html',
 })
-export class MyprofilsPage {
+export class MyProfilePage {
   ionButtonsEnd: Array<IonButtonEnd> = [];
   user = null;
   patient = null;
@@ -28,6 +28,7 @@ export class MyprofilsPage {
   
   ionViewWillEnter() {
     this.localStorage.getKey('session').then(next => {
+      console.log(next);
       if (next !== undefined && next !== null) {
         this.patient = next.user._embedded.patient;
         
@@ -58,7 +59,7 @@ export class MyprofilsPage {
   getClickedButton(button: IonButtonEnd) {
     switch (button.code) {
       case 'update':
-        this.navCtrl.push('ProfilPage');
+        this.navCtrl.push('UpdateProfilePage');
         break;
     }
   }

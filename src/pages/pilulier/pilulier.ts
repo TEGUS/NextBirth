@@ -8,7 +8,7 @@ import {
   PopoverController, ToastController
 } from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ServiceProvider} from "../../providers/service";
+import {ServiceProvider} from "../../providers/metier.service";
 import {
   ELocalNotificationTriggerUnit,
   ILocalNotification,
@@ -19,8 +19,8 @@ import {
 import Schedule from "../../models/Schedule";
 import * as functions from "../../variables/functions";
 import * as v from "../../variables/variables_";
-import {LocalStorageProvider} from "../../providers/localstorage";
-import {formatDate, getDate} from "../../variables/functions";
+import {LocalStorageProvider} from "../../providers/localstorage.service";
+import {formatDate, getCurrentDateWith, getDate} from "../../variables/functions";
 import {formatNumberOfDate} from "../../variables/functions";
 
 /**
@@ -40,6 +40,7 @@ export class PilulierPage {
   private part: any;
   private form: FormGroup;
   private treatments = [];
+  private archives = [];
   private frequencesPrise = [];
   
   private medicament_search = null;
@@ -283,7 +284,7 @@ export class PilulierPage {
   }
   
   ionViewDidLoad() {
-    this.gotoOnglet_2();
+    this.gotoOnglet_1();
     this.part = 1;
   }
   
@@ -316,17 +317,21 @@ export class PilulierPage {
     this.form.patchValue({horaireFirstPrise: event.hour + ':' + event.minute})
   }
   
-  gotoOnglet_1() {
-    this.onglet = 0;
+  gotoOnglet_0() {
     this.part = 1;
+    this.onglet = 0;
     this.currentTreatment = null;
     this.initForm();
   }
   
-  gotoOnglet_2() {
+  gotoOnglet_1() {
     this.onglet = 1;
     this.currentTreatment = null;
     this.getTreatments();
+  }
+  
+  gotoOnglet_2() {
+    this.onglet = 2;
   }
   
   cancel() {
@@ -359,7 +364,7 @@ export class PilulierPage {
           loading.dismiss();
           loading.onDidDismiss(() => {
             this.cancel();
-            this.gotoOnglet_2()
+            this.gotoOnglet_1()
             this.presentDialogAlert('Médicament crée avec succès!');
             this.initScheduleTreatement();
           })
@@ -377,7 +382,7 @@ export class PilulierPage {
             loading.dismiss();
             loading.onDidDismiss(() => {
               this.cancel();
-              this.gotoOnglet_2()
+              this.gotoOnglet_1()
               this.presentDialogAlert('Médicament mis à jour avec succès!');
               this.initScheduleTreatement();
             })
@@ -420,6 +425,27 @@ export class PilulierPage {
       loading.present();
       this.treatments = [];
       this.services.allTreatments().subscribe((next: any) => {
+        let tmp = [];
+        this.archives = [];
+  
+        /**
+         * Filtrer les traitements en cours des traitements terminés.
+         */
+        next.forEach(t => {
+          const dateDebT = new Date((t.date_debut_traitement).split('T')[0]);
+          const horaire: Array<any> = (t.horaire_first_prise).split(':');
+          dateDebT.setHours(Number(horaire[0]), Number(horaire[1]));
+          const dateTraitment = getCurrentDateWith(dateDebT, t.duree_traitement);
+          
+          if ((new Date()) > dateTraitment) {
+            this.archives.push(t);
+          } else {
+            tmp.push(t);
+          }
+        });
+        
+        next = tmp;
+        
         if (this.isModeGrs) {
           next.forEach(m => {
             if (m._embedded.core_medicament !== null) {
@@ -434,7 +460,8 @@ export class PilulierPage {
           this.treatments = next;
         }
         
-        console.log(next)
+        // console.log(next)
+        // console.log(this.archives)
       }, error => {
         console.error(error);
         loading.dismiss()

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Network} from "@ionic-native/network";
-import {IonButtonEnd, ServiceProvider} from "../../providers/service";
+import {IonButtonEnd, ServiceProvider} from "../../providers/metier.service";
 
 
 @Component({
