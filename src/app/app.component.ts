@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {AlertController, LoadingController, MenuController, Nav, Platform} from 'ionic-angular';
+import {AlertController, LoadingController, MenuController, Nav, Platform, ToastController} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {LocalStorageProvider} from "../providers/localstorage.service";
 import * as codesMode from "../components/mode/mode";
@@ -22,7 +22,7 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public localStorage: LocalStorageProvider,
               public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController,
               public alertCtrl: AlertController, private sqlite: SQLite, public translate: TranslateService,
-              private globalization: Globalization) {
+              private globalization: Globalization, private toastCtrl: ToastController) {
     
     this.services.initHeaders();
     
@@ -169,6 +169,7 @@ export class MyApp {
           this.localStorage.getKey('mode').then(mode => {
             console.log(mode)
             if (mode === null) {
+              this.presentToast("Veuillez Choisir Un Mode !");
               this.nav.setRoot('ChooseModePage', {});
             } else {
               this.nav.setRoot(
@@ -209,22 +210,23 @@ export class MyApp {
     }).present();
   }
   
+  presentToast(message: any) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 5000
+    });
+    toast.present();
+  }
+  
   
   intiliazedatabase() {
-    
     this.sqlite.create({
       name: 'nextbirth.db',
       location: 'default'
     }).then((db: SQLiteObject) => {
-      
-      
       db.executeSql('CREATE TABLE IF NOT EXISTS SITUATIONS (id integer primary key, date, titre, description)', [])
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
-      
-      
     }).catch(e => console.log(e));
   }
-  
-  
 }
