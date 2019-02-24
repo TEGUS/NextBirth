@@ -43,14 +43,15 @@
       <p *ngIf="errorpath != null && errorpath.hasOwnProperty('account') && errorpath.account.hasOwnProperty('username')" style="color: red">
         {{errorpath.account.username[0]}}</p>
       
-      <input-element
-        [libelle]="'Numéro de téléphone'"
-        [type]="'text'"
-        [initValue]="user != null ? user.phone : null"
-        (outputValue)="getPhone($event)">
-      </input-element>
-      <p *ngIf="errorpath != null && errorpath.hasOwnProperty('account') && errorpath.account.hasOwnProperty('phone')" style="color: red">
-        {{errorpath.account.phone[0]}}</p>
+      <!--<input-element-->
+        <!--[libelle]="'Numéro de téléphone'"-->
+        <!--[type]="'text'"-->
+        <!--[initValue]="user != null ? user.phone : null"-->
+        <!--(outputValue)="getPhone($event)">-->
+      <!--</input-element>-->
+      <!--<p *ngIf="errorpath != null && errorpath.hasOwnProperty('account') && errorpath.account.hasOwnProperty('phone')" style="color: red">-->
+        <!--{{errorpath.account.phone[0]}}</p>-->
+      
     </div>
     
     <div style="padding-left: 50px; padding-right: 50px;">
