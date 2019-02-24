@@ -257,7 +257,7 @@ export class UpdateProfilePage {
       console.log("============================================");
       console.log(this.object);
       console.log("============================================");
-      
+
       this.services.updateprofile(this.object).subscribe(next => {
         console.log(next)
         this.localStorage.updatePatientStorage(next);
