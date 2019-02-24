@@ -3,6 +3,7 @@ import {IonicPage, LoadingController, MenuController, NavController, NavParams, 
 import {AuthenticationProvider} from "../../../providers/authentication.service";
 import {checkField, formatNumberOfDate} from "../../../variables/functions";
 import {LocalStorageProvider} from "../../../providers/localstorage.service";
+import { ServiceProvider } from '../../../providers/metier.service';
 
 
 @IonicPage()
@@ -18,7 +19,7 @@ export class SignUpPage {
   showError = null;
   
   
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public services: ServiceProvider, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider,
               public menuCtrl: MenuController) {
@@ -95,11 +96,13 @@ export class SignUpPage {
           console.log(next);
           this.mylocalstorage.storeSession(next).then(() => {
             loading.dismiss();
-            loading.onDidDismiss(() => {
-              this.presentToast('Finish SignUp!');
-              this.navCtrl.setRoot('ChooseModePage', {});
-              this.menuCtrl.enable(true, 'sideMenu');
-            });
+            this.services.faitTravail().then(() => {
+                  loading.onDidDismiss(() => {
+                    this.presentToast('Finish SignUp!');
+                    this.navCtrl.setRoot('ChooseModePage', {});
+                    this.menuCtrl.enable(true, 'sideMenu');
+                  });
+             });
           });
         }, error => {
           loading.dismiss();

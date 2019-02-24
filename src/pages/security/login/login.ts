@@ -61,7 +61,10 @@ export class LoginPage {
         console.log(next);
 
         this.mylocalstorage.storeSession(next).then(() => {
-          this.services.faitTravail();
+          this.services.faitTravail().then(() => {
+
+            
+          });
           
           this.services.checkAuthorization().then(() => {
             this.mylocalstorage.storeKeydpv(0).then(() => {});

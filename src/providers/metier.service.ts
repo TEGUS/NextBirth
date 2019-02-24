@@ -35,9 +35,12 @@ export class ServiceProvider {
   
   
   faitTravail() {
-    this.initHeaders().then(next => {
-      this.headers = next;
-    });
+    return new Promise(resolve => {
+      this.initHeaders().then(next => {
+        this.headers = next;
+        resolve()
+      });
+    })
   }
   
   checkAuthorization() {

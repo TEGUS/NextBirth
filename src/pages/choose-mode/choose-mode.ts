@@ -7,6 +7,7 @@ import {ModeContraceptionPage} from "../mode-contraception/mode-contraception";
 import {ReportPage} from "../report/report";
 import {LocalNotifications} from '@ionic-native/local-notifications';
 import * as codesMode from "../../components/mode/mode";
+import {DatePicker} from '@ionic-native/date-picker';
 
 @IonicPage()
 @Component({
@@ -25,11 +26,11 @@ export class ChooseModePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public services: ServiceProvider,
               public loadingCtrl: LoadingController, public alertCtrl: AlertController,
-              public toastCtrl: ToastController, public localStorage: LocalStorageProvider, private localNotifications: LocalNotifications) {
+              public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider, private datePicker: DatePicker, public localStorage: LocalStorageProvider, private localNotifications: LocalNotifications) {
   }
 
   ionViewWillLoad() {
-    this.services.initHeaders();
+    //this.services.initHeaders();
   }
 
   ionViewDidLoad() {
@@ -90,8 +91,13 @@ export class ChooseModePage {
             this.nombrejourseignement = nombresjours3;
             if(this.nombrejourseignement<=3){
                 this.testeurovulation = 1;
+                this.datepdeseignement()
             }
 
+          }else if((nombresjours2<0) && (nombresjours2 ==-1)){
+            this.testeur = 5;
+          }else if((nombresjours2<0) && (nombresjours2 ==-2)){
+            this.testeur = 6;
           }
     }, error => {
       console.error(error)
@@ -126,86 +132,96 @@ export class ChooseModePage {
     this.checkProfile().then(next => {
       console.log(next);
       if (next) {
-        this.services.selectMode(mode.id).subscribe(alerts => {
-          let listesNotification = [];
-          var i = 0;
-          alerts.forEach((element) => {
-            let manotification = {
-              id: i + 1,
-              text: element._embedded.conseil.description,
-              //trigger: {at: new Date(new Date().getTime() + (60*1000)*(i+1))},
-              trigger: {at: new Date((new Date(element.date_alert)).getTime())},
-              led: 'FF0000',
-              sound: 'file://assets/imgs/notification.mp3'
-            }
+        let loading2 = this.loadingCtrl.create();
+        loading2.present();
 
-            listesNotification.push(manotification);
-            i++;
-          });
+      
 
-          if (i == alerts.length) {
-            this.localNotifications.schedule(
-              listesNotification
-            );
-          }
-          this.localStorage.storeModeInSession(mode);
-        }, error => {
-          loading.dismiss();
-          console.error(error);
-        }, () => {
-          console.log('Succes du stochage du mode!');
-          //Redirection vers la page du Mode
-          switch (mode.code) {
-            case codesMode.CONTPL:
-              loading.dismiss();
-              this.navCtrl.push("ModeContraceptionPage", {
-                title: mode.intitule
-              })
-              break;
-            case codesMode.CONTPR:
-              loading.dismiss();
-              this.navCtrl.push("ModeContraceptionPage", {
-                title: mode.intitule
-              })
-              break;
-            case codesMode.GRS:
-              this.checkProfileDesirGrossesse().then((next: any) => {
-                loading.dismiss()
-                if (next.status) {
-                  let alert = this.alertCtrl.create({
-                    message: 'Voulez vous mettre à jour vos infos ?',
-                    buttons: [
-                      {
-                        text: 'Non',
-                        handler: () => {
-                          this.navCtrl.push("ReportPage")
-                        }
-                      },
-                      {
-                        text: 'Oui',
-                        handler: () => {
-                          this.navCtrl.push("QuestionContraceptionPage", {
-                            infos_desir_grossesse: next.infos_desir_grossesse
-                          })
-                        }
+                  this.services.selectMode(mode.id).subscribe(alerts => {
+                    let listesNotification = [];
+                    var i = 0;
+                    alerts.forEach((element) => {
+                      let manotification = {
+                        id: i + 1,
+                        text: element._embedded.conseil.description,
+                        //trigger: {at: new Date(new Date().getTime() + (60*1000)*(i+1))},
+                        trigger: {at: new Date((new Date(element.date_alert)).getTime())},
+                        led: 'FF0000',
+                        sound: 'file://assets/imgs/notification.mp3'
                       }
-                    ]
+
+                      listesNotification.push(manotification);
+                      i++;
+                    });
+
+                    if (i == alerts.length) {
+                      loading2.dismiss();
+                      this.localNotifications.schedule(
+                        listesNotification
+                      );
+                    }
+                    this.localStorage.storeModeInSession(mode);
+                  }, error => {
+                    loading.dismiss();
+                    console.error(error);
+                  }, () => {
+                    console.log('Succes du stochage du mode!');
+                    //Redirection vers la page du Mode
+                    switch (mode.code) {
+                      case codesMode.CONTPL:
+                        loading.dismiss();
+                        this.navCtrl.push("ModeContraceptionPage", {
+                          title: mode.intitule
+                        })
+                        break;
+                      case codesMode.CONTPR:
+                        loading.dismiss();
+                        this.navCtrl.push("ModeContraceptionPage", {
+                          title: mode.intitule
+                        })
+                        break;
+                      case codesMode.GRS:
+                        this.checkProfileDesirGrossesse().then((next: any) => {
+                          loading.dismiss()
+                          if (next.status) {
+                            let alert = this.alertCtrl.create({
+                              message: 'Voulez vous mettre à jour vos infos ?',
+                              buttons: [
+                                {
+                                  text: 'Non',
+                                  handler: () => {
+                                    this.navCtrl.push("ReportPage")
+                                  }
+                                },
+                                {
+                                  text: 'Oui',
+                                  handler: () => {
+                                    this.navCtrl.push("QuestionContraceptionPage", {
+                                      infos_desir_grossesse: next.infos_desir_grossesse
+                                    })
+                                  }
+                                }
+                              ]
+                            });
+                            alert.present();
+                          } else {
+                            this.navCtrl.push("QuestionContraceptionPage")
+                          }
+                        }, error => {
+                          console.error(error)
+                          loading.dismiss();
+                        })
+                        break;
+                      case codesMode.GEST:
+                        loading.dismiss();
+                        this.navCtrl.push("ReportPage")
+                        break;
+                    }
                   });
-                  alert.present();
-                } else {
-                  this.navCtrl.push("QuestionContraceptionPage")
-                }
-              }, error => {
-                console.error(error)
-                loading.dismiss();
-              })
-              break;
-            case codesMode.GEST:
-              loading.dismiss();
-              this.navCtrl.push("ReportPage")
-              break;
-          }
-        });
+       
+
+
+
       } else {
         loading.dismiss();
         loading.onDidDismiss(() => {
@@ -220,21 +236,102 @@ export class ChooseModePage {
     });
   }
 
+
+  datepdeseignement() {
+    
+    
+    /*this.mylocalstorage.getSession().then((result:any) =>{
+          console.log("=========================================");
+          result.user._embedded.patient.debut_dernieres_menstrues = "madateepuis quoi"
+          console.log(result.user._embedded.patient.debut_dernieres_menstrues );
+          console.log("=========================================");
+    })*/
+    
+    let alert = this.alertCtrl.create({
+      title: 'Alerte seignement',
+      message: 'Voulez vous metre à jours votre date de dernier règle ?',
+      buttons: [
+        {
+          text: 'NON',
+          role: 'cancel',
+          handler: () => {
+            
+          
+          }
+        },
+        {
+          text: 'OUI',
+          handler: () => {
+            
+            
+            this.datePicker.show({
+              date: new Date(),
+              mode: 'date',
+              androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+            }).then((date) => {
+              
+              //var datepv = new Date(JSON.stringify(date)).getTime();
+              // update profile date des dernier règles
+              
+              this.mylocalstorage.getSession().then((result: any) => {
+                result.user._embedded.patient.debut_dernieres_menstrues = date;
+                this.mylocalstorage.storeSession(result).then(() => {
+                  // c'est update doit aussi aller au serveur
+                  
+                  this.mylocalstorage.getSession().then((result: any) => {
+                    var dataprofile = '' + result.user._embedded.patient.debut_dernieres_menstrues;
+                    // this.mylocalstorage.setObjectUpdateProfile(this.object);
+                    this.mylocalstorage.getObjectUpdateProfile().then((mode: any) => {
+                      if (mode != null) {
+                        mode.debut_dernieres_menstrues = dataprofile.substring(0, 16) + 'Z';
+                        this.services.updateprofile(mode).subscribe(next => {
+                          this.mylocalstorage.updatePatientStorage(next);
+                        }, error => {
+                        }, () => {
+                          this.mylocalstorage.setObjectUpdateProfile(mode);
+                        });
+                      }
+                    });
+                   
+                    // 280 jour pour donné naissance
+                    
+                  })
+                  
+                });
+              })
+              
+            });
+            
+            
+          }
+        }
+      ]
+    });
+    
+    alert.present();
+    
+  }
+
   getAllcategories() {
     let loading = this.loadingCtrl.create();
     loading.present();
-    this.services.getCategories().subscribe(next => {
-     
-      this.modes = next;
-    }, error => {
-      loading.dismiss();
-      console.log(error);
-    }, () => {
-      loading.dismiss();
-      loading.onDidDismiss(() => {
-        console.log('succes de la recupération des modes!');
-      });
-    });
+
+   
+
+      this.services.getCategories().subscribe(next => {
+          
+          this.modes = next;
+        }, error => {
+          loading.dismiss();
+          console.log(error);
+        }, () => {
+          loading.dismiss();
+          loading.onDidDismiss(() => {
+            console.log('succes de la recupération des modes!');
+          });
+        });  
+   
+          
   }
 }
 
