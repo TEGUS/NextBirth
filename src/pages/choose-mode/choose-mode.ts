@@ -211,7 +211,7 @@ export class ChooseModePage {
         loading.onDidDismiss(() => {
           this.localStorage.setKey("modeSelected", mode);
           //Redirection vers Update Profile
-          this.navCtrl.push("ProfilPage");
+          this.navCtrl.push("UpdateProfilePage");
         });
       }
     }, error => {

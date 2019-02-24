@@ -100,7 +100,11 @@ export class UpdateProfilePage {
           this.user = next.user
         }
         
-        this.date_naissance = formatDate(this.user.date_naissance)
+        this.castUsername(this.user).then(user => {
+          this.user = user;
+        });
+        
+        this.date_naissance = formatDate(this.user.date_naissance);
         this.debut_dernieres_menstrues = formatDate(this.patient.debut_dernieres_menstrues)
         
         if (this.user._embedded.photo !== undefined && this.user._embedded.photo !== null) {
@@ -111,6 +115,18 @@ export class UpdateProfilePage {
     }, error => {
       console.error(error);
     });
+  }
+  
+  /**
+   * Cast Username
+   * @param user
+   */
+  castUsername(user) {
+    return new Promise(resolve => {
+      let res = (user.username).split('@nextbirth.com');
+      user.username = res.length === 0 ? user.username : null;
+      resolve(user);
+    })
   }
   
   
