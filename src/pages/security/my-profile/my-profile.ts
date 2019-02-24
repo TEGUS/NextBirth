@@ -38,14 +38,31 @@ export class MyProfilePage {
           this.user = next.user
         }
   
-        if (this.user._embedded.photo !== undefined && this.user._embedded.photo !== null) {
-          let photo = this.user._embedded.photo;
-          this.imageaafficher = photo._embedded.url_photo
-        }
+        this.castUsername(this.user).then(user => {
+          console.log(user);
+          this.user = user;
+    
+          if (this.user._embedded.photo !== undefined && this.user._embedded.photo !== null) {
+            let photo = this.user._embedded.photo;
+            this.imageaafficher = photo._embedded.url_photo
+          }
+        });
       }
     }, error => {
       console.error(error);
     });
+  }
+  
+  /**
+   * Cast Username
+   * @param user
+   */
+  castUsername(user) {
+    return new Promise(resolve => {
+      let res = (user.username).indexOf("@nextbirth.com");
+      user.username = res.length === -1 ? user.username : null;
+      resolve(user);
+    })
   }
   
   ionViewDidLoad() {

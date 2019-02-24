@@ -103,15 +103,18 @@ export class UpdateProfilePage {
         
         this.castUsername(this.user).then(user => {
           this.user = user;
+  
+          this.date_naissance = formatDate(this.user.date_naissance);
+          this.debut_dernieres_menstrues = formatDate(this.patient.debut_dernieres_menstrues)
+  
+          console.log(this.date_naissance)
+          console.log(this.debut_dernieres_menstrues)
+          
+          if (this.user._embedded.photo !== undefined && this.user._embedded.photo !== null) {
+            let photo = this.user._embedded.photo;
+            this.imageaafficher = photo._embedded.url_photo
+          }
         });
-        
-        this.date_naissance = formatDate(this.user.date_naissance);
-        this.debut_dernieres_menstrues = formatDate(this.patient.debut_dernieres_menstrues)
-        
-        if (this.user._embedded.photo !== undefined && this.user._embedded.photo !== null) {
-          let photo = this.user._embedded.photo;
-          this.imageaafficher = photo._embedded.url_photo
-        }
       }
     }, error => {
       console.error(error);
@@ -124,12 +127,11 @@ export class UpdateProfilePage {
    */
   castUsername(user) {
     return new Promise(resolve => {
-      let res = (user.username).split('@nextbirth.com');
-      user.username = res.length === 0 ? user.username : null;
+      let res = (user.username).indexOf("@nextbirth.com");
+      user.username = res.length === -1 ? user.username : null;
       resolve(user);
     })
   }
-  
   
   dateDeDernieresRegles(date) {
     this.object.debutDernieresMenstrues = `${formatNumberOfDate(date.day)}-${formatNumberOfDate(date.month)}-${date.year}`;

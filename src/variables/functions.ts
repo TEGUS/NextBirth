@@ -17,10 +17,10 @@ export function formatDate(date: string) {
   if (date === null) {
     return null;
   } else {
-    const d = new Date(('' + date).substring(0, 16) + 'Z');
+    const d = new Date((`${date}`).substring(0, 16) + 'Z');
     return {
       day: formatNumberOfDate(d.getDate()),
-      month: formatNumberOfDate(d.getMonth()),
+      month: formatNumberOfDate(d.getMonth() + 1),
       year: d.getFullYear(),
       date: d
     };
