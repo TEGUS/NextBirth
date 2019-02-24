@@ -73,7 +73,8 @@ export class UpdateProfilePage {
       drepano: 0,
       agePremiereRegle: null,
       dureeSaignement: null,
-      dureeCycle: null,
+      dureeCycleMax: null,
+      dureeCycleMin: null,
       cycleRegulier: 0,
       douleurRegle: 0,
       nombreGrossesse: null,
@@ -146,8 +147,12 @@ export class UpdateProfilePage {
     this.object.dureeSaignement = dureeSaignement;
   }
   
-  getDureeCycle(dureeCycle) {
-    this.object.dureeCycle = dureeCycle;
+  getDureeCycleMin(dureeCycle) {
+    this.object.dureeCycleMin = dureeCycle;
+  }
+  
+  getDureeCycleMax(dureeCycle) {
+    this.object.dureeCycleMax = dureeCycle;
   }
   
   getCycleRegulier(cycleRegulier) {
@@ -190,7 +195,9 @@ export class UpdateProfilePage {
     return new Promise((resolve, reject) => {
       if (
         this.object.agePremiereRegle === null ||
-        this.object.dureeSaignement === null || this.object.dureeCycle === null ||
+        this.object.dureeSaignement === null ||
+        this.object.dureeCycleMin === null ||
+        this.object.dureeCycleMax === null ||
         this.object.nombreGrossesse === null || this.object.nombrePremature === null ||
         this.object.nombreFosseCouche === null || this.object.nombreEnfantVivant === null ||
         this.username === '' || this.username === null

@@ -96,14 +96,14 @@
           [libelle]="'Durée minimale du cycle (en Jr)'"
           [type]="'text'"
           [initValue]="patient != null ? patient.duree_cycle_min : null"
-          (outputValue)="getDureeCycle($event)"
+          (outputValue)="getDureeCycleMin($event)"
         ></input-element>
         
         <input-element
           [libelle]="'Durée maximale du cycle (en Jr)'"
           [type]="'text'"
           [initValue]="patient != null ? patient.duree_cycle_max : null"
-          (outputValue)="getDureeCycle($event)"
+          (outputValue)="getDureeCycleMax($event)"
         ></input-element>
       </div>
       
