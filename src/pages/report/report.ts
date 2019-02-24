@@ -135,12 +135,19 @@ export class ReportPage {
     
     
     this.mylocalstorage.getSession().then((result: any) => {
+
+
       var dataprofile = '' + result.user._embedded.patient.debut_dernieres_menstrues;
       var ladate = dataprofile.substring(0, 16) + 'Z';
       var premieredate = new Date(ladate).getTime();
       var dateaujourdui = new Date().getTime();
       var nombremilliseconde = dateaujourdui - premieredate;
       var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
+      console.log("==============================");
+      console.log(dataprofile);
+      console.log(nombresjours);
+      console.log("==============================");
+      
       var nomrejoursavantacc = 280 - nombresjours;
       if (nomrejoursavantacc < 0) {
         this.alertechangementdatederneirregles();
