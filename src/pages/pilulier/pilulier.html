@@ -4,9 +4,9 @@
   <ion-toolbar no-padding no-margin>
     <div class="question">
       <ion-row class="montext">
-        <ion-col (click)="gotoOnglet_0()">Nouveau Traitement</ion-col>
-        <ion-col (click)="gotoOnglet_1()">Traitements en cours</ion-col>
-        <ion-col (click)="gotoOnglet_2()">Traitements Terminés</ion-col>
+        <ion-col (click)="gotoOnglet_0()">Nouveau traitement</ion-col>
+        <ion-col (click)="gotoOnglet_1()">Traitements encours</ion-col>
+        <ion-col (click)="gotoOnglet_2()">Traitements terminés</ion-col>
       </ion-row>
     </div>
   
@@ -49,7 +49,7 @@
       <form [formGroup]="form" (submit)="addTreatment()" (reset)="cancel()">
         <ion-row>
           <ion-col>
-            <p class="text">Non du produit</p>
+            <p class="text">Non du médicament</p>
           </ion-col>
           <ion-col>
             <ion-input class="monimput" disabled type="text" formControlName="name"></ion-input>
@@ -58,7 +58,7 @@
         
         <ion-row class="maligne">
           <ion-col>
-            <p class="text">Frequence de prise</p>
+            <p class="text">Fréquence de prise</p>
           </ion-col>
           <ion-col>
             <ion-select class="monselect" #select formControlName="frequencePrise">
@@ -78,7 +78,7 @@
         
         <ion-row class="maligne">
           <ion-col col-6>
-            <p class="text">Date du début</p>
+            <p class="text">Date de début</p>
           </ion-col>
           <ion-col col-4 (click)="datePicker.open()">
             <ion-input class="monimput2" disabled="true" type="text" formControlName="dateDebutTraitement"></ion-input>

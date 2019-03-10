@@ -7,14 +7,14 @@
     <div class="logologin" (click)="openDialogChangePhoto()">
       <img class="logo" [src]="imageaafficher != null ? imageaafficher : 'assets/imgs/user.jpg'">
       
-      <p class="textelogin">Change Picture </p>
+      <p class="textelogin">Modififier la photo de profil</p>
     </div>
     
     <p *ngIf="internalerror === 1" style="color: red; font-weight: bold">{{internalemesage}}</p>
     <div class="content">
       <show-date
         [initValue]="debut_dernieres_menstrues"
-        [libelle]="'Date de dernières règles'"
+        [libelle]="'Date du début des dernières règles'"
         (outputDate)="dateDeDernieresRegles($event)">
       </show-date>
       <p *ngIf="this.errorUpdateProfile.debutDernieresMenstrues != undefined" class="show-error-dom">
@@ -22,7 +22,7 @@
       
       <show-date
         [initValue]="date_vaccin_anti_tetanique"
-        [libelle]="'Date Vaccin Antitétanique'"
+        [libelle]="'Date vaccin anti-tétanique'"
         (outputDate)="DateVaccinAntitetanique($event)">
       </show-date>
       
@@ -133,7 +133,7 @@
         ></input-element>
         
         <input-element
-          [libelle]="'Nombre de prématurés'"
+          [libelle]="'Nombre de prématuré'"
           type="number"
           [min]="0"
           [initValue]="patient != null ? patient.nombre_premature : null"
@@ -143,7 +143,7 @@
       
       <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
         <input-element
-          [libelle]="'Nombre de fausses couches ou avortements'"
+          [libelle]="'Nombre de fausse couche ou avortement'"
           type="number"
           [min]="0"
           [initValue]="patient != null ? patient.nombre_fosse_couche : null"

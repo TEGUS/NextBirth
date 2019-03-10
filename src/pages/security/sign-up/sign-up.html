@@ -61,7 +61,7 @@
     <p *ngIf="this.errorSignup.firstPassword != undefined" class="show-error-dom">{{this.errorSignup.firstPassword}}</p>
     
     <input-element
-      [libelle]="'Repetez le mot de passe'"
+      [libelle]="'Repétez le mot de passe'"
       [type]="'password'"
       (outputValue)="getRepeatPassword($event)">
     </input-element>
