@@ -7,14 +7,18 @@
 <ion-content padding>
   <div class="content">
     <show-date
+      [max]="maxYear"
+      [min]="minYear"
       [libelle]="'Date de naissance'"
       (outputDate)="dateNaissance($event)">
     </show-date>
+    <p *ngIf="this.errorSignup.dateNaissance != undefined" class="show-error-dom">{{this.errorSignup.dateNaissance}}</p>
     
     <show-date
       [libelle]="'Date du premier jour de vos dernières règles'"
       (outputDate)="dateLastMentruation($event)">
     </show-date>
+    <p *ngIf="this.errorSignup.debutDernieresMenstrues != undefined" class="show-error-dom">{{this.errorSignup.debutDernieresMenstrues}}</p>
     
     <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
       <input-element
@@ -35,19 +39,23 @@
         (outputValue)="getDureeCycleMax($event)">
       </input-element>
     </div>
+    <p *ngIf="this.errorSignup.dureeMenstrues != undefined" class="show-error-dom">{{this.errorSignup.dureeMenstrues}}</p>
+    <p *ngIf="this.errorSignup.dureeCycleMin != undefined" class="show-error-dom">{{this.errorSignup.dureeCycleMin}}</p>
+    <p *ngIf="this.errorSignup.dureeCycleMax != undefined" class="show-error-dom">{{this.errorSignup.dureeCycleMax}}</p>
     
     <input-element
       [libelle]="'Numéro de téléphone'"
       [type]="'text'"
       (outputValue)="getPhone($event)">
     </input-element>
+    <p *ngIf="this.errorSignup.phone != undefined" class="show-error-dom">{{this.errorSignup.phone}}</p>
     
     <input-element
       [libelle]="'Mot de passe'"
       [type]="'password'"
       (outputValue)="getPassword($event)">
     </input-element>
-    <p *ngIf="errorpath === 'account.password'" style="color: red">{{errormessage}}</p>
+    <p *ngIf="this.errorSignup.firstPassword != undefined" class="show-error-dom">{{this.errorSignup.firstPassword}}</p>
     
     <input-element
       [libelle]="'Repetez le mot de passe'"

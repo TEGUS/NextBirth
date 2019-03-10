@@ -17,8 +17,7 @@
         [libelle]="'Date de dernières règles'"
         (outputDate)="dateDeDernieresRegles($event)">
       </show-date>
-      <p *ngIf="errorpath != null && errorpath.hasOwnProperty('account') && errorpath.account.hasOwnProperty('debut_dernieres_menstrues')" style="color: red">
-        {{errorpath.account.debut_dernieres_menstrues[0]}}</p>
+      <p *ngIf="this.errorUpdateProfile.debutDernieresMenstrues != undefined" class="show-error-dom">{{this.errorUpdateProfile.debutDernieresMenstrues}}</p>
       
       <show-date
         [initValue]="date_vaccin_anti_tetanique"
@@ -31,8 +30,7 @@
         [libelle]="'Date de naissance'"
         (outputDate)="dateDeNaissance($event)">
       </show-date>
-      <p *ngIf="errorpath != null && errorpath.hasOwnProperty('account') && errorpath.account.hasOwnProperty('date_naissance')" style="color: red">
-        {{errorpath.account.date_naissance[0]}}</p>
+      <p *ngIf="this.errorUpdateProfile.dateNaissance != undefined" class="show-error-dom">{{this.errorUpdateProfile.dateNaissance}}</p>
       
       <input-element
         [libelle]="'Pseudonyme'"
@@ -40,9 +38,8 @@
         [initValue]="user != null ? user.username : null"
         (outputValue)="getUsername($event)">
       </input-element>
-      <p *ngIf="errorpath != null && errorpath.hasOwnProperty('account') && errorpath.account.hasOwnProperty('username')" style="color: red">
-        {{errorpath.account.username[0]}}</p>
-      
+      <p *ngIf="this.errorUpdateProfile.username != undefined" class="show-error-dom">{{this.errorUpdateProfile.username}}</p>
+  
       <!--<input-element-->
         <!--[libelle]="'Numéro de téléphone'"-->
         <!--[type]="'text'"-->

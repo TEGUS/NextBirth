@@ -22,7 +22,7 @@
       (outputValue)="getPassword($event)">
     </input-element>
 
-    <p class="error" *ngIf="error != null"> {{error.message}} </p>
+    <p class="show-error-dom" *ngIf="error != null"> Login et/ou mot de passe incorrect! </p>
 
     <div class="create-account">
       <input id="login" type="button" value="SE CONNECTER" (click)="login()">

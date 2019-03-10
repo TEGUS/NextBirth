@@ -154,7 +154,7 @@ export class ServiceProvider {
       this.headers
     );
   }
- 
+  
   /**
    * Selection d'un mode
    * @param id
@@ -310,8 +310,8 @@ export class ServiceProvider {
       this.headers
     );
   }
-
-   /**
+  
+  /**
    * Supprimer un bon bon moment
    * @param id
    * @returns {Observable<any>}
@@ -322,8 +322,7 @@ export class ServiceProvider {
       this.headers
     );
   }
-
-
+  
   
   /**
    * Les différentes fréquences de prise de traitement
@@ -375,9 +374,8 @@ export class ServiceProvider {
       this.headers
     );
   }
-
-
-
+  
+  
   /**
    * Ajouter une traitement(produit) au Pilulier
    * @param treatment
@@ -390,8 +388,36 @@ export class ServiceProvider {
       this.headers
     );
   }
-
-
+  
+  
+  /**
+   * Changer le mot de passe
+   * @param object
+   */
+  changePassword(object): Observable<any> {
+    return this.http.put(
+      this.host + 'profiles/change-password',
+      object,
+      this.headers
+    );
+  }
+  
+  
+  /**
+   * Suppression du compte nextbirth
+   * @param password
+   */
+  deleteAccount(password): Observable<any> {
+    const object = {
+      password: password
+    };
+    console.log(object);
+    return this.http.post(
+      this.host + 'profiles/delete',
+      object,
+      this.headers
+    );
+  }
   
   /**
    * Les différentes fréquences de prise de traitement
@@ -468,21 +494,26 @@ export class ServiceProvider {
         name: 'nextbirth.db',
         location: 'default'
       }).then((db: SQLiteObject) => {
-
-            db.executeSql('SELECT * FROM SITUATIONS ORDER BY date DESC', [])
-            .then(res => {
-              let expenses = [];
-              for(var i=0; i<res.rows.length; i++) {
-                expenses.push({id:res.rows.item(i).id,date:res.rows.item(i).date,titre:res.rows.item(i).titre,description:res.rows.item(i).description})
-              } 
-              resolve(expenses);
-            })
-            .catch(e => {
-              console.log(e);
-              resolve(0);
-            });
-
-
+        
+        db.executeSql('SELECT * FROM SITUATIONS ORDER BY date DESC', [])
+          .then(res => {
+            let expenses = [];
+            for (var i = 0; i < res.rows.length; i++) {
+              expenses.push({
+                id: res.rows.item(i).id,
+                date: res.rows.item(i).date,
+                titre: res.rows.item(i).titre,
+                description: res.rows.item(i).description
+              })
+            }
+            resolve(expenses);
+          })
+          .catch(e => {
+            console.log(e);
+            resolve(0);
+          });
+        
+        
       }).catch(e => {
         // this.presentToast('database donst exist!');
         console.error(e)

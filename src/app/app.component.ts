@@ -8,6 +8,7 @@ import {TranslateService} from "@ngx-translate/core";
 
 import {SQLite, SQLiteObject} from '@ionic-native/sqlite';
 import {Globalization} from '@ionic-native/globalization';
+import {Network} from "@ionic-native/network";
 
 @Component({
   templateUrl: 'app.html'
@@ -22,7 +23,8 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public localStorage: LocalStorageProvider,
               public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController,
               public alertCtrl: AlertController, private sqlite: SQLite, public translate: TranslateService,
-              private globalization: Globalization, private toastCtrl: ToastController) {
+              private globalization: Globalization, private toastCtrl: ToastController,
+              public network: Network) {
     
     this.services.initHeaders();
     
@@ -40,12 +42,10 @@ export class MyApp {
       {title: 'Mise en garde', component: "MessituationarisquePage", icon: 'icon2'},
       {title: 'Mes mises à jour', component: "MiseajourPage", icon: 'icon4'},
       {title: 'Outils surveillance', component: "SurveillancePage", icon: 'icon6'},
-      
+      {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
+      {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'},
       {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
       {title: 'Paramètres', component: "SettingsPage", icon: 'icon8'},
-      {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
-      // {title: 'Mise en garde', component: "Img8Page", icon: 'icon10'},
-      {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'}
     ];
   }
   

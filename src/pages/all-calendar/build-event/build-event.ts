@@ -43,6 +43,10 @@ export class BuildEventPage {
         delaiJoursDebut: ['', Validators.compose([Validators.required])],
         delaiJoursFin: ['', Validators.compose([Validators.required])],
       })
+      
+      this.services.getDateDernierMenstrues().then(ddm => {
+        this.debut_dernieres_menstrues = ddm;
+      }, err => console.error(err));
     } else {
       this.form = this.formBuilder.group({
         name: [this.event.name, Validators.compose([Validators.required])],

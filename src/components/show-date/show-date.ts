@@ -14,6 +14,8 @@ import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 export class ShowDateComponent {
   @ViewChild('datePicker') datePicker;
   @Input() libelle = '';
+  @Input() min = null;
+  @Input() max = null;
   @Output() outputDate: EventEmitter<any> = new EventEmitter();
   dateToShow = null;
   date = null;

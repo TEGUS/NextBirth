@@ -20,7 +20,7 @@ import Schedule from "../../models/Schedule";
 import * as functions from "../../variables/functions";
 import * as v from "../../variables/variables_";
 import {LocalStorageProvider} from "../../providers/localstorage.service";
-import {formatDate, getCurrentDateWith, getDate} from "../../variables/functions";
+import {showDateAndTime, getCurrentDateWith, getDate} from "../../variables/functions";
 import {formatNumberOfDate} from "../../variables/functions";
 
 /**
@@ -70,10 +70,16 @@ export class PilulierPage {
   
   private debut_dernieres_menstrues: Date = null;
   
+  showFooter = false;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
               private localNotifications: LocalNotifications, public popoverCtrl: PopoverController,
               private localStorage: LocalStorageProvider, private toastCtrl: ToastController) {
+  }
+  
+  isShowFooter(bool = false) {
+    this.showFooter = bool;
   }
   
   ionViewWillEnter() {
@@ -220,6 +226,7 @@ export class PilulierPage {
     if (idOfTreatement === -1) {
       this.medicament_search = item.name;
       this.nextPart()
+      this.isShowFooter(true);
     } else {
       let alert = this.alertCtrl.create({
         subTitle: 'Médicament existant !',
@@ -296,7 +303,7 @@ export class PilulierPage {
   
   convertDatetime(time) {
     console.log(time);
-    return functions.convertDatetimeToDate(time);
+    return functions.showDate(time);
   }
   
   dateDebutTraitementChanged(event) {
@@ -322,16 +329,22 @@ export class PilulierPage {
     this.onglet = 0;
     this.currentTreatment = null;
     this.initForm();
+    
+    if (this.onglet === 0 && this.part === 2) {
+      this.isShowFooter(true);
+    }
   }
   
   gotoOnglet_1() {
     this.onglet = 1;
     this.currentTreatment = null;
     this.getTreatments();
+    this.isShowFooter()
   }
   
   gotoOnglet_2() {
     this.onglet = 2;
+    this.isShowFooter()
   }
   
   cancel() {
@@ -367,6 +380,7 @@ export class PilulierPage {
             this.gotoOnglet_1()
             this.presentDialogAlert('Médicament crée avec succès!');
             this.initScheduleTreatement();
+            this.isShowFooter()
           })
         });
       } else {
@@ -385,6 +399,7 @@ export class PilulierPage {
               this.gotoOnglet_1()
               this.presentDialogAlert('Médicament mis à jour avec succès!');
               this.initScheduleTreatement();
+              this.isShowFooter();
             })
           });
         }, error => {
@@ -401,6 +416,7 @@ export class PilulierPage {
     popover.onDidDismiss(data => {
       if (data === 1) {
         this.gotoUpdate(item)
+        this.isShowFooter(true)
       } else if (data === 2) {
         this.gotoDelete(item)
       }
@@ -425,6 +441,7 @@ export class PilulierPage {
       loading.present();
       this.treatments = [];
       this.services.allTreatments().subscribe((next: any) => {
+        console.log(next);
         let tmp = [];
         this.archives = [];
   
@@ -436,6 +453,8 @@ export class PilulierPage {
           const horaire: Array<any> = (t.horaire_first_prise).split(':');
           dateDebT.setHours(Number(horaire[0]), Number(horaire[1]));
           const dateTraitment = getCurrentDateWith(dateDebT, t.duree_traitement);
+          
+          t._embedded.date_creation = showDateAndTime(t._embedded.date_creation);
           
           if ((new Date()) > dateTraitment) {
             this.archives.push(t);

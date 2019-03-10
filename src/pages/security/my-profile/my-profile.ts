@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {LocalStorageProvider} from '../../../providers/localstorage.service';
 import {IonButtonEnd} from "../../../providers/metier.service";
 import {formatDate} from "../../../variables/functions";
@@ -23,10 +23,23 @@ export class MyProfilePage {
   imageaafficher = null;
   
   constructor(public navCtrl: NavController, public localStorage: LocalStorageProvider,
-              public navParams: NavParams) {
+              public navParams: NavParams, public popoverCtrl: PopoverController) {
   }
   
   ionViewWillEnter() {
+    this.ionButtonsEnd = [
+      {
+        icon: 'create',
+        code: 'updateProfile',
+        title: 'Mise à jour du profil'
+      },
+      {
+        icon: 'create',
+        code: 'updatePassword',
+        title: 'Changer le mot de passe'
+      }
+    ]
+    
     this.localStorage.getKey('session').then(next => {
       console.log(next);
       if (next !== undefined && next !== null) {
@@ -37,11 +50,11 @@ export class MyProfilePage {
         } else {
           this.user = next.user
         }
-  
+        
         this.castUsername(this.user).then(user => {
           console.log(user);
           this.user = user;
-    
+          
           if (this.user._embedded.photo !== undefined && this.user._embedded.photo !== null) {
             let photo = this.user._embedded.photo;
             this.imageaafficher = photo._embedded.url_photo
@@ -66,19 +79,41 @@ export class MyProfilePage {
   }
   
   ionViewDidLoad() {
-    this.ionButtonsEnd.push({
-      icon: 'create',
-      code: 'update',
-      title: 'Mise à jour'
-    })
   }
   
   getClickedButton(button: IonButtonEnd) {
     switch (button.code) {
-      case 'update':
+      case 'more':
+        this.presentPopover();
+        break;
+      
+      case 'updateProfile':
         this.navCtrl.push('UpdateProfilePage');
         break;
     }
+  }
+  
+  presentPopover() {
+    let popover = this.popoverCtrl.create(
+      'PopoverMyProfileMenu',
+      {
+        menu: this.ionButtonsEnd
+      }
+    );
+    popover.present();
+    popover.onDidDismiss(data => {
+      if (data !== null) {
+        switch (data.code) {
+          case 'updatePassword':
+            this.navCtrl.push('UpdatePasswordPage');
+            break;
+    
+          case 'updateProfile':
+            this.navCtrl.push('UpdateProfilePage');
+            break;
+        }
+      }
+    });
   }
   
   formatBool(bool: boolean) {
@@ -88,7 +123,7 @@ export class MyProfilePage {
   formatDate(date: string) {
     let d = null;
     if (date !== null) {
-      d =  new Date(('' + date).substring(0,16)+'Z')
+      d = new Date(('' + date).substring(0, 16) + 'Z')
     }
     return d;
   }

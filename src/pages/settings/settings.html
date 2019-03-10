@@ -22,4 +22,15 @@
       </ion-select>
     </ion-item>
   </ion-item-group>
+  
+  <ion-item-group>
+    <ion-item-divider color="primary" class="bold">Autres</ion-item-divider>
+  </ion-item-group>
+  
+  <ion-item-group>
+    <button tappable (click)="closeAccount()" ion-button clear icon-only icon-right full block text-capitalize color="secondary">
+      <ion-icon name="close"></ion-icon>
+      Suprimer votre compte
+    </button>
+  </ion-item-group>
 </ion-content>

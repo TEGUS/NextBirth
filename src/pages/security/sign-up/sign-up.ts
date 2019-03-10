@@ -3,7 +3,7 @@ import {IonicPage, LoadingController, MenuController, NavController, NavParams, 
 import {AuthenticationProvider} from "../../../providers/authentication.service";
 import {checkField, formatNumberOfDate} from "../../../variables/functions";
 import {LocalStorageProvider} from "../../../providers/localstorage.service";
-import { ServiceProvider } from '../../../providers/metier.service';
+import {ServiceProvider} from '../../../providers/metier.service';
 
 
 @IonicPage()
@@ -12,12 +12,16 @@ import { ServiceProvider } from '../../../providers/metier.service';
   templateUrl: 'sign-up.html',
 })
 export class SignUpPage {
-  object = null;
+  object: ObjectSignup = null;
   error = null;
   errorpath = null;
   errormessage = null;
   showError = null;
+  errorObject = null;
   
+  errorSignup: ErrorSignup = {};
+  maxYear = null;
+  minYear = null;
   
   constructor(public navCtrl: NavController, public services: ServiceProvider, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
@@ -43,6 +47,9 @@ export class SignUpPage {
         dateNaissance: null
       }
     }
+    
+    this.maxYear = (new Date()).getFullYear() - 12;
+    this.minYear = (new Date()).getFullYear() - 60;
   }
   
   ionViewDidLoad() {
@@ -82,7 +89,7 @@ export class SignUpPage {
   }
   
   signUp() {
-    if (checkField(this.object.dateNaissance) &&
+    if (checkField(this.object.account.dateNaissance) &&
       checkField(this.object.account.plainPassword.first) &&
       checkField(this.object.account.plainPassword.second) &&
       checkField(this.object.debutDernieresMenstrues) &&
@@ -97,23 +104,18 @@ export class SignUpPage {
           this.mylocalstorage.storeSession(next).then(() => {
             loading.dismiss();
             this.services.faitTravail().then(() => {
-                  loading.onDidDismiss(() => {
-                    this.presentToast('Finish SignUp!');
-                    this.navCtrl.setRoot('ChooseModePage', {});
-                    this.menuCtrl.enable(true, 'sideMenu');
-                  });
-             });
+              loading.onDidDismiss(() => {
+                this.presentToast('Finish SignUp!');
+                this.navCtrl.setRoot('ChooseModePage', {});
+                this.menuCtrl.enable(true, 'sideMenu');
+              });
+            });
           });
         }, error => {
           loading.dismiss();
-          console.log(error);
-          if (error.error[0] !== undefined) {
-            this.errorpath = error.error[0].property_path;
-            this.errormessage = error.error[0].message;
-          }
-        }, () => {
-        
-        
+          this.errorObject = error.error.errors;
+          console.log(this.errorObject);
+          this.buildError();
         });
       } else {
         this.setMessageError('Les mots de passe ne sont pas identiques!')
@@ -136,5 +138,64 @@ export class SignUpPage {
       duration: 1500
     });
     toast.present();
+  }
+  
+  buildError() {
+    this.errorSignup = {};
+    
+    if (this.errorObject.hasOwnProperty('account')) {
+      if (this.errorObject.account.hasOwnProperty('dateNaissance')) {
+        this.errorSignup.dateNaissance = this.errorObject.account.dateNaissance[0];
+      }
+      if (this.errorObject.account.hasOwnProperty('plainPassword')) {
+        this.errorSignup.firstPassword = this.errorObject.account.plainPassword.first[0];
+      }
+      if (this.errorObject.account.hasOwnProperty('phone')) {
+        this.errorSignup.phone = this.errorObject.account.phone[0];
+      }
+    }
+    
+    if (this.errorObject.hasOwnProperty('dureeCycleMin')) {
+      this.errorSignup.dureeCycleMin = this.errorObject.dureeCycleMin[0];
+    }
+    if (this.errorObject.hasOwnProperty('dureeCycleMax')) {
+      this.errorSignup.dureeCycleMax = this.errorObject.dureeCycleMax[0];
+    }
+    if (this.errorObject.hasOwnProperty('debutDernieresMenstrues')) {
+      this.errorSignup.debutDernieresMenstrues = this.errorObject.debutDernieresMenstrues[0];
+    }
+    if (this.errorObject.hasOwnProperty('dureeMenstrues')) {
+      this.errorSignup.dureeMenstrues = this.errorObject.dureeMenstrues[0];
+    }
+    
+    console.log(this.errorSignup);
+  }
+}
+
+interface ErrorSignup {
+  dateNaissance?: any,
+  phone?: any,
+  firstPassword?: any,
+  dureeCycleMin?: any,
+  dureeCycleMax?: any,
+  debutDernieresMenstrues?: any,
+  dureeMenstrues?: any,
+}
+
+interface ObjectSignup {
+  dureeCycleMin: any,
+  dureeCycleMax: any,
+  debutDernieresMenstrues: any,
+  dureeMenstrues: any,
+  account: {
+    nom: any,
+    prenom: any,
+    phone: any,
+    plainPassword: {
+      first: any,
+      second: any
+    },
+    langue: 1,
+    dateNaissance: any
   }
 }

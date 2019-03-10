@@ -125,14 +125,14 @@
           </ion-col>
         </ion-row>
         
-        <button ion-button (click)="part = 1;" *ngIf="this.currentTreatment == null">
-          <ion-icon name="arrow-back"></ion-icon>
-        </button>
-        
-        <button style="border-radius:50px; height: 60px; float: right; margin-top: 10% " bottom right ion-button
-                type="submit" [disabled]="!form.valid">
-          {{currentTreatment == null ? 'Add' : 'Upd'}}
-        </button>
+        <!--<button ion-button (click)="part = 1;" *ngIf="this.currentTreatment == null">-->
+          <!--<ion-icon name="arrow-back"></ion-icon>-->
+        <!--</button>-->
+        <!---->
+        <!--<button style="border-radius:50px; height: 60px; float: right; margin-top: 10% " bottom right ion-button-->
+                <!--type="submit" [disabled]="!form.valid">-->
+          <!--{{currentTreatment == null ? 'Add' : 'Upd'}}-->
+        <!--</button>-->
       </form>
     </div>
   </div>
@@ -144,7 +144,7 @@
           <div style="display:flex;justify-content: space-between;align-items: center;flex-direction: row;">
             <div>
               <h4 style="font-size: x-large;">{{item.name}}</h4>
-              <h6>Crée le 19/01/1992 à 12:00</h6>
+              <h6>Crée le {{item._embedded.date_creation}}</h6>
             </div>
             
             <button icon-only ion-button clear (click)="presentPopover(item)">
@@ -176,12 +176,12 @@
           <div style="display:flex;justify-content: space-between;align-items: center;flex-direction: row;">
             <div>
               <h4 style="font-size: x-large;">{{item.name}}</h4>
-              <h6>Crée le 19/01/1992 à 12:00</h6>
+              <h6>Crée le {{item._embedded.date_creation}}</h6>
             </div>
           
-            <button icon-only ion-button clear (click)="presentPopover(item)">
-              <ion-icon name="more"></ion-icon>
-            </button>
+            <!--<button icon-only ion-button clear (click)="presentPopover(item)">-->
+              <!--<ion-icon name="more"></ion-icon>-->
+            <!--</button>-->
           </div>
         </ion-card-content>
       
@@ -201,9 +201,25 @@
     </div>
   </div>
   
-  <ion-fab bottom right class="monsuperbutton" *ngIf="onglet==1">
-    <button ion-fab (click)="gotoOnglet_0()">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </ion-fab>
+  <!--<ion-fab bottom right class="monsuperbutton" *ngIf="onglet==1">-->
+    <!--<button ion-fab (click)="gotoOnglet_0()">-->
+      <!--<ion-icon name="add"></ion-icon>-->
+    <!--</button>-->
+  <!--</ion-fab>-->
 </ion-content>
+
+<ion-footer *ngIf="showFooter">
+  <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;" text-capitalize>
+    <button full ion-button (click)="part = 1; isShowFooter()" *ngIf="onglet == 0 && part == 2 && this.currentTreatment == null">
+      <ion-icon name="arrow-back"></ion-icon> Retour
+    </button>
+  
+    <button full ion-button *ngIf="onglet == 0 && part == 2" tappable [disabled]="!form.valid" (click)="addTreatment()" text-capitalize>
+      <ion-icon name="add"></ion-icon> {{currentTreatment == null ? 'Ajouter' : 'Mettre à jour'}}
+    </button>
+    
+    <button full ion-button tappable *ngIf="onglet==1" text-capitalize (click)="isShowFooter()">
+      <ion-icon name="add"></ion-icon> Ajouter un traitement
+    </button>
+  </div>
+</ion-footer>

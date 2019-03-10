@@ -1,0 +1,23 @@
+<ion-header>
+  <navbar [title]="'Supprimer votre compte'"></navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <input-element
+    [libelle]="'Mot de passe'"
+    [type]="'password'"
+    (outputValue)="getPassword($event)">
+  </input-element>
+  
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <p class="show-error-dom" *ngIf="error != null">{{error}}</p>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <button full ion-button tappable (click)="submit()">
+    Valider
+  </button>
+</ion-footer>
