@@ -17,7 +17,8 @@
         [libelle]="'Date de dernières règles'"
         (outputDate)="dateDeDernieresRegles($event)">
       </show-date>
-      <p *ngIf="this.errorUpdateProfile.debutDernieresMenstrues != undefined" class="show-error-dom">{{this.errorUpdateProfile.debutDernieresMenstrues}}</p>
+      <p *ngIf="this.errorUpdateProfile.debutDernieresMenstrues != undefined" class="show-error-dom">
+        {{this.errorUpdateProfile.debutDernieresMenstrues}}</p>
       
       <show-date
         [initValue]="date_vaccin_anti_tetanique"
@@ -30,7 +31,8 @@
         [libelle]="'Date de naissance'"
         (outputDate)="dateDeNaissance($event)">
       </show-date>
-      <p *ngIf="this.errorUpdateProfile.dateNaissance != undefined" class="show-error-dom">{{this.errorUpdateProfile.dateNaissance}}</p>
+      <p *ngIf="this.errorUpdateProfile.dateNaissance != undefined" class="show-error-dom">
+        {{this.errorUpdateProfile.dateNaissance}}</p>
       
       <input-element
         [libelle]="'Pseudonyme'"
@@ -38,17 +40,18 @@
         [initValue]="user != null ? user.username : null"
         (outputValue)="getUsername($event)">
       </input-element>
-      <p *ngIf="this.errorUpdateProfile.username != undefined" class="show-error-dom">{{this.errorUpdateProfile.username}}</p>
-  
+      <p *ngIf="this.errorUpdateProfile.username != undefined" class="show-error-dom">
+        {{this.errorUpdateProfile.username}}</p>
+      
       <!--<input-element-->
-        <!--[libelle]="'Numéro de téléphone'"-->
-        <!--[type]="'text'"-->
-        <!--[initValue]="user != null ? user.phone : null"-->
-        <!--(outputValue)="getPhone($event)">-->
+      <!--[libelle]="'Numéro de téléphone'"-->
+      <!--[type]="'text'"-->
+      <!--[initValue]="user != null ? user.phone : null"-->
+      <!--(outputValue)="getPhone($event)">-->
       <!--</input-element>-->
       <!--<p *ngIf="errorpath != null && errorpath.hasOwnProperty('account') && errorpath.account.hasOwnProperty('phone')" style="color: red">-->
-        <!--{{errorpath.account.phone[0]}}</p>-->
-      
+      <!--{{errorpath.account.phone[0]}}</p>-->
+    
     </div>
     
     <div style="padding-left: 50px; padding-right: 50px;">
@@ -76,6 +79,7 @@
         <input-element
           [libelle]="'Age des premières règles (en Jr)'"
           type="number"
+          [min]="0"
           [initValue]="patient != null ? patient.age_premiere_regle : null"
           (outputValue)="getAgePremiereRegle($event)"
         ></input-element>
@@ -83,6 +87,7 @@
         <input-element
           [libelle]="'Durée des seignements (en Jr)'"
           type="number"
+          [min]="1"
           [initValue]="patient != null ? patient.duree_saignement : null"
           (outputValue)="getDureeSaignement($event)"
         ></input-element>
@@ -122,6 +127,7 @@
         <input-element
           [libelle]="'Nombre de grossesse'"
           type="number"
+          [min]="0"
           [initValue]="patient != null ? patient.nombre_grossesse : null"
           (outputValue)="getNombreGrossesse($event)"
         ></input-element>
@@ -129,6 +135,7 @@
         <input-element
           [libelle]="'Nombre de prématurés'"
           type="number"
+          [min]="0"
           [initValue]="patient != null ? patient.nombre_premature : null"
           (outputValue)="getNombrePremature($event)"
         ></input-element>
@@ -138,6 +145,7 @@
         <input-element
           [libelle]="'Nombre de fausses couches ou avortements'"
           type="number"
+          [min]="0"
           [initValue]="patient != null ? patient.nombre_fosse_couche : null"
           (outputValue)="getNombreFosseCouche($event)"
         ></input-element>
@@ -145,6 +153,7 @@
         <input-element
           libelle="Nombre d'enfant vivant"
           type="number"
+          [min]="0"
           [initValue]="patient != null ? patient.nombre_enfant_vivant : null"
           (outputValue)="getNombreEnfantVivant($event)"
         ></input-element>
@@ -161,3 +170,12 @@
     <h5 *ngIf="!modeSelectedExist">Mettre à jour</h5>
   </button>
 </ion-footer>
+
+<!--<ion-footer>-->
+  <!--<button full ion-button color="secondary" (click)="updateProfile()" icon-right>-->
+    <!--<h5 *ngIf="modeSelectedExist">Suivant-->
+      <!--<ion-icon name="arrow-forward"></ion-icon>-->
+    <!--</h5>-->
+    <!--<h5 *ngIf="!modeSelectedExist">Mettre à jour</h5>-->
+  <!--</button>-->
+<!--</ion-footer>-->

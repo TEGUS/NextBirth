@@ -24,18 +24,21 @@
       <input-element
         [libelle]="'Durée des Menstruations'"
         [type]="'number'"
+        [min]="1"
         (outputValue)="getDurationMenstruation($event)">
       </input-element>
       
       <input-element
-        [libelle]="'Durée du cycle Minimal'"
+        [libelle]="'Durée du cycle Minimum'"
         [type]="'number'"
+        [min]="1"
         (outputValue)="getDureeCycleMin($event)">
       </input-element>
       
       <input-element
-        [libelle]="'Durée du cycle Maximal'"
+        [libelle]="'Durée du cycle Maximum'"
         [type]="'number'"
+        [min]="1"
         (outputValue)="getDureeCycleMax($event)">
       </input-element>
     </div>
@@ -63,7 +66,7 @@
       (outputValue)="getRepeatPassword($event)">
     </input-element>
     
-    <p class="error" *ngIf="error == null && showError != null"> {{showError.message}} </p>
+    <p class="show-error-dom" *ngIf="error == null && showError != null"> {{showError.message}} </p>
     
     <div class="create-account">
       <!--<div class="libelle">Pour profiter d'une prise en charge complète, veuillez</div>-->

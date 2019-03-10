@@ -80,11 +80,11 @@
           <ion-col col-6>
             <p class="text">Date du début</p>
           </ion-col>
-          <ion-col col-4>
+          <ion-col col-4 (click)="datePicker.open()">
             <ion-input class="monimput2" disabled="true" type="text" formControlName="dateDebutTraitement"></ion-input>
           </ion-col>
           <ion-col col-2 (click)="datePicker.open()">
-            <ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>
+            <ion-icon class="monicon" color="whitecolor" ios="ios-calendar" md="md-calendar"></ion-icon>
           </ion-col>
         </ion-row>
         
@@ -98,11 +98,11 @@
           <ion-col col-6>
             <p class="text">Horaire de la 1ère prise</p>
           </ion-col>
-          <ion-col col-4>
+          <ion-col col-4 (click)="timePicker.open()">
             <ion-input class="monimput" disabled="true" type="text" formControlName="horaireFirstPrise"></ion-input>
           </ion-col>
           <ion-col col-2 (click)="timePicker.open()">
-            <ion-icon class="monicon" ios="ios-calendar" md="md-calendar"></ion-icon>
+            <ion-icon class="monicon" color="whitecolor" ios="ios-calendar" md="md-calendar"></ion-icon>
           </ion-col>
         </ion-row>
         
@@ -209,16 +209,16 @@
 </ion-content>
 
 <ion-footer *ngIf="showFooter">
-  <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;" text-capitalize>
-    <button full ion-button (click)="part = 1; isShowFooter()" *ngIf="onglet == 0 && part == 2 && this.currentTreatment == null">
+  <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    <button full clear ion-button (click)="part = 1; isShowFooter()" *ngIf="onglet == 0 && part == 2 && this.currentTreatment == null">
       <ion-icon name="arrow-back"></ion-icon> Retour
     </button>
   
-    <button full ion-button *ngIf="onglet == 0 && part == 2" tappable [disabled]="!form.valid" (click)="addTreatment()" text-capitalize>
-      <ion-icon name="add"></ion-icon> {{currentTreatment == null ? 'Ajouter' : 'Mettre à jour'}}
+    <button full clear color="secondary" ion-button *ngIf="onglet == 0 && part == 2" tappable [disabled]="!form.valid" (click)="addTreatment()">
+      <ion-icon name="create"></ion-icon> {{currentTreatment == null ? 'Ajouter' : 'Mettre à jour'}}
     </button>
     
-    <button full ion-button tappable *ngIf="onglet==1" text-capitalize (click)="isShowFooter()">
+    <button full clear color="secondary" ion-button tappable *ngIf="onglet==1" (click)="isShowFooter()">
       <ion-icon name="add"></ion-icon> Ajouter un traitement
     </button>
   </div>

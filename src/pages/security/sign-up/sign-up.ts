@@ -65,15 +65,27 @@ export class SignUpPage {
   }
   
   getDurationMenstruation(duree) {
+    if (parseInt(duree) < 0) {
+      this.errorSignup.dureeMenstrues = "La durée des menstruation doit être supérieur à 0."
+      return;
+    }
     this.object.dureeMenstrues = parseInt(duree)
   }
   
   getDureeCycleMin(duree) {
-    this.object.dureeCycleMin = duree
+    if (parseInt(duree) < 0) {
+      this.errorSignup.dureeCycleMin = "La durée du cycle minimum doit être supérieur à 0."
+      return;
+    }
+    this.object.dureeCycleMin = parseInt(duree)
   }
   
   getDureeCycleMax(duree) {
-    this.object.dureeCycleMax = duree
+    if (parseInt(duree) < 0) {
+      this.errorSignup.dureeCycleMax = "La durée du cycle maximum doit être supérieur à 0."
+      return;
+    }
+    this.object.dureeCycleMax = parseInt(duree)
   }
   
   getPhone(phone) {
