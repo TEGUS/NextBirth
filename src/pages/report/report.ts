@@ -143,10 +143,7 @@ export class ReportPage {
       var dateaujourdui = new Date().getTime();
       var nombremilliseconde = dateaujourdui - premieredate;
       var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
-      console.log("==============================");
-      console.log(dataprofile);
-      console.log(nombresjours);
-      console.log("==============================");
+      
       
       var nomrejoursavantacc = 280 - nombresjours;
       if (nomrejoursavantacc < 0) {
