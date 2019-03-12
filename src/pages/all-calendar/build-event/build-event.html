@@ -8,14 +8,14 @@
     <form [formGroup]="form" (submit)="submit()">
       <ion-list no-margin no-padding>
         <ion-item>
-          <ion-label color="primary" floating>Date début</ion-label>
+          <ion-label color="primary" floating>Date de début</ion-label>
           <ion-datetime text-left [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="dateStart" (ionChange)="listenChangeDate($event, 'start')"
                         displayFormat="DD MMM, YYYY"></ion-datetime>
         </ion-item>
         
         <ion-item>
-          <ion-label color="primary" floating>Date fin</ion-label>
+          <ion-label color="primary" floating>Date de fin</ion-label>
           <ion-datetime text-left [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="dateEnd" (ionChange)="listenChangeDate($event, 'end')"
                         displayFormat="DD MMM, YYYY"></ion-datetime>
@@ -23,7 +23,7 @@
         
         
         <ion-item>
-          <ion-label color="primary" floating>Name</ion-label>
+          <ion-label color="primary" floating>Titre</ion-label>
           <ion-input text-left formControlName="name" type="text"></ion-input>
         </ion-item>
         
@@ -32,9 +32,12 @@
           <ion-textarea text-left formControlName="description" rows="4" maxLength="300"></ion-textarea>
         </ion-item>
       </ion-list>
-      
-      
-      <button style="margin-top: 10%" text-capitalize ion-button full [disabled]="!form.valid">Valider</button>
     </form>
   </div>
 </ion-content>
+
+<ion-footer>
+  <div *ngIf="form != null">
+    <button ion-button clear tappable (click)="submit()" full [disabled]="!form.valid">Valider</button>
+  </div>
+</ion-footer>

@@ -15,6 +15,9 @@ export class InputElementComponent {
   @Input() libelle = '';
   @Input() type = '';
   
+  @Input() min = null;
+  @Input() max = null;
+  
   _initValue = null
   
   @Input()

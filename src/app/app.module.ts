@@ -24,6 +24,7 @@ import { SQLite } from '@ionic-native/sqlite';
 import { DatePicker } from '@ionic-native/date-picker';
 import { CameraMock } from '@ionic-native-mocks/camera';
 import { Globalization } from '@ionic-native/globalization';
+import {ReducerService} from "../providers/reducer.service";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -57,7 +58,7 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   providers: [
     StatusBar, Calendar, Network, Vibration, LocalStorageProvider, SplashScreen,
-    SQLite, DatePicker, Globalization,
+    SQLite, DatePicker, Globalization, ReducerService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: Camera, useClass: CameraMock},
     AuthenticationProvider, ServiceProvider, LocalNotifications

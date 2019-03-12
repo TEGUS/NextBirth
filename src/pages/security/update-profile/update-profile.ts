@@ -31,7 +31,7 @@ import {formatDate, formatNumberOfDate} from "../../../variables/functions";
 })
 export class UpdateProfilePage {
   
-  public object = null;
+  public object: ObjectUpdateProfile = null;
   public error = null;
   public ladate = null;
   public dateDernieresMenstrues = null;
@@ -50,11 +50,17 @@ export class UpdateProfilePage {
     "image": ""
   }
   
+  errorObject = null;
   patient = null;
   user = null;
   date_naissance = null;
   debut_dernieres_menstrues = null;
   date_vaccin_anti_tetanique = null;
+  
+  maxYear = null;
+  minYear = null;
+  
+  errorUpdateProfile: ErrorUpdateProfile = {};
   
   constructor(public navCtrl: NavController, public mylocalstorage: LocalStorageProvider, private base64: Base64,
               private camera: Camera, public services: ServiceProvider, public loadingCtrl: LoadingController,
@@ -67,6 +73,9 @@ export class UpdateProfilePage {
   }
   
   ionViewWillEnter() {
+    this.maxYear = (new Date()).getFullYear() - 12;
+    this.minYear = (new Date()).getFullYear() - 60;
+    
     this.object = {
       diabete: 0,
       hta: 0,
@@ -103,15 +112,18 @@ export class UpdateProfilePage {
         
         this.castUsername(this.user).then(user => {
           this.user = user;
+          
+          this.date_naissance = formatDate(this.user.date_naissance);
+          this.debut_dernieres_menstrues = formatDate(this.patient.debut_dernieres_menstrues)
+          
+          console.log(this.date_naissance)
+          console.log(this.debut_dernieres_menstrues)
+          
+          if (this.user._embedded.photo !== undefined && this.user._embedded.photo !== null) {
+            let photo = this.user._embedded.photo;
+            this.imageaafficher = photo._embedded.url_photo
+          }
         });
-        
-        this.date_naissance = formatDate(this.user.date_naissance);
-        this.debut_dernieres_menstrues = formatDate(this.patient.debut_dernieres_menstrues)
-        
-        if (this.user._embedded.photo !== undefined && this.user._embedded.photo !== null) {
-          let photo = this.user._embedded.photo;
-          this.imageaafficher = photo._embedded.url_photo
-        }
       }
     }, error => {
       console.error(error);
@@ -124,12 +136,11 @@ export class UpdateProfilePage {
    */
   castUsername(user) {
     return new Promise(resolve => {
-      let res = (user.username).split('@nextbirth.com');
-      user.username = res.length === 0 ? user.username : null;
+      let res = (user.username).indexOf("@nextbirth.com");
+      user.username = res.length === -1 ? user.username : null;
       resolve(user);
     })
   }
-  
   
   dateDeDernieresRegles(date) {
     this.object.debutDernieresMenstrues = `${formatNumberOfDate(date.day)}-${formatNumberOfDate(date.month)}-${date.year}`;
@@ -201,7 +212,7 @@ export class UpdateProfilePage {
         this.object.nombreGrossesse === null || this.object.nombrePremature === null ||
         this.object.nombreFosseCouche === null || this.object.nombreEnfantVivant === null ||
         this.username === '' || this.username === null
-        // || this.phone === '' || this.phone === null
+      // || this.phone === '' || this.phone === null
       ) {
         reject(false)
       } else {
@@ -281,7 +292,9 @@ export class UpdateProfilePage {
         
         if (undefined != error.error.errors) {
           this.errorpath = error.error.errors;
-          // this.errormessage = error.error[0].message;
+          this.errorObject = error.error.errors;
+          
+          this.buildError();
           
           if (this.errorpath.hasOwnProperty('account')) {
             if (this.errorpath.account.hasOwnProperty('debut_dernieres_menstrues')) {
@@ -475,4 +488,66 @@ export class UpdateProfilePage {
     })
   }
   
+  buildError() {
+    this.errorUpdateProfile = {};
+  
+    if (this.errorObject.hasOwnProperty('account')) {
+      if (this.errorObject.account.hasOwnProperty('dateNaissance')) {
+        this.errorUpdateProfile.dateNaissance = this.errorObject.account.dateNaissance[0];
+      }
+    
+      if (this.errorObject.account.hasOwnProperty('username')) {
+        this.errorUpdateProfile.username = this.errorObject.account.username[0];
+      }
+    }
+  
+    if (this.errorObject.hasOwnProperty('debutDernieresMenstrues')) {
+      this.errorUpdateProfile.debutDernieresMenstrues = this.errorObject.debutDernieresMenstrues[0];
+    }
+    
+    console.log(this.errorUpdateProfile);
+  }
+  
+}
+
+interface ErrorUpdateProfile {
+  diabete?: any,
+  hta?: any,
+  drepano?: any,
+  agePremiereRegle?: any,
+  dureeSaignement?: any,
+  dureeCycleMax?: any,
+  dureeCycleMin?: any,
+  cycleRegulier?: any,
+  douleurRegle?: any,
+  nombreGrossesse?: any,
+  nombrePremature?: any,
+  nombreFosseCouche?: any,
+  nombreEnfantVivant?: any,
+  dateVaccinAntiTetanique?: any,
+  debutDernieresMenstrues?: any,
+  username?: null,
+  dateNaissance?: null
+}
+
+interface ObjectUpdateProfile {
+  diabete: any,
+  hta: any,
+  drepano: any,
+  agePremiereRegle: any,
+  dureeSaignement: any,
+  dureeCycleMax: any,
+  dureeCycleMin: any,
+  cycleRegulier: any,
+  douleurRegle: any,
+  nombreGrossesse: any,
+  nombrePremature: any,
+  nombreFosseCouche: any,
+  nombreEnfantVivant: any,
+  dateVaccinAntiTetanique: any,
+  debutDernieresMenstrues: any,
+  account?: {
+    username: null,
+    dateNaissance: null
+  }
 }

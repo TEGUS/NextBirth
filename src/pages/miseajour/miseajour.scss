@@ -1,8 +1,40 @@
 page-miseajour {
   
+  ion-input {
+    margin-top: 10px;
+    background-color: color($colors, primary);
+    color: color($colors, whitecolor);
+    font-size: 16px;
+    border-radius: 20px;
+    padding: 0;
+    text-align: center;
+    padding-left: 15px;
+    width: 160px;
+    height: 40px;
+  }
+  
+  .text-input[disabled] {
+    opacity: 10;
+  }
+  
+  ion-select {
+    margin-top: 10px;
+    background-color: color($colors, primary);
+    color: color($colors, whitecolor);
+    font-size: 14px;
+    border-radius: 20px;
+    padding: 0;
+    text-align: center;
+    padding-left: 15px;
+    width: 160px;
+    height: 40px;
+    max-width: none;
+  }
+  
   .monbody {
     background-color: #e3e3e3;
   }
+  
   .text {
     float: left;
     margin-top: 25px;
@@ -13,12 +45,12 @@ page-miseajour {
     margin-top: 26px;
   }
   
-  .monimput {
-    background-color: #fff;
-    width: 100px;
-    height: 35px;
-    margin-top: 15px;
-  }
+  //.monimput {
+  //  background-color: #fff;
+  //  width: 100px;
+  //  height: 35px;
+  //  margin-top: 15px;
+  //}
   
   .maligne {
     display: flex;
@@ -36,11 +68,11 @@ page-miseajour {
     color: red;
   }
   
-  .monselect {
-    margin-top: 10px;
-    height: 40px;
-    background-color: #fff;
-  }
+  //.monselect {
+  //  margin-top: 10px;
+  //  height: 40px;
+  //  background-color: #fff;
+  //}
   
   .monfooter {
     background-color: #f5ff28;
@@ -59,4 +91,7 @@ page-miseajour {
     font-weight: bold;
   }
   
+  ion-footer {
+    background-color: #fcf366;
+  }
 }

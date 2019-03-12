@@ -1,23 +1,59 @@
 page-pilulier {
+  ion-input {
+    margin-top: 10px;
+    background-color: color($colors, primary);
+    color: color($colors, whitecolor);
+    font-size: 16px;
+    border-radius: 20px;
+    padding: 0;
+    text-align: center;
+    padding-left: 15px;
+    width: 160px;
+    height: 40px;
+  }
+  
+  .text-input[disabled] {
+    opacity: 10;
+  }
+  
+  ion-select {
+    margin-top: 10px;
+    background-color: color($colors, primary);
+    color: color($colors, whitecolor);
+    font-size: 14px;
+    border-radius: 20px;
+    padding: 0;
+    text-align: center;
+    padding-left: 15px;
+    width: 160px;
+    height: 40px;
+    max-width: none;
+  }
+  
+  ion-footer {
+    background-color: #fcf366;
+  }
+  
   .monbody {
     background-color: #e3e3e3;
   }
   .text {
     float: right;
   }
-  .monimput {
-    background-color: #fff;
-    width: 160px;
-    height: 35px;
-    margin-top: 10px;
-  }
   
-  .monimput2 {
-    background-color: #fff;
-    width: 160px;
-    height: 35px;
-    margin-top: 10px;
-  }
+  //.monimput {
+  //  background-color: #fff;
+  //  width: 160px;
+  //  height: 35px;
+  //  margin-top: 10px;
+  //}
+  
+  //.monimput2 {
+  //  background-color: #fff;
+  //  width: 160px;
+  //  height: 35px;
+  //  margin-top: 10px;
+  //}
   
   .monicon {
     margin-left: 25px;
@@ -29,13 +65,11 @@ page-pilulier {
     margin-top: 5px;
   }
   
-  .monselect {
-    margin-top: 10px;
-    height: 40px;
-    
-    background-color: #fff;
-    
-  }
+  //.monselect {
+  //  margin-top: 10px;
+  //  height: 40px;
+  //  background-color: #fff;
+  //}
   
   .question {
     width: 100%;

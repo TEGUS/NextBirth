@@ -35,7 +35,7 @@ page-timelinetest {
   
   ion-scroll {
     width: 100%;
-    height: 150px;
+    height: 180px;
     .scroll-content {
       overflow-x: auto;
       display: flex;
@@ -44,7 +44,6 @@ page-timelinetest {
   
   .mondive {
     background-color: #afdcf8;
-    height: -webkit-fill-available;
     width: 120px;
     margin-left: 10px;
     padding: 5px 5px 5px 5px;

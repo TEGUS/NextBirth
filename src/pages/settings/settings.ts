@@ -1,5 +1,13 @@
 import {Component} from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {
+  AlertController,
+  IonicPage,
+  LoadingController,
+  MenuController,
+  NavController,
+  NavParams,
+  ToastController
+} from 'ionic-angular';
 import {TranslateService} from "@ngx-translate/core";
 import {LocalStorageProvider} from "../../providers/localstorage.service";
 import {ServiceProvider} from "../../providers/metier.service";
@@ -25,7 +33,8 @@ export class SettingsPage {
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public localStorage: LocalStorageProvider,
               public translate: TranslateService, public loadingCtrl: LoadingController,
-              public services: ServiceProvider) {
+              public services: ServiceProvider, public alertCtrl: AlertController, public toastCtrl: ToastController,
+              public menuCtrl: MenuController) {
   }
   
   ionViewWillEnter() {
@@ -87,4 +96,31 @@ export class SettingsPage {
       loading.dismiss();
     });
   }
+  
+  closeAccount() {
+    this.alertCtrl.create({
+      title:'Supprimer votre compte Nextbirth',
+      message: 'L\'opération de suppression de compte est irréversible. \nVoulez vous continuer ?',
+      buttons: [
+        {
+          text: 'Annuler'
+        },
+        {
+          text: 'Continuer',
+          handler: () => {
+            this.navCtrl.push('DeleteAccountPage')
+          }
+        }
+      ]
+    }).present();
+  }
+  
+  presentToast(message: any) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
+  }
+  
 }

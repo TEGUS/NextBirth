@@ -69,7 +69,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        Date du vaccin anti tétanique :
+        Date du vaccin anti-tétanique :
       </ion-col>
       <ion-col class="dateheure3">
         {{formatDate(patient.date_vaccin_anti_tetanique) ? ((formatDate(patient.date_vaccin_anti_tetanique) | date:
@@ -124,7 +124,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        Durée désir grossesse :
+        Durée du désir de grossesse :
       </ion-col>
       <ion-col class="dateheure3">
         {{patient.duree_desir_grossesse || 'Non défini'}}
@@ -142,7 +142,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        Durée des seignement :
+        Durée des saignements :
       </ion-col>
       <ion-col class="dateheure3">
         {{patient.duree_saignement || 'Non défini' +' (jrs)'}}
@@ -151,7 +151,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        Etat exprit :
+        Etat d'exprit :
       </ion-col>
       <ion-col class="dateheure3">
         {{patient.etat_esprit || 'Non défini'}}
@@ -160,7 +160,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        Fréquence de seignement :
+        Fréquence de saignement :
       </ion-col>
       <ion-col class="dateheure3">
         {{patient.frequence_saignement || 'Non défini'}}
@@ -190,16 +190,16 @@
         Nombre d'enfant vivant :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.nombre_enfant_vivant || 'Non défini'}}
+        {{patient.nombre_enfant_vivant}}
       </ion-col>
     </ion-row>
     
     <ion-row>
       <ion-col class="dateheure2">
-        Nombre de fausses couches ou avortements :
+        Nombre de fausse couche ou avortement :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.nombre_fosse_couche || 'Non défini'}}
+        {{patient.nombre_fosse_couche}}
       </ion-col>
     </ion-row>
     
@@ -208,16 +208,16 @@
         Nombre de grossesse :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.nombre_grossesse || 'Non défini'}}
+        {{patient.nombre_grossesse}}
       </ion-col>
     </ion-row>
     
     <ion-row>
       <ion-col class="dateheure2">
-        Nombre de prémature :
+        Nombre de prématuré :
       </ion-col>
       <ion-col class="dateheure3">
-        {{patient.nombre_premature || 'Non défini'}}
+        {{patient.nombre_premature}}
       </ion-col>
     </ion-row>
   </div>

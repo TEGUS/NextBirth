@@ -8,112 +8,103 @@
   <div *ngIf="form != null">
     <form [formGroup]="form">
       <ion-row class="maligne">
-        <ion-col col-6>
-          <p class="text">Poids</p>
+        <ion-col>
+          <p class="text">Poids (kg)</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="poids" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
-        </ion-col>
-        <ion-col>
-          <p class="text2"> kg </p>
+          <ion-input formControlName="poids" min="0" class="monimput" type="number"
+                     (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
       </ion-row>
       <ion-row class="maligne validator-error" *ngIf="!form.controls.poids.valid && form.controls.poids.dirty">
         Veuillez entrer un poids valide.
       </ion-row>
-
+      
       <ion-row class="maligne">
-        <ion-col col-6>
-          <p class="text">Taille</p>
+        <ion-col>
+          <p class="text">Taille (m)</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="taille" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
-        </ion-col>
-        <ion-col>
-          <p class="text2"> m </p>
+          <ion-input formControlName="taille" min="0" class="monimput" type="number"
+                     (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
       </ion-row>
       <ion-row class="maligne validator-error" *ngIf="!form.controls.taille.valid && form.controls.taille.dirty">
         Veuillez entrer un taille valide.
       </ion-row>
-
+      
       <ion-row class="maligne">
-        <ion-col col-6>
-          <p class="text">Taux d'hémoglobine</p>
+        <ion-col>
+          <p class="text">Taux d'hémoglobine (g/dl)</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="taux_hemoglobine" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
-        </ion-col>
-        <ion-col>
-          <p class="text2"> g/dl </p>
+          <ion-input formControlName="taux_hemoglobine" min="0" class="monimput" type="number"
+                     (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
       </ion-row>
-      <ion-row class="maligne validator-error" *ngIf="!form.controls.taux_hemoglobine.valid && form.controls.taux_hemoglobine.dirty">
+      <ion-row class="maligne validator-error"
+               *ngIf="!form.controls.taux_hemoglobine.valid && form.controls.taux_hemoglobine.dirty">
         Veuillez entrer un Taux d'hémoglobine valide.
       </ion-row>
-
+      
       <ion-row class="maligne">
-        <ion-col col-6>
-          <p class="text">Tension artérielle systolique</p>
+        <ion-col>
+          <p class="text">Tension artérielle systolique (mmHg)</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="tension_arterielle_systolique" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
-        </ion-col>
-        <ion-col>
-          <p class="text2"> mmHg </p>
+          <ion-input formControlName="tension_arterielle_systolique" min="0" class="monimput" type="number"
+                     (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
       </ion-row>
-      <ion-row class="maligne validator-error" *ngIf="!form.controls.tension_arterielle_systolique.valid && form.controls.tension_arterielle_systolique.dirty">
+      <ion-row class="maligne validator-error"
+               *ngIf="!form.controls.tension_arterielle_systolique.valid && form.controls.tension_arterielle_systolique.dirty">
         Veuillez entrer un Tension artérielle systolique valide.
       </ion-row>
-  
+      
       <ion-row class="maligne">
-        <ion-col col-6>
-          <p class="text">Tension artérielle distolique</p>
+        <ion-col>
+          <p class="text">Tension artérielle distolique (mmHg)</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="tension_arterielle_diastolique" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
-        </ion-col>
-        <ion-col>
-          <p class="text2"> mmHg </p>
+          <ion-input formControlName="tension_arterielle_diastolique" min="0" class="monimput" type="number"
+                     (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
       </ion-row>
-      <ion-row class="maligne validator-error" *ngIf="!form.controls.tension_arterielle_diastolique.valid && form.controls.tension_arterielle_diastolique.dirty">
+      <ion-row class="maligne validator-error"
+               *ngIf="!form.controls.tension_arterielle_diastolique.valid && form.controls.tension_arterielle_diastolique.dirty">
         Veuillez entrer un Tension artérielle diastolique valide.
       </ion-row>
-
+      
       <ion-row class="maligne">
-        <ion-col col-6>
-          <p class="text">Glycémie à jeun</p>
+        <ion-col>
+          <p class="text">Glycémie à jeun (g/l)</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="gyclemie_a_jeun" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
-        </ion-col>
-        <ion-col>
-          <p class="text2"> g/l </p>
+          <ion-input formControlName="gyclemie_a_jeun" min="0" class="monimput" type="number"
+                     (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
       </ion-row>
-      <ion-row class="maligne validator-error" *ngIf="!form.controls.gyclemie_a_jeun.valid && form.controls.gyclemie_a_jeun.dirty">
+      <ion-row class="maligne validator-error"
+               *ngIf="!form.controls.gyclemie_a_jeun.valid && form.controls.gyclemie_a_jeun.dirty">
         Veuillez entrer une Glycémie à jeun valide.
       </ion-row>
-
+      
       <ion-row class="maligne">
-        <ion-col col-6>
-          <p class="text">Température vaginale</p>
+        <ion-col>
+          <p class="text">Température vaginale (°C)</p>
         </ion-col>
         <ion-col>
-          <ion-input formControlName="temperature_vaginale" class="monimput" type="number" (ionChange)="changeListener(event)"></ion-input>
-        </ion-col>
-        <ion-col>
-          <p class="text2"> °C </p>
+          <ion-input formControlName="temperature_vaginale" min="0" class="monimput" type="number"
+                     (ionChange)="changeListener(event)"></ion-input>
         </ion-col>
       </ion-row>
-      <ion-row class="maligne validator-error" *ngIf="!form.controls.temperature_vaginale.valid && form.controls.temperature_vaginale.dirty">
+      <ion-row class="maligne validator-error"
+               *ngIf="!form.controls.temperature_vaginale.valid && form.controls.temperature_vaginale.dirty">
         Veuillez entrer une Température vaginale valide.
       </ion-row>
-
+      
       <ion-row class="maligne">
-        <ion-col col-6>
+        <ion-col>
           <p class="text">Conclusion du D CPN </p>
         </ion-col>
         <ion-col>
@@ -128,14 +119,20 @@
   </div>
 </ion-content>
 
-<ion-footer class="monfooter">
-  <ion-row>
-    <ion-col>
-      <button class="buttonanuler" (click)="cancel()">Annuler</button>
-    </ion-col>
-    <ion-col>
-      <button class="buttonenregistrer" (click)="submit()">Enregistrer</button>
-    </ion-col>
-  </ion-row>
-  <button></button>
+<!--<ion-footer class="monfooter">-->
+  <!--<ion-row>-->
+    <!--<ion-col>-->
+      <!--<button class="buttonanuler" (click)="cancel()">Annuler</button>-->
+    <!--</ion-col>-->
+    <!--<ion-col>-->
+      <!--<button class="buttonenregistrer" (click)="submit()">Enregistrer</button>-->
+    <!--</ion-col>-->
+  <!--</ion-row>-->
+<!--</ion-footer>-->
+
+<ion-footer>
+  <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;" text-capitalize>
+    <button full clear ion-button tappable (click)="cancel()">Annuler</button>
+    <button full clear ion-button tappable color="secondary" (click)="submit()">Valider</button>
+  </div>
 </ion-footer>

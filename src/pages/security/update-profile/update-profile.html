@@ -7,22 +7,22 @@
     <div class="logologin" (click)="openDialogChangePhoto()">
       <img class="logo" [src]="imageaafficher != null ? imageaafficher : 'assets/imgs/user.jpg'">
       
-      <p class="textelogin">Change Picture </p>
+      <p class="textelogin">Modififier la photo de profil</p>
     </div>
     
     <p *ngIf="internalerror === 1" style="color: red; font-weight: bold">{{internalemesage}}</p>
     <div class="content">
       <show-date
         [initValue]="debut_dernieres_menstrues"
-        [libelle]="'Date de dernières règles'"
+        [libelle]="'Date du début des dernières règles'"
         (outputDate)="dateDeDernieresRegles($event)">
       </show-date>
-      <p *ngIf="errorpath != null && errorpath.hasOwnProperty('account') && errorpath.account.hasOwnProperty('debut_dernieres_menstrues')" style="color: red">
-        {{errorpath.account.debut_dernieres_menstrues[0]}}</p>
+      <p *ngIf="this.errorUpdateProfile.debutDernieresMenstrues != undefined" class="show-error-dom">
+        {{this.errorUpdateProfile.debutDernieresMenstrues}}</p>
       
       <show-date
         [initValue]="date_vaccin_anti_tetanique"
-        [libelle]="'Date Vaccin Antitétanique'"
+        [libelle]="'Date vaccin anti-tétanique'"
         (outputDate)="DateVaccinAntitetanique($event)">
       </show-date>
       
@@ -31,8 +31,8 @@
         [libelle]="'Date de naissance'"
         (outputDate)="dateDeNaissance($event)">
       </show-date>
-      <p *ngIf="errorpath != null && errorpath.hasOwnProperty('account') && errorpath.account.hasOwnProperty('date_naissance')" style="color: red">
-        {{errorpath.account.date_naissance[0]}}</p>
+      <p *ngIf="this.errorUpdateProfile.dateNaissance != undefined" class="show-error-dom">
+        {{this.errorUpdateProfile.dateNaissance}}</p>
       
       <input-element
         [libelle]="'Pseudonyme'"
@@ -40,18 +40,18 @@
         [initValue]="user != null ? user.username : null"
         (outputValue)="getUsername($event)">
       </input-element>
-      <p *ngIf="errorpath != null && errorpath.hasOwnProperty('account') && errorpath.account.hasOwnProperty('username')" style="color: red">
-        {{errorpath.account.username[0]}}</p>
+      <p *ngIf="this.errorUpdateProfile.username != undefined" class="show-error-dom">
+        {{this.errorUpdateProfile.username}}</p>
       
       <!--<input-element-->
-        <!--[libelle]="'Numéro de téléphone'"-->
-        <!--[type]="'text'"-->
-        <!--[initValue]="user != null ? user.phone : null"-->
-        <!--(outputValue)="getPhone($event)">-->
+      <!--[libelle]="'Numéro de téléphone'"-->
+      <!--[type]="'text'"-->
+      <!--[initValue]="user != null ? user.phone : null"-->
+      <!--(outputValue)="getPhone($event)">-->
       <!--</input-element>-->
       <!--<p *ngIf="errorpath != null && errorpath.hasOwnProperty('account') && errorpath.account.hasOwnProperty('phone')" style="color: red">-->
-        <!--{{errorpath.account.phone[0]}}</p>-->
-      
+      <!--{{errorpath.account.phone[0]}}</p>-->
+    
     </div>
     
     <div style="padding-left: 50px; padding-right: 50px;">
@@ -79,6 +79,7 @@
         <input-element
           [libelle]="'Age des premières règles (en Jr)'"
           type="number"
+          [min]="0"
           [initValue]="patient != null ? patient.age_premiere_regle : null"
           (outputValue)="getAgePremiereRegle($event)"
         ></input-element>
@@ -86,6 +87,7 @@
         <input-element
           [libelle]="'Durée des seignements (en Jr)'"
           type="number"
+          [min]="1"
           [initValue]="patient != null ? patient.duree_saignement : null"
           (outputValue)="getDureeSaignement($event)"
         ></input-element>
@@ -125,13 +127,15 @@
         <input-element
           [libelle]="'Nombre de grossesse'"
           type="number"
+          [min]="0"
           [initValue]="patient != null ? patient.nombre_grossesse : null"
           (outputValue)="getNombreGrossesse($event)"
         ></input-element>
         
         <input-element
-          [libelle]="'Nombre de prématurés'"
+          [libelle]="'Nombre de prématuré'"
           type="number"
+          [min]="0"
           [initValue]="patient != null ? patient.nombre_premature : null"
           (outputValue)="getNombrePremature($event)"
         ></input-element>
@@ -139,8 +143,9 @@
       
       <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
         <input-element
-          [libelle]="'Nombre de fausses couches ou avortements'"
+          [libelle]="'Nombre de fausse couche ou avortement'"
           type="number"
+          [min]="0"
           [initValue]="patient != null ? patient.nombre_fosse_couche : null"
           (outputValue)="getNombreFosseCouche($event)"
         ></input-element>
@@ -148,6 +153,7 @@
         <input-element
           libelle="Nombre d'enfant vivant"
           type="number"
+          [min]="0"
           [initValue]="patient != null ? patient.nombre_enfant_vivant : null"
           (outputValue)="getNombreEnfantVivant($event)"
         ></input-element>
@@ -164,3 +170,12 @@
     <h5 *ngIf="!modeSelectedExist">Mettre à jour</h5>
   </button>
 </ion-footer>
+
+<!--<ion-footer>-->
+  <!--<button full ion-button color="secondary" (click)="updateProfile()" icon-right>-->
+    <!--<h5 *ngIf="modeSelectedExist">Suivant-->
+      <!--<ion-icon name="arrow-forward"></ion-icon>-->
+    <!--</h5>-->
+    <!--<h5 *ngIf="!modeSelectedExist">Mettre à jour</h5>-->
+  <!--</button>-->
+<!--</ion-footer>-->

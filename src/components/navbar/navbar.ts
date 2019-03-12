@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Network} from "@ionic-native/network";
 import {IonButtonEnd, ServiceProvider} from "../../providers/metier.service";
+import {ReducerService} from "../../providers/reducer.service";
 
 
 @Component({
@@ -21,28 +22,26 @@ export class NavbarComponent {
   @Input() ionButtons: Array<IonButtonEnd> = [];
   @Output() getClickedButton = new EventEmitter();
 
-  private msg_network = 'msg network'
+  private msg_network = '';
   private showNetworkStatus = false
   private colorNetworkStatus = 'red'
 
-  constructor(public network: Network, public service: ServiceProvider) {
+  constructor(public network: Network, public service: ServiceProvider,
+              public reducerService: ReducerService) {
   }
   
   ngOnInit() {
-    console.log(this.network)
     this.checkNetwork()
   }
 
   checkNetwork() {
     this.network.onDisconnect().subscribe(next => {
       console.log(next)
-      console.log(this.network)
       this.initNetworkStatus(false);
     });
 
     this.network.onConnect().subscribe(next => {
       console.log(next)
-      console.log(this.network)
       this.initNetworkStatus(true);
       setTimeout(() => {
         this.showNetworkStatus = false
@@ -50,11 +49,12 @@ export class NavbarComponent {
     });
   }
 
-  initNetworkStatus(status) {
-    this.msg_network = status ? 'Network connected' : 'Network was disconnected'
-    this.colorNetworkStatus = status ? 'green' : 'red'
-    this.showNetworkStatus = status
+  initNetworkStatus(status: boolean) {
+    this.msg_network = status ? 'Connection internet' : 'Pas de connection internet';
+    this.colorNetworkStatus = status ? 'green' : 'red';
+    this.showNetworkStatus = status;
     this.service.statusNetwork = status;
+    this.reducerService.isNetwork(status);
   }
   
   goTo(item) {
