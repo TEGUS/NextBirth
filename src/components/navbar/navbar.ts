@@ -57,7 +57,10 @@ export class NavbarComponent {
     this.reducerService.isNetwork(status);
   }
   
-  goTo(item) {
-    this.getClickedButton.emit(item);
+  goTo(event, item) {
+    this.getClickedButton.emit({
+      ...item,
+      event: event
+    });
   }
 }

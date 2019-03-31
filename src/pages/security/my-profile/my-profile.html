@@ -9,7 +9,7 @@
   <div *ngIf="user != null">
     <div class="logologin" text-center>
       <img class="logo" [src]="imageaafficher != null ? imageaafficher : 'assets/imgs/user.jpg'">
-      <p class="textelogin">{{user.email}}</p>
+      <!--<p class="textelogin">{{user.email}}</p>-->
     </div>
     <br>
     
@@ -22,14 +22,14 @@
       </ion-col>
     </ion-row>
     
-    <ion-row>
-      <ion-col class="dateheure2">
-        Email :
-      </ion-col>
-      <ion-col class="dateheure3">
-        {{user.email || 'Non défini'}}
-      </ion-col>
-    </ion-row>
+    <!--<ion-row>-->
+      <!--<ion-col class="dateheure2">-->
+        <!--Email :-->
+      <!--</ion-col>-->
+      <!--<ion-col class="dateheure3">-->
+        <!--{{user.email || 'Non défini'}}-->
+      <!--</ion-col>-->
+    <!--</ion-row>-->
     
     <ion-row>
       <ion-col class="dateheure2">
@@ -106,7 +106,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        Durée min du cycle :
+        Durée minimale du cycle :
       </ion-col>
       <ion-col class="dateheure3">
         {{patient.duree_cycle_min || 'Non défini' + ' (jrs)'}}
@@ -115,7 +115,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        Durée max du cycle :
+        Durée maximale du cycle :
       </ion-col>
       <ion-col class="dateheure3">
         {{patient.duree_cycle_max || 'Non défini' + ' (jrs)'}}
@@ -187,7 +187,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        Nombre d'enfant vivant :
+        Nombre d'enfants vivants :
       </ion-col>
       <ion-col class="dateheure3">
         {{patient.nombre_enfant_vivant}}
@@ -196,7 +196,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        Nombre de fausse couche ou avortement :
+        Nombre de fausses couches ou d'avortements :
       </ion-col>
       <ion-col class="dateheure3">
         {{patient.nombre_fosse_couche}}
@@ -205,7 +205,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        Nombre de grossesse :
+        Nombre de grossesses :
       </ion-col>
       <ion-col class="dateheure3">
         {{patient.nombre_grossesse}}
@@ -214,7 +214,7 @@
     
     <ion-row>
       <ion-col class="dateheure2">
-        Nombre de prématuré :
+        Nombre de prématurés :
       </ion-col>
       <ion-col class="dateheure3">
         {{patient.nombre_premature}}

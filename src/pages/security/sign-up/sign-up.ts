@@ -23,6 +23,10 @@ export class SignUpPage {
   maxYear = null;
   minYear = null;
   
+  countries = [];
+  currentCallingCode = 237;
+  currentPhone = null;
+  
   constructor(public navCtrl: NavController, public services: ServiceProvider, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider,
@@ -50,6 +54,10 @@ export class SignUpPage {
     
     this.maxYear = (new Date()).getFullYear() - 12;
     this.minYear = (new Date()).getFullYear() - 60;
+  
+    this.mylocalstorage.getCountries().then(countries => {
+      this.countries = countries;
+    });
   }
   
   ionViewDidLoad() {
@@ -89,7 +97,17 @@ export class SignUpPage {
   }
   
   getPhone(phone) {
-    this.object.account.phone = phone
+    this.currentPhone = phone;
+    this.object.account.phone = `+${this.currentCallingCode}${phone}`;
+  }
+  
+  listenCode(event) {
+    this.currentCallingCode = event;
+    
+    if (this.currentPhone === null)
+      return;
+    
+    this.object.account.phone = `+${this.currentCallingCode}${this.currentPhone}`;
   }
   
   getPassword(pwd) {
@@ -130,7 +148,7 @@ export class SignUpPage {
           this.buildError();
         });
       } else {
-        this.setMessageError('Les mots de passe ne sont pas identiques!')
+        //this.setMessageError('Les mots de passe ne sont pas identiques!')
       }
     } else {
       this.setMessageError('Veuillez remplir touts les champs!')

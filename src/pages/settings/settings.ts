@@ -30,6 +30,7 @@ export class SettingsPage {
   modes = [];
   defaultLang = null;
   defaultMode = null;
+  chooseMode = null;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public localStorage: LocalStorageProvider,
               public translate: TranslateService, public loadingCtrl: LoadingController,
@@ -40,17 +41,22 @@ export class SettingsPage {
   ionViewWillEnter() {
     this.initLanguages();
     
-    this.localStorage.getMode().then((mode: any) => {
-      console.log(mode);
-      if (mode !== null) {
-        this.defaultMode = mode.code;
-      }
-    });
+    this.initDefaultMode();
     
     this.getAllModes();
     
     this.localStorage.getDefaultLang().then(defaultLang => {
       this.defaultLang = defaultLang;
+    });
+  }
+  
+  initDefaultMode() {
+    this.localStorage.getMode().then((mode: any) => {
+      console.log(mode);
+      if (mode !== null) {
+        this.defaultMode = mode.code;
+        this.chooseMode = mode.code;
+      }
     });
   }
   
@@ -74,8 +80,28 @@ export class SettingsPage {
   }
   
   listenModeChange(event) {
-    if (this.defaultMode !== null) {
-      this.localStorage.storeModeInSession(this.modes.find(x => x.code === this.defaultMode));
+    let mode: any = this.modes.find(x => x.code === event);
+    
+    if (mode !== null) {
+      console.log(mode);
+      if (!mode.enable) {
+        this.alertCtrl.create({
+          message: 'Ce mode n\'est pas encore disponible.',
+          buttons: [
+            {
+              text: 'OK',
+              handler: () => {
+                this.defaultMode = this.chooseMode;
+              }
+            }
+          ]
+        }).present();
+        return;
+      } else {
+        this.chooseMode = mode.code;
+        this.localStorage.storeModeInSession(mode);
+      }
+      
     }
   }
   
@@ -99,8 +125,8 @@ export class SettingsPage {
   
   closeAccount() {
     this.alertCtrl.create({
-      title:'Supprimer votre compte Nextbirth',
-      message: 'L\'opération de suppression de compte est irréversible. \nVoulez vous continuer ?',
+      title: 'Supprimer mon compte Nextbirth',
+      message: 'L\'opération de suppression de compte est irréversible. \nVoulez-vous continuer ?',
       buttons: [
         {
           text: 'Annuler'

@@ -8,7 +8,6 @@ import {SignUpPage} from "../sign-up/sign-up";
 import {checkField} from "../../../variables/functions";
 import {LocalStorageProvider} from '../../../providers/localstorage.service';
 import {ServiceProvider} from '../../../providers/metier.service';
-import {MbscSelectOptions} from "@mobiscroll/angular";
 import {MyApp} from "../../../app/app.component";
 
 /**
@@ -27,6 +26,9 @@ import {MyApp} from "../../../app/app.component";
 export class LoginPage {
   object = null;
   error = null;
+  countries = [];
+  currentCallingCode = 237;
+  currentPhone = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
@@ -38,13 +40,27 @@ export class LoginPage {
     this.object = {
       phone: null,
       plainPassword: null
-    }
+    };
+  
+    this.mylocalstorage.getCountries().then(countries => {
+      this.countries = countries;
+    });
   }
 
   ionViewDidLoad() {}
 
   getPhone(phone) {
-    this.object.phone = phone
+    this.currentPhone = phone;
+    this.object.phone = `+${this.currentCallingCode}${phone}`;
+  }
+  
+  listenCode(event) {
+    this.currentCallingCode = event;
+    
+    if (this.currentPhone === null)
+      return;
+    
+    this.object.phone = `+${this.currentCallingCode}${this.currentPhone}`;
   }
 
   getPassword(pwd) {

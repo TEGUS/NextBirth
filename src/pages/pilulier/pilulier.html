@@ -5,11 +5,11 @@
     <div class="question">
       <ion-row class="montext">
         <ion-col (click)="gotoOnglet_0()">Nouveau traitement</ion-col>
-        <ion-col (click)="gotoOnglet_1()">Traitements encours</ion-col>
+        <ion-col (click)="gotoOnglet_1()">Traitements en cours</ion-col>
         <ion-col (click)="gotoOnglet_2()">Traitements terminés</ion-col>
       </ion-row>
     </div>
-  
+    
     <ion-row no-border no-margin no-padding no-lines>
       <ion-col>
         <div class="supercard" *ngIf="onglet==0"></div>
@@ -61,7 +61,8 @@
             <p class="text">Fréquence de prise</p>
           </ion-col>
           <ion-col>
-            <ion-select class="monselect" #select formControlName="frequencePrise">
+            <ion-select class="monselect" #select formControlName="frequencePrise" okText="Valider"
+                        cancelText="Annuler">
               <ion-option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</ion-option>
             </ion-select>
           </ion-col>
@@ -118,7 +119,7 @@
             <p class="text">Evaluation de l'observance ?</p>
           </ion-col>
           <ion-col>
-            <ion-select class="monselect">
+            <ion-select class="monselect" okText="Valider" cancelText="Annuler">
               <ion-option value="oui" selected>Oui</ion-option>
               <ion-option value="non">Non</ion-option>
             </ion-select>
@@ -126,36 +127,40 @@
         </ion-row>
         
         <!--<button ion-button (click)="part = 1;" *ngIf="this.currentTreatment == null">-->
-          <!--<ion-icon name="arrow-back"></ion-icon>-->
+        <!--<ion-icon name="arrow-back"></ion-icon>-->
         <!--</button>-->
         <!---->
         <!--<button style="border-radius:50px; height: 60px; float: right; margin-top: 10% " bottom right ion-button-->
-                <!--type="submit" [disabled]="!form.valid">-->
-          <!--{{currentTreatment == null ? 'Add' : 'Upd'}}-->
+        <!--type="submit" [disabled]="!form.valid">-->
+        <!--{{currentTreatment == null ? 'Add' : 'Upd'}}-->
         <!--</button>-->
       </form>
     </div>
   </div>
   
   <div *ngIf="onglet==1">
+    <div *ngIf="treatments.length == 0 && !startProcessGet" class="empty">
+      Pas de traitement en cours.
+    </div>
+    
     <div *ngFor="let item of treatments">
       <ion-card>
         <ion-card-content>
           <div style="display:flex;justify-content: space-between;align-items: center;flex-direction: row;">
             <div>
               <h4 style="font-size: x-large;">{{item.name}}</h4>
-              <h6>Crée le {{item._embedded.date_creation}}</h6>
+              <h6>Créée le {{item._embedded.date_creation}}</h6>
             </div>
             
-            <button icon-only ion-button clear (click)="presentPopover(item)">
+            <button icon-only ion-button clear (click)="presentPopover($event, item)">
               <ion-icon name="more"></ion-icon>
             </button>
           </div>
         </ion-card-content>
         
         <ion-card-content>
-          Duree: {{item.duree_traitement}} Jrs<br>
-          Date Debut: {{convertDatetime(item.date_debut_traitement)}}<br>
+          Durée: {{item.duree_traitement}} Jr(s)<br>
+          Date de début: {{convertDatetime(item.date_debut_traitement)}}<br>
           Première prise: {{item.horaire_first_prise}}<br>
           Fréquence de prise: {{getFrequencePrise(item.frequence_prise)}}<br>
         </ion-card-content>
@@ -170,28 +175,32 @@
   </div>
   
   <div *ngIf="onglet==2">
-      <div *ngFor="let item of archives">
+    <div *ngIf="archives.length == 0 && !startProcessGet" class="empty">
+      Pas de traitement terminé.
+    </div>
+    
+    <div *ngFor="let item of archives">
       <ion-card>
         <ion-card-content>
           <div style="display:flex;justify-content: space-between;align-items: center;flex-direction: row;">
             <div>
               <h4 style="font-size: x-large;">{{item.name}}</h4>
-              <h6>Crée le {{item._embedded.date_creation}}</h6>
+              <h6>Créée le {{item._embedded.date_creation}}</h6>
             </div>
-          
+            
             <!--<button icon-only ion-button clear (click)="presentPopover(item)">-->
-              <!--<ion-icon name="more"></ion-icon>-->
+            <!--<ion-icon name="more"></ion-icon>-->
             <!--</button>-->
           </div>
         </ion-card-content>
-      
+        
         <ion-card-content>
-          Duree: {{item.duree_traitement}} Jrs<br>
-          Date Debut: {{convertDatetime(item.date_debut_traitement)}}<br>
+          Durée: {{item.duree_traitement}} Jr(s)<br>
+          Date de début: {{convertDatetime(item.date_debut_traitement)}}<br>
           Première prise: {{item.horaire_first_prise}}<br>
           Fréquence de prise: {{getFrequencePrise(item.frequence_prise)}}<br>
         </ion-card-content>
-      
+        
         <div *ngIf="item.msg_alert !== undefined && item.msg_alert !== null">
           <ion-card-content [ngClass]="item.msg_alert.status == 'warning' ? 'msg-warning' : 'msg-danger'">
             {{item.msg_alert.msg}}
@@ -202,24 +211,29 @@
   </div>
   
   <!--<ion-fab bottom right class="monsuperbutton" *ngIf="onglet==1">-->
-    <!--<button ion-fab (click)="gotoOnglet_0()">-->
-      <!--<ion-icon name="add"></ion-icon>-->
-    <!--</button>-->
+  <!--<button ion-fab (click)="gotoOnglet_0()">-->
+  <!--<ion-icon name="add"></ion-icon>-->
+  <!--</button>-->
   <!--</ion-fab>-->
 </ion-content>
 
 <ion-footer *ngIf="showFooter">
   <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
-    <button full clear ion-button (click)="part = 1; isShowFooter()" *ngIf="onglet == 0 && part == 2 && this.currentTreatment == null">
-      <ion-icon name="arrow-back"></ion-icon> Retour
+    <button full clear ion-button (click)="part = 1; isShowFooter()"
+            *ngIf="onglet == 0 && part == 2 && this.currentTreatment == null">
+      <ion-icon name="arrow-back"></ion-icon>
+      Retour
     </button>
-  
-    <button full clear color="secondary" ion-button *ngIf="onglet == 0 && part == 2" tappable [disabled]="!form.valid" (click)="addTreatment()">
-      <ion-icon name="create"></ion-icon> {{currentTreatment == null ? 'Ajouter' : 'Mettre à jour'}}
+    
+    <button full clear color="secondary" ion-button *ngIf="onglet == 0 && part == 2" tappable [disabled]="!form.valid"
+            (click)="addTreatment()">
+      <ion-icon name="create"></ion-icon>
+      {{currentTreatment == null ? 'Ajouter' : 'Mettre à jour'}}
     </button>
     
     <button full clear color="secondary" ion-button tappable *ngIf="onglet==1" (click)="isShowFooter()">
-      <ion-icon name="add"></ion-icon> Ajouter un traitement
+      <ion-icon name="add"></ion-icon>
+      Ajouter un traitement
     </button>
   </div>
 </ion-footer>

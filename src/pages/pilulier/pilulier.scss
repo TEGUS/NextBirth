@@ -1,4 +1,10 @@
 page-pilulier {
+  .empty {
+    text-align: center;
+    font-size: large;
+    padding-top: 13rem;
+  }
+  
   ion-input {
     margin-top: 10px;
     background-color: color($colors, primary);

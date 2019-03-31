@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, LoadingController, AlertController} from 'ionic-angular';
 import {ServiceProvider} from '../../../providers/metier.service';
 import {LocalStorageProvider} from "../../../providers/localstorage.service";
-import {getCurrentDateWith} from "../../../variables/functions";
+import {getCurrentDateWith, getCurrentDateWithout} from "../../../variables/functions";
 
 /**
  * Generated class for the TimelinetestPage page.
@@ -22,7 +22,7 @@ export class TimelinetestPage {
   public testeur = 0;
   public titre: any;
   public description: any;
-  mainInterval = 200;
+  mainInterval = 500;
   
   
   public timelines = [];
@@ -75,6 +75,8 @@ export class TimelinetestPage {
   ]
   
   debut_dernieres_menstrues = null;
+  lastWeekTimeline = null;
+  lastEvents = [];
   
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public services: ServiceProvider,
               public navParams: NavParams, public localStorage: LocalStorageProvider,
@@ -84,19 +86,24 @@ export class TimelinetestPage {
   ionViewWillEnter() {
     this.start = 0;
     this.end = this.mainInterval;
+    this.lastEvents = [];
+    
+    console.log(this.start)
+    console.log(this.end)
     
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getAllEvents(this.start, this.end).subscribe(next => {
       this.services.getDateDernierMenstrues().then(ddm => {
-        console.log(ddm.getDate());
-        console.log(ddm.getDay());
         this.debut_dernieres_menstrues = ddm;
+        this.lastWeekTimeline = this.debut_dernieres_menstrues;
+  
+        console.log(next.data);
         
-        let events = this.buildIntervals(next.data);
-        console.log(events);
+        this.lastEvents = this.lastEvents.concat(this.buildIntervals(next.data));
+        console.log(this.lastEvents);
         
-        this.timelines = this.getTimelines(next.data);
+        this.timelines = this.getTimelines(this.lastEvents);
       }, err => console.error(err));
     }, error => {
       loading.dismiss();
@@ -148,72 +155,40 @@ export class TimelinetestPage {
     const timelines = [];
     
     if (events !== undefined && events !== null && events.length !== 0) {
-      const cache = [];
-      const nbJourInterval = 7;
+      let nbJourInterval = 0;
       let elements = [];
-      let firstdebut = events[0].delai_jours_debut + nbJourInterval;
+      let currentDate = getCurrentDateWith(this.lastWeekTimeline, 0);
+      let currentWeek = this.lastWeekTimeline;
       
-      while (cache.length !== events.length) {
+      while (nbJourInterval <= this.end) {
         events.forEach((event, j) => {
-          if (cache.find(x => event.id === x.id) === undefined && event.delai_jours_debut < firstdebut) {
-            let d = getCurrentDateWith(this.debut_dernieres_menstrues, event.delai_jours_debut);
-            
+          let currentDateDebutEvent = getCurrentDateWith(this.lastWeekTimeline, event.delai_jours_debut);
+          let currentDateFinEvent = getCurrentDateWith(this.lastWeekTimeline, event.delai_jours_fin);
+    
+          if (currentDate >= currentDateDebutEvent && currentDate <= currentDateFinEvent) {
             elements.push({
               ...event,
               title: event.event_type,
               content: event.name,
               icon: 'calendar',
-              time: {subTitle: d.toDateString(), title: d.toDateString()}
+              time: {subTitle: currentWeek.toDateString(), title: currentWeek.toDateString()}
             });
-            
-            // if (!(element.take_interval instanceof Array)) {
-            //   let interval = [];
-            //   let i = 1;
-            //   while (element.take_interval[i] !== undefined) {
-            //     interval.push(Number(element.take_interval[i++]));
-            //   }
-            //   element.take_interval = interval;
-            // }
-            //
-            // if (element.take_interval.length !== 0) {
-            //   element.take_interval.forEach(ti => {
-            //     let v = {
-            //       ...element,
-            //       delai_jours_debut: element.delai_jours_debut + Number(ti),
-            //       take_interval: [],
-            //       title: element.event_type,
-            //       content: element.name,
-            //       icon: 'calendar',
-            //       time: {subTitle: '', title: ''}
-            //     };
-            //
-            //     let d = getCurrentDateWith(this.debut_dernieres_menstrues, v.delai_jours_debut);
-            //
-            //     v.time.subTitle = d.toDateString();
-            //     v.time.title = v.time.subTitle;
-            //
-            //     timelinestmp.push(v);
-            //   });
-            // }
-            
-            cache.push(event);
-          }
-          
-          // if (j === (events.length - 1) && timelinestmp.length !== 0) {
-          if (j === (events.length - 1)) {
-            // console.log(timelines);
-            let d = getCurrentDateWith(this.debut_dernieres_menstrues, (firstdebut - nbJourInterval));
-            
-            timelines.push({
-              elements: elements,
-              icon: 'calendar',
-              time: {subTitle: d.toDateString(), title: d.toDateString()}
-            });
-            elements = [];
           }
         });
-        firstdebut += nbJourInterval;
+  
+        timelines.push({
+          elements: elements,
+          icon: 'calendar',
+          time: {subTitle: currentWeek.toDateString(), title: currentWeek.toDateString()}
+        });
+        elements = [];
+  
+        currentWeek = currentDate;
+        nbJourInterval+=7;
+        currentDate = getCurrentDateWith(currentDate, 7);
       }
+      
+      this.lastWeekTimeline = currentWeek;
     }
     return timelines;
   }
@@ -237,8 +212,14 @@ export class TimelinetestPage {
       this.start += this.mainInterval;
       this.end += this.mainInterval;
       
+      console.log(this.start)
+      console.log(this.end)
+      
       this.services.getAllEvents(this.start, this.end).subscribe(next => {
-        this.timelines = this.timelines.concat(this.getTimelines(next.data));
+        this.lastEvents = this.buildIntervals(next.data);
+        console.log(this.lastEvents);
+        
+        this.timelines = this.timelines.concat(this.getTimelines(this.lastEvents));
       }, error => {
         console.error(error);
       });

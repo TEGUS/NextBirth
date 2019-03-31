@@ -137,7 +137,7 @@ export class UpdateProfilePage {
   castUsername(user) {
     return new Promise(resolve => {
       let res = (user.username).indexOf("@nextbirth.com");
-      user.username = res.length === -1 ? user.username : null;
+      user.username = res === -1 ? user.username : null;
       resolve(user);
     })
   }

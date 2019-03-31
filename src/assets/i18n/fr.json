@@ -2,6 +2,7 @@
   "français": "Français",
   "anglais": "English",
   "parametres": "Paramètres",
-  "langue": "Langue",
-  "parametre_utilisateur": "Paramètres utilisateur"
+  "langue_affichage": "Langue d'affichage",
+  "langue_audio": "Langue des audios",
+  "parametre_utilisateur": "Paramètres généraux"
 }

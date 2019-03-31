@@ -26,7 +26,8 @@ export class ChooseModePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public services: ServiceProvider,
               public loadingCtrl: LoadingController, public alertCtrl: AlertController,
-              public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider, private datePicker: DatePicker, public localStorage: LocalStorageProvider, private localNotifications: LocalNotifications) {
+              public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider, private datePicker: DatePicker,
+              public localStorage: LocalStorageProvider, private localNotifications: LocalNotifications) {
   }
 
   ionViewWillLoad() {
@@ -127,6 +128,20 @@ export class ChooseModePage {
   }
 
   selectMode(mode) {
+    console.log(mode);
+    if (!mode.enabled) {
+      this.alertCtrl.create({
+        message: 'Ce mode n\'est pas encore disponible.',
+        buttons: [
+          {
+            text: 'OK',
+            handler:() => {}
+          }
+        ]
+      }).present();
+      return;
+    }
+    
     let loading = this.loadingCtrl.create();
     loading.present();
     this.checkProfile().then(next => {

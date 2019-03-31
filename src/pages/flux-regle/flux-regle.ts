@@ -23,11 +23,11 @@ export class FluxReglePage {
   }
 
   img1j1(){
-      alert("le pros");
+      // alert("le pros");
   }
 
   submit(){
-    alert("le mokai");
+    // alert("le mokai");
   }
 
 }

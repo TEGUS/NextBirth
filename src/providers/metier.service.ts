@@ -33,6 +33,14 @@ export class ServiceProvider {
     this.host = currentHost;
   }
   
+  /**
+   * REST COUNTRIES
+   */
+  getAllCountries() {
+    return this.http.get(`https://restcountries.eu/rest/v2/all`, {})
+  }
+  
+  
   
   faitTravail() {
     return new Promise(resolve => {
@@ -565,5 +573,6 @@ export interface Situation {
 export interface IonButtonEnd {
   title?: string,
   icon?: string,
-  code: string
+  code: string,
+  event?: any
 }

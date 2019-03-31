@@ -71,6 +71,7 @@ export class PilulierPage {
   private debut_dernieres_menstrues: Date = null;
   
   showFooter = false;
+  private startProcessGet: boolean = false;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
@@ -111,7 +112,7 @@ export class PilulierPage {
     
     let dateEndThirdTrimestre: Date = new Date(dateEndSecondTrimestre);
     dateEndSecondTrimestre.setDate(dateEndSecondTrimestre.getDate() + 93);
-  
+    
     console.clear()
     console.log(this.debut_dernieres_menstrues);
     console.log(dateEndFirstTrimestre);
@@ -410,9 +411,11 @@ export class PilulierPage {
     }
   }
   
-  presentPopover(item) {
+  presentPopover(event, item) {
     let popover = this.popoverCtrl.create('PopoverTreatementOptionsPage');
-    popover.present();
+    popover.present({
+      ev: event
+    });
     popover.onDidDismiss(data => {
       if (data === 1) {
         this.gotoUpdate(item)
@@ -439,12 +442,13 @@ export class PilulierPage {
     return new Promise(resolve => {
       let loading = this.loadingCtrl.create();
       loading.present();
+      this.startProcessGet = true;
       this.treatments = [];
       this.services.allTreatments().subscribe((next: any) => {
         console.log(next);
         let tmp = [];
         this.archives = [];
-  
+        
         /**
          * Filtrer les traitements en cours des traitements terminés.
          */
@@ -484,11 +488,13 @@ export class PilulierPage {
       }, error => {
         console.error(error);
         loading.dismiss()
+        this.startProcessGet = false;
       }, () => {
         loading.dismiss();
         loading.onDidDismiss(() => {
           resolve(this.treatments);
         })
+        this.startProcessGet = false;
       });
     })
   }
@@ -616,13 +622,13 @@ export class PilulierPage {
       duration: 3000,
       position: 'bottom'
     });
-  
+    
     toast.onDidDismiss(() => {
       if (callback !== null) {
         callback();
       }
     });
-  
+    
     toast.present();
   }
   
