@@ -16,7 +16,7 @@ import {Camera, CameraOptions} from '@ionic-native/camera';
 import {Base64} from '@ionic-native/base64';
 import {LocalStorageProvider} from '../../providers/localstorage.service';
 import {DatePicker} from '@ionic-native/date-picker';
-import {formatNumberOfDate} from "../../variables/functions";
+import {formatNumberOfDate, getCurrentDateWith} from "../../variables/functions";
 
 
 @IonicPage()
@@ -26,6 +26,8 @@ import {formatNumberOfDate} from "../../variables/functions";
 })
 export class ReportPage {
   items = [];
+  
+  public KEY_SCHEDULE_DIALOG_VACCIN_ANTI_TETANIQUE = "SCHEDULE_DIALOG_VACCIN_ANTI_TETANIQUE";
   
   public testeurdpv = 0;
   public testeurdpvcac = 0;
@@ -164,7 +166,12 @@ export class ReportPage {
       //Check Date Vacin Anti Tétanique
       this.mylocalstorage.getKey('mode').then(m => {
         if (m !== undefined && m !== null && m.code === 'MO1') {
-          this.checkDateVaccinAntiTetanique(result.user._embedded.patient.date_vaccin_anti_tetanique);
+          this.mylocalstorage.getKey(this.KEY_SCHEDULE_DIALOG_VACCIN_ANTI_TETANIQUE).then(schedule => {
+            if (schedule === null || schedule === (new Date())) {
+              this.mylocalstorage.setKey(this.KEY_SCHEDULE_DIALOG_VACCIN_ANTI_TETANIQUE, getCurrentDateWith((new Date()), 1));
+              this.checkDateVaccinAntiTetanique(result.user._embedded.patient.date_vaccin_anti_tetanique);
+            }
+          });
         }
       })
     }, error => {
@@ -254,7 +261,13 @@ export class ReportPage {
           text: 'NON',
           handler: () => {
             let a = this.alertCtrl.create({
-              message: 'Faites-vous vacciner au plus tôt contre le tétanos pour vous protéger et protéger votre enfant!'
+              message: 'Faites-vous vacciner au plus tôt contre le tétanos pour vous protéger et protéger votre enfant!',
+              buttons: [
+                {
+                  text: 'OK',
+                  handler:() => {}
+                }
+              ]
             })
             a.present()
           }

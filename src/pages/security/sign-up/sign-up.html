@@ -45,12 +45,23 @@
     <p *ngIf="this.errorSignup.dureeMenstrues != undefined" class="show-error-dom">{{this.errorSignup.dureeMenstrues}}</p>
     <p *ngIf="this.errorSignup.dureeCycleMin != undefined" class="show-error-dom">{{this.errorSignup.dureeCycleMin}}</p>
     <p *ngIf="this.errorSignup.dureeCycleMax != undefined" class="show-error-dom">{{this.errorSignup.dureeCycleMax}}</p>
+  
+    <div class="phone-number">
+      <ion-col>
+        <ion-select [(ngModel)]="currentCallingCode" okText="Valider" cancelText="Annuler">
+          <ion-option [value]="item.callingCodes[0]" (ionSelect)="listenCode($event)"
+                      *ngFor="let item of countries">
+            {{item.alpha2Code + " (+" + item.callingCodes[0] + ")"}}
+          </ion-option>
+        </ion-select>
+      </ion-col>
     
-    <input-element
-      [libelle]="'Numéro de téléphone'"
-      [type]="'text'"
-      (outputValue)="getPhone($event)">
-    </input-element>
+      <input-element
+        [libelle]="'Numéro de téléphone'"
+        [type]="'text'"
+        (outputValue)="getPhone($event)">
+      </input-element>
+    </div>
     <p *ngIf="this.errorSignup.phone != undefined" class="show-error-dom">{{this.errorSignup.phone}}</p>
     
     <input-element

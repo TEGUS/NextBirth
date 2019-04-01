@@ -81,7 +81,8 @@ export class LocalStorageProvider {
       console.log("===================================");
       console.log(session);
       console.log("===================================");
-      session.user._embedded.patient = patient;
+      // session.user._embedded.patient = patient;
+      session.user = patient;
       this.setKey(this.key, session);
     });
   }
@@ -164,6 +165,28 @@ export class LocalStorageProvider {
         failed(error);
       });
     });
+  }
+  
+  /**
+   * Store Countries
+   * @param countries
+   */
+  setCountries(countries) {
+    return new Promise(resolve => {
+      this.setKey('countries', countries);
+      resolve()
+    })
+  }
+  
+  /**
+   * Get Countries
+   */
+  getCountries() {
+    return new Promise<Array<any>>(resolve => {
+      this.getKey('countries').then(val => {
+        resolve(val);
+      })
+    })
   }
 
   //store key

@@ -36,7 +36,8 @@ export class ChooseModePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public services: ServiceProvider,
               public loadingCtrl: LoadingController, public alertCtrl: AlertController,
-              public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider, private datePicker: DatePicker, public localStorage: LocalStorageProvider, private localNotifications: LocalNotifications) {
+              public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider, private datePicker: DatePicker,
+              public localStorage: LocalStorageProvider, private localNotifications: LocalNotifications) {
   }
 
   ionViewWillLoad() {

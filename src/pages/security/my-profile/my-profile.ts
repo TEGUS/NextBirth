@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angu
 import {LocalStorageProvider} from '../../../providers/localstorage.service';
 import {IonButtonEnd} from "../../../providers/metier.service";
 import {formatDate} from "../../../variables/functions";
+import {e} from "@angular/core/src/render3";
 
 /**
  * Generated class for the MyprofilsPage page.
@@ -51,6 +52,8 @@ export class MyProfilePage {
           this.user = next.user
         }
         
+        console.log(this.user.username);
+        
         this.castUsername(this.user).then(user => {
           console.log(user);
           this.user = user;
@@ -72,8 +75,9 @@ export class MyProfilePage {
    */
   castUsername(user) {
     return new Promise(resolve => {
+      console.log(user);
       let res = (user.username).indexOf("@nextbirth.com");
-      user.username = res.length === -1 ? user.username : null;
+      user.username = res === -1 ? user.username : null;
       resolve(user);
     })
   }
@@ -84,7 +88,7 @@ export class MyProfilePage {
   getClickedButton(button: IonButtonEnd) {
     switch (button.code) {
       case 'more':
-        this.presentPopover();
+        this.presentPopover(button.event);
         break;
       
       case 'updateProfile':
@@ -93,14 +97,16 @@ export class MyProfilePage {
     }
   }
   
-  presentPopover() {
+  presentPopover(event?) {
     let popover = this.popoverCtrl.create(
       'PopoverMyProfileMenu',
       {
         menu: this.ionButtonsEnd
       }
     );
-    popover.present();
+    popover.present({
+      ev: event
+    });
     popover.onDidDismiss(data => {
       if (data !== null) {
         switch (data.code) {

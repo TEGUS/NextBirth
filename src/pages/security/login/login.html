@@ -10,11 +10,22 @@
     <img class="profils" src="assets/imgs/monlogo.png" alt="">
     <br>
     
-    <input-element
-      [libelle]="'Numéro de téléphone'"
-      [type]="'text'"
-      (outputValue)="getPhone($event)">
-    </input-element>
+    <div class="phone-number">
+      <ion-col>
+        <ion-select [(ngModel)]="currentCallingCode" okText="Valider" cancelText="Annuler">
+          <ion-option [value]="item.callingCodes[0]" (ionSelect)="listenCode($event)"
+                      *ngFor="let item of countries">
+            {{item.alpha2Code + " (+" + item.callingCodes[0] + ")"}}
+          </ion-option>
+        </ion-select>
+      </ion-col>
+      
+      <input-element
+        [libelle]="'Numéro de téléphone'"
+        [type]="'text'"
+        (outputValue)="getPhone($event)">
+      </input-element>
+    </div>
 
     <input-element
       [libelle]="'Mot de passe'"

@@ -7,7 +7,27 @@ page-login {
     color: white;
     text-align: center;
     width: 100%;
-
+    
+    .phone-number {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+  
+      ion-select {
+        margin-top: 3.5rem;
+        background-color: #eb5350;
+        color: white;
+        font-size: 12px;
+        border-radius: 20px;
+        text-align: center;
+        padding-left: 15px;
+        width: inherit;
+        height: 4rem;
+        max-width: none;
+      }
+    }
+    
     input-element {
       width: inherit;
     }

@@ -15,7 +15,8 @@
             <ion-col col-1><div class="triangle"></div></ion-col>
             <ion-col col-7>{{q.libelle}}</ion-col>
             <ion-col col-4>
-              <ion-select [(ngModel)]="q.choice" style="max-width: none;" (ionChange)="listenChange($event, q)">
+              <ion-select [(ngModel)]="q.choice" style="max-width: none;" (ionChange)="listenChange($event, q)"
+                          okText="Valider" cancelText="Annuler">
                 <ion-option [value]="r.key" *ngFor="let r of q.reponses">{{r.value}}</ion-option>
               </ion-select>
             </ion-col>

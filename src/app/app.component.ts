@@ -41,10 +41,10 @@ export class MyApp {
       {title: 'Calendrier', component: "CalendarPage", icon: 'icon1'},
       {title: 'Mise en garde', component: "MessituationarisquePage", icon: 'icon2'},
       {title: 'Mes mises à jour', component: "MiseajourPage", icon: 'icon4'},
-      {title: 'Outils surveillance', component: "SurveillancePage", icon: 'icon6'},
+      {title: 'Parturiomètre', component: "SurveillancePage", icon: 'icon6'},
       {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
-      {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'},
-      {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
+      // {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'},
+      // {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
       {title: 'Paramètres', component: "SettingsPage", icon: 'icon8'},
     ];
   }
@@ -62,7 +62,27 @@ export class MyApp {
       this.initRootPage().then(page => {
         this.rootPage = page
       });
+      
+      this.initValuesLocalStorage();
     });
+  }
+  
+  /**
+   * Initialisations des valeurs dans le localstorage
+   */
+  initValuesLocalStorage() {
+    /**
+     * Check All Countries and Store in LocalStorage
+     */
+    this.localStorage.getCountries().then(countries => {
+      if (countries === null || countries === undefined) {
+        this.services.getAllCountries().subscribe(countries => {
+          this.localStorage.setCountries(countries);
+        }, error => {
+          console.error(error)
+        })
+      }
+    })
   }
   
   initRootPage() {
