@@ -241,7 +241,9 @@ export class ChooseModePage {
 
   selectMode(mode) {
 
-        if(this.testeur==1){
+      
+
+        if((this.testeur==1)&&(mode.intitule == "MODE GROSSESSE")){
 
        
 
@@ -355,7 +357,124 @@ export class ChooseModePage {
   
       }else{
 
-         this.presentToast("vous n'avez pas un retard merci de bien vouloir mettre à jours votre profils")
+          if(mode.intitule != "MODE GROSSESSE"){
+
+              
+                
+              let loading = this.loadingCtrl.create();
+              loading.present();
+              this.checkProfile().then(next => {
+                console.log(next);
+                if (next) {
+                  let loading2 = this.loadingCtrl.create();
+                  loading2.present();
+
+                
+
+                            this.services.selectMode(mode.id).subscribe(alerts => {
+                              let listesNotification = [];
+                              var i = 0;
+                              alerts.forEach((element) => {
+                                let manotification = {
+                                  id: i + 1,
+                                  text: element._embedded.conseil.description,
+                                  //trigger: {at: new Date(new Date().getTime() + (60*1000)*(i+1))},
+                                  trigger: {at: new Date((new Date(element.date_alert)).getTime())},
+                                  led: 'FF0000',
+                                  sound: 'file://assets/imgs/notification.mp3'
+                                }
+
+                                listesNotification.push(manotification);
+                                i++;
+                              });
+
+                              if (i == alerts.length) {
+                                loading2.dismiss();
+                                this.localNotifications.schedule(
+                                  listesNotification
+                                );
+                              }
+                              this.localStorage.storeModeInSession(mode);
+                            }, error => {
+                              loading.dismiss();
+                              console.error(error);
+                            }, () => {
+                              console.log('Succes du stochage du mode!');
+                              //Redirection vers la page du Mode
+                              switch (mode.code) {
+                                case codesMode.CONTPL:
+                                  loading.dismiss();
+                                  this.navCtrl.push("ModeContraceptionPage", {
+                                    title: mode.intitule
+                                  })
+                                  break;
+                                case codesMode.CONTPR:
+                                  loading.dismiss();
+                                  this.navCtrl.push("ModeContraceptionPage", {
+                                    title: mode.intitule
+                                  })
+                                  break;
+                                case codesMode.GRS:
+                                  this.checkProfileDesirGrossesse().then((next: any) => {
+                                    loading.dismiss()
+                                    if (next.status) {
+                                      let alert = this.alertCtrl.create({
+                                        message: 'Voulez vous mettre à jour vos infos ?',
+                                        buttons: [
+                                          {
+                                            text: 'Non',
+                                            handler: () => {
+                                              this.navCtrl.push("ReportPage")
+                                            }
+                                          },
+                                          {
+                                            text: 'Oui',
+                                            handler: () => {
+                                              this.navCtrl.push("QuestionContraceptionPage", {
+                                                infos_desir_grossesse: next.infos_desir_grossesse
+                                              })
+                                            }
+                                          }
+                                        ]
+                                      });
+                                      alert.present();
+                                    } else {
+                                      this.navCtrl.push("QuestionContraceptionPage")
+                                    }
+                                  }, error => {
+                                    console.error(error)
+                                    loading.dismiss();
+                                  })
+                                  break;
+                                case codesMode.GEST:
+                                  loading.dismiss();
+                                  this.navCtrl.push("ReportPage")
+                                  break;
+                              }
+                            });
+                
+
+
+
+                } else {
+                  loading.dismiss();
+                  loading.onDidDismiss(() => {
+                    this.localStorage.setKey("modeSelected", mode);
+                    //Redirection vers Update Profile
+                    this.navCtrl.push("UpdateProfilePage");
+                  });
+                }
+              }, error => {
+                loading.dismiss();
+                console.error(error);
+              });
+  
+
+          }else{
+
+            this.presentToast("vous n'avez pas un retard merci de bien vouloir mettre à jours votre profils");
+          }
+             
 
       }
 
