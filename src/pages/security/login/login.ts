@@ -5,7 +5,7 @@ import {
 } from 'ionic-angular';
 import {AuthenticationProvider} from "../../../providers/authentication.service";
 import {SignUpPage} from "../sign-up/sign-up";
-import {checkField} from "../../../variables/functions";
+import {checkField, handleError} from "../../../variables/functions";
 import {LocalStorageProvider} from '../../../providers/localstorage.service';
 import {ServiceProvider} from '../../../providers/metier.service';
 import {MyApp} from "../../../app/app.component";
@@ -99,6 +99,10 @@ export class LoginPage {
             }, error => {
               console.error(error);
               loading.dismiss();
+  
+              if (handleError(error) === 0) {
+                this.navCtrl.setRoot('ErrorPage');
+              }
             });
           })
         });

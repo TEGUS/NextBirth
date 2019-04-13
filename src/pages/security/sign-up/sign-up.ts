@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, LoadingController, MenuController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {AuthenticationProvider} from "../../../providers/authentication.service";
-import {checkField, formatNumberOfDate} from "../../../variables/functions";
+import {checkField, formatNumberOfDate, handleError} from "../../../variables/functions";
 import {LocalStorageProvider} from "../../../providers/localstorage.service";
 import {ServiceProvider} from '../../../providers/metier.service';
 
@@ -142,6 +142,10 @@ export class SignUpPage {
             });
           });
         }, error => {
+          if (handleError(error) === 0) {
+            this.navCtrl.setRoot('ErrorPage');
+          }
+          
           loading.dismiss();
           this.errorObject = error.error.errors;
           console.log(this.errorObject);

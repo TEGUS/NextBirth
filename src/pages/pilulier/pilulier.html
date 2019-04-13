@@ -140,7 +140,7 @@
   
   <div *ngIf="onglet==1">
     <div *ngIf="treatments.length == 0 && !startProcessGet" class="empty">
-      {{globalError}}
+      Pas de traitement en cours.
     </div>
     
     <div *ngFor="let item of treatments">
@@ -176,7 +176,7 @@
   
   <div *ngIf="onglet==2">
     <div *ngIf="archives.length == 0 && !startProcessGet" class="empty">
-      {{globalError}}
+      Pas de traitement terminé.
     </div>
     
     <div *ngFor="let item of archives">

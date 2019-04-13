@@ -216,7 +216,7 @@ export class PilulierPage {
           this.showSpinner = false;
   
           if (handleError(error) === 0) {
-            this.presentDialogAlert('Connectez-vous pour effectuer votre recherche');
+            this.navCtrl.setRoot('ErrorPage');
           }
         })
       }
@@ -388,7 +388,7 @@ export class PilulierPage {
           loading.dismiss();
   
           if (handleError(error) === 0) {
-            this.presentDialogAlert('Connectez-vous pour ajouter un traitement');
+            this.navCtrl.setRoot('ErrorPage');
           }
         }, () => {
           loading.dismiss();
@@ -411,7 +411,7 @@ export class PilulierPage {
             loading.dismiss()
   
             if (handleError(error) === 0) {
-              this.presentDialogAlert('Connectez-vous pour modifier ler traitement');
+              this.navCtrl.setRoot('ErrorPage');
             }
           }, () => {
             loading.dismiss();
@@ -515,7 +515,7 @@ export class PilulierPage {
         this.startProcessGet = false;
         
         if (handleError(error) === 0) {
-          this.globalError = 'Connectez-vous pour voir les traitements';
+          this.navCtrl.setRoot('ErrorPage');
         }
       }, () => {
         loading.dismiss();

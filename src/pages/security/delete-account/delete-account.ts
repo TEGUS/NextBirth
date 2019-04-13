@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, LoadingController, MenuController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {ServiceProvider} from "../../../providers/metier.service";
 import {LocalStorageProvider} from "../../../providers/localstorage.service";
+import {handleError} from "../../../variables/functions";
 
 /**
  * Generated class for the DeleteAccountPage page.
@@ -49,6 +50,10 @@ export class DeleteAccountPage {
           console.log(error);
         })
       }, error => {
+        if (handleError(error) === 0) {
+          this.navCtrl.setRoot('ErrorPage');
+        }
+        
         loading.dismiss();
         console.error(error);
         this.error = error.error.message;

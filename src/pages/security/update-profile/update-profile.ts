@@ -15,7 +15,7 @@ import * as codesMode from "../../../components/mode/mode";
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {Base64} from '@ionic-native/base64';
 import * as moment from "moment";
-import {formatDate, formatNumberOfDate} from "../../../variables/functions";
+import {formatDate, formatNumberOfDate, handleError} from "../../../variables/functions";
 
 /**
  * Generated class for the ProfilsPage page.
@@ -282,6 +282,10 @@ export class UpdateProfilePage {
           })
         }
       }, error => {
+        if (handleError(error) === 0) {
+          this.navCtrl.setRoot('ErrorPage');
+        }
+        
         console.error(error.error.errors);
         loading.dismiss();
         

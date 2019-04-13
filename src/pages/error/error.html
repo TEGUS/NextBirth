@@ -1,0 +1,12 @@
+<ion-header>
+  <navbar [title]="'Pas de connection Internet'" [showMenuToggle]="false"></navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="message != null" class="message">
+    <ion-icon name="alert"></ion-icon>
+    
+    {{message}}
+  </div>
+</ion-content>

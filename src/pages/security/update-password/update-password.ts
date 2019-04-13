@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
-import {checkField} from "../../../variables/functions";
+import {checkField, handleError} from "../../../variables/functions";
 import {ServiceProvider} from "../../../providers/metier.service";
 
 /**
@@ -64,6 +64,10 @@ export class UpdatePasswordPage {
             this.navCtrl.pop();
             loading.dismiss()
           }, error => {
+            if (handleError(error) === 0) {
+              this.navCtrl.setRoot('ErrorPage');
+            }
+            
             console.error(error)
             if (error.error[0] !== undefined) {
               this.errorpath = error.error[0].property_path;
