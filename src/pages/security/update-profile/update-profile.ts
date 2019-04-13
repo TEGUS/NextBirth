@@ -205,12 +205,12 @@ export class UpdateProfilePage {
   checkValues() {
     return new Promise((resolve, reject) => {
       if (
-        this.object.agePremiereRegle === null ||
-        this.object.dureeSaignement === null ||
-        this.object.dureeCycleMin === null ||
-        this.object.dureeCycleMax === null ||
-        this.object.nombreGrossesse === null || this.object.nombrePremature === null ||
-        this.object.nombreFosseCouche === null || this.object.nombreEnfantVivant === null ||
+        // this.object.agePremiereRegle === null ||
+        // this.object.dureeSaignement === null ||
+        // this.object.dureeCycleMin === null ||
+        // this.object.dureeCycleMax === null ||
+        // this.object.nombreGrossesse === null || this.object.nombrePremature === null ||
+        // this.object.nombreFosseCouche === null || this.object.nombreEnfantVivant === null ||
         this.username === '' || this.username === null
       // || this.phone === '' || this.phone === null
       ) {
@@ -325,7 +325,8 @@ export class UpdateProfilePage {
         });
       });
     }, error => {
-      this.presentToast('Veuillez remplir tous les champs!')
+      // this.presentToast('Veuillez remplir tous les champs');
+      this.presentToast('Veuillez renseigner votre pseudonyme');
     })
   }
   

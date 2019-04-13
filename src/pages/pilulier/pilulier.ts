@@ -20,7 +20,7 @@ import Schedule from "../../models/Schedule";
 import * as functions from "../../variables/functions";
 import * as v from "../../variables/variables_";
 import {LocalStorageProvider} from "../../providers/localstorage.service";
-import {showDateAndTime, getCurrentDateWith, getDate} from "../../variables/functions";
+import {showDateAndTime, getCurrentDateWith, getDate, handleError} from "../../variables/functions";
 import {formatNumberOfDate} from "../../variables/functions";
 
 /**
@@ -73,6 +73,9 @@ export class PilulierPage {
   showFooter = false;
   private startProcessGet: boolean = false;
   
+  misesEnGarde = [];
+  globalError = null;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
               private localNotifications: LocalNotifications, public popoverCtrl: PopoverController,
@@ -97,6 +100,11 @@ export class PilulierPage {
           }
         }, error => console.error(error));
       }
+    });
+    
+    // Chargement des mises en garde
+    this.services.getAllSituations().then((result: any) => {
+      this.misesEnGarde = result;
     });
   }
   
@@ -206,6 +214,10 @@ export class PilulierPage {
         }, error => {
           console.error(error)
           this.showSpinner = false;
+  
+          if (handleError(error) === 0) {
+            this.presentDialogAlert('Connectez-vous pour effectuer votre recherche');
+          }
         })
       }
     }
@@ -374,6 +386,10 @@ export class PilulierPage {
         }, error => {
           console.error(error);
           loading.dismiss();
+  
+          if (handleError(error) === 0) {
+            this.presentDialogAlert('Connectez-vous pour ajouter un traitement');
+          }
         }, () => {
           loading.dismiss();
           loading.onDidDismiss(() => {
@@ -393,6 +409,10 @@ export class PilulierPage {
           }, error => {
             console.error(error);
             loading.dismiss()
+  
+            if (handleError(error) === 0) {
+              this.presentDialogAlert('Connectez-vous pour modifier ler traitement');
+            }
           }, () => {
             loading.dismiss();
             loading.onDidDismiss(() => {
@@ -483,12 +503,20 @@ export class PilulierPage {
           this.treatments = next;
         }
         
+        if (this.treatments.length === 0 || this.archives.length === 0) {
+          this.globalError = 'Pas de traitement';
+        }
+        
         // console.log(next)
         // console.log(this.archives)
       }, error => {
         console.error(error);
         loading.dismiss()
         this.startProcessGet = false;
+        
+        if (handleError(error) === 0) {
+          this.globalError = 'Connectez-vous pour voir les traitements';
+        }
       }, () => {
         loading.dismiss();
         loading.onDidDismiss(() => {
@@ -553,6 +581,7 @@ export class PilulierPage {
   }
   
   initScheduleTreatement() {
+    const cacheMessage = [];
     console.log(this.schedules)
     const title = 'Prise de médicament';
     this.schedules.forEach(item => {
@@ -601,14 +630,17 @@ export class PilulierPage {
         
       }, error => console.error(error));
       
-      this.services.createSituations({
-        date: new Date(),
-        titre: title,
-        description: item.message
-      }).then(() => {
-      }, error => {
-        console.error(error);
-      });
+      // Création des éléments dans mise en garde
+      if (this.misesEnGarde.find(x => x.description === item.message) === undefined) {
+        this.services.createSituations({
+          date: new Date(),
+          titre: title,
+          description: item.message
+        }).then(() => {
+        }, error => {
+          console.error(error);
+        });
+      }
     });
   }
   
@@ -616,10 +648,10 @@ export class PilulierPage {
     ids.forEach(id => this.localNotifications.clear(id));
   }
   
-  presentDialogAlert(message, callback: () => void = null) {
+  presentDialogAlert(message, duration = 3000, callback: () => void = null) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 3000,
+      duration: duration,
       position: 'bottom'
     });
     

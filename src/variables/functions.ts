@@ -81,3 +81,17 @@ export function getCurrentDateWith(dateStart: Date, nbJour: number): Date {
 export function getCurrentDateWithout(dateStart: Date, nbJour: number): Date {
   return new Date((dateStart.getTime()) + (nbJour * 24 * 60 * 60 * 1000))
 }
+
+
+/**
+ * Handel Error of Observable
+ * @param error
+ */
+export function handleError (error: Response | any) {
+  let statut: any = null;
+  if (error.status == 0) { //or whatever condition you like to put
+    statut = 0;
+  }
+  
+  return statut;
+}
