@@ -515,8 +515,8 @@ export class ReportPage {
     })*/
     
     let alert = this.alertCtrl.create({
-      title: 'Vous avez sans doute déjà mis au monde un bébé',
-      message: 'Merci de bien vouloir metre à jours votre date de dernier règle pour profiter des services de NextBirth?',
+      title: 'Vous avez sans doute déjà mis au monde votre bébé',
+      message: 'Voulez vous mettre à jour votre date d\'accouchement tout suite pour mieux profiter de nos service ? ',
       buttons: [
         {
           text: 'NON',
