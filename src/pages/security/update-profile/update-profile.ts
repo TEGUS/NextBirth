@@ -359,12 +359,12 @@ export class UpdateProfilePage {
           case codesMode.CONTPL:
             this.navCtrl.setRoot("ModeContraceptionPage", {
               title: mode.intitule
-            })
+            });
             break;
           case codesMode.CONTPR:
             this.navCtrl.setRoot("ModeContraceptionPage", {
               title: mode.intitule
-            })
+            });
             break;
           case codesMode.GRS:
             this.navCtrl.setRoot("QuestionContraceptionPage")
@@ -385,18 +385,13 @@ export class UpdateProfilePage {
         {
           text: 'camera',
           handler: () => {
-            
             this.takephotos();
-            
           }
         },
         {
           text: 'Gallery',
           handler: () => {
-            
             this.takegalerie();
-            
-            
           }
         }
       ]
@@ -411,7 +406,7 @@ export class UpdateProfilePage {
     if (this.platform.is('mobileweb')) {
       this.getPicture().then(img => {
         this.imageaafficher = img;
-      })
+      });
       
       return;
     }
