@@ -41,13 +41,14 @@ export class LoginPage {
       phone: null,
       plainPassword: null
     };
-  
+  }
+
+  ionViewDidLoad() {
     this.mylocalstorage.getCountries().then(countries => {
+      // console.log(countries);
       this.countries = countries;
     });
   }
-
-  ionViewDidLoad() {}
 
   getPhone(phone) {
     this.currentPhone = phone;

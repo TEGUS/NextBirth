@@ -59,11 +59,13 @@ export class MyApp {
       this.statusBar.styleLightContent();
       
       this.menuCtrl.enable(false);
-      this.initRootPage().then(page => {
-        this.rootPage = page
-      });
       
-      this.initValuesLocalStorage();
+      this.initValuesLocalStorage().then(() => {
+        // Get Root Page
+        this.initRootPage().then(page => {
+          this.rootPage = page
+        });
+      });
     });
   }
   
@@ -71,18 +73,24 @@ export class MyApp {
    * Initialisations des valeurs dans le localstorage
    */
   initValuesLocalStorage() {
-    /**
-     * Check All Countries and Store in LocalStorage
-     */
-    this.localStorage.getCountries().then(countries => {
-      if (countries === null || countries === undefined) {
-        this.services.getAllCountries().subscribe(countries => {
-          this.localStorage.setCountries(countries);
-        }, error => {
-          console.error(error)
-        })
-      }
-    })
+    return new Promise(resolve => {
+      /**
+       * Check All Countries and Store in LocalStorage
+       */
+      this.localStorage.getCountries().then(countries => {
+        if (countries === null || countries === undefined) {
+          this.services.getAllCountries().subscribe(countries => {
+            this.localStorage.setCountries(countries);
+            resolve();
+          }, error => {
+            console.error(error)
+            resolve();
+          })
+        } else {
+          resolve();
+        }
+      })
+    });
   }
   
   initRootPage() {
