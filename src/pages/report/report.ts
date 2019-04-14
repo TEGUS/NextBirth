@@ -137,12 +137,16 @@ export class ReportPage {
     
     
     this.mylocalstorage.getSession().then((result: any) => {
+
+
       var dataprofile = '' + result.user._embedded.patient.debut_dernieres_menstrues;
       var ladate = dataprofile.substring(0, 16) + 'Z';
       var premieredate = new Date(ladate).getTime();
       var dateaujourdui = new Date().getTime();
       var nombremilliseconde = dateaujourdui - premieredate;
       var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
+      
+      
       var nomrejoursavantacc = 280 - nombresjours;
       if (nomrejoursavantacc < 0) {
         this.alertechangementdatederneirregles();
@@ -511,8 +515,8 @@ export class ReportPage {
     })*/
     
     let alert = this.alertCtrl.create({
-      title: 'Vous avez sans doute déjà mis au monde un bébé',
-      message: 'Merci de bien vouloir metre à jours votre date de dernier règle pour profiter des services de NextBirth?',
+      title: 'Vous avez sans doute déjà mis au monde votre bébé',
+      message: 'Voulez vous mettre à jour votre date d\'accouchement tout suite pour mieux profiter de nos service ? ',
       buttons: [
         {
           text: 'NON',

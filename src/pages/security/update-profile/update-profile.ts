@@ -247,6 +247,7 @@ export class UpdateProfilePage {
   
   
   updateProfile() {
+
     if (this.checkErrorPossibilities().error) {
       this.presentToast(this.checkErrorPossibilities().msg)
       return;
@@ -271,6 +272,10 @@ export class UpdateProfilePage {
       let loading = this.loadingCtrl.create();
       loading.present();
       
+      console.log("============================================");
+      console.log(this.object);
+      console.log("============================================");
+
       this.services.updateprofile(this.object).subscribe(next => {
         console.log(next)
         this.localStorage.updatePatientStorage(next);
