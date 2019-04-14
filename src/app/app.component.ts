@@ -9,6 +9,8 @@ import {TranslateService} from "@ngx-translate/core";
 import {SQLite, SQLiteObject} from '@ionic-native/sqlite';
 import {Globalization} from '@ionic-native/globalization';
 import {Network} from "@ionic-native/network";
+import {LocalNotifications} from "@ionic-native/local-notifications";
+import * as v from "../variables/variables_";
 
 @Component({
   templateUrl: 'app.html'
@@ -24,7 +26,7 @@ export class MyApp {
               public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController,
               public alertCtrl: AlertController, private sqlite: SQLite, public translate: TranslateService,
               private globalization: Globalization, private toastCtrl: ToastController,
-              public network: Network) {
+              public network: Network, private localNotifications: LocalNotifications) {
     
     this.services.initHeaders();
     
@@ -66,6 +68,8 @@ export class MyApp {
           this.rootPage = page
         });
       });
+  
+      this.checkLocalNotification();
     });
   }
   
@@ -238,15 +242,17 @@ export class MyApp {
     }).present();
   }
   
-  presentToast(message: any) {
+  presentToast(message: any, duration = 5000) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 5000
+      duration: duration
     });
     toast.present();
   }
   
-  
+  /**
+   * Init SQLITE DB
+   */
   intiliazedatabase() {
     this.sqlite.create({
       name: 'nextbirth.db',
@@ -256,5 +262,76 @@ export class MyApp {
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
     }).catch(e => console.log(e));
+  }
+  
+  
+  /**
+   * Notification Events Action
+   */
+  checkLocalNotification() {
+    this.localNotifications.on('click').subscribe((next) => {
+      this.storeMiseEnGarde(next)
+    }, error => console.error(error));
+    
+    this.localNotifications.on('trigger').subscribe((next) => {
+      this.storeMiseEnGarde(next, false);
+    }, error => console.error(error));
+    
+    this.localNotifications.on(`TAKE`).subscribe(next => {
+      this.storeMiseEnGarde(next);
+      this.makeTakingTreatment(next.id).then(on => {
+        let loading = this.loadingCtrl.create();
+        loading.present();
+        this.services.takedMedicament(next.id).subscribe(r => {
+          loading.dismiss();
+          this.presentToast('Prise de médicament Enrégistré !');
+        });
+      });
+    }, error => console.error(error));
+    
+    this.localNotifications.on(`OPEN`).subscribe(next => {
+      this.storeMiseEnGarde(next);
+    }, error => console.error(error));
+  }
+  
+  storeMiseEnGarde(item, open = true) {
+    // Chargement des mises en garde
+    this.services.getAllSituations().then((misesEnGarde: any) => {
+      // Création des éléments dans mise en garde
+      if (misesEnGarde.find(x => x.description === item.text) === undefined) {
+        this.services.createSituations({
+          date: item.trigger.at,
+          titre: item.title,
+          description: item.text
+        }).then(() => {
+          if (open) {
+            this.nav.push('MessituationarisquePage')
+          }
+        }, error => {
+          console.error(error);
+        });
+      } else {
+        if (open) {
+          this.nav.push('MessituationarisquePage')
+        }
+      }
+    });
+  }
+  
+  makeTakingTreatment(id_alert) {
+    return new Promise(resolve => {
+      this.localStorage.getKey(v.LOCAL_STRG_TAKED_TREATEMENT).then((res: any) => {
+        // this.presentDialogAlert(JSON.stringify(res));
+        if (res !== undefined && res !== null) {
+          res.push(id_alert);
+        } else {
+          res = [];
+          res.push(id_alert);
+        }
+        this.localStorage.setKey(v.LOCAL_STRG_TAKED_TREATEMENT, res).then(on => {
+          resolve(true);
+        });
+      });
+    })
   }
 }

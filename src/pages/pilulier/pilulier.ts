@@ -581,7 +581,6 @@ export class PilulierPage {
   }
   
   initScheduleTreatement() {
-    const cacheMessage = [];
     console.log(this.schedules)
     const title = 'Prise de médicament';
     this.schedules.forEach(item => {
@@ -599,15 +598,15 @@ export class PilulierPage {
         sound: 'file://assets/imgs/notification.mp3',
         vibrate: true,
         actions: [
+          // {
+          //   id:`OPEN`,
+          //   title: 'Ouvrir',
+          //   type: ILocalNotificationActionType.BUTTON,
+          //   icon: 'checkmark-circle-outline'
+          // },
           {
-            id: `OPEN${item.id}`,
-            title: 'Open',
-            type: ILocalNotificationActionType.BUTTON,
-            icon: 'checkmark-circle-outline'
-          },
-          {
-            id: `TAKE${item.id}`,
-            title: 'Take',
+            id: `TAKE`,
+            title: 'Marquer la prise',
             type: ILocalNotificationActionType.BUTTON,
             icon: 'checkmark-circle-outline'
           }
@@ -615,33 +614,54 @@ export class PilulierPage {
       };
       this.localNotifications.schedule(notif);
       
-      this.localNotifications.on(`TAKE${item.id}`).subscribe(next => {
-        this.makeTakingTreatment(next.id).then(on => {
-          let loading = this.loadingCtrl.create();
-          loading.present();
-          this.services.takedMedicament(next.id).subscribe(r => {
-            loading.dismiss();
-            this.presentDialogAlert('Taked');
-          })
-        })
-      }, error => console.error(error));
-      
-      this.localNotifications.on(`OPEN${item.id}`).subscribe(next => {
-        
-      }, error => console.error(error));
-      
-      // Création des éléments dans mise en garde
-      if (this.misesEnGarde.find(x => x.description === item.message) === undefined) {
-        this.services.createSituations({
-          date: new Date(),
-          titre: title,
-          description: item.message
-        }).then(() => {
-        }, error => {
-          console.error(error);
-        });
-      }
+      // this.localNotifications.on(`TAKE${item.id}`).subscribe(next => {
+      //   this.storeMiseEnGarde(next);
+      //
+      //   this.makeTakingTreatment(next.id).then(on => {
+      //     let loading = this.loadingCtrl.create();
+      //     loading.present();
+      //     this.services.takedMedicament(next.id).subscribe(r => {
+      //       loading.dismiss();
+      //       this.presentDialogAlert('Taked');
+      //     });
+      //   });
+      // }, error => console.error(error));
+      //
+      // this.localNotifications.on(`OPEN${item.id}`).subscribe(next => {
+      //   this.storeMiseEnGarde(next);
+      // }, error => console.error(error));
+      //
+      // this.localNotifications.on(`click`).subscribe(next => {
+      //   this.storeMiseEnGarde(next);
+      //
+      //   this.makeTakingTreatment(next.id).then(on => {
+      //     let loading = this.loadingCtrl.create();
+      //     loading.present();
+      //     this.services.takedMedicament(next.id).subscribe(r => {
+      //       loading.dismiss();
+      //       this.presentDialogAlert('Taked');
+      //     });
+      //   });
+      // }, error => console.error(error));
+      //
+      // this.localNotifications.on(`trigger`).subscribe(next => {
+      //   this.storeMiseEnGarde(next);
+      // }, error => console.error(error));
     });
+  }
+  
+  storeMiseEnGarde(item) {
+    // Création des éléments dans mise en garde
+    if (this.misesEnGarde.find(x => x.description === item.text) === undefined) {
+      this.services.createSituations({
+        date: item.trigger.at,
+        titre: item.title,
+        description: item.text
+      }).then(() => {
+      }, error => {
+        console.error(error);
+      });
+    }
   }
   
   deleteSchedules(ids: Array<number>) {

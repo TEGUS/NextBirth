@@ -36,8 +36,8 @@
     <p class="show-error-dom" *ngIf="error != null"> Login et/ou mot de passe incorrect! </p>
 
     <div class="create-account">
-      <input id="login" type="button" value="SE CONNECTER" (click)="login()">
-      <input id="signup" type="button" value="S'INSCRIRE" (click)="signup()">
+      <input id="login" type="button" value="SE CONNECTER" tappable (click)="login()">
+      <input id="signup" type="button" value="S'INSCRIRE" tappable (click)="signup()">
     </div>
   </div>
 </ion-content>

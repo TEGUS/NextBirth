@@ -108,6 +108,10 @@ export class LoginPage {
           })
         });
       }, error => {
+        if (handleError(error) === 0) {
+          this.navCtrl.setRoot('ErrorPage');
+        }
+        
         loading.dismiss();
         console.log(error);
         this.error = error.error;

@@ -1,5 +1,8 @@
+
 <ion-header>
-  <navbar [title]="'Pas de connection Internet'" [showMenuToggle]="false"></navbar>
+  <ion-navbar color="primary">
+    <ion-title>Pas de connection Internet</ion-title>
+  </ion-navbar>
 </ion-header>
 
 
@@ -9,4 +12,8 @@
     
     {{message}}
   </div>
+  
+  <button ion-button tappable (click)="reload()" style="margin-top: 1rem">
+    Actualiser
+  </button>
 </ion-content>
