@@ -172,6 +172,10 @@
         </div>
       </ion-card>
     </div>
+  
+    <ion-infinite-scroll (ionInfinite)="doInfiniteBottom($event)" threshold="2%">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </div>
   
   <div *ngIf="onglet==2">

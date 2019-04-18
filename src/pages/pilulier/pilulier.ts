@@ -76,6 +76,9 @@ export class PilulierPage {
   misesEnGarde = [];
   globalError = null;
   
+  page = 1;
+  private finishLoadTreatment: boolean = true;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               public services: ServiceProvider, public loadingCtrl: LoadingController, private alertCtrl: AlertController,
               private localNotifications: LocalNotifications, public popoverCtrl: PopoverController,
@@ -351,6 +354,7 @@ export class PilulierPage {
   gotoOnglet_1() {
     this.onglet = 1;
     this.currentTreatment = null;
+    this.page = 1;
     this.getTreatments();
     this.isShowFooter()
   }
@@ -462,12 +466,112 @@ export class PilulierPage {
     return new Promise(resolve => {
       let loading = this.loadingCtrl.create();
       loading.present();
+      
       this.startProcessGet = true;
       this.treatments = [];
-      this.services.allTreatments().subscribe((next: any) => {
+      
+      this.processGetTreatment().then((next: any) => {
+        this.archives = next.archives;
+        this.treatments = next.treatments;
+        
+  
+        if (this.treatments.length === 0 || this.archives.length === 0) {
+          this.globalError = 'Pas de traitement';
+        }
+  
+        this.startProcessGet = false;
+  
+        loading.dismiss();
+        loading.onDidDismiss(() => {
+          resolve(this.treatments);
+        });
+      }, error => {
+        console.error(error);
+        loading.dismiss()
+        this.startProcessGet = false;
+  
+        if (handleError(error) === 0) {
+          this.navCtrl.setRoot('ErrorPage');
+        }
+      });
+      
+      // this.services.allTreatments(this.page).subscribe((next: any) => {
+      //   console.log(next);
+      //   let tmp = [];
+      //   this.archives = [];
+      //
+      //   /**
+      //    * Filtrer les traitements en cours des traitements terminés.
+      //    */
+      //   next.forEach(t => {
+      //     const dateDebT = new Date((t.date_debut_traitement).split('T')[0]);
+      //     const horaire: Array<any> = (t.horaire_first_prise).split(':');
+      //     dateDebT.setHours(Number(horaire[0]), Number(horaire[1]));
+      //     const dateTraitment = getCurrentDateWith(dateDebT, t.duree_traitement);
+      //
+      //     t._embedded.date_creation = showDateAndTime(t._embedded.date_creation);
+      //
+      //     if ((new Date()) > dateTraitment) {
+      //       this.archives.push(t);
+      //     } else {
+      //       tmp.push(t);
+      //     }
+      //   });
+      //
+      //   next = tmp;
+      //
+      //   if (this.isModeGrs) {
+      //     next.forEach(m => {
+      //       if (m._embedded.core_medicament !== null) {
+      //         m = {
+      //           ...m,
+      //           msg_alert: this.checkTrim(m._embedded.core_medicament)
+      //         }
+      //       }
+      //       this.treatments.push(m);
+      //     })
+      //   } else {
+      //     this.treatments = next;
+      //   }
+      //
+      //   if (this.treatments.length === 0 || this.archives.length === 0) {
+      //     this.globalError = 'Pas de traitement';
+      //   }
+      //
+      //   // console.log(next)
+      //   // console.log(this.archives)
+      // }, error => {
+      //   console.error(error);
+      //   loading.dismiss()
+      //   this.startProcessGet = false;
+      //
+      //   if (handleError(error) === 0) {
+      //     this.navCtrl.setRoot('ErrorPage');
+      //   }
+      // }, () => {
+      //   loading.dismiss();
+      //   loading.onDidDismiss(() => {
+      //     resolve(this.treatments);
+      //   })
+      //   this.startProcessGet = false;
+      // });
+    })
+  }
+  
+  processGetTreatment() {
+    let treatments = [];
+    let archives = [];
+    
+    return new Promise((resolve, reject) => {
+      this.services.allTreatments(this.page).subscribe((next: any) => {
+        const tmp = [];
         console.log(next);
-        let tmp = [];
-        this.archives = [];
+        
+        next = next.items;
+        
+        if (next.length === 0) {
+          this.finishLoadTreatment = false;
+        }
         
         /**
          * Filtrer les traitements en cours des traitements terminés.
@@ -477,18 +581,18 @@ export class PilulierPage {
           const horaire: Array<any> = (t.horaire_first_prise).split(':');
           dateDebT.setHours(Number(horaire[0]), Number(horaire[1]));
           const dateTraitment = getCurrentDateWith(dateDebT, t.duree_traitement);
-          
+      
           t._embedded.date_creation = showDateAndTime(t._embedded.date_creation);
-          
+      
           if ((new Date()) > dateTraitment) {
-            this.archives.push(t);
+            archives.push(t);
           } else {
             tmp.push(t);
           }
         });
-        
+    
         next = tmp;
-        
+    
         if (this.isModeGrs) {
           next.forEach(m => {
             if (m._embedded.core_medicament !== null) {
@@ -497,34 +601,40 @@ export class PilulierPage {
                 msg_alert: this.checkTrim(m._embedded.core_medicament)
               }
             }
-            this.treatments.push(m);
+            treatments.push(m);
           })
         } else {
-          this.treatments = next;
+          treatments = next;
         }
-        
-        if (this.treatments.length === 0 || this.archives.length === 0) {
-          this.globalError = 'Pas de traitement';
-        }
-        
-        // console.log(next)
-        // console.log(this.archives)
+  
+        resolve({
+          treatments: treatments,
+          archives: archives
+        });
       }, error => {
-        console.error(error);
-        loading.dismiss()
-        this.startProcessGet = false;
-        
-        if (handleError(error) === 0) {
-          this.navCtrl.setRoot('ErrorPage');
-        }
-      }, () => {
-        loading.dismiss();
-        loading.onDidDismiss(() => {
-          resolve(this.treatments);
-        })
-        this.startProcessGet = false;
+        this.finishLoadTreatment = false;
+        reject(error);
       });
     })
+  }
+  
+  doInfiniteBottom(infiniteScroll) {
+    setTimeout(() => {
+      
+      if (this.finishLoadTreatment) {
+        this.page = this.page + 1;
+  
+        this.processGetTreatment().then((next: any) => {
+          this.treatments = this.treatments.concat(next.treatments);
+          this.archives = this.archives.concat(next.archives);
+        }, error => {
+          this.finishLoadTreatment = false;
+          console.error(error);
+        });
+      }
+      
+      infiniteScroll.complete();
+    }, 1000);
   }
   
   gotoUpdate(item) {
@@ -566,6 +676,7 @@ export class PilulierPage {
               loading.dismiss();
               loading.onDidDismiss(() => {
                 this.presentDialogAlert('Médicament supprimé avec succès');
+                this.page = 1;
                 this.getTreatments();
               })
             });

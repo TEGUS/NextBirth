@@ -443,9 +443,9 @@ export class ServiceProvider {
    * Get all treatments
    * @returns {Observable<any>}
    */
-  allTreatments(): Observable<any> {
+  allTreatments(page): Observable<any> {
     return this.http.get(
-      this.host + 'medicaments',
+      this.host + `medicaments?page=${page}`,
       this.headers
     );
   }
