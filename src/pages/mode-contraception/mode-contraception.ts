@@ -11,6 +11,7 @@ export class ModeContraceptionPage {
 
   items = [];
   title = '';
+  public pagenumber = 1;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public loadingCtrl: LoadingController, public services: ServiceProvider) {
@@ -21,7 +22,7 @@ export class ModeContraceptionPage {
     this.services.initHeaders();
     let loading = this.loadingCtrl.create();
     loading.present();
-    this.services.getArticles().subscribe(next => {
+    this.services.getArticles(this.pagenumber).subscribe(next => {
       console.log(next);
       this.items = next
     }, error => {

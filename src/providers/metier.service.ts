@@ -249,9 +249,9 @@ export class ServiceProvider {
    * Retourne les articles portant sur le mode choisi
    * @returns {Observable<any>}
    */
-  getArticles(): Observable<any> {
+  getArticles(pagenumber): Observable<any> {
     return this.http.get(
-      this.host + 'articles',
+      this.host + 'articles?page=' +pagenumber,
       this.headers
     );
   }

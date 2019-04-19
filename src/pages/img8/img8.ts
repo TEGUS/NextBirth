@@ -10,6 +10,8 @@ import {ServiceProvider} from "../../providers/metier.service";
 export class Img8Page {
   items = [];
 
+  public pagenumber = 1;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public alertCtrl: AlertController, public loadingCtrl: LoadingController, public services: ServiceProvider) {
 
@@ -29,7 +31,7 @@ export class Img8Page {
   ionViewDidLoad() {
     let loading = this.loadingCtrl.create();
     loading.present();
-    this.services.getArticles().subscribe(next => {
+    this.services.getArticles(this.pagenumber).subscribe(next => {
       console.log(next);
       this.items = next
     }, error => {

@@ -26,6 +26,7 @@ export class ChooseModePage {
   public nombrejrovulation = 0;
   public nombrejrovulation1 = 0;
   public nombrejrovulation2 = 0;
+  public foraujourduit = 0;
   public dateovulation = 0;
   public datesegnement = 0;
   public datesegnement1 = 0;
@@ -102,6 +103,11 @@ export class ChooseModePage {
 
                       this.testeur = 2;
                       this.nombrejrovulation = nombresjours2;
+                      if(nombresjours2<=3){
+                        this.foraujourduit = 1;
+                      }else if(nombresjours2> -3){
+                        this.foraujourduit = 1;
+                      }
 
                     }else if(this.testeur!=1){
 
@@ -181,6 +187,11 @@ export class ChooseModePage {
                             this.nombrejrovulation2 = 1;
                           }else{
                             this.nombrejrovulation2 = nombresjours22;
+                            if(this.nombrejrovulation2<=3){ 
+                              this.foraujourduit = 1;
+                            }else if(this.nombrejrovulation1> -3){
+                              this.foraujourduit = 1;
+                            }
                           }
                     }else if(this.testeur!=1){
 

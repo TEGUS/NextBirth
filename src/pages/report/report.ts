@@ -31,6 +31,7 @@ export class ReportPage {
   
   public testeurdpv = 0;
   public testeurdpvcac = 0;
+  public pagenumber = 1;
   
   public noteGrosesse = {
     libele: "",
@@ -223,9 +224,11 @@ export class ReportPage {
     
     let loading = this.loadingCtrl.create();
     loading.present();
-    this.acticlesSubscription = this.services.getArticles().subscribe(next => {
-      
-      this.items = next
+    this.acticlesSubscription = this.services.getArticles(this.pagenumber).subscribe(next => {
+      console.log("=====================================");
+      console.log(next);
+      console.log("=====================================");
+      this.items = next.items
     }, error => {
       loading.dismiss();
       console.error(error);
@@ -732,6 +735,28 @@ export class ReportPage {
       sound: 'file://assets/imgs/notification.mp3'
     });
     
+  }
+
+
+  nextPageArticle(){ 
+
+
+    this.pagenumber = this.pagenumber + 1;
+    let loading = this.loadingCtrl.create();
+    loading.present();
+    this.acticlesSubscription = this.services.getArticles(this.pagenumber).subscribe(next => {
+         this.items = next.items
+         console.log("=====================================");
+         console.log(next.items);
+         console.log("=====================================");
+    }, error => {
+      loading.dismiss();
+      console.error(error);
+    }, () => {
+      loading.dismiss();
+    });
+
+
   }
   
   
