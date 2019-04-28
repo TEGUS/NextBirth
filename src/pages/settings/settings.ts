@@ -113,8 +113,12 @@ export class SettingsPage {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.services.getCategories().subscribe(next => {
+      this.modes = [];
       console.log(next)
-      this.modes = next;
+      next.forEach(m => {
+        if (m.enable)
+          this.modes.push(m)
+      });
     }, error => {
       loading.dismiss();
       console.log(error);
