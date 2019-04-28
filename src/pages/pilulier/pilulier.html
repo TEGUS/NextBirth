@@ -61,7 +61,7 @@
             <p class="text">Fréquence de prise</p>
           </ion-col>
           <ion-col>
-            <ion-select class="monselect" #select formControlName="frequencePrise" okText="Valider"
+            <ion-select class="monselect" #select formControlName="frequencePrise" okText="Valider" interface="popover"
                         cancelText="Annuler">
               <ion-option [value]="item.key" *ngFor="let item of frequencesPrise">{{item.value}}</ion-option>
             </ion-select>

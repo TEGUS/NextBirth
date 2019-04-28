@@ -48,7 +48,7 @@
   
     <div class="phone-number">
       <ion-col>
-        <ion-select [(ngModel)]="currentCallingCode" okText="Valider" cancelText="Annuler">
+        <ion-select [(ngModel)]="currentCallingCode" okText="Valider" cancelText="Annuler" interface="popover">
           <ion-option [value]="item.callingCodes[0]" (ionSelect)="listenCode($event)"
                       *ngFor="let item of countries">
             {{item.alpha2Code + " (+" + item.callingCodes[0] + ")"}}

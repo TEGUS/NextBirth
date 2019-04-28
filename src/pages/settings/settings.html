@@ -10,21 +10,21 @@
     
     <ion-item *ngIf="defaultLang != null">
       <ion-label>{{'langue_affichage' | translate}}</ion-label>
-      <ion-select [(ngModel)]="defaultLang" cancelText="Annuler" okText="OK" (ionChange)="listenLangChange($event)">
+      <ion-select [(ngModel)]="defaultLang" cancelText="Annuler" okText="OK" (ionChange)="listenLangChange($event)" interface="popover">
         <ion-option *ngFor="let item of langs" [value]="item.code">{{item.label | translate}}</ion-option>
       </ion-select>
     </ion-item>
   
     <ion-item *ngIf="defaultLang != null">
       <ion-label>{{'langue_audio' | translate}}</ion-label>
-      <ion-select [(ngModel)]="defaultLang" cancelText="Annuler" okText="OK" (ionChange)="listenLangChange($event)">
+      <ion-select [(ngModel)]="defaultLang" cancelText="Annuler" okText="OK" (ionChange)="listenLangChange($event)" interface="popover">
         <ion-option *ngFor="let item of langs" [value]="item.code">{{item.label | translate}}</ion-option>
       </ion-select>
     </ion-item>
   
     <ion-item *ngIf="defaultMode != null">
       <ion-label>Mode</ion-label>
-      <ion-select [(ngModel)]="defaultMode" cancelText="Annuler" okText="OK" (ionChange)="listenModeChange($event)">
+      <ion-select [(ngModel)]="defaultMode" cancelText="Annuler" okText="OK" (ionChange)="listenModeChange($event)" interface="popover">
         <ion-option *ngFor="let item of modes" [value]="item.code">{{item.intitule}}</ion-option>
       </ion-select>
     </ion-item>
