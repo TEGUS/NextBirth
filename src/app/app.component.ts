@@ -300,7 +300,8 @@ export class MyApp {
       // Création des éléments dans mise en garde
       if (item !== null && item !== undefined && misesEnGarde.find(x => x.description === item.text) === undefined) {
         this.services.createSituations({
-          date: item.trigger.at,
+          // date: item.trigger.at,
+          date: new Date(),
           titre: item.title,
           description: item.text
         }).then(() => {
