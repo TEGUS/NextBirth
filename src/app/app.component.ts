@@ -270,7 +270,8 @@ export class MyApp {
    */
   checkLocalNotification() {
     this.localNotifications.on('click').subscribe((next) => {
-      this.storeMiseEnGarde(next)
+      // this.storeMiseEnGarde(next)
+      this.nav.push('MessituationarisquePage')
     }, error => console.error(error));
     
     this.localNotifications.on('trigger').subscribe((next) => {
@@ -278,7 +279,8 @@ export class MyApp {
     }, error => console.error(error));
     
     this.localNotifications.on(`TAKE`).subscribe(next => {
-      this.storeMiseEnGarde(next);
+      // this.storeMiseEnGarde(next);
+      this.nav.push('MessituationarisquePage')
       this.makeTakingTreatment(next.id).then(on => {
         let loading = this.loadingCtrl.create();
         loading.present();
@@ -289,9 +291,9 @@ export class MyApp {
       });
     }, error => console.error(error));
     
-    this.localNotifications.on(`OPEN`).subscribe(next => {
-      this.storeMiseEnGarde(next);
-    }, error => console.error(error));
+    // this.localNotifications.on(`OPEN`).subscribe(next => {
+    //   this.storeMiseEnGarde(next);
+    // }, error => console.error(error));
   }
   
   storeMiseEnGarde(item, open = true) {
