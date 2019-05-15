@@ -266,8 +266,7 @@ export class SurveillancePage {
         this.services.createSituations(situations).then((result) =>{});
      
       })   
-    }
-    if(((this.envies == "ep")||(this.envies == "efs"))&&(this.premierecontraction>=21600)&&(this.frequence>=(1/5))&& ( (this.contraceptionminutes*60 + this.contraceptionseconde)>60) && (this.intensite>=(8/10))){
+    } else if(((this.envies == "ep")||(this.envies == "efs"))&&(this.premierecontraction>=21600)&&(this.frequence>=(1/5))&& ( (this.contraceptionminutes*60 + this.contraceptionseconde)>60) && (this.intensite>=(8/10))){
       this.mylocalstorage.getSession().then((result:any) =>{
       this.presentToast("Attention " + result.user.username + " votre accouchement est probablement imminent. Vous risquez accoucher dans moins d’une heure. Si vous ne vous rendez pas dans la maternité la plus proche dans un bref délai, vous risquez accoucher dans un cadre inapproprié et mettre en danger la vie de votre bébé et même la vôtre.");
       this.declancherAlerte("Attention " + result.user.username + " votre accouchement est probablement imminent. Vous risquez accoucher dans moins d’une heure. Si vous ne vous rendez pas dans la maternité la plus proche dans un bref délai, vous risquez accoucher dans un cadre inapproprié et mettre en danger la vie de votre bébé et même la vôtre.", 2);
@@ -279,8 +278,7 @@ export class SurveillancePage {
       this.services.createSituations(situations).then((result) =>{});
     
     }) 
-    }
-
+    } else 
     // coooooooooooooooooooooooooooooooolllllllllllllllllllllllllllllllllll
     if((this.intensite>=(8/10))&&(this.frequence>=(4/10))&&((this.contraceptionminutes*60 + this.contraceptionseconde)>60)){
       this.presentToast("Vous risquez une rupture utérine veillez-vous rendre immédiatement dans une maternité au plateau technique élevé");

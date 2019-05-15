@@ -6,6 +6,11 @@
 <ion-content padding class="monbody">
 
 
+  <div *ngIf="items.length == 0" class="empty">
+        Pas de bon moment disponible.
+  </div>
+
+
   <ion-grid *ngIf="testeur == 0">
      <div *ngFor="let item of items">
         <ion-row style="height: 100px;"  (click)="selectNode(item.id, item.libelle, item.description, item._embedded.image._embedded.url_photo)" >

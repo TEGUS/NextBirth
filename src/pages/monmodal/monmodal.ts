@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController, ToastController } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/metier.service';
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {Base64} from '@ionic-native/base64';
@@ -29,7 +29,7 @@ export class MonmodalPage {
   public imageaafficher = "";
 
 
-  constructor(private base64: Base64, public loadingCtrl: LoadingController, public navCtrl: NavController,
+  constructor(private base64: Base64, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController,
               private camera: Camera, public services: ServiceProvider, public navParams: NavParams, private view: ViewController) {
   }
 
@@ -63,7 +63,7 @@ export class MonmodalPage {
     
     const options: CameraOptions = {
       quality:100,
-      destinationType:1,
+      destinationType:0,
       encodingType:this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: 1
@@ -80,13 +80,13 @@ export class MonmodalPage {
             this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
 
         }, (err) =>{
-          alert(err);
+          this.presentToast("Une ereur est survenus merci de reprendre");
       })
 
 
 
     }, (err) =>{
-      alert(err);
+      this.presentToast("Une ereur est survenus merci de reprendre");
     })
 
     
@@ -115,13 +115,13 @@ export class MonmodalPage {
                   this.noteGrosesse.image = "data:image/jpeg;base64," + base64Image;
 
               }, (err) =>{
-                alert(err);
+                this.presentToast("Une ereur est survenus merci de reprendre");
             })
 
 
 
           }, (err) =>{
-            alert(err);
+            this.presentToast("Une ereur est survenus merci de reprendre");
           })
       }
 
@@ -153,6 +153,15 @@ export class MonmodalPage {
           })*/
     });
 
+  }
+
+
+  presentToast(message: any) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 10000
+    });
+    toast.present();
   }
 
 }
