@@ -3,7 +3,7 @@ import {AlertController, LoadingController, MenuController, Nav, Platform, Toast
 import {StatusBar} from '@ionic-native/status-bar';
 import {LocalStorageProvider} from "../providers/localstorage.service";
 import * as codesMode from "../components/mode/mode";
-import {ServiceProvider} from "../providers/metier.service";
+import {ServiceProvider, Situation} from "../providers/metier.service";
 import {TranslateService} from "@ngx-translate/core";
 
 import {SQLite, SQLiteObject} from '@ionic-native/sqlite';
@@ -300,7 +300,7 @@ export class MyApp {
   
   storeMiseEnGarde(item, open = true) {
     // Chargement des mises en garde
-    this.services.getAllSituations().then((misesEnGarde: any) => {
+    this.services.getAllSituations().then((misesEnGarde: Array<Situation>) => {
       // Création des éléments dans mise en garde
       if (misesEnGarde.find(x => x.idNotif === item.id) === undefined) {
         this.services.createSituations({

@@ -32,7 +32,7 @@
 
   <ion-grid *ngIf="testeur == 0">
 
-    <pre>{{items}}</pre>
+    <pre>{{items | json}}</pre>
 
       <div *ngFor="let item of items">
          <ion-row style="height: 100px;"  (click)="selectArticle(item.titre, item.description)" >
