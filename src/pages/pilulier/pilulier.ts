@@ -708,7 +708,7 @@ export class PilulierPage {
         data: {
           idNotif: item.id,
           title: title,
-          text: item.message
+          description: item.message
         },
         icon: 'file://assets/imgs/monlogo.png',
         smallIcon: 'file://assets/imgs/monlogo.png',

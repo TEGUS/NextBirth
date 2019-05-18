@@ -303,11 +303,13 @@ export class MyApp {
     this.services.getAllSituations().then((misesEnGarde: Array<Situation>) => {
       // Création des éléments dans mise en garde
       if (misesEnGarde.find(x => x.idNotif === item.data.idNotif) === undefined) {
+        alert("title = "+item.data.title);
+        alert("description = "+item.data.description);
+        alert("idNotif = "+item.data.idNotif);
         this.services.createSituations({
-          // date: item.trigger.at,
           date: new Date(),
-          titre: item.title,
-          description: item.text,
+          titre: item.data.title,
+          description: item.data.description,
           idNotif: item.data.idNotif
         }).then(() => {
           if (open) {
