@@ -301,6 +301,7 @@ export class MyApp {
   storeMiseEnGarde(item, open = true) {
     // Chargement des mises en garde
     this.services.getAllSituations().then((misesEnGarde: Array<Situation>) => {
+      alert("find = "+ misesEnGarde.find(x => x.idNotif === item.data.idNotif));
       // Création des éléments dans mise en garde
       if (misesEnGarde.find(x => x.idNotif === item.data.idNotif) === undefined) {
         alert("title = "+item.data.title);
