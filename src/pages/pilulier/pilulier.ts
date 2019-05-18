@@ -702,9 +702,11 @@ export class PilulierPage {
         text: item.message,
         trigger: {
           at: new Date(initDate),
-          unit: ELocalNotificationTriggerUnit.MINUTE,
-          count: 5
+          // unit: ELocalNotificationTriggerUnit.MINUTE,
+          // count: 5
         },
+        icon: 'file://assets/imgs/monlogo.png',
+        smallIcon: 'file://assets/imgs/monlogo.png',
         led: 'FF0000',
         sound: 'file://assets/imgs/notification.mp3',
         vibrate: true,

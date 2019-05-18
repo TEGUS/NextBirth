@@ -270,17 +270,19 @@ export class MyApp {
    */
   checkLocalNotification() {
     this.localNotifications.on('click').subscribe((next) => {
-      // this.storeMiseEnGarde(next)
-      this.nav.push('MessituationarisquePage')
+      this.storeMiseEnGarde(next);
     }, error => console.error(error));
-    
-    this.localNotifications.on('trigger').subscribe((next) => {
+
+    // this.localNotifications.on('trigger').subscribe((next) => {
+    //   this.storeMiseEnGarde(next, false);
+    // }, error => console.error(error));
+
+    this.localNotifications.on('schedule').subscribe((next) => {
       this.storeMiseEnGarde(next, false);
     }, error => console.error(error));
-    
+
     this.localNotifications.on(`TAKE`).subscribe(next => {
-      // this.storeMiseEnGarde(next);
-      this.nav.push('MessituationarisquePage')
+      this.storeMiseEnGarde(next);
       this.makeTakingTreatment(next.id).then(on => {
         let loading = this.loadingCtrl.create();
         loading.present();
