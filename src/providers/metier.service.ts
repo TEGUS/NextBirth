@@ -478,7 +478,7 @@ export class ServiceProvider {
         name: 'nextbirth.db',
         location: 'default'
       }).then((db: SQLiteObject) => {
-        db.executeSql('INSERT INTO SITUATIONS VALUES(NULL,?,?,?)', [situation.date, situation.titre, situation.description])
+        db.executeSql('INSERT INTO SITUATIONS VALUES(NULL,?,?,?,?)', [situation.date, situation.titre, situation.description, situation.idNotif])
           .then(res => {
             
             resolve(res);
@@ -511,7 +511,10 @@ export class ServiceProvider {
                 id: res.rows.item(i).id,
                 date: res.rows.item(i).date,
                 titre: res.rows.item(i).titre,
-                description: res.rows.item(i).description
+                description: res.rows.item(i).description,
+                idNotif: res.rows.item(i).idNotif
+
+                
               })
             }
             resolve(expenses);
@@ -565,8 +568,9 @@ export class ServiceProvider {
 
 export interface Situation {
   date: Date,
-  titre: string;
-  description: string
+  titre: string,
+  description: string,
+  idNotif:any
 }
 
 

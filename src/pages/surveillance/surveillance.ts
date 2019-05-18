@@ -261,8 +261,9 @@ export class SurveillancePage {
         let situations = {
            date: new Date(),
            titre: "alerte",
-           description: "Attention " + result.user.username + " vous serez déjà en train de faire un vrai travail d’accouchement rendez-vous sans trop attendre dans votre maternité pour vous faire examiner."
-        }
+           description: "Attention " + result.user.username + " vous serez déjà en train de faire un vrai travail d’accouchement rendez-vous sans trop attendre dans votre maternité pour vous faire examiner.",
+           idNotif:"null"
+          }
         this.services.createSituations(situations).then((result) =>{});
      
       })   
@@ -273,7 +274,8 @@ export class SurveillancePage {
       let situations = {
         date: new Date(),
         titre: "alerte",
-        description: "Attention " + result.user.username + " votre accouchement est probablement imminent. Vous risquez accoucher dans moins d’une heure. Si vous ne vous rendez pas dans la maternité la plus proche dans un bref délai, vous risquez accoucher dans un cadre inapproprié et mettre en danger la vie de votre bébé et même la vôtre."
+        description: "Attention " + result.user.username + " votre accouchement est probablement imminent. Vous risquez accoucher dans moins d’une heure. Si vous ne vous rendez pas dans la maternité la plus proche dans un bref délai, vous risquez accoucher dans un cadre inapproprié et mettre en danger la vie de votre bébé et même la vôtre.",
+        idNotif:"null"
       }
       this.services.createSituations(situations).then((result) =>{});
     
@@ -286,7 +288,8 @@ export class SurveillancePage {
       let situations = {
         date: new Date(),
         titre: "alerte",
-        description: "Vous risquez une rupture utérine veillez-vous rendre immédiatement dans une maternité au plateau technique élevé"
+        description: "Vous risquez une rupture utérine veillez-vous rendre immédiatement dans une maternité au plateau technique élevé",
+        idNotif:"null"
       }
       this.services.createSituations(situations).then((result) =>{});
    
@@ -333,7 +336,8 @@ export class SurveillancePage {
     let situations = {
       date: new Date(),
       titre: "alerte",
-      description: " Votre fœtus subit probablement une souffrance importante. Veillez-vous rendre à la maternité en urgence pour vous faire examiner"
+      description: " Votre fœtus subit probablement une souffrance importante. Veillez-vous rendre à la maternité en urgence pour vous faire examiner",
+      idNotif:"null"
     }
     this.services.createSituations(situations).then((result) =>{});
   
@@ -347,7 +351,8 @@ export class SurveillancePage {
     let situations = {
       date: new Date(),
       titre: "alerte",
-      description: " Attention ! Cet aspect du liquide amniotique peut être signe de danger. Faites-vous examiner sans attendre dans une paternité proche de vous."
+      description: " Attention ! Cet aspect du liquide amniotique peut être signe de danger. Faites-vous examiner sans attendre dans une paternité proche de vous.",
+      idNotif:"null"
     }
     this.services.createSituations(situations).then((result) =>{});
   
@@ -361,7 +366,8 @@ export class SurveillancePage {
     let situations = {
       date: new Date(),
       titre: "alerte",
-      description: " Les saignements par le vagin au troisième trimestre peuvent être des signes d’une urgence vitale. Faite vous absolument examiner dans une maternité le plutôt possible"
+      description: " Les saignements par le vagin au troisième trimestre peuvent être des signes d’une urgence vitale. Faite vous absolument examiner dans une maternité le plutôt possible",
+      idNotif:"null"
     }
     this.services.createSituations(situations).then((result) =>{});
   
@@ -377,7 +383,8 @@ export class SurveillancePage {
         let situations = {
           date: new Date(),
           titre: "alerte",
-          description: " Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner"
+          description: " Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner",
+          idNotif:"null"
         }
         this.services.createSituations(situations).then((result) =>{});
     
@@ -387,7 +394,8 @@ export class SurveillancePage {
       let situations = {
         date: new Date(),
         titre: "alerte",
-        description: " Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner"
+        description: " Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner",
+        idNotif:"null"
       }
       this.services.createSituations(situations).then((result) =>{});
     
@@ -402,7 +410,8 @@ export class SurveillancePage {
     let situations = {
       date: new Date(),
       titre: "alerte",
-      description: " Attention ! Cet aspect du liquide amniotique peut être signe de danger. Faites-vous examiner sans attendre dans une paternité proche de vous."
+      description: " Attention ! Cet aspect du liquide amniotique peut être signe de danger. Faites-vous examiner sans attendre dans une paternité proche de vous.",
+      idNotif:"null"
     }
     this.services.createSituations(situations).then((result) =>{});
   
@@ -436,7 +445,8 @@ export class SurveillancePage {
                   let situations = {
                     date: new Date(),
                     titre: "alerte",
-                    description: " Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner"
+                    description: " Vous avez probablement une rupture prématurée de la poche des eaux veillez-vous rendre en urgence dans votre maternité pour vous faire examiner",
+                    idNotif:"null"
                   }
                   this.services.createSituations(situations).then((result) =>{});
               
@@ -458,7 +468,8 @@ export class SurveillancePage {
       let situations = {
         date: new Date(),
         titre: "alerte",
-        description: " Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner"
+        description: " Soyez rasuré vous êtes probablement en travail veuillez vous rendre dans votre materniitée pour vous faire examiner",
+        idNotif:"null"
       }
       this.services.createSituations(situations).then((result) =>{});
     }
