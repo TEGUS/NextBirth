@@ -49,10 +49,10 @@
       <form [formGroup]="form" (submit)="addTreatment()" (reset)="cancel()">
         <ion-row>
           <ion-col>
-            <p class="text">Non du médicament</p>
+            <p class="text">Nom du médicament</p>
           </ion-col>
           <ion-col>
-            <ion-input class="monimput" disabled type="text" formControlName="name"></ion-input>
+            <ion-input class="monimput" type="text" formControlName="name"></ion-input>
           </ion-col>
         </ion-row>
         
@@ -82,7 +82,7 @@
             <p class="text">Date de début</p>
           </ion-col>
           <ion-col col-4 (click)="datePicker.open()">
-            <ion-input class="monimput2" disabled="true" type="text" formControlName="dateDebutTraitement"></ion-input>
+            <ion-input class="monimput2"  type="text" formControlName="dateDebutTraitement"></ion-input>
           </ion-col>
           <ion-col col-2 (click)="datePicker.open()">
             <ion-icon class="monicon" color="whitecolor" ios="ios-calendar" md="md-calendar"></ion-icon>
@@ -100,7 +100,7 @@
             <p class="text">Horaire de la 1ère prise</p>
           </ion-col>
           <ion-col col-4 (click)="timePicker.open()">
-            <ion-input class="monimput" disabled="true" type="text" formControlName="horaireFirstPrise"></ion-input>
+            <ion-input class="monimput" type="text" formControlName="horaireFirstPrise"></ion-input>
           </ion-col>
           <ion-col col-2 (click)="timePicker.open()">
             <ion-icon class="monicon" color="whitecolor" ios="ios-calendar" md="md-calendar"></ion-icon>

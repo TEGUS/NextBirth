@@ -124,7 +124,7 @@ export class PilulierPage {
     let dateEndThirdTrimestre: Date = new Date(dateEndSecondTrimestre);
     dateEndSecondTrimestre.setDate(dateEndSecondTrimestre.getDate() + 93);
     
-    console.clear()
+    // console.clear();
     console.log(this.debut_dernieres_menstrues);
     console.log(dateEndFirstTrimestre);
     console.log(dateEndSecondTrimestre);
@@ -267,11 +267,11 @@ export class PilulierPage {
     this.heureDebutTraitement = new Date().toISOString();
     
     this.form = this.formBuilder.group({
-      name: [this.currentTreatment == null ? '' : this.currentTreatment.name, Validators.required],
+      name: [{value : this.currentTreatment == null ? '' : this.currentTreatment.name, disabled: true}, Validators.required],
       frequencePrise: [this.currentTreatment == null ? '' : this.currentTreatment.frequence_prise, Validators.required],
       dureeTraitement: [this.currentTreatment == null ? '' : this.currentTreatment.duree_traitement, Validators.required],
-      dateDebutTraitement: ['', Validators.required],
-      horaireFirstPrise: ['', Validators.required],
+      dateDebutTraitement: [{value: '', disabled: true}, Validators.required],
+      horaireFirstPrise: [{value: '', disabled: true}, Validators.required],
       // jourCycle: [this.currentTreatment == null ? '' : this.currentTreatment.jour_cycle, Validators.required],
       // evaluationEvolution: [this.currentTreatment == null ? '' : this.currentTreatment.evaluation_evolution, Validators.required],
     });
@@ -372,7 +372,7 @@ export class PilulierPage {
   addTreatment() {
     if (this.form.valid) {
       const object = {
-        name: this.form.value.name,
+        name: this.medicament_search,
         frequencePrise: Number(this.form.value.frequencePrise),
         dureeTraitement: Number(this.form.value.dureeTraitement),
         dateDebutTraitement: this.madate,
