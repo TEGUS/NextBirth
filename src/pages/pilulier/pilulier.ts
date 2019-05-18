@@ -705,6 +705,11 @@ export class PilulierPage {
           // unit: ELocalNotificationTriggerUnit.MINUTE,
           // count: 5
         },
+        data: {
+          idNotif: item.id,
+          title: title,
+          text: item.message
+        },
         icon: 'file://assets/imgs/monlogo.png',
         smallIcon: 'file://assets/imgs/monlogo.png',
         led: 'FF0000',
