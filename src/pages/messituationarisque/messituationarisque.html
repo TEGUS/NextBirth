@@ -3,9 +3,10 @@
 </ion-header>
 
 
-
 <ion-content padding class="monbody">
-  
+
+  <pre>{{items | json}}</pre>
+
   <!--ion-grid>
 
     <ion-row style="height: 100px;"  *ngFor="let item of items" (click)="selectArticle(item.id)">
@@ -26,68 +27,61 @@
   </ion-grid>-->
 
   <div *ngIf="items.length == 0" class="empty">
-      Pas de mise en garde
+    Pas de mise en garde
   </div>
 
-
   <ion-grid *ngIf="testeur == 0">
+    <div *ngFor="let item of items">
+      <ion-row style="height: 100px;" (click)="selectArticle(item.titre, item.description)">
+        <ion-col col-4>
 
-    <pre>{{items | json}}</pre>
+          <img src="assets/imgs/icon2.png" alt="" width="100" height="70">
+        </ion-col>
+        <ion-col class="item-list">
+          <label>{{item.description | slice:0:40}}...</label>
+          <p class="ladate">{{ parseDate(item.date, "DD-MM-YYYY:HH:mm") }}</p>
 
-      <div *ngFor="let item of items">
-         <ion-row style="height: 100px;"  (click)="selectArticle(item.titre, item.description)" >
-             <ion-col col-4>
-              
-               <img src="assets/imgs/icon2.png" alt="" width="100" height="70">
-             </ion-col>
-             <ion-col class="item-list">
-               <label>{{item.description | slice:0:40}}...</label>
-               <p class="ladate">{{ parseDate(item.date, "DD-MM-YYYY:HH:mm") }}</p>
-             
-               <!-- <p class="titles">{{item.description | slice:0:30}}...</p>
-               <p class="ladate">{{ parseDate(item.date, "DD-MM-YYYY:HH:mm") }}</p> -->
-             </ion-col>
-             <ion-col col-2 class="mafleche">
-                 <img src="assets/imgs/maflecherouge.png" alt="" width="20" height="40">
-             </ion-col>
-           </ion-row>
-           <br>
-         <hr style=" background-color: #b9b9b9; height: 1px; margin-top: -2px; margin-left: 5px; margin-right: 20px;">
-         <br>
-      </div>
-         
-     </ion-grid>
-  
-  
-     <ion-card *ngIf="testeur == 1">
-    
-          <ion-card-content>
-            <ion-card-title>
-              {{titre}}
-            </ion-card-title>
-            <p>
-              {{description}}
-            </p>
-          </ion-card-content>
-      
-          <ion-row no-padding>
-            <ion-col>
-              <button ion-button clear small color="danger" icon-start>
-                <ion-icon name='star'></ion-icon>
-                Favorite
-              </button>
-            </ion-col>
-            <ion-col text-right>
-              <button ion-button clear small color="danger"   (click)="revientsituation()" icon-start>
-                OK
-              </button>
-            </ion-col>
-          </ion-row>
-      
-      </ion-card>
-  
+          <!-- <p class="titles">{{item.description | slice:0:30}}...</p>
+          <p class="ladate">{{ parseDate(item.date, "DD-MM-YYYY:HH:mm") }}</p> -->
+        </ion-col>
+        <ion-col col-2 class="mafleche">
+          <img src="assets/imgs/maflecherouge.png" alt="" width="20" height="40">
+        </ion-col>
+      </ion-row>
+      <br>
+      <hr style=" background-color: #b9b9b9; height: 1px; margin-top: -2px; margin-left: 5px; margin-right: 20px;">
+      <br>
+    </div>
 
- 
+  </ion-grid>
+
+
+  <ion-card *ngIf="testeur == 1">
+
+    <ion-card-content>
+      <ion-card-title>
+        {{titre}}
+      </ion-card-title>
+      <p>
+        {{description}}
+      </p>
+    </ion-card-content>
+
+    <ion-row no-padding>
+      <ion-col>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='star'></ion-icon>
+          Favorite
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button clear small color="danger" (click)="revientsituation()" icon-start>
+          OK
+        </button>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
 
 
 </ion-content>
