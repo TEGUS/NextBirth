@@ -25,6 +25,10 @@
 
   </ion-grid>-->
 
+  <div *ngIf="items.length == 0" class="empty">
+      Pas de mise en garde
+  </div>
+
 
   <ion-grid *ngIf="testeur == 0">
 
@@ -35,10 +39,11 @@
                <img src="assets/imgs/icon2.png" alt="" width="100" height="70">
              </ion-col>
              <ion-col class="item-list">
-               <label class="titles">{{item.titre}}   </label>
-             
-               <p class="titles">{{item.description | slice:0:50}}...</p>
+               <label>{{item.description | slice:0:40}}...</label>
                <p class="ladate">{{ parseDate(item.date, "DD-MM-YYYY:HH:mm") }}</p>
+             
+               <!-- <p class="titles">{{item.description | slice:0:30}}...</p>
+               <p class="ladate">{{ parseDate(item.date, "DD-MM-YYYY:HH:mm") }}</p> -->
              </ion-col>
              <ion-col col-2 class="mafleche">
                  <img src="assets/imgs/maflecherouge.png" alt="" width="20" height="40">

@@ -32,6 +32,7 @@ export class ReportPage {
   public testeurdpv = 0;
   public testeurdpvcac = 0;
   public pagenumber = 1;
+  public page = 1;
   
   public noteGrosesse = {
     libele: "",
@@ -71,10 +72,12 @@ export class ReportPage {
     
     
     this.mylocalstorage.getSession().then((result: any) => {
-      this.imageaafficher = result.user._embedded.photo;
+      this.imageaafficher = result.user._embedded.photo._embedded.url_photo;
     }, error => {
       console.error(error)
     });
+
+
     
     
     this.mylocalstorage.getKeydpv().then((result: any) => {
@@ -239,6 +242,25 @@ export class ReportPage {
     console.log('ionViewDidLoad ReportPage');
   }
   
+
+
+
+  doInfiniteBottom(infiniteScroll) {
+    setTimeout(() => {
+        this.page = this.page + 1;
+
+        this.nextPageArticle().then((next: any) => {
+          this.items =  this.items.concat(next);
+
+        }, error => {
+          console.error(error);
+        });
+     
+      infiniteScroll.complete();
+    }, 1000);
+  }
+
+
   selectArticle(id) {
     console.log(id);
     this.navCtrl.push("ArticleDetailPage", {
@@ -740,24 +762,21 @@ export class ReportPage {
 
   nextPageArticle(){ 
 
-
-    this.pagenumber = this.pagenumber + 1;
-    let loading = this.loadingCtrl.create();
-    loading.present();
-    this.acticlesSubscription = this.services.getArticles(this.pagenumber).subscribe(next => {
-         this.items = next.items
-         console.log("=====================================");
-         console.log(next.items);
-         console.log("=====================================");
-    }, error => {
-      loading.dismiss();
-      console.error(error);
-    }, () => {
-      loading.dismiss();
-    });
-
-
+      return new Promise(resolve => {
+          this.pagenumber = this.pagenumber + 1;
+          this.acticlesSubscription = this.services.getArticles(this.pagenumber).subscribe(next => {
+              this.items = this.items.concat(next.items);
+              resolve(this.items);
+          }, error => {
+            
+          }, () => {
+            
+          });
+    })
   }
+
+
+
   
   
 }

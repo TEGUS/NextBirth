@@ -58,7 +58,12 @@
     <label> ARTICLES ET CONSEILS </label>
   </div>
 
-  <ion-grid>
+
+  <div *ngIf="items.length == 0" class="empty">
+      Pas d'article disponible.
+  </div>
+
+  <ion-grid *ngIf="items.length != 0">
     <ion-row style="height: 105px;" *ngFor="let item of items" (click)="selectArticle(item.id)">
       <ion-col col-4>
         <img
@@ -75,6 +80,10 @@
     </ion-row>
   </ion-grid>
 
+  <ion-infinite-scroll (ionInfinite)="doInfiniteBottom($event)" threshold="4%">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
   <ion-fab bottom right class="monsuperbutton">
       <button ion-fab><ion-icon name="add"></ion-icon></button>
       <!-- <ion-fab-list side="top">
@@ -89,8 +98,8 @@
       </ion-fab-list>
   </ion-fab>
 
-  <ion-fab bottom left class="monsuperbutton">
+  <!-- <ion-fab bottom left class="monsuperbutton">
     <button ion-fab (click)="nextPageArticle()"><ion-icon name="md-fastforward"></ion-icon></button>
-</ion-fab>
+  </ion-fab>-->
 
 </ion-content>
