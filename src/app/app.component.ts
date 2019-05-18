@@ -306,9 +306,9 @@ export class MyApp {
         this.services.createSituations({
           // date: item.trigger.at,
           date: new Date(),
-          idNotif: item.data.idNotif,
           titre: item.title,
-          description: item.text
+          description: item.text,
+          idNotif: item.data.idNotif
         }).then(() => {
           if (open) {
             this.nav.push('MessituationarisquePage')
