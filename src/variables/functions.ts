@@ -20,6 +20,24 @@ export function showDateAndTime(datetime_mysql: string, lang = 'fr') {
   }
 }
 
+export function showDateAndTime_2(datetime_mysql: string, lang = 'fr') {
+  const d = new Date(datetime_mysql),
+    year = d.getFullYear(),
+    month = formatNumberOfDate(`${d.getMonth() + 1}`),
+    day = formatNumberOfDate(`${d.getDate()}`),
+    hours = formatNumberOfDate(`${d.getHours()}`),
+    minutes = formatNumberOfDate(`${d.getMinutes()}`),
+    seconds = formatNumberOfDate(`${d.getSeconds()}`);
+
+  if (lang === 'fr') {
+    return `${day}/${month}/${year} à ${hours}:${minutes}:${seconds}`;
+  } else if (lang === 'en') {
+    return `${year}-${month}-${day} at ${hours}:${minutes}:${seconds}`;
+  } else {
+    return `${year}-${month}-${day} at ${hours}:${minutes}:${seconds}`;
+  }
+}
+
 export function showDate(datetime_mysql: string, lang = 'fr') {
   const d = new Date((datetime_mysql.substring(0, 16)) + 'Z'),
     year = d.getFullYear(),

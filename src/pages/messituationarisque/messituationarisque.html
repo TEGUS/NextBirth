@@ -5,8 +5,6 @@
 
 <ion-content padding class="monbody">
 
-  <pre>{{items | json}}</pre>
-
   <!--ion-grid>
 
     <ion-row style="height: 100px;"  *ngFor="let item of items" (click)="selectArticle(item.id)">
@@ -39,7 +37,7 @@
         </ion-col>
         <ion-col class="item-list">
           <label>{{item.description | slice:0:40}}...</label>
-          <p class="ladate">{{ parseDate(item.date, "DD-MM-YYYY:HH:mm") }}</p>
+          <p class="ladate">{{ item.date }}</p>
 
           <!-- <p class="titles">{{item.description | slice:0:30}}...</p>
           <p class="ladate">{{ parseDate(item.date, "DD-MM-YYYY:HH:mm") }}</p> -->

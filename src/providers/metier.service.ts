@@ -509,7 +509,7 @@ export class ServiceProvider {
             for (var i = 0; i < res.rows.length; i++) {
               expenses.push({
                 id: res.rows.item(i).id,
-                date: res.rows.item(i).date,
+                date:  res.rows.item(i).date,
                 titre: res.rows.item(i).titre,
                 description: res.rows.item(i).description,
                 idNotif: res.rows.item(i).idNotif

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/metier.service';
 import moment from 'moment';
+import {showDateAndTime_2} from "../../variables/functions";
 
 /**
  * Generated class for the MessituationarisquePage page.
@@ -27,8 +28,14 @@ export class MessituationarisquePage {
   }
 
   ionViewDidLoad() {
-    this.services.getAllSituations().then((result:any) =>{
-      this.items = result;
+    this.services.getAllSituations().then((result: Array<any>) =>{
+      this.items = [];
+      result.forEach(item => {
+        this.items.push({
+          ...item,
+          date: showDateAndTime_2(item.date)
+        });
+      });
     });
   }
 
