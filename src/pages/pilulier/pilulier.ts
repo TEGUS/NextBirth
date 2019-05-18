@@ -106,9 +106,9 @@ export class PilulierPage {
     });
     
     // Chargement des mises en garde
-    this.services.getAllSituations().then((result: any) => {
-      this.misesEnGarde = result;
-    });
+    // this.services.getAllSituations().then((result: any) => {
+    //   this.misesEnGarde = result;
+    // });
   }
   
   checkTrim(treatement): any {

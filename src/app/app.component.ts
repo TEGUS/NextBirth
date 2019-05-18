@@ -302,7 +302,7 @@ export class MyApp {
     // Chargement des mises en garde
     this.services.getAllSituations().then((misesEnGarde: any) => {
       // Création des éléments dans mise en garde
-      if (item !== null && item !== undefined && misesEnGarde.find(x => x.idNotif === item.id) === undefined) {
+      if (misesEnGarde.find(x => x.idNotif === item.id) === undefined) {
         this.services.createSituations({
           // date: item.trigger.at,
           date: new Date(),

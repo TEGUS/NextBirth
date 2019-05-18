@@ -28,7 +28,7 @@ export class MessituationarisquePage {
 
   ionViewDidLoad() {
     this.services.getAllSituations().then((result:any) =>{
-        this.items = result;
+      this.items = result;
     });
   }
 
