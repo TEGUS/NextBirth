@@ -763,19 +763,19 @@ export class PilulierPage {
     });
   }
   
-  storeMiseEnGarde(item) {
-    // Création des éléments dans mise en garde
-    if (this.misesEnGarde.find(x => x.description === item.text) === undefined) {
-      this.services.createSituations({
-        date: item.trigger.at,
-        titre: item.title,
-        description: item.text
-      }).then(() => {
-      }, error => {
-        console.error(error);
-      });
-    }
-  }
+  // storeMiseEnGarde(item) {
+  //   // Création des éléments dans mise en garde
+  //   if (this.misesEnGarde.find(x => x.description === item.text) === undefined) {
+  //     this.services.createSituations({
+  //       date: item.trigger.at,
+  //       titre: item.title,
+  //       description: item.text
+  //     }).then(() => {
+  //     }, error => {
+  //       console.error(error);
+  //     });
+  //   }
+  // }
   
   deleteSchedules(ids: Array<number>) {
     ids.forEach(id => this.localNotifications.clear(id));
