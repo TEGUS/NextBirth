@@ -273,9 +273,9 @@ export class MyApp {
       this.storeMiseEnGarde(next);
     }, error => console.error(error));
 
-    // this.localNotifications.on('trigger').subscribe((next) => {
-    //   this.storeMiseEnGarde(next, false);
-    // }, error => console.error(error));
+    this.localNotifications.on('trigger').subscribe((next) => {
+      this.storeMiseEnGarde(next, false);
+    }, error => console.error(error));
 
     this.localNotifications.on('schedule').subscribe((next) => {
       this.storeMiseEnGarde(next, false);
@@ -302,10 +302,11 @@ export class MyApp {
     // Chargement des mises en garde
     this.services.getAllSituations().then((misesEnGarde: any) => {
       // Création des éléments dans mise en garde
-      if (item !== null && item !== undefined && misesEnGarde.find(x => x.description === item.text) === undefined) {
+      if (item !== null && item !== undefined && misesEnGarde.find(x => x.idNotif === item.id) === undefined) {
         this.services.createSituations({
           // date: item.trigger.at,
           date: new Date(),
+          idNotif: item.id,
           titre: item.title,
           description: item.text
         }).then(() => {

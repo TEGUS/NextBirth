@@ -692,7 +692,7 @@ export class PilulierPage {
   }
   
   initScheduleTreatement() {
-    console.log(this.schedules)
+    console.log(this.schedules);
     const title = 'Prise de médicament';
     this.schedules.forEach(item => {
       const initDate = new Date(((item.date_alert).substring(0, 16)) + 'Z').getTime();
