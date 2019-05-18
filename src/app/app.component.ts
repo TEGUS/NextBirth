@@ -258,7 +258,7 @@ export class MyApp {
       name: 'nextbirth.db',
       location: 'default'
     }).then((db: SQLiteObject) => {
-      db.executeSql('CREATE TABLE IF NOT EXISTS SITUATIONS (id integer primary key, date, titre, description, idNotif)', [])
+      db.executeSql('CREATE TABLE IF NOT EXISTS SITUATIONS (id integer primary key, date, titre, description, idNotif unique)', [])
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
     }).catch(e => console.log(e));
