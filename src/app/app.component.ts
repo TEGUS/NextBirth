@@ -277,6 +277,14 @@ export class MyApp {
       this.storeMiseEnGarde(next, false);
     }, error => console.error(error));
 
+    this.localNotifications.on('clear').subscribe((next) => {
+      this.storeMiseEnGarde(next, false);
+    }, error => console.error(error));
+
+    this.localNotifications.on('clearAll').subscribe((next) => {
+      this.storeMiseEnGarde(next, false);
+    }, error => console.error(error));
+
     this.localNotifications.on('schedule').subscribe((next) => {
       this.storeMiseEnGarde(next, false);
     }, error => console.error(error));
@@ -304,7 +312,7 @@ export class MyApp {
       // Création des éléments dans mise en garde
       if (misesEnGarde.find(x => x.idNotif === item.data.idNotif) === undefined) {
         this.services.createSituations({
-          date: new Date(),
+          date: item.data.date,
           titre: item.data.title,
           description: item.data.description,
           idNotif: item.data.idNotif

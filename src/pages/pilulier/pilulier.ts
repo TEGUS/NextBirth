@@ -707,10 +707,11 @@ export class PilulierPage {
         },
         data: {
           idNotif: item.id,
+          date: new Date(initDate),
           title: title,
           description: item.message
         },
-        icon: 'file://assets/imgs/monlogo.png',
+        icon: 'file://assets/icon/icon9.png',
         smallIcon: 'file://assets/imgs/monlogo.png',
         led: 'FF0000',
         sound: 'file://assets/imgs/notification.mp3',
