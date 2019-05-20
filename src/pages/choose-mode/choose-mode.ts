@@ -186,13 +186,21 @@ export class ChooseModePage {
                           if(nombresjours22<=0){
                             this.nombrejrovulation2 = 1;
                           }else{
+                           
                             this.nombrejrovulation2 = nombresjours22;
-                            if(this.nombrejrovulation2<=3){ 
-                              this.foraujourduit = 1;
-                            }else if(this.nombrejrovulation1> -3){
-                              this.foraujourduit = 1;
-                            }
                           }
+
+
+                          // nombrejrovulation2 plus petit
+                          // nombrejrovulation1 plus grand
+                          
+                          if(this.nombrejrovulation2<=3){ 
+                            this.foraujourduit = 1;
+                          }else if(this.nombrejrovulation1 > -2){
+                            this.foraujourduit = 1;
+                          }
+
+
                     }else if(this.testeur!=1){
 
                       this.testeur = 31;
