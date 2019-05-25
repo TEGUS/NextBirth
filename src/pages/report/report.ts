@@ -33,6 +33,7 @@ export class ReportPage {
   public testeurdpvcac = 0;
   public pagenumber = 1;
   public page = 1;
+  public listevide = 1;
   
   public noteGrosesse = {
     libele: "",
@@ -228,10 +229,11 @@ export class ReportPage {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.acticlesSubscription = this.services.getArticles(this.pagenumber).subscribe(next => {
-      console.log("=====================================");
-      console.log(next);
-      console.log("=====================================");
+      
       this.items = next.items
+      if(this.items.length == 0){
+        this.listevide = 2;
+      }
     }, error => {
       loading.dismiss();
       console.error(error);
@@ -247,9 +249,10 @@ export class ReportPage {
 
   doInfiniteBottom(infiniteScroll) {
     setTimeout(() => {
-        this.page = this.page + 1;
+      
 
         this.nextPageArticle().then((next: any) => {
+        
           this.items =  this.items.concat(next);
 
         }, error => {
@@ -257,7 +260,7 @@ export class ReportPage {
         });
      
       infiniteScroll.complete();
-    }, 1000);
+    }, 5000);
   }
 
 
@@ -765,8 +768,7 @@ export class ReportPage {
       return new Promise(resolve => {
           this.pagenumber = this.pagenumber + 1;
           this.acticlesSubscription = this.services.getArticles(this.pagenumber).subscribe(next => {
-              this.items = this.items.concat(next.items);
-              resolve(this.items);
+              resolve(next.items);
           }, error => {
             
           }, () => {
