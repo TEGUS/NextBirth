@@ -291,7 +291,7 @@ export class MyApp {
 
     this.localNotifications.on(`TAKE`).subscribe(next => {
       this.storeMiseEnGarde(next);
-      this.makeTakingTreatment(next.id).then(on => {
+      this.makeTakingTreatment(next.data.idNotif).then(on => {
         let loading = this.loadingCtrl.create();
         loading.present();
         this.services.takedMedicament(next.id).subscribe(r => {
@@ -312,20 +312,20 @@ export class MyApp {
       // Création des éléments dans mise en garde
       if (misesEnGarde.find(x => x.idNotif === item.data.idNotif) === undefined) {
         this.services.createSituations({
-          date: item.data.date,
+          date: new Date(),
           titre: item.data.title,
           description: item.data.description,
           idNotif: item.data.idNotif
         }).then(() => {
           if (open) {
-            this.nav.push('MessituationarisquePage')
+            this.nav.root('MessituationarisquePage')
           }
         }, error => {
           console.error(error);
         });
       } else {
         if (open) {
-          this.nav.push('MessituationarisquePage')
+          this.nav.root('MessituationarisquePage')
         }
       }
     });

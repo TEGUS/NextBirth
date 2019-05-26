@@ -707,7 +707,6 @@ export class PilulierPage {
         },
         data: {
           idNotif: item.id,
-          date: new Date(initDate),
           title: title,
           description: item.message
         },
