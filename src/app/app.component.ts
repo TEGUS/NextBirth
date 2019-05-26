@@ -318,14 +318,14 @@ export class MyApp {
           idNotif: item.data.idNotif
         }).then(() => {
           if (open) {
-            this.nav.push('MessituationarisquePage')
+            this.nav.root('MessituationarisquePage')
           }
         }, error => {
           console.error(error);
         });
       } else {
         if (open) {
-          this.nav.push('MessituationarisquePage')
+          this.nav.root('MessituationarisquePage')
         }
       }
     });
