@@ -291,7 +291,7 @@ export class MyApp {
 
     this.localNotifications.on(`TAKE`).subscribe(next => {
       this.storeMiseEnGarde(next);
-      this.makeTakingTreatment(next.id).then(on => {
+      this.makeTakingTreatment(next.data.idNotif).then(on => {
         let loading = this.loadingCtrl.create();
         loading.present();
         this.services.takedMedicament(next.id).subscribe(r => {
