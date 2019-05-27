@@ -67,7 +67,7 @@
     <ion-row style="height: 105px;" *ngFor="let item of items" (click)="selectArticle(item.id)">
       <ion-col col-4>
         <img
-          [src]="item._embedded.miniature != null ? item._embedded.miniature._embedded.url_photo : '/assets/imgs/background.jpg'"
+          [src]="item != null && item._embedded.miniature != null ? item._embedded.miniature._embedded.url_photo : '/assets/imgs/background.jpg'"
           alt="" width="100" height="70">
       </ion-col>
       <ion-col class="item-list">

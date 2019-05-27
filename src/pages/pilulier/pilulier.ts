@@ -265,7 +265,7 @@ export class PilulierPage {
   initForm() {
     this.dateDebutTraitement = new Date().toISOString();
     this.heureDebutTraitement = new Date().toISOString();
-    
+
     this.form = this.formBuilder.group({
       name: [{value : this.currentTreatment == null ? '' : this.currentTreatment.name, disabled: true}, Validators.required],
       frequencePrise: [this.currentTreatment == null ? '' : this.currentTreatment.frequence_prise, Validators.required],

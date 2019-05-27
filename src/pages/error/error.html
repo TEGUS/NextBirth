@@ -7,13 +7,22 @@
 
 
 <ion-content padding>
-  <div *ngIf="message != null" class="message">
+  <div *ngIf="message != null"
+       style="display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;">
+
     <ion-icon name="alert"></ion-icon>
     
-    {{message}}
+    <div class="message">
+      {{message}}
+    </div>
   </div>
-  
-  <button ion-button tappable (click)="reload()" style="margin-top: 1rem">
+</ion-content>
+
+<ion-footer>
+  <button ion-button tappable (click)="reload()" style="margin-top: 1rem" full>
     Actualiser
   </button>
-</ion-content>
+</ion-footer>
