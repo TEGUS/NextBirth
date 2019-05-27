@@ -19,9 +19,16 @@
           <p class="ladate">C'est à dire le {{dateovulation}}</p>
       </ion-card>
 
-      <ion-card class="carddoleur" *ngIf="foraujourduit==1">
+      <ion-card class="carddoleur" *ngIf="(nombrejrovulation2 < 3) && (nombrejrovulation2 > 0)">
                 <p class="titlecard2"> attention ! fort risque de conception aujourd’hui </p>
       </ion-card>
+
+      <ion-card class="carddoleur" *ngIf="nombrejourseignement1 >= 12">
+                <p class="titlecard2"> attention ! fort risque de conception aujourd’hui </p>
+      </ion-card>
+
+
+      
 
       <ion-card class="carddoleur" *ngIf="testeur == 21">
           <p class="titlecard2"> vous allez ovuler probablement dans </p>
@@ -47,7 +54,7 @@
           <p class="ladate" *ngIf="testeurovulation1 == 1">Vous risquez une grossesse a cette période</p>
       </ion-card>
 
-      <ion-card class="carddoleur" *ngIf="testeur == 4">
+      <!--<ion-card class="carddoleur" *ngIf="testeur == 4">
         <p class="titlecard2"> attention ! fort risque de conception aujourd’hui </p>
         <p class="nombrejours">car vous avez probablement ovulé il y’a 1 jours  </p>  
        </ion-card>
@@ -55,7 +62,7 @@
        <ion-card class="carddoleur" *ngIf="testeur == 5">
         <p class="titlecard2"> attention ! fort risque de conception aujourd’hui </p>
         <p class="nombrejours">car vous avez probablement ovulé il y’a 2 jours  </p>  
-       </ion-card>
+       </ion-card>-->
 
    
     <hr>
