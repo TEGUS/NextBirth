@@ -36,6 +36,9 @@ import {formatNumberOfDate} from "../../variables/functions";
   templateUrl: 'pilulier.html',
 })
 export class PilulierPage {
+  public KEY_SCHEDULE_CHECK_ILocalNotification = "KEY_SCHEDULE_CHECK_ILocalNotification";
+  public KEY_ILocalNotifications = "KEY_ILocalNotifications";
+
   private onglet: any;
   private part: any;
   private form: FormGroup;
@@ -88,8 +91,16 @@ export class PilulierPage {
   isShowFooter(bool = false) {
     this.showFooter = bool;
   }
+
+  getLocalISOTime() {
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+    var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0,-1);
+    return localISOTime;
+  }
   
   ionViewWillEnter() {
+    console.log(this.getLocalISOTime());
+
     this.localStorage.getKey('mode').then(mode => {
       this.isModeGrs = mode !== null && mode.code === "MO1";
       
@@ -104,11 +115,6 @@ export class PilulierPage {
         }, error => console.error(error));
       }
     });
-    
-    // Chargement des mises en garde
-    // this.services.getAllSituations().then((result: any) => {
-    //   this.misesEnGarde = result;
-    // });
   }
   
   checkTrim(treatement): any {
@@ -390,7 +396,7 @@ export class PilulierPage {
         }, error => {
           console.error(error);
           loading.dismiss();
-  
+
           if (handleError(error) === 0) {
             this.navCtrl.setRoot('ErrorPage');
           }
@@ -413,7 +419,7 @@ export class PilulierPage {
           }, error => {
             console.error(error);
             loading.dismiss()
-  
+
             if (handleError(error) === 0) {
               this.navCtrl.setRoot('ErrorPage');
             }
@@ -473,8 +479,7 @@ export class PilulierPage {
       this.processGetTreatment().then((next: any) => {
         this.archives = next.archives;
         this.treatments = next.treatments;
-        
-  
+
         if (this.treatments.length === 0 || this.archives.length === 0) {
           this.globalError = 'Pas de traitement';
         }
@@ -494,67 +499,6 @@ export class PilulierPage {
           this.navCtrl.setRoot('ErrorPage');
         }
       });
-      
-      // this.services.allTreatments(this.page).subscribe((next: any) => {
-      //   console.log(next);
-      //   let tmp = [];
-      //   this.archives = [];
-      //
-      //   /**
-      //    * Filtrer les traitements en cours des traitements terminés.
-      //    */
-      //   next.forEach(t => {
-      //     const dateDebT = new Date((t.date_debut_traitement).split('T')[0]);
-      //     const horaire: Array<any> = (t.horaire_first_prise).split(':');
-      //     dateDebT.setHours(Number(horaire[0]), Number(horaire[1]));
-      //     const dateTraitment = getCurrentDateWith(dateDebT, t.duree_traitement);
-      //
-      //     t._embedded.date_creation = showDateAndTime(t._embedded.date_creation);
-      //
-      //     if ((new Date()) > dateTraitment) {
-      //       this.archives.push(t);
-      //     } else {
-      //       tmp.push(t);
-      //     }
-      //   });
-      //
-      //   next = tmp;
-      //
-      //   if (this.isModeGrs) {
-      //     next.forEach(m => {
-      //       if (m._embedded.core_medicament !== null) {
-      //         m = {
-      //           ...m,
-      //           msg_alert: this.checkTrim(m._embedded.core_medicament)
-      //         }
-      //       }
-      //       this.treatments.push(m);
-      //     })
-      //   } else {
-      //     this.treatments = next;
-      //   }
-      //
-      //   if (this.treatments.length === 0 || this.archives.length === 0) {
-      //     this.globalError = 'Pas de traitement';
-      //   }
-      //
-      //   // console.log(next)
-      //   // console.log(this.archives)
-      // }, error => {
-      //   console.error(error);
-      //   loading.dismiss()
-      //   this.startProcessGet = false;
-      //
-      //   if (handleError(error) === 0) {
-      //     this.navCtrl.setRoot('ErrorPage');
-      //   }
-      // }, () => {
-      //   loading.dismiss();
-      //   loading.onDidDismiss(() => {
-      //     resolve(this.treatments);
-      //   })
-      //   this.startProcessGet = false;
-      // });
     })
   }
   
@@ -606,6 +550,13 @@ export class PilulierPage {
         } else {
           treatments = next;
         }
+
+        /**
+         * Check All ILocalNotification
+         */
+        if (treatments.length > 0) {
+          this.checkAllILocalNofification(treatments);
+        }
   
         resolve({
           treatments: treatments,
@@ -616,6 +567,30 @@ export class PilulierPage {
         reject(error);
       });
     })
+  }
+
+  /**
+   * Check All ILocalNotification
+   * @param treatments_encours
+   */
+  checkAllILocalNofification(treatments_encours) {
+    this.localStorage.getKey(this.KEY_SCHEDULE_CHECK_ILocalNotification).then(schedule => {
+      if (schedule === null || schedule === (new Date())) {
+        treatments_encours.forEach(item => {
+          this.getAlerts(item.id).then((ids: Array<any>) => {
+            ids.forEach(id => {
+              if (this.localNotifications.get(id) === null) {
+                //TODO: Implement Schedule Notification
+              }
+            });
+          }, error => {
+            console.error(error);
+          });
+        });
+
+        this.localStorage.setKey(this.KEY_SCHEDULE_CHECK_ILocalNotification, getCurrentDateWith((new Date()), 1));
+      }
+    });
   }
   
   doInfiniteBottom(infiniteScroll) {
@@ -645,9 +620,6 @@ export class PilulierPage {
   }
   
   gotoDelete(item) {
-    // const date = new Date("1970-01-01T10:48:00-05:00");
-    // console.log(date.getUTCHours())
-    // console.log(date.getMinutes())
     let alert = this.alertCtrl.create({
       title: 'Confirm purchase',
       message: 'Do you want to delete this treatement?',
@@ -692,6 +664,7 @@ export class PilulierPage {
   }
   
   initScheduleTreatement() {
+    const notifs: Array<ILocalNotification> = [];
     console.log(this.schedules);
     const title = 'Prise de médicament';
     this.schedules.forEach(item => {
@@ -701,9 +674,7 @@ export class PilulierPage {
         title: title,
         text: item.message,
         trigger: {
-          at: new Date(initDate),
-          // unit: ELocalNotificationTriggerUnit.MINUTE,
-          // count: 5
+          at: new Date(initDate)
         },
         data: {
           idNotif: item.id,
@@ -716,12 +687,6 @@ export class PilulierPage {
         sound: 'file://assets/imgs/notification.mp3',
         vibrate: true,
         actions: [
-          // {
-          //   id:`OPEN`,
-          //   title: 'Ouvrir',
-          //   type: ILocalNotificationActionType.BUTTON,
-          //   icon: 'checkmark-circle-outline'
-          // },
           {
             id: `TAKE`,
             title: 'Marquer la prise',
@@ -730,57 +695,10 @@ export class PilulierPage {
           }
         ],
       };
+      notifs.push(notif);
       this.localNotifications.schedule(notif);
-      
-      // this.localNotifications.on(`TAKE${item.id}`).subscribe(next => {
-      //   this.storeMiseEnGarde(next);
-      //
-      //   this.makeTakingTreatment(next.id).then(on => {
-      //     let loading = this.loadingCtrl.create();
-      //     loading.present();
-      //     this.services.takedMedicament(next.id).subscribe(r => {
-      //       loading.dismiss();
-      //       this.presentDialogAlert('Taked');
-      //     });
-      //   });
-      // }, error => console.error(error));
-      //
-      // this.localNotifications.on(`OPEN${item.id}`).subscribe(next => {
-      //   this.storeMiseEnGarde(next);
-      // }, error => console.error(error));
-      //
-      // this.localNotifications.on(`click`).subscribe(next => {
-      //   this.storeMiseEnGarde(next);
-      //
-      //   this.makeTakingTreatment(next.id).then(on => {
-      //     let loading = this.loadingCtrl.create();
-      //     loading.present();
-      //     this.services.takedMedicament(next.id).subscribe(r => {
-      //       loading.dismiss();
-      //       this.presentDialogAlert('Taked');
-      //     });
-      //   });
-      // }, error => console.error(error));
-      //
-      // this.localNotifications.on(`trigger`).subscribe(next => {
-      //   this.storeMiseEnGarde(next);
-      // }, error => console.error(error));
     });
   }
-  
-  // storeMiseEnGarde(item) {
-  //   // Création des éléments dans mise en garde
-  //   if (this.misesEnGarde.find(x => x.description === item.text) === undefined) {
-  //     this.services.createSituations({
-  //       date: item.trigger.at,
-  //       titre: item.title,
-  //       description: item.text
-  //     }).then(() => {
-  //     }, error => {
-  //       console.error(error);
-  //     });
-  //   }
-  // }
   
   deleteSchedules(ids: Array<number>) {
     ids.forEach(id => this.localNotifications.clear(id));
@@ -800,22 +718,5 @@ export class PilulierPage {
     });
     
     toast.present();
-  }
-  
-  makeTakingTreatment(id_alert) {
-    return new Promise(resolve => {
-      this.localStorage.getKey(v.LOCAL_STRG_TAKED_TREATEMENT).then((res: any) => {
-        // this.presentDialogAlert(JSON.stringify(res));
-        if (res !== undefined && res !== null) {
-          res.push(id_alert);
-        } else {
-          res = [];
-          res.push(id_alert);
-        }
-        this.localStorage.setKey(v.LOCAL_STRG_TAKED_TREATEMENT, res).then(on => {
-          resolve(true);
-        });
-      });
-    })
   }
 }

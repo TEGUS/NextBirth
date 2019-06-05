@@ -67,9 +67,14 @@ export class BuildEventPage {
   
   listenChangeDate(event, type) {
     let date = new Date();
-    date.setMonth(event.month);
+    date.setMonth(event.month - 1);
+    console.log(event.month);
     date.setFullYear(event.year);
+    console.log(event.year);
     date.setDate(event.day);
+    console.log(event.day);
+
+    console.log(date);
     
     let diff = date.getTime() - this.debut_dernieres_menstrues.getTime();
     let nbJr = Math.ceil(((((diff / 1000) / 60) / 60) / 24));
@@ -99,6 +104,7 @@ export class BuildEventPage {
     if (this.form.valid) {
       let loading = this.loadingCtrl.create()
       loading.present()
+      console.log(this.form.value);
       
       if (this.event === null) {
         this.services.addEvent(this.form.value).subscribe(next => {

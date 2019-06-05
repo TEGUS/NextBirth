@@ -126,6 +126,11 @@ export class SignUpPage {
       checkField(this.object.dureeMenstrues)
     ) {
       if (this.object.account.plainPassword.first === this.object.account.plainPassword.second) {
+        if (this.object.dureeCycleMin > this.object.dureeCycleMax) {
+          this.presentToast('La durée minimal doit être inférieur ou égale à la durée maximale du cycle.');
+          return;
+        }
+
         let loading = this.loadingCtrl.create();
         loading.present();
         console.log(this.object);

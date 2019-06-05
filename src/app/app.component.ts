@@ -29,11 +29,6 @@ export class MyApp {
               public network: Network, private localNotifications: LocalNotifications) {
     
     this.services.initHeaders();
-    
-    this.initDefaultLang().then(() => {
-      this.initializeApp();
-    });
-    
     this.intiliazedatabase();
     
     // used for an example of ngFor and navigation
@@ -49,6 +44,10 @@ export class MyApp {
       // {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
       {title: 'Paramètres', component: "SettingsPage", icon: 'icon8'},
     ];
+
+    this.initDefaultLang().then(() => {
+      this.initializeApp();
+    });
   }
   
   initializeApp() {
@@ -63,6 +62,7 @@ export class MyApp {
       this.menuCtrl.enable(false);
       
       this.initValuesLocalStorage().then(() => {
+        this.rootPage = null;
         // Get Root Page
         this.initRootPage().then(page => {
           this.rootPage = page
@@ -103,6 +103,7 @@ export class MyApp {
         if (next !== null) {
           this.menuCtrl.enable(true, 'sideMenu');
           this.localStorage.getKey('mode').then(mode => {
+            console.log(mode);
             if (mode !== null) {
               switch (mode.code) {
                 case codesMode.CONTPL:
@@ -111,27 +112,28 @@ export class MyApp {
                 case codesMode.CONTPR:
                   resolve("ModeContraceptionPage");
                   break;
-                case codesMode.GRS:
-                  let loading = this.loadingCtrl.create();
-                  loading.present();
-                  this.checkProfileDesirGrossesse().then((next: any) => {
-                    loading.dismiss()
-                    resolve(next.status ? "ReportPage" : "QuestionContraceptionPage")
-                  }, error => {
-                    console.error(error)
-                    loading.dismiss();
-                  })
-                  break;
                 case codesMode.GEST:
-                  resolve("ReportPage")
+                  resolve("ReportPage");
+                  break;
+                case codesMode.GRS:
+                  this.checkProfileDesirGrossesse().then((next: any) => {
+                    console.log(next);
+                    resolve(next.status ? "ReportPage" : "QuestionContraceptionPage");
+                  }, error => {
+                    console.error(error);
+                    resolve("QuestionContraceptionPage");
+                  });
                   break;
               }
             } else {
-              resolve("ChooseModePage")
+              resolve("ChooseModePage");
             }
+          }, error => {
+            console.error(error);
+            resolve("ChooseModePage");
           });
         } else {
-          resolve("LoginPage")
+          resolve("LoginPage");
         }
       }, error => {
         console.log(error);
@@ -141,11 +143,15 @@ export class MyApp {
   
   checkProfileDesirGrossesse() {
     return new Promise((resolve, reject) => {
+      let loading = this.loadingCtrl.create();
+      loading.present();
       this.services.checkProfileDesirGrossesse().subscribe(next => {
-        console.log(next)
+        console.log(next);
         resolve(next);
+        loading.dismiss();
       }, error => {
         reject(error);
+        loading.dismiss();
       })
     });
   }
@@ -195,7 +201,7 @@ export class MyApp {
         case "Start":
           this.initRootPage().then(page => {
             this.nav.setRoot(page);
-          })
+          });
           break;
         case "CalendarPage":
           this.localStorage.getKey('mode').then(mode => {
