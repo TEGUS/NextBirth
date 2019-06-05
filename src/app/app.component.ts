@@ -98,6 +98,7 @@ export class MyApp {
   }
   
   initRootPage() {
+    console.log("initRootPage");
     return new Promise((resolve, reject) => {
       this.localStorage.getKey('session').then(next => {
         if (next !== null) {
