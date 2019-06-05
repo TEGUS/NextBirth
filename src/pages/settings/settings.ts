@@ -114,11 +114,11 @@ export class SettingsPage {
     loading.present();
     this.services.getCategories().subscribe(next => {
       this.modes = [];
-      console.log(next)
       next.forEach(m => {
-        if (m.enable)
+        // if (m.enabled)
           this.modes.push(m)
       });
+      console.log(this.modes);
     }, error => {
       loading.dismiss();
       console.log(error);
