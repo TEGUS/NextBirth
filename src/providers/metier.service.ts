@@ -187,6 +187,18 @@ export class ServiceProvider {
       this.headers
     );
   }
+
+  /**
+   * Mise à jour d'une numéro de téléphone
+   * @param object
+   */
+  updatePhoneNumber(object: any): Observable<any> {
+    return this.http.put(
+      this.host + 'profile/phone',
+      object,
+      this.headers
+    );
+  }
   
   
   dateprochaineVisite(data: any): Observable<any> {
@@ -362,6 +374,17 @@ export class ServiceProvider {
   takedMedicament(idAlert): Observable<any> {
     return this.http.put(
       `${this.host}medicament/alert/${idAlert}/take`,
+      this.headers
+    );
+  }
+
+  /**
+   * Retourne l'alerte en fonction de l'ID
+   * @param id
+   */
+  getAlertById(id): Observable<any> {
+    return this.http.get(
+      `${this.host}alert/${id}`,
       this.headers
     );
   }

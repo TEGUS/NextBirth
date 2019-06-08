@@ -571,6 +571,8 @@ export class PilulierPage {
 
   /**
    * Check All ILocalNotification
+   * Vérifier si toutes les alerts de tous les traitements encours sont programmées dans le Schedule
+   * du LocalNotification.
    * @param treatments_encours
    */
   checkAllILocalNofification(treatments_encours) {
@@ -580,7 +582,12 @@ export class PilulierPage {
           this.getAlerts(item.id).then((ids: Array<any>) => {
             ids.forEach(id => {
               if (this.localNotifications.get(id) === null) {
-                //TODO: Implement Schedule Notification
+                //FIXME: Implement Schedule Notification
+                this.services.getAlertById(id).subscribe(alert => {
+                  this.localNotifications.schedule(this.buildNotificaitonTraitement(alert));
+                }, error => {
+                  console.error(error);
+                });
               }
             });
           }, error => {
@@ -658,48 +665,57 @@ export class PilulierPage {
     });
     alert.present();
   }
-  
-  take(item) {
-    console.log(item);
-  }
-  
+
+  /**
+   * Programmer les notifications dans le schedule du LocalNotifications.
+   */
   initScheduleTreatement() {
-    const notifs: Array<ILocalNotification> = [];
     console.log(this.schedules);
-    const title = 'Prise de médicament';
     this.schedules.forEach(item => {
-      const initDate = new Date(((item.date_alert).substring(0, 16)) + 'Z').getTime();
-      const notif: ILocalNotification = {
-        id: item.id,
-        title: title,
-        text: item.message,
-        trigger: {
-          at: new Date(initDate)
-        },
-        data: {
-          idNotif: item.id,
-          title: title,
-          description: item.message
-        },
-        icon: 'file://assets/icon/icon9.png',
-        smallIcon: 'file://assets/imgs/monlogo.png',
-        led: 'FF0000',
-        sound: 'file://assets/imgs/notification.mp3',
-        vibrate: true,
-        actions: [
-          {
-            id: `TAKE`,
-            title: 'Marquer la prise',
-            type: ILocalNotificationActionType.BUTTON,
-            icon: 'checkmark-circle-outline'
-          }
-        ],
-      };
-      notifs.push(notif);
-      this.localNotifications.schedule(notif);
+      this.localNotifications.schedule(this.buildNotificaitonTraitement(item));
     });
   }
-  
+
+  /**
+   * Construire une notification depuis une alerte générer
+   * @param alert
+   */
+  buildNotificaitonTraitement(alert): ILocalNotification {
+    const title = 'Prise de médicament';
+    const initDate = new Date(((alert.date_alert).substring(0, 16)) + 'Z').getTime();
+    const notification: ILocalNotification = {
+      id: alert.id,
+      title: title,
+      text: alert.message,
+      trigger: {
+        at: new Date(initDate)
+      },
+      data: {
+        idNotif: alert.id,
+        title: title,
+        description: alert.message
+      },
+      icon: 'file://assets/icon/icon9.png',
+      smallIcon: 'file://assets/imgs/monlogo.png',
+      led: 'FF0000',
+      sound: 'file://assets/imgs/notification.mp3',
+      vibrate: true,
+      actions: [
+        {
+          id: `TAKE`,
+          title: 'Marquer la prise',
+          type: ILocalNotificationActionType.BUTTON,
+          icon: 'checkmark-circle-outline'
+        }
+      ],
+    };
+    return notification;
+  }
+
+  /**
+   * Suppression des notifications programmées dans le LocalNotification
+   * @param ids
+   */
   deleteSchedules(ids: Array<number>) {
     ids.forEach(id => this.localNotifications.clear(id));
   }

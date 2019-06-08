@@ -1,0 +1,30 @@
+<ion-header>
+  <navbar [title]="'Changer le numéro de téléphone'"></navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="content">
+    <div class="phone-number">
+      <ion-col>
+        <ion-select [(ngModel)]="currentCallingCode" okText="Valider" cancelText="Annuler" interface="popover">
+          <ion-option [value]="item.callingCodes[0]" (ionSelect)="listenCode($event)"
+                      *ngFor="let item of countries">
+            {{item.alpha2Code + " (+" + item.callingCodes[0] + ")"}}
+          </ion-option>
+        </ion-select>
+      </ion-col>
+
+      <input-element
+        [libelle]="'Numéro de téléphone'"
+        [type]="'text'"
+        (outputValue)="getPhone($event)">
+      </input-element>
+    </div>
+
+    <p class="error" *ngIf="error == null && showError != null"> {{showError.message}} </p>
+
+    <div class="create-account">
+      <input type="button" value="Valider"  tappable  (click)="submit()">
+    </div>
+  </div>
+</ion-content>

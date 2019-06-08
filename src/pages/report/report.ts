@@ -233,6 +233,12 @@ export class ReportPage {
       console.error(error);
     });
 
+    setTimeout(() => {
+      loading.dismiss();
+      this.acticlesSubscription.unsubscribe();
+      // this.presentToast("Veuillez vérifier votre connection internet !");
+    }, 10000);
+
     console.log('ionViewDidLoad ReportPage');
   }
 

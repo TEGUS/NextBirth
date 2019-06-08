@@ -38,6 +38,11 @@ export class MyProfilePage {
         icon: 'create',
         code: 'updatePassword',
         title: 'Changer le mot de passe'
+      },
+      {
+        icon: 'create',
+        code: 'updatePhoneNumber',
+        title: 'Changer numéro de téléphone'
       }
     ]
     
@@ -116,6 +121,10 @@ export class MyProfilePage {
     
           case 'updateProfile':
             this.navCtrl.push('UpdateProfilePage');
+            break;
+
+          case 'updatePhoneNumber':
+            this.navCtrl.push('UpdatePhoneNumberPage');
             break;
         }
       }
