@@ -239,7 +239,11 @@ export class MyApp {
           handler: () => {
             this.localStorage.clearStorage().then(next => {
               this.menuCtrl.enable(false);
-              this.nav.setRoot("LoginPage");
+              this.initDefaultLang().then(() => {
+                this.initValuesLocalStorage().then(() => {
+                  this.nav.setRoot("LoginPage");
+                });
+              });
             }, error => {
               console.log(error);
             })

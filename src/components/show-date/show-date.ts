@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {formatNumberOfDate} from "../../variables/functions";
+import {LocalStorageProvider} from "../../providers/localstorage.service";
 
 
 /**
@@ -21,7 +23,8 @@ export class ShowDateComponent {
   date = null;
   
   _initValue = null;
-  
+  defaultLang = null;
+
   @Input()
   set initValue(value) {
     if (value) {
@@ -32,8 +35,12 @@ export class ShowDateComponent {
     }
   };
   
-  constructor() {
+  constructor(public localStorage: LocalStorageProvider) {
     this.dateToShow = {day: 'DD', month: 'MM', year: 'YYYY'}
+
+    this.localStorage.getDefaultLang().then(defaultLang => {
+      this.defaultLang = defaultLang;
+    });
   }
   
   dateChanged(event) {
@@ -42,5 +49,9 @@ export class ShowDateComponent {
       this.date = this.dateToShow.date.toISOString();
     }
     this.outputDate.emit(this.dateToShow);
+  }
+
+  formatNumberOfDate(val) {
+    return Number(val) ? formatNumberOfDate(val) : val;
   }
 }

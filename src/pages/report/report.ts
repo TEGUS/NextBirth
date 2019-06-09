@@ -237,7 +237,7 @@ export class ReportPage {
       loading.dismiss();
       this.acticlesSubscription.unsubscribe();
       // this.presentToast("Veuillez vérifier votre connection internet !");
-    }, 10000);
+    }, 15000);
 
     console.log('ionViewDidLoad ReportPage');
   }

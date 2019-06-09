@@ -68,9 +68,11 @@ export class UpdatePhoneNumberPage {
     loading.present();
     this.services.updatePhoneNumber(this.object).subscribe(next => {
       console.log(next);
-      // this.localStorage.updatePatientStorage(next);
-      loading.dismiss()
-      this.navCtrl.pop();
+      this.localStorage.storeSession(next).then(s => {
+        this.services.checkAuthorization();
+        loading.dismiss()
+        this.navCtrl.pop();
+      });
     }, error => {
       loading.dismiss()
       console.error(error);

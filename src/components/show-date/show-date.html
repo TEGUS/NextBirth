@@ -1,9 +1,17 @@
 <div class="libelle">{{libelle}}</div>
 
 <div class="show" *ngIf="dateToShow != undefined && dateToShow != null" (click)="datePicker.open()">
-  <div class="day">{{dateToShow.day}}</div>
-  <div class="month">{{dateToShow.month}}</div>
-  <div class="year">{{dateToShow.year}}</div>
+  <ng-container *ngIf="defaultLang == null || defaultLang == 'fr'">
+    <div class="day">{{formatNumberOfDate(dateToShow.day)}}</div>
+    <div class="month">{{formatNumberOfDate(dateToShow.month)}}</div>
+    <div class="year">{{formatNumberOfDate(dateToShow.year)}}</div>
+  </ng-container>
+
+  <ng-container *ngIf="defaultLang == 'en'">
+    <div class="day">{{formatNumberOfDate(dateToShow.month)}}</div>
+    <div class="month">{{formatNumberOfDate(dateToShow.day)}}</div>
+    <div class="year">{{formatNumberOfDate(dateToShow.year)}}</div>
+  </ng-container>
 </div>
 
 <ion-datetime #datePicker
@@ -11,6 +19,6 @@
               [min]="min"
               [max]="max"
               (ionChange)="dateChanged($event)"
-              displayFormat="DD MMM, YYYY"
+              [displayFormat]="defaultLang == null || defaultLang == 'fr' ? 'DD MMMM, YYYY' : 'MMMM DD, YYYY'"
               [(ngModel)]="date" hidden="true">
 </ion-datetime>
