@@ -26,7 +26,7 @@ export class UpdatePhoneNumberPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public loadingCtrl: LoadingController, public toastCtrl: ToastController,
-              public services: ServiceProvider, public mylocalstorage: LocalStorageProvider) {
+              public services: ServiceProvider, public localStorage: LocalStorageProvider) {
   }
 
   ionViewWillEnter() {
@@ -36,7 +36,7 @@ export class UpdatePhoneNumberPage {
   }
 
   ionViewDidLoad() {
-    this.mylocalstorage.getCountries().then(countries => {
+    this.localStorage.getCountries().then(countries => {
       console.log(countries);
       this.countries = countries;
     });
@@ -68,6 +68,7 @@ export class UpdatePhoneNumberPage {
     loading.present();
     this.services.updatePhoneNumber(this.object).subscribe(next => {
       console.log(next);
+      // this.localStorage.updatePatientStorage(next);
       loading.dismiss()
       this.navCtrl.pop();
     }, error => {

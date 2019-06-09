@@ -193,7 +193,7 @@ export class ServiceProvider {
    * @param object
    */
   updatePhoneNumber(object: any): Observable<any> {
-    return this.http.put(
+    return this.http.post(
       this.host + 'profile/phone',
       object,
       this.headers

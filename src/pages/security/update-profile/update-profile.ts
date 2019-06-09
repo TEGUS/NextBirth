@@ -249,7 +249,6 @@ export class UpdateProfilePage {
 
 
   updateProfile() {
-
     if (this.checkErrorPossibilities().error) {
       this.presentToast(this.checkErrorPossibilities().msg)
       return;
