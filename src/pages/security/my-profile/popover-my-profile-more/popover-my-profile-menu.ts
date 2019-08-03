@@ -12,7 +12,7 @@ import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular
 @Component({
   selector: 'page-popover-my-profile-menu',
   template: `
-    <ion-list no-border no-padding no-margin>
+    <ion-list no-border no-padding no-margin class="bg-page">
       <button ion-item tappable *ngFor="let item of menuItems" (click)="close(item)">
         {{item.title}}
       </button>

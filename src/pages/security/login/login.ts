@@ -9,6 +9,8 @@ import {checkField, handleError} from "../../../variables/functions";
 import {LocalStorageProvider} from '../../../providers/localstorage.service';
 import {ServiceProvider} from '../../../providers/metier.service';
 import {MyApp} from "../../../app/app.component";
+import {CallNumber} from "@ionic-native/call-number";
+import {contactsInfo} from "../../../configs/configs";
 
 /**
  * Generated class for the LoginPage page.
@@ -33,9 +35,10 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public authProvider: AuthenticationProvider, public loadingCtrl: LoadingController,
               public toastCtrl: ToastController, public mylocalstorage: LocalStorageProvider,
-              public menuCtrl: MenuController, public services: ServiceProvider, public alertCtrl: AlertController) {
+              public menuCtrl: MenuController, public services: ServiceProvider, public alertCtrl: AlertController,
+              private callNumber: CallNumber) {
   }
-  
+
   ionViewWillEnter() {
     this.object = {
       phone: null,
@@ -52,13 +55,13 @@ export class LoginPage {
     this.currentPhone = phone;
     this.object.phone = `+${this.currentCallingCode}${phone}`;
   }
-  
+
   listenCode(event) {
     this.currentCallingCode = event;
-    
+
     if (this.currentPhone === null)
       return;
-    
+
     this.object.phone = `+${this.currentCallingCode}${this.currentPhone}`;
   }
 
@@ -70,7 +73,7 @@ export class LoginPage {
     if (checkField(this.object.phone) && checkField(this.object.plainPassword)) {
       let loading = this.loadingCtrl.create();
       loading.present();
-      
+
       console.log(this.object);
       this.authProvider.logIn(this.object).subscribe(next => {
         console.log(next);
@@ -78,13 +81,15 @@ export class LoginPage {
         this.mylocalstorage.storeSession(next).then(() => {
           this.services.faitTravail().then(() => {
 
-            
+
           });
-          
+
           this.services.checkAuthorization().then(() => {
-            this.mylocalstorage.storeKeydpv(0).then(() => {});
-            this.mylocalstorage.storeKeydpvacc(0).then(() => {});
-  
+            this.mylocalstorage.storeKeydpv(0).then(() => {
+            });
+            this.mylocalstorage.storeKeydpvacc(0).then(() => {
+            });
+
             this.services.getMode().subscribe(mode => {
               if (mode !== null) {
                 this.mylocalstorage.storeModeInSession(mode._embedded.categorie);
@@ -92,13 +97,13 @@ export class LoginPage {
               } else {
                 this.navCtrl.setRoot('ChooseModePage', {});
               }
-    
+
               loading.dismiss();
               this.menuCtrl.enable(true, 'sideMenu');
             }, error => {
               console.error(error);
               loading.dismiss();
-  
+
               if (handleError(error) === 0) {
                 this.navCtrl.setRoot('ErrorPage');
               }
@@ -109,7 +114,7 @@ export class LoginPage {
         if (handleError(error) === 0) {
           this.navCtrl.setRoot('ErrorPage');
         }
-        
+
         loading.dismiss();
         console.log(error);
         this.error = error.error;
@@ -144,5 +149,42 @@ export class LoginPage {
       duration: 1500
     });
     toast.present();
+  }
+
+  /**
+   * Mot de passe oublié
+   */
+  alertForgotPassword() {
+    let alert = this.alertCtrl.create({
+      title: "Mot de passe oublié ?",
+      message: "Vous avez oublié votre mot de passe, veuillez nous contacter.",
+      buttons: [
+        {
+          text: 'Envoyer un mail',
+          handler: () => this.sendEmail()
+        },
+        {
+          text: 'Lancer un appel',
+          handler: () => this.makeCall()
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  /**
+   * Envoyer un mail
+   */
+  sendEmail() {
+    this.navCtrl.push('SendEmailPage')
+  }
+
+  /**
+   * Faire un appel
+   */
+  makeCall() {
+    this.callNumber.callNumber(contactsInfo.phoneNumber, true)
+      .then(res => console.log('Launched dialer!', res))
+      .catch(err => console.error('Error launching dialer', err));
   }
 }

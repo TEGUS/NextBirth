@@ -42,7 +42,9 @@ export class MyApp {
       {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
       // {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'},
       // {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
+      {title: 'Conseils', component: 'ConseilPage', icon: 'icon10'},
       {title: 'Paramètres', component: "SettingsPage", icon: 'icon8'},
+      {title: 'A propos', component: 'AProposPage', icon: 'icon7'},
     ];
 
     this.initDefaultLang().then(() => {
@@ -51,7 +53,8 @@ export class MyApp {
   }
   
   initializeApp() {
-    this.platform.ready().then(() => {
+    this.platform.ready().then((readySource) => {
+      console.log('Platform ready from', readySource);
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       // this.statusBar.styleDefault();

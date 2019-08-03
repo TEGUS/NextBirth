@@ -28,6 +28,7 @@ export class MyProfilePage {
   }
   
   ionViewWillEnter() {
+    console.log("ionViewWillEnter");
     this.ionButtonsEnd = [
       {
         icon: 'create',
