@@ -48,7 +48,7 @@
     "build": "0.1.4",
     "call-number": "^1.0.1",
     "com-badrit-base64": "^0.2.0",
-    "cordova-android": "6.3.0",
+    "cordova-android": "^6.3.0",
     "cordova-browser": "5.0.4",
     "cordova-common": "^3.0.0",
     "cordova-plugin-badge": "^0.8.7",
@@ -103,8 +103,7 @@
       "mx.ferreyra.callnumber": {}
     },
     "platforms": [
-      "browser",
-      "android"
+      "browser"
     ]
   },
   "config": {

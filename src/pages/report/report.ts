@@ -619,7 +619,7 @@ export class ReportPage {
 
   presentPrompt() {
     let alert = this.alertCtrl.create({
-      title: 'Bien Voiloir saisir le bon moment',
+      title: 'Bien Vouloir saisir le bon moment',
       inputs: [
         {
           name: 'libele',
@@ -634,14 +634,14 @@ export class ReportPage {
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Annuler',
           role: 'cancel',
           handler: data => {
             console.log('Cancel clicked');
           }
         },
         {
-          text: 'Save',
+          text: 'Valider',
           handler: data => {
             this.noteGrosesse.libele = data.libele;
             this.noteGrosesse.description = data.description;
