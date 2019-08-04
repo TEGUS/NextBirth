@@ -11,7 +11,9 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "launch:on:device": "ionic cordova run android --target=emulator-5554",
-    "launch:on:emulator": "ionic cordova run android --target=emulator-5554"
+    "launch:on:emulator": "ionic cordova run android --target=emulator-5554",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@angular/animations": "5.2.9",
@@ -74,7 +76,8 @@
     "moment": "^2.22.2",
     "rxjs": "5.5.8",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.20"
+    "zone.js": "0.8.20",
+    "snyk": "^1.208.0"
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.1.11",
@@ -108,5 +111,6 @@
   },
   "config": {
     "ionic_copy": "./scripts/copy-mobiscroll-css.js"
-  }
+  },
+  "snyk": true
 }
