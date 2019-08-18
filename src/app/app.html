@@ -6,12 +6,12 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content style="background-color: #e4e4e4; background-image: none;">
+  <ion-content class="bg-page">
     <ion-grid>
       <ion-row menuClose *ngFor="let p of pages" (click)="openPage(p)" style="display: table; padding: 10px; cursor: pointer;">
         <ion-col col-2>
           <img [src]="'./assets/icon/' + p.icon + '.png'" alt=""
-               style="max-width: 100px;" class="img-menu">
+               style="max-width: 100px;" class="img-menu" *ngIf="p.icon != null">
         </ion-col>
         <ion-col style="display: table-cell; vertical-align: middle; padding-left: 15px; font-weight: 600;">
           {{p.title}}

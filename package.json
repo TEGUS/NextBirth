@@ -27,6 +27,7 @@
     "@ionic-native-mocks/local-notifications": "^2.0.12",
     "@ionic-native/base64": "^4.11.0",
     "@ionic-native/calendar": "^4.7.0",
+    "@ionic-native/call-number": "^4.20.0",
     "@ionic-native/camera": "^4.11.0",
     "@ionic-native/core": "4.6.0",
     "@ionic-native/date-picker": "^4.17.0",
@@ -45,8 +46,9 @@
     "@ngx-translate/http-loader": "^2.0.1",
     "angular2-uuid": "^1.1.1",
     "build": "0.1.4",
+    "call-number": "^1.0.1",
     "com-badrit-base64": "^0.2.0",
-    "cordova-android": "6.3.0",
+    "cordova-android": "^6.3.0",
     "cordova-browser": "5.0.4",
     "cordova-common": "^3.0.0",
     "cordova-plugin-badge": "^0.8.7",
@@ -97,11 +99,11 @@
       "cordova-sqlite-storage": {},
       "cordova-plugin-datepicker": {},
       "cordova-plugin-decimal-keyboard": {},
-      "cordova-plugin-globalization": {}
+      "cordova-plugin-globalization": {},
+      "mx.ferreyra.callnumber": {}
     },
     "platforms": [
-      "browser",
-      "android"
+      "browser"
     ]
   },
   "config": {

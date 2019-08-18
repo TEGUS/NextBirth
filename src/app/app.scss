@@ -47,6 +47,11 @@ ion-navbar {
   border-bottom: 3px solid #c82a21;
 }
 
+.bg-page {
+  background-color: #e4e4e4;
+  background-image: none;
+}
+
 // Customize ScrollBar
 //::-webkit-scrollbar {
 //  width: 14px; /* for vertical scrollbars */
@@ -71,7 +76,6 @@ ion-navbar {
 hr {
   border-top: 1px solid white;
 }
-
 
 .show-error-dom {
   color: white;

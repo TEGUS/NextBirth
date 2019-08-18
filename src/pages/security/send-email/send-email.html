@@ -1,0 +1,18 @@
+<ion-header>
+  <navbar title="Envoyer un mail"></navbar>
+</ion-header>
+
+
+<ion-content padding class="bg-page">
+  <div class="content">
+    <ion-textarea placeholder="Tappez votre message ici..."
+                  [(ngModel)]="message" rows="10" maxLength="500"
+                  autocomplete="on" autosize
+                  autocorrect="on">
+    </ion-textarea>
+
+    <div class="create-account">
+      <input type="button" value="Envoyer" tappable (click)="submit()">
+    </div>
+  </div>
+</ion-content>

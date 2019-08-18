@@ -5,7 +5,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="bg-page">
   <div class="content">
     <img class="profils" src="assets/imgs/monlogo.png" alt="">
     <br>
@@ -34,6 +34,10 @@
     </input-element>
 
     <p class="show-error-dom" *ngIf="error != null"> Login et/ou mot de passe incorrect! </p>
+
+    <div padding-left padding-right padding-top>
+      <a style="float: right" tappable (click)="resettingRequest()">Mot de passe oublié ?</a>
+    </div>
 
     <div class="create-account">
       <input id="login" type="button" value="SE CONNECTER" tappable (click)="login()">

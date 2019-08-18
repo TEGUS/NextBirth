@@ -25,6 +25,7 @@ import { DatePicker } from '@ionic-native/date-picker';
 import { CameraMock } from '@ionic-native-mocks/camera';
 import { Globalization } from '@ionic-native/globalization';
 import {ReducerService} from "../providers/reducer.service";
+import {CallNumber} from "@ionic-native/call-number";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -61,7 +62,7 @@ export function createTranslateLoader(http: HttpClient) {
     SQLite, DatePicker, Globalization, ReducerService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: Camera, useClass: CameraMock},
-    AuthenticationProvider, ServiceProvider, LocalNotifications
+    AuthenticationProvider, ServiceProvider, LocalNotifications, CallNumber
   ]
 })
 export class AppModule {

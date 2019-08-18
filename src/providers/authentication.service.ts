@@ -51,4 +51,28 @@ export class AuthenticationProvider {
       this.headers
     );
   }
+
+  confirmRegisterCode(confirmCode): Observable<any> {
+    return this.http.post(
+      this.host + 'register/confirm',
+      confirmCode,
+      this.headers
+    );
+  }
+
+  resettingRequestCode(params): Observable<any> {
+    return this.http.post(
+      this.host + 'resetting/request',
+      params,
+      this.headers
+    );
+  }
+
+  resetPassword(params): Observable<any> {
+    return this.http.post(
+      this.host + 'resetting/reset',
+      params,
+      this.headers
+    );
+  }
 }

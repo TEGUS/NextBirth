@@ -94,5 +94,4 @@
     <plugin name="cordova-plugin-decimal-keyboard" spec="1.0.0" />
     <plugin name="cordova-plugin-globalization" spec="1.11.0" />
     <engine name="browser" spec="5.0.4" />
-    <engine name="android" spec="6.3.0" />
 </widget>
