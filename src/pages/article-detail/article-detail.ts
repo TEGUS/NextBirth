@@ -24,7 +24,11 @@ export class ArticleDetailPage {
   }
 
   ionViewDidLoad() {
-    if (!this.navParams.data.hasOwnProperty('id')) {
+
+    this.article = this.navParams.get('article');
+    this.title = this.article.title
+
+    /*if (!this.navParams.data.hasOwnProperty('id')) {
       this.navCtrl.pop();
     } else {
       let loading = this.loadingCtrl.create();
@@ -40,7 +44,7 @@ export class ArticleDetailPage {
       }, () => {
         loading.dismiss();
       });
-    }
+    }*/
   }
 
 }

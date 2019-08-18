@@ -58,10 +58,130 @@ export class ReportPage {
     this.testeurdpv = 0;
     this.testeurdpvcac = 0;
     this.services.initHeaders();
+
+    ////////////////////// si les conseil n'ont pas encore été programmé alors les programmé ////////////
+  
+    
+     this.mylocalstorage.getValideconseil().then((result: any) => {
+
+              if(result.value != 10){
+
+                this.services.getConseils().subscribe(next => {
+
+                  console.log("===============================");
+                  console.log(next);
+                  console.log("===============================");
+                  console.log("===============================");
+                        let listesNotification = [];
+                        var i = 0;
+                        next.items.forEach((element) => {
+                          let manotification = {
+                            id: i + 1,
+                            text: element.description,
+                            trigger: {at: new Date(new Date().getTime() + (60*1000*60*24)*(i+1))},
+                            //trigger: {at: new Date((new Date(element.date_alert)).getTime())},
+                            led: 'FF0000',
+                            sound: 'file://assets/imgs/notification.mp3'
+                          }
+    
+                          listesNotification.push(manotification);
+                          i++;
+                        });
+    
+                        if (i == next.items.length) {
+                          this.localNotifications.schedule(
+                            listesNotification
+                          );
+    
+                          var donnee = {
+                            value:10
+                          }
+                          this.mylocalstorage.storeValideconseilInSession(donnee).then((result: any) => {
+      
+                          })
+    
+    
+                        }
+                  console.log("=================================")
+                
+                }, error => {
+                  console.error(error);
+                });
+             
+
+              }
+
+            
+      });
+     ////////////////////////////////////////////////////////////////////////////////////////////////
+
   }
 
   ionViewWillEnter() {
+
+  }
+
+
+
+
+
+
+  ionViewDidLoad() {
+
     this.services.initHeaders();
+
+
+
+    
+
+
+
+
+    let loading = this.loadingCtrl.create();
+    loading.present();
+    this.acticlesSubscription = this.services.getArticles(this.pagenumber).subscribe(next => {
+      loading.dismiss();
+      this.items = next.items;
+      if (this.items.length == 0) {
+        this.listevide = 2;
+      }
+    }, error => {
+      loading.dismiss();
+      console.error(error);
+    });
+
+    setTimeout(() => {
+      loading.dismiss();
+      this.acticlesSubscription.unsubscribe();
+      // this.presentToast("Veuillez vérifier votre connection internet !");
+    }, 15000);
+
+    console.log('ionViewDidLoad ReportPage');
+
+
+
+
+    this.mylocalstorage.getTesteur().then((result: any) => {
+
+        if(result.value != 10){
+            for (let i = 1; i <= 10; i++) {
+                  this.declancherAlerte("Vous avez de nouveaux articles à lire", (604800*i));
+                  if(i==10){
+                    var donnee = {
+                      value:10
+                    }
+                    this.mylocalstorage.storeTesteur(donnee).then((result: any) => {
+
+                    })
+                  }
+            }
+        }
+    })
+          
+              
+
+
+
 
     this.mylocalstorage.getSession().then((result: any) => {
       if (result.user !== null && result.user._embedded.photo !== null) {
@@ -219,28 +339,7 @@ export class ReportPage {
     });
   }
 
-  ionViewDidLoad() {
-    let loading = this.loadingCtrl.create();
-    loading.present();
-    this.acticlesSubscription = this.services.getArticles(this.pagenumber).subscribe(next => {
-      loading.dismiss();
-      this.items = next.items;
-      if (this.items.length == 0) {
-        this.listevide = 2;
-      }
-    }, error => {
-      loading.dismiss();
-      console.error(error);
-    });
-
-    setTimeout(() => {
-      loading.dismiss();
-      this.acticlesSubscription.unsubscribe();
-      // this.presentToast("Veuillez vérifier votre connection internet !");
-    }, 15000);
-
-    console.log('ionViewDidLoad ReportPage');
-  }
+  
 
 
   doInfiniteBottom(infiniteScroll) {
@@ -260,10 +359,9 @@ export class ReportPage {
   }
 
 
-  selectArticle(id) {
-    console.log(id);
+  selectArticle(article) {
     this.navCtrl.push("ArticleDetailPage", {
-      id: id
+      article: article
     })
   }
 

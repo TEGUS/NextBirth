@@ -5,6 +5,7 @@ import {currentHost} from "../host/host";
 import {LocalStorageProvider} from "./localstorage.service";
 import {SQLite, SQLiteObject} from '@ionic-native/sqlite';
 import {ToastController} from 'ionic-angular';
+import { ConseilsPage } from '../pages/conseils/conseils';
 
 /*
   Generated class for the ServiceProvider provider.
@@ -117,6 +118,21 @@ export class ServiceProvider {
       this.headers
     );
   }
+
+
+
+   /**
+   * Toutes les conseils
+   * @returns {Observable<any>}
+   */
+  getConseils(): Observable<any> {
+    return this.http.get(
+      this.host + 'conseils',
+      this.headers
+    );
+  }
+
+
   
   /**
    * All Events
@@ -575,6 +591,98 @@ export class ServiceProvider {
       });
     });
   }
+
+
+
+
+  //////////////////////////////////////////////////////////////////
+
+
+  
+
+  createConseils(conseil: any) {
+    
+    return new Promise((resolve) => {
+      this.sqlite.create({
+        name: 'nextbirth.db',
+        location: 'default'
+      }).then((db: SQLiteObject) => {
+        db.executeSql('INSERT INTO CONSEILS VALUES(NULL,?,?,?)', [conseil.date, conseil.titre, conseil.description])
+          .then(res => {
+            
+            resolve(res);
+          })
+          .catch(e => {
+            // this.presentToast('table pays donst exist!');
+            resolve(e);
+          });
+      }).catch(e => {
+        // this.presentToast('database donst exist!');
+        resolve(e);
+      });
+    });
+  }
+  
+  
+  getAllConseils() {
+    return new Promise((resolve) => {
+      
+      this.sqlite.create({
+        name: 'nextbirth.db',
+        location: 'default'
+      }).then((db: SQLiteObject) => {
+        
+        db.executeSql('SELECT * FROM CONSEILS ORDER BY date DESC', [])
+          .then(res => {
+            let expenses = [];
+            for (var i = 0; i < res.rows.length; i++) {
+              expenses.push({
+                id: res.rows.item(i).id,
+                date:  res.rows.item(i).date,
+                titre: res.rows.item(i).titre,
+                description: res.rows.item(i).description
+                
+              })
+            }
+            resolve(expenses);
+          })
+          .catch(e => {
+            console.log(e);
+            resolve(0);
+          });
+        
+        
+      }).catch(e => {
+        // this.presentToast('database donst exist!');
+        console.error(e)
+      });
+    });
+  }
+  
+  
+  deletteAllConseils() {
+    return new Promise((resolve) => {
+      this.sqlite.create({
+        name: 'nextbirth.db',
+        location: 'default'
+      }).then((db: SQLiteObject) => {
+        db.executeSql('DELETE FROM CONSEILS', [])
+          .then(res => {
+            resolve(1);
+          })
+          .catch(e => {
+            console.log(e);
+            resolve(0);
+          });
+      }).catch(e => {
+        this.presentToast('database donst exist!');
+      });
+    });
+  }
+
+
+
+
 
 ////////////////////////////////////////////////////////////////////////
   

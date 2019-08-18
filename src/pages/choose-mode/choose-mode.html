@@ -7,6 +7,25 @@
 
   <div padding>
 
+
+      <ion-card class="carddoleur" *ngIf="(nombrejrovulation <= 3)&&(testeur == 2)">
+                <p class="titlecard2"> Attention ! Fort risque de conception aujourd’hui </p>
+      </ion-card>
+
+      <ion-card class="carddoleur" *ngIf="(nombrejrovulation2 <= 3) && (nombrejrovulation2 > 0)">
+                <p class="titlecard2"> Attention ! Fort risque de conception aujourd’hui </p>
+      </ion-card>
+
+      <ion-card class="carddoleur" *ngIf="nombrejourseignement1 >= 12">
+                <p class="titlecard2"> Attention ! Fort risque de conception aujourd’hui </p>
+      </ion-card>
+
+      <ion-card class="carddoleur" *ngIf="nombrejourseignement >= 12">
+                <p class="titlecard2"> Attention ! Fort risque de conception aujourd’hui </p>
+      </ion-card>
+
+
+
       <ion-card class="carddoleur" *ngIf="testeur == 1">
           <p class="titlecard2"> Vous avez un retard de   </p>
           <p class="nombrejours">{{nombrejrretard}} jours </p>  
@@ -19,19 +38,12 @@
           <p class="ladate">C'est à dire le {{dateovulation}}</p>
       </ion-card>
 
-      <ion-card class="carddoleur" *ngIf="(nombrejrovulation2 < 3) && (nombrejrovulation2 > 0)">
-                <p class="titlecard2"> attention ! fort risque de conception aujourd’hui </p>
-      </ion-card>
-
-      <ion-card class="carddoleur" *ngIf="nombrejourseignement1 >= 12">
-                <p class="titlecard2"> attention ! fort risque de conception aujourd’hui </p>
-      </ion-card>
-
+     
 
       
 
       <ion-card class="carddoleur" *ngIf="testeur == 21">
-          <p class="titlecard2"> vous allez ovuler probablement dans </p>
+          <p class="titlecard2"> Vous allez ovuler probablement dans </p>
           <p class="nombrejours">[{{nombrejrovulation2}} à {{nombrejrovulation1}} ] jours</p>  
       </ion-card>
       
@@ -39,19 +51,19 @@
      
 
       <ion-card class="carddoleur" *ngIf="testeur == 3">
-          <p class="titlecard2"> vous allez saigner probablement dans  </p>
+          <p class="titlecard2"> Vous allez saigner probablement dans  </p>
           <p class="nombrejours">{{nombrejourseignement}} jours </p>  
-          <p class="ladate">cest à dire le {{datesegnement}}</p>
-          <p class="ladate" *ngIf="testeurovulation == 1">Vous risquez une grossesse a cette période</p>
+          <p class="ladate">c'est à dire le {{datesegnement}}</p>
+          
       </ion-card>
 
-
+     
      
 
       <ion-card class="carddoleur" *ngIf="testeur == 31">
-          <p class="titlecard2"> vous allez saigner probablement dans  </p>
+          <p class="titlecard2"> Vous allez saigner probablement dans  </p>
           <p class="nombrejours">  {{nombrejourseignement2}} à {{nombrejourseignement1}}  jours</p>  
-          <p class="ladate" *ngIf="testeurovulation1 == 1">Vous risquez une grossesse a cette période</p>
+        
       </ion-card>
 
       <!--<ion-card class="carddoleur" *ngIf="testeur == 4">

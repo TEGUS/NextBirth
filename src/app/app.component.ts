@@ -40,6 +40,7 @@ export class MyApp {
       {title: 'Mes mises à jour', component: "MiseajourPage", icon: 'icon4'},
       {title: 'Parturiomètre', component: "SurveillancePage", icon: 'icon6'},
       {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
+      {title: 'Conseils', component: "ConseilsPage", icon: 'icon9'},
       // {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'},
       // {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
       {title: 'Paramètres', component: "SettingsPage", icon: 'icon8'},
@@ -272,6 +273,12 @@ export class MyApp {
       db.executeSql('CREATE TABLE IF NOT EXISTS SITUATIONS (id integer primary key, date, titre, description, idNotif unique)', [])
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
+ 
+      db.executeSql('CREATE TABLE IF NOT EXISTS CONSEILS (id integer primary key, date, titre, description)', [])
+        .then(res => console.log('Executed SQL'))
+        .catch(e => console.log(e));
+
+
     }).catch(e => console.log(e));
   }
   

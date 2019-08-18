@@ -64,7 +64,7 @@
   </div>
 
   <ion-grid *ngIf="items.length != 0">
-    <ion-row style="height: 105px;" *ngFor="let item of items" (click)="selectArticle(item.id)">
+    <ion-row style="height: 105px;" *ngFor="let item of items" (click)="selectArticle(item)">
       <ion-col col-4>
         <img
           [src]="item != null && item._embedded.miniature != null ? item._embedded.miniature._embedded.url_photo : '/assets/imgs/background.jpg'"

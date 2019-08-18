@@ -1,0 +1,12 @@
+<ion-header>
+  <navbar [title]="'Mes conseils'"></navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+    <div *ngIf="items.length == 0" class="empty">
+        Pas de conseils disponibles
+    </div>
+
+</ion-content>

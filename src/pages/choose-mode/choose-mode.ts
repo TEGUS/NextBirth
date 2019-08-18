@@ -67,6 +67,7 @@ export class ChooseModePage {
           if(nombresjours>duree_cycle){
               this.testeur = 1;
               this.nombrejrretard = nombresjours - duree_cycle;
+              this.retartderegle();
           }
 
           // determination du jour d'ovulation
@@ -103,6 +104,31 @@ export class ChooseModePage {
 
                       this.testeur = 2;
                       this.nombrejrovulation = nombresjours2;
+
+                      // programme les notifications sur 3 jours
+
+
+                      this.mylocalstorage.getRisque().then((result: any) => {
+
+                        if(result.value != 10){
+                              for (let i = 1; i <= 3; i++) {
+                                    this.declancherAlerte("attention ! fort risque de conception aujourd’hui", (86400*i));
+                                    if(i==3){
+                                      var donnee = {
+                                        value:10
+                                      }
+                                      this.mylocalstorage.storeRisque(donnee).then((result: any) => {
+                  
+                                      })
+                                    }
+                              }
+                          }
+                      })
+
+                      
+
+
+
                       if(nombresjours2<=3){
                         this.foraujourduit = 1;
                       }else if(nombresjours2> -3){
@@ -117,7 +143,7 @@ export class ChooseModePage {
                       var nombremilliseconde3 = premieredate3 - dateaujourdui3;
                       var nombresjours3 = Math.ceil(((((nombremilliseconde3 / 1000) / 60) / 60) / 24));
                       this.nombrejourseignement = nombresjours3;
-                      if(this.nombrejourseignement<=3){
+                      if(this.nombrejourseignement<=1){
                           this.testeurovulation = 1;
                           this.datepdeseignement()
                       }
@@ -219,7 +245,7 @@ export class ChooseModePage {
                       var nombresjours32 = Math.ceil(((((nombremilliseconde32 / 1000) / 60) / 60) / 24));
                       this.nombrejourseignement2 = nombresjours32;
 
-                      if(this.nombrejourseignement2<=3){
+                      if(this.nombrejourseignement2<=1){
                           this.testeurovulation1 = 1;
                           this.datepdeseignement()
                       }
@@ -503,6 +529,23 @@ export class ChooseModePage {
   }
 
 
+
+
+  declancherAlerte(message: any, nombreseconde: any) {
+
+    this.localNotifications.schedule({
+      text: message,
+      trigger: {at: new Date(new Date().getTime() + nombreseconde * 1000)},
+      led: 'FF0000',
+      sound: 'file://assets/imgs/notification.mp3'
+    });
+
+  }
+
+
+
+
+
   datepdeseignement() {
     
     
@@ -514,8 +557,8 @@ export class ChooseModePage {
     })*/
     
     let alert = this.alertCtrl.create({
-      title: 'Alerte seignement',
-      message: 'Voulez vous metre à jours votre date de dernier règle ?',
+      title: 'Alerte saignement',
+      message: 'Voulez vous mettre à jour votre date de dernières règles ?',
       buttons: [
         {
           text: 'NON',
@@ -577,6 +620,46 @@ export class ChooseModePage {
     alert.present();
     
   }
+
+
+
+
+
+
+  retartderegle() {
+    
+   
+    
+    let alert = this.alertCtrl.create({
+      title: 'Retard',
+      message: 'Vous avez un retard de règles. Êtes-vous enceinte ?',
+      buttons: [
+        {
+          text: 'NON',
+          role: 'cancel',
+          handler: () => {
+            
+               this.presentToast("Veillez mettre à jour votre date du début des dernières règles si vous avez déjà recommencé à saigner");           
+          
+          }
+        },
+        {
+          text: 'OUI',
+          handler: () => {
+            
+              this.presentToast("Félicitation ! Veillez activer le mode grossesse pour bénéficier d’un suivi personnalisé durant toute votre grossesse.");
+          }
+        }
+      ]
+    });
+    
+    alert.present();
+    
+  }
+
+
+
+
 
   getAllcategories() {
     let loading = this.loadingCtrl.create();

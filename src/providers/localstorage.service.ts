@@ -15,6 +15,9 @@ export class LocalStorageProvider {
   private keymode = 'mode';
   private keydpv = 'keydpv';
   private keydpvacc = 'keydpvacc';
+  private testeurntif = 'testeurnotif';
+  private risque = 'lemokai'
+  private valideconseil = 'valideconseil'
 
   constructor(private http: HttpClient, private storage: Storage) {
     console.log('Hello LocalStorageProvider Provider');
@@ -76,6 +79,34 @@ export class LocalStorageProvider {
     })
   }
 
+
+  storeValideconseilInSession(mode) {
+    Session.mode = mode;
+    return new Promise((resolve) => {
+      this.storage.set(this.valideconseil, mode).then((val) => {
+        resolve();
+      }, error => {
+        resolve();
+      });
+    });
+  }
+  
+  /**
+   * Get Mode
+   */
+  getValideconseil() {
+    return new Promise<string>(resolve => {
+      this.getKey(this.valideconseil).then(val => {
+        resolve(val);
+      })
+    })
+  }
+
+
+
+
+
+
   updatePatientStorage(patient) {
     this.getKey(this.key).then(session => {
       console.log("===================================");
@@ -109,6 +140,45 @@ export class LocalStorageProvider {
     return this.storage.set(this.key, data);
   }
 
+  storeTesteur(data) {
+    return this.storage.set(this.testeurntif, data);
+  }
+
+  storeRisque(data) {
+    return this.storage.set(this.risque, data);
+  }
+
+
+  
+
+  getRisque() {
+    return new Promise<any>((resolve, failed) => {
+      this.storage.get(this.risque).then((data) => {
+        if (data == null) {
+          failed(null);
+        }else {
+          resolve(data);
+        }
+      }).catch((error) => {
+        failed(error);
+      });
+    });
+  }
+
+
+  getTesteur() {
+    return new Promise<any>((resolve, failed) => {
+      this.storage.get(this.testeurntif).then((data) => {
+        if (data == null) {
+          failed(null);
+        }else {
+          resolve(data);
+        }
+      }).catch((error) => {
+        failed(error);
+      });
+    });
+  }
   
 
   getSession() {
