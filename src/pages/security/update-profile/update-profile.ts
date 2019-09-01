@@ -99,13 +99,17 @@ export class UpdateProfilePage {
 
     this.localStorage.getKey('modeSelected').then(mode => {
       console.log(mode);
-      this.modeSelectedExist = mode !== null ? true : false;
+      this.modeSelectedExist = mode !== null;
     });
 
     this.localStorage.getKey('session').then(next => {
       console.log(next);
       if (next !== undefined && next !== null) {
         this.patient = next.user._embedded.patient;
+
+        this.object.diabete = this.patient.diabete;
+        this.object.hta = this.patient.hta;
+        this.object.drepano = this.patient.drepano;
 
         if (this.patient._embedded.hasOwnProperty('account')) {
           this.user = this.patient._embedded.account;
@@ -114,10 +118,12 @@ export class UpdateProfilePage {
         }
 
         this.castUsername(this.user).then(user => {
+          console.log(user);
           this.user = user;
 
           this.date_naissance = formatDate(this.user.date_naissance);
           this.debut_dernieres_menstrues = formatDate(this.patient.debut_dernieres_menstrues)
+          this.date_vaccin_anti_tetanique = formatDate(this.patient.date_vaccin_anti_tetanique)
 
           console.log(this.date_naissance)
           console.log(this.debut_dernieres_menstrues)
