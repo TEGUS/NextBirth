@@ -164,21 +164,26 @@ export class ReportPage {
     this.mylocalstorage.getTesteur().then((result: any) => {
 
         this.declancherAlerte("De nouveaux article peuvent vous interesser sur NextBirth", (2));
+        this.declancherAlerte("De nouveaux article peuvent vous interesser sur NextBirth", (60));
+        this.declancherAlerte("Vous allez recevoir des notifications tous les 3 jours", 10);
+     
+              if(result == 0){
+                  for (let i = 1; i <= 90; i++) {
+                        this.declancherAlerte("De nouveaux article peuvent vous interesser sur NextBirth", (518400*i));
+                        if(i==10){
+                          var donnee = {
+                            value:10
+                          }
+                          this.mylocalstorage.storeTesteur(donnee).then((result: any) => {
 
-        if(result.value != 10){
-            for (let i = 1; i <= 10; i++) {
-                  this.declancherAlerte("De nouveaux article peuvent vous interesser sur NextBirth", (604800*i));
-                  if(i==10){
-                    var donnee = {
-                      value:10
-                    }
-                    this.mylocalstorage.storeTesteur(donnee).then((result: any) => {
-
-                    })
+                          })
+                        }
                   }
-            }
-        }
-    })
+              }
+    },error => {
+      alert(JSON.stringify(error));
+      console.error(error)
+    });
           
               
 

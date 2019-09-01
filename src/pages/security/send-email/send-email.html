@@ -5,6 +5,8 @@
 
 <ion-content padding class="bg-page">
   <div class="content">
+    <ion-input placeholder="entrer votre email"  [(ngModel)]="email" rows="10" maxLength="500" type="email" autocomplete="on" autosize
+    autocorrect="on"></ion-input>
     <ion-textarea placeholder="Tappez votre message ici..."
                   [(ngModel)]="message" rows="10" maxLength="500"
                   autocomplete="on" autosize

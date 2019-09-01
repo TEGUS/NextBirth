@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import { ServiceProvider } from '../../../providers/metier.service';
 
 /**
  * Generated class for the SendEmailPage page.
@@ -18,8 +19,9 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 })
 export class SendEmailPage {
   message = null;
+  email = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public services: ServiceProvider, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -29,6 +31,31 @@ export class SendEmailPage {
   submit() {
     if (this.message !== null && this.message !== '') {
       console.log(this.message);
+
+      var email = {
+        "object": "Contact nextbith",
+        "content": this.message,
+        "email": this.email
+      }
+      
+
+      this.services.sendMail(email).subscribe(mode => {
+           this.presentToast("Opération éffectué avec succès");
+           this.message="";
+      }, error => {
+           this.presentToast("Echec de l'opération");
+      });
+
+
     }
+  }
+
+
+  presentToast(message: any) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 1500
+    });
+    toast.present();
   }
 }

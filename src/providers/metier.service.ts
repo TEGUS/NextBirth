@@ -155,6 +155,18 @@ export class ServiceProvider {
       this.headers
     );
   }
+
+   /**
+   * Send Email
+   * @param message
+   */
+  sendMail(email): Observable<any> {
+    return this.http.post(
+      `${this.host}contacts`,
+      email,
+      this.headers
+    );
+  }
   
   /**
    * Update Event
