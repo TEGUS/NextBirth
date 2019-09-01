@@ -282,6 +282,7 @@ export class UpdateProfilePage {
         return;
       }
 
+      console.log("TO_UPDATE");
       console.log(this.object);
 
       let loading = this.loadingCtrl.create();
@@ -290,12 +291,34 @@ export class UpdateProfilePage {
         console.log("UPDATE_PROFILE")
         console.log(next)
         this.localStorage.updatePatientStorage(next);
+        let respUpdate = next;
 
         if (this.images.image != "") {
+          alert("UPDATE_PHOTO_PROFILE");
           this.services.editImage(this.images).subscribe(next => {
+            console.log("UPDATE_PHOTO_PROFILE");
+            console.log(next);
+            respUpdate._embedded.photo = next.account._embedded.photo;
+            this.localStorage.updatePatientStorage(respUpdate);
+
+            loading.dismiss();
+            this.presentToast('Mise à jour effectué !');
+            this.localStorage.setObjectUpdateProfile(this.object);
+            this.localStorage.getKey('modeSelected').then(mode => {
+              console.log(mode);
+              (mode !== null) ? this.selectMode(mode) : this.navCtrl.pop();
+            });
           }, error => {
-          }, () => {
+            console.error(error);
           })
+        } else {
+          loading.dismiss();
+          this.presentToast('Mise à jour effectué !');
+          this.localStorage.setObjectUpdateProfile(this.object);
+          this.localStorage.getKey('modeSelected').then(mode => {
+            console.log(mode);
+            (mode !== null) ? this.selectMode(mode) : this.navCtrl.pop();
+          });
         }
       }, error => {
         if (handleError(error) === 0) {
@@ -335,14 +358,15 @@ export class UpdateProfilePage {
         }
 
       }, () => {
-        loading.dismiss();
-        this.presentToast('Mise à jour effectué !');
-
-        this.localStorage.setObjectUpdateProfile(this.object);
-
-        this.localStorage.getKey('modeSelected').then(mode => {
-          (mode !== null) ? this.selectMode(mode) : this.navCtrl.pop();
-        });
+        // loading.dismiss();
+        // this.presentToast('Mise à jour effectué !');
+        //
+        // this.localStorage.setObjectUpdateProfile(this.object);
+        //
+        // this.localStorage.getKey('modeSelected').then(mode => {
+        //   console.log(mode);
+        //   (mode !== null) ? this.selectMode(mode) : this.navCtrl.pop();
+        // });
       });
     }, error => {
       // this.presentToast('Veuillez remplir tous les champs');
