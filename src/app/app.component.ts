@@ -42,7 +42,7 @@ export class MyApp {
       {title: 'Mes mises à jour', component: "MiseajourPage", icon: 'icon4'},
       {title: 'Parturiomètre', component: "SurveillancePage", icon: 'icon6'},
       {title: 'Pilulier', component: "PilulierPage", icon: 'icon9'},
-      {title: 'Conseils', component: "ConseilsPage", icon: 'icon9'},
+      //{title: 'Conseils', component: "ConseilsPage", icon: 'icon9'},
       // {title: 'Humeur et état d\'esprit', component: "FluxReglePage", icon: 'icon11'},
       // {title: 'FAQ', component: "Img8Page", icon: 'icon7'},
       {title: 'Conseils', component: 'ConseilPage', icon: 'icon10'},

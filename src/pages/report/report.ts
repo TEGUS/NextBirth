@@ -64,14 +64,13 @@ export class ReportPage {
     
      this.mylocalstorage.getValideconseil().then((result: any) => {
 
+           if(result!=null){
+
               if(result.value != 10){
 
                 this.services.getConseils().subscribe(next => {
 
-                  console.log("===============================");
-                  console.log(next);
-                  console.log("===============================");
-                  console.log("===============================");
+                
                         let listesNotification = [];
                         var i = 0;
                         next.items.forEach((element) => {
@@ -102,14 +101,15 @@ export class ReportPage {
     
     
                         }
-                  console.log("=================================")
+
                 
                 }, error => {
                   console.error(error);
                 });
-             
-
               }
+
+            }
+
 
             
       });
@@ -163,9 +163,11 @@ export class ReportPage {
 
     this.mylocalstorage.getTesteur().then((result: any) => {
 
+        this.declancherAlerte("De nouveaux article peuvent vous interesser sur NextBirth", (2));
+
         if(result.value != 10){
             for (let i = 1; i <= 10; i++) {
-                  this.declancherAlerte("Vous avez de nouveaux articles à lire", (604800*i));
+                  this.declancherAlerte("De nouveaux article peuvent vous interesser sur NextBirth", (604800*i));
                   if(i==10){
                     var donnee = {
                       value:10
@@ -209,8 +211,8 @@ export class ReportPage {
 
         // Bonjour Rahim n'oubliez pas votre visite demain demain
         this.mylocalstorage.getSession().then((result: any) => {
-          this.presentToast("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain");
-          this.declancherAlerte("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain", 2);
+          this.presentToast("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui");
+          this.declancherAlerte("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui", 2);
         }, error => {
           console.error(error)
         });
@@ -234,14 +236,25 @@ export class ReportPage {
 
       if (nombresjours > 0) {
         this.dpvacc = nombresjours;
+        if(this.dpvacc == 1){
+          
+          // notification
+          this.mylocalstorage.getSession().then((result: any) => {
+            this.presentToast("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui");
+            this.declancherAlerte("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui", 2);
+          }, error => {
+            console.error(error)
+          });
+
+        }
         this.testeurdpvcac = 1;
       } else if (nombresjours == 1) {
 
         // Bonjour Rahim n'oubliez pas votre vaccin demain
 
         this.mylocalstorage.getSession().then((result: any) => {
-          this.presentToast("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain demain");
-          this.declancherAlerte("Bonjour " + result.user.username + " svp n'oubliez pas votre visite demain demain", 2);
+          this.presentToast("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui demain");
+          this.declancherAlerte("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui demain", 2);
         }, error => {
           console.error(error)
         });
@@ -307,6 +320,15 @@ export class ReportPage {
 
       if (nombresjours > 0) {
         this.dpvacc = nombresjours;
+        if(this.dpvacc == 1){
+          // notification
+          this.mylocalstorage.getSession().then((result: any) => {
+            this.presentToast("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui");
+            this.declancherAlerte("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui", 2);
+          }, error => {
+            console.error(error)
+          });
+        }
         this.testeurdpvcac = 1;
       } else {
         this.testeurdpvcac = 0;
@@ -521,6 +543,16 @@ export class ReportPage {
               var nombremilliseconde = datepv - dateaujourdui;
               var nombresjours = Math.ceil(((((nombremilliseconde / 1000) / 60) / 60) / 24));
               this.dpvacc = nombresjours;
+              if(this.dpvacc == 1){
+
+                this.mylocalstorage.getSession().then((result: any) => {
+                  this.presentToast("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui");
+                  this.declancherAlerte("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui", 2);
+                }, error => {
+                  console.error(error)
+                });
+                // notification
+              }
               if (this.dpvacc > 0) {
                 this.mylocalstorage.storeKeydpvacc(datepv).then(() => {
                 });
