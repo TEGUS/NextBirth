@@ -171,11 +171,12 @@ export class LocalStorageProvider {
     return new Promise<any>((resolve, failed) => {
       this.storage.get(this.testeurntif).then((data) => {
         if (data == null) {
-          failed(null);
+          resolve(0);
         }else {
           resolve(data);
         }
       }).catch((error) => {
+        alert("impossible");
         failed(error);
       });
     });
