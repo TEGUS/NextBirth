@@ -12,6 +12,8 @@ import {Network} from "@ionic-native/network";
 import {LocalNotifications} from "@ionic-native/local-notifications";
 import * as v from "../variables/variables_";
 
+import { OneSignal } from '@ionic-native/onesignal';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -26,7 +28,7 @@ export class MyApp {
               public services: ServiceProvider, public menuCtrl: MenuController, public loadingCtrl: LoadingController,
               public alertCtrl: AlertController, private sqlite: SQLite, public translate: TranslateService,
               private globalization: Globalization, private toastCtrl: ToastController,
-              public network: Network, private localNotifications: LocalNotifications) {
+              public network: Network, private localNotifications: LocalNotifications, private oneSignal: OneSignal) {
     
     this.services.initHeaders();
     this.intiliazedatabase();
@@ -54,8 +56,12 @@ export class MyApp {
   }
   
   initializeApp() {
+
+    
+       
     this.platform.ready().then((readySource) => {
-      console.log('Platform ready from', readySource);
+  
+       this.initOneSignal();
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       // this.statusBar.styleDefault();
@@ -228,6 +234,42 @@ export class MyApp {
       }
     }
   }
+
+
+  private initOneSignal() {
+
+    this.oneSignal.startInit('750ec2b4-94d2-4cf0-91c4-fa765fa3ae02', '531280430695');
+
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+
+    this.oneSignal.handleNotificationReceived().subscribe((data) => {
+    // do something when notification is received
+    });
+
+    this.oneSignal.handleNotificationOpened().subscribe((data) => {
+      // do something when a notification is opened
+
+       //this.navCtrl.push('NotificationPage');
+
+        
+    });
+
+    this.getUserOneSignalID();
+
+      this.oneSignal.endInit();
+    }
+
+    private getUserOneSignalID() {
+      this.oneSignal.getIds().then(data => {
+         //alert(JSON.stringify(data));
+         
+      });
+
+
+
+    }
+
+
   
   signOut() {
     this.alertCtrl.create({

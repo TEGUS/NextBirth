@@ -27,6 +27,8 @@ import { Globalization } from '@ionic-native/globalization';
 import {ReducerService} from "../providers/reducer.service";
 import {CallNumber} from "@ionic-native/call-number";
 
+import { OneSignal } from '@ionic-native/onesignal';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -62,7 +64,7 @@ export function createTranslateLoader(http: HttpClient) {
     SQLite, DatePicker, Globalization, ReducerService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: Camera, useClass: CameraMock},
-    AuthenticationProvider, ServiceProvider, LocalNotifications, CallNumber
+    AuthenticationProvider, ServiceProvider, LocalNotifications, CallNumber, OneSignal
   ]
 })
 export class AppModule {
