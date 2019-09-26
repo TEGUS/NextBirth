@@ -98,11 +98,7 @@ export class ReportPage {
                           this.mylocalstorage.storeValideconseilInSession(donnee).then((result: any) => {
       
                           })
-    
-    
                         }
-
-                
                 }, error => {
                   console.error(error);
                 });
@@ -122,21 +118,12 @@ export class ReportPage {
   }
 
 
-
-
-
-
   ionViewDidLoad() {
 
     this.services.initHeaders();
 
-
-
+     let i = 1;
     
-
-
-
-
     let loading = this.loadingCtrl.create();
     loading.present();
     this.acticlesSubscription = this.services.getArticles(this.pagenumber).subscribe(next => {
@@ -163,13 +150,18 @@ export class ReportPage {
 
     this.mylocalstorage.getTesteur().then((result: any) => {
 
-        this.declancherAlerte("De nouveaux article peuvent vous interesser sur NextBirth", (2));
+        /*this.declancherAlerte("De nouveaux article peuvent vous interesser sur NextBirth", (2));
         this.declancherAlerte("De nouveaux article peuvent vous interesser sur NextBirth", (60));
         this.declancherAlerte("Vous allez recevoir des notifications tous les 3 jours", 10);
-     
-              if(result == 0){
+       */
+              if(result == 0){ 
+                  
+                  alert("ce gars doi êprporpo");
+
                   for (let i = 1; i <= 90; i++) {
-                        this.declancherAlerte("De nouveaux article peuvent vous interesser sur NextBirth", (518400*i));
+                       //518400
+                        var timetoexe = (120*i);
+                        this.declancherAlerte("De nouveaux article peuvent vous interesser sur NextBirth", timetoexe);
                         if(i==10){
                           var donnee = {
                             value:10
@@ -179,7 +171,9 @@ export class ReportPage {
                           })
                         }
                   }
+
               }
+
     },error => {
       alert(JSON.stringify(error));
       console.error(error)
@@ -245,21 +239,21 @@ export class ReportPage {
           
           // notification
           this.mylocalstorage.getSession().then((result: any) => {
-            this.presentToast("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui");
-            this.declancherAlerte("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui", 2);
+            this.presentToast("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain");
+            this.declancherAlerte("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain", 25200);
           }, error => {
             console.error(error)
           });
 
         }
         this.testeurdpvcac = 1;
-      } else if (nombresjours == 1) {
+      } else if (nombresjours == 0) {
 
         // Bonjour Rahim n'oubliez pas votre vaccin demain
 
         this.mylocalstorage.getSession().then((result: any) => {
-          this.presentToast("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui demain");
-          this.declancherAlerte("Bonjour " + result.user.username + " noubliez pas votre visite prenatale demain/aujourd'hui demain", 2);
+          this.presentToast("Bonjour " + result.user.username + " noubliez pas votre visite prenatale aujourd'hui");
+          this.declancherAlerte("Bonjour " + result.user.username + " noubliez pas votre visite prenatale aujourd'hui", 25200);
         }, error => {
           console.error(error)
         });

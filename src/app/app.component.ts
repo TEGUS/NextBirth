@@ -258,6 +258,18 @@ export class MyApp {
       // do something when a notification is opened
 
        //this.navCtrl.push('NotificationPage');
+       
+       /*var notifica = data.notification;
+
+       alert(notifica);
+       
+       alert(data.notification['body']);
+
+       this.alertCtrl.create({
+        
+           message: '' + data.notification,
+       
+       }).present();*/
 
         
     });

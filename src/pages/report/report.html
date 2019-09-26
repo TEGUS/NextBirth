@@ -13,13 +13,13 @@
       <div class="param">
         <div class="libelle-param">Visite</div>
         <div class="value-param" *ngIf="testeurdpv == 0" (click)="datapick()" >?</div>
-        <div class="value-param" *ngIf="testeurdpv != 0">-{{dpv}}J</div>
+        <div class="value-param" *ngIf="testeurdpv != 0" (click)="datapick()">-{{dpv}}J</div>
       </div>
       <div class="param">
         <div class="libelle-param">VAT</div>
         
         <div class="value-param" *ngIf="testeurdpvcac == 0" (click)="dateprochainvacc()">?</div>
-        <div class="value-param" *ngIf="testeurdpvcac != 0">-{{dpvacc}}J</div>
+        <div class="value-param" *ngIf="testeurdpvcac != 0" (click)="dateprochainvacc()">-{{dpvacc}}J</div>
       </div>
       <div class="param">
         <div class="libelle-param" (click)="dateprodacc()">DPA</div>
